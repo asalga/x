@@ -21,8 +21,8 @@ export default class P3 {
 
     document.addEventListener('mousemove', function(e) {
       let rect = e.target.getBoundingClientRect();
-      that.mouseX = Math.floor(e.clientX - rect.left);
-      that.mouseY = Math.floor(Math.abs(e.clientY - rect.bottom));
+      that.mouseX = Math.floor(e.clientX - cvs.offsetLeft);
+      that.mouseY = Math.floor(e.clientY - cvs.offsetTop);
     });
   }
 

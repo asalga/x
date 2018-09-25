@@ -38,6 +38,7 @@ function render() {
   p3.fill('orange');
   p3.ellipse(p3.width / 2, p3.height / 2, 40, 40);
 
+  console.log(p3.mouseX, p3.mouseY);
 
   let center = new Vec2(p3.width / 2, p3.height / 2);
   let cursor = new Vec2(p3.mouseX, p3.mouseY);
