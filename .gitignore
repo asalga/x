@@ -2,6 +2,7 @@
 Thumbs.db
 .DS_Store
 
+
 # Sublime
 *.sublime-project
 *.sublime-workspace
@@ -10,7 +11,8 @@ Thumbs.db
 .tmp
 .sass-cache
 wip/
-app/
+# app/
+snippets/
 
 #Node
 node_modules/
