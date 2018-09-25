@@ -1,15 +1,15 @@
 'use strict';
 
-let p5 = require('p5');
+let _p5 = require('p5');
 
-let debug = false;
+let debug = true;
 let paused = false;
-let _p5;
+let p5;
 let now = 0,
   lastTime = 0,
   gameTime = 0;
 let fps = 0;
-
+let p;
 
 function update(dt) {
   if (paused) {
@@ -21,19 +21,28 @@ function update(dt) {
 
 
 
-function render(p) {
-  p.clear();
+function render() {
+  p5.clear();
 
-  let center = {
-    x: p.width / 2,
-    y: p.height / 2
-  };
+  let center = p5.createVector(p5.width / 2, p5.height / 2);
+  let cursor = p5.createVector(p5.mouseX, p5.mouseY);
+  cursor.sub(center);
+  cursor.normalize();
+  cursor.mult(80);
+  cursor.add(center);
 
-  p.ellipse(center.x, center.y, 50, 50);
-  p.strokeWeight(2);
-  p.stroke(255,0,0);
-  p.line(center.x, center.y, p.mouseX, p.mouseY);
+  p5.noFill();
+  p5.strokeWeight(3);
+  p5.stroke(0, 255, 0);
+  p5.ellipse(center.x, center.y, 50, 50);
 
+  p5.line(center.x, center.y, cursor.x, cursor.y);
+
+  if (debug) {
+    p5.stroke(255, 0, 0);
+    p5.strokeWeight(1);
+    p5.line(center.x, center.y, p5.mouseX, p5.mouseY);
+  }
 }
 
 function checkPageFocus() {
@@ -44,8 +53,8 @@ function checkPageFocus() {
   }
 }
 
-var newp5 = new p5(function(p) {
-  _p5 = p;
+var newp5 = new _p5(function(p) {
+  p5 = p;
 
   p.setup = function setup() {
     let cvs = p.createCanvas(640, 400);
