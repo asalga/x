@@ -1,8 +1,0 @@
-{
-  "blink": {
-    "type": "frames",
-    "framedata": "rat.json",
-    "time": 500,
-    "frames": ["eyes_0", "eyes_1", "eyes_2"]
-  }
-}
