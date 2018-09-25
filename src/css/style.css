@@ -1,5 +1,5 @@
 body {
-  background: #000;
+  background: #aaa;
   margin: 0;
   overflow: hidden;
   /*padding: 20px 0 0 0;*/
@@ -23,8 +23,8 @@ body {
   margin: 0 auto;
 }
 
-canvas#defaultCanvas0 {
-  background-color: #000;
+canvas#cvs {
+  /*background-color: #000;*/
   border: 1px solid #FFF;
   display: flex;
   height: auto !important;

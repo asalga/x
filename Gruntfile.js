@@ -20,29 +20,28 @@ module.exports = function(grunt) {
   const tmp = '.tmp';
   const app = 'app';
   const lib = 'src/libs';
-  const basePath = 'src/sketches/';
 
-  let config = {
-    // load by default if we can't find the target
-    target: `${basePath}/examples/p5-require`,
-    library: 'p5js-0.6',
-    bundleMethod: 'concat'
-  };
+  // load by default if we can't find the target
+  // let config = {
+  //   target: `${basePath}/examples/p5-require`,
+  //   library: 'p5js-0.6',
+  //   bundleMethod: 'concat'
+  // };
 
-  /*
-   */
-  try {
-    let cfg = grunt.file.readJSON('config.json');
-    let target = cfg.targets[cfg.id];
+  // /*
+  //  */
+  // try {
+  //   let cfg = grunt.file.readJSON('config.json');
+  //   let target = cfg.targets[cfg.id];
 
-    config.target = `${basePath}` + target.dir;
-    config.bundleMethod = target.bundleMethod;
-    config.library = target.library;
+  //   config.target = `${basePath}` + target.dir;
+  //   config.bundleMethod = target.bundleMethod;
+  //   config.library = target.library;
 
-    grunt.log.writeln('loading:' + cfg.id);
-  } catch (e) {
-    grunt.log.writeln(e);
-  }
+  //   grunt.log.writeln('loading:' + cfg.id);
+  // } catch (e) {
+  //   grunt.log.writeln(e);
+  // }
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -84,15 +83,14 @@ module.exports = function(grunt) {
     /**
      *
      */
-    concat: {
-      dev: {
-        dest: `${app}/index.js`,
-        src: `${config.target}/*.js`
-      },
-      options: {
-
-      }
-    },
+    // concat: {
+    //   dev: {
+    //     dest: `${app}/index.js`,
+    //     src: `${src}/**/*.js`
+    //   },
+    //   options: {
+    //   }
+    // },
 
     /**
      *
@@ -116,21 +114,22 @@ module.exports = function(grunt) {
             dest: `${app}/`,
             filter: 'isFile'
           },
-          // DATA
-          {
-            expand: true,
-            cwd: `${config.target}/data`,
-            src: '**/*.json',
-            dest: `${app}/data/`,
-            filter: 'isFile'
-          },
+          // // DATA
+          // {
+          //   expand: true,
+          //   cwd: `${config.target}/data`,
+          //   src: '**/*.json',
+          //   dest: `${app}/data/`,
+          //   filter: 'isFile'
+          // },
 
           // JS
           {
             expand: true,
-            cwd: `${config.target}/data`,
-            src: '*.js',
-            dest: `${app}/`,
+            // cwd: `${config.target}/data`,
+            cwd: `${src}/js/`,
+            src: '**/*.js',
+            dest: `${app}/js/`,
             filter: 'isFile'
           },
 
@@ -143,15 +142,15 @@ module.exports = function(grunt) {
             filter: 'isFile'
           },
 
-          // AUDIO
-          {
-            expand: true,
-            flatten: false,
-            cwd: `${config.target}/data/audio`,
-            src: ['**/*.{mp3,ogg}'],
-            dest: `${app}/data/audio`,
-            filter: 'isFile'
-          },
+          // // AUDIO
+          // {
+          //   expand: true,
+          //   flatten: false,
+          //   cwd: `${config.target}/data/audio`,
+          //   src: ['**/*.{mp3,ogg}'],
+          //   dest: `${app}/data/audio`,
+          //   filter: 'isFile'
+          // },
 
           // // IMAGES
           // {
@@ -177,20 +176,20 @@ module.exports = function(grunt) {
       }
     },
 
-    /**
-     * 
-     */
-    browserify: {
-      dev: {
-        files: [{
-          dest: `${app}/dev_bundle.js`,
-          src: `${config.target}/index.js`
-        }],
-        options: {
-          mangle: false
-        }
-      }
-    },
+    // /**
+    //  * 
+    //  */
+    // browserify: {
+    //   dev: {
+    //     files: [{
+    //       dest: `${app}/dev_bundle.js`,
+    //       src: `${config.target}/index.js`
+    //     }],
+    //     options: {
+    //       mangle: false
+    //     }
+    //   }
+    // },
 
 
     /**
@@ -239,29 +238,28 @@ module.exports = function(grunt) {
       },
       scripts_dev: {
         files: [
-          `${config.target}/**/*.js`
+          `${src}/js/**/*.js`
         ],
         tasks: [
           'copy:dev',
           'bundle'
-          //'browserify:dev'
         ],
         options: {
           livereload: true
         }
       },
-      // AUDIO
-      audio: {
-        files: [
-          `${config.target}/data/**/*.{mp3,ogg}`
-        ],
-        tasks: [
-          'copy:dev'
-        ],
-        options: {
-          livereload: true
-        }
-      },
+      // // AUDIO
+      // audio: {
+      //   files: [
+      //     `${config.target}/data/**/*.{mp3,ogg}`
+      //   ],
+      //   tasks: [
+      //     'copy:dev'
+      //   ],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
       // // IMAGES
       // images: {
       //   files: [
@@ -275,17 +273,17 @@ module.exports = function(grunt) {
       //   }
       // },
       // DATA
-      data: {
-        files: [
-          `${config.target}/data/**/*.{json,glsl}`
-        ],
-        tasks: [
-          'copy:dev'
-        ],
-        options: {
-          livereload: true
-        }
-      },
+      // data: {
+      //   files: [
+      //     `${config.target}/data/**/*.{json,glsl}`
+      //   ],
+      //   tasks: [
+      //     'copy:dev'
+      //   ],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
       // STYLE
       style: {
         files: [
@@ -304,8 +302,8 @@ module.exports = function(grunt) {
           `src/index.html`
         ],
         tasks: [
-          // 'copy:dev'
-          'processhtml'
+          'copy:dev'
+          // 'processhtml'
         ],
         options: {
           livereload: true
@@ -318,24 +316,25 @@ module.exports = function(grunt) {
     To bundle or not to bundle
   */
   grunt.registerTask('bundle', function() {
+    grunt.task.run('copy');
 
-    if (`${config.bundleMethod}` === 'browserify') {
-      grunt.task.run('browserify:dev');
-    }
-    //
-    else if (`${config.bundleMethod}` === 'concat') {
-      grunt.task.run('concat');
-    }
-    //
-    else if (`${config.bundleMethod}` === 'module') {
-      grunt.task.run('copy');
-    }
+    // if (`${config.bundleMethod}` === 'browserify') {
+    //   grunt.task.run('browserify:dev');
+    // }
+    // //
+    // else if (`${config.bundleMethod}` === 'concat') {
+    //   grunt.task.run('concat');
+    // }
+    // //
+    // else if (`${config.bundleMethod}` === 'module') {
+    //   grunt.task.run('copy');
+    // }
   });
 
   grunt.registerTask('default', [
     'copy:dev',
 
-    'bundle',
+    // 'bundle',
     // 'jshint:dev',
 
     'connect:livereload',
