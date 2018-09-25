@@ -49,11 +49,9 @@ export default class P3 {
 
   stroke(args) {
     this._doStroke = true;
-
-    if(typeof col === 'string'){
+    if (typeof(args) === 'string') {
       this.ctx.strokeStyle = args;
-    }
-    else if(arguments.length === 3){
+    } else if (arguments.length === 3) {
       let c = [...arguments];
       this.ctx.strokeStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
     }
@@ -62,17 +60,21 @@ export default class P3 {
   strokeWeight(n) {
     this.ctx.lineWidth = n;
   }
-
+  save() {
+    this.ctx.save();
+  }
+  restore() {
+    this.ctx.restore();
+  }
   noStroke() {
     this._doStroke = false;
   }
 
   rect(x, y, w, h) {
-
+    // let arrArgs = [...arguments];
     if (this._doStroke) {
       this.ctx.strokeRect(x, y, w, h);
     }
-
     if (this._doFill) {
       this.ctx.fillRect(x, y, w, h);
     }
@@ -86,7 +88,6 @@ export default class P3 {
   }
 
   ellipse(x, y, r1, r2) {
-
     if (this._doStroke) {
       this.ctx.beginPath();
       this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);

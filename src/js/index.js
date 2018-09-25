@@ -22,22 +22,24 @@ function update(dt) {
 }
 
 function render() {
+  // p3.save();
+
   p3.clear();
-  // p3.strokeWeight(5);
+  p3.strokeWeight(5);
 
-  // p3.fill('green');
-  // p3.stroke('red');
+  p3.fill('green');
+  p3.stroke('grey');
+  p3.rect(50, 50, 100, 100);
 
-  // p3.rect(50, 50, 100, 100);
+  p3.stroke('blue');
+  p3.line(190, 150, 250, 200);
 
-  // p3.stroke('blue');
-  // p3.line(190, 150, 250, 200);
-
-  p3.stroke('purple');
+  p3.stroke(111, 150, 80);
   p3.fill('orange');
-  p3.ellipse(p3.width/2, p3.height/2, 40, 40);
+  p3.ellipse(p3.width / 2, p3.height / 2, 40, 40);
 
-  let center = new Vec2(p3.width/2, p3.height/2);
+
+  let center = new Vec2(p3.width / 2, p3.height / 2);
   let cursor = new Vec2(p3.mouseX, p3.mouseY);
 
   cursor.sub(center);
@@ -45,20 +47,17 @@ function render() {
   cursor.mult(80);
   cursor.add(center);
 
-  // console.log(cursor);
+  if (debug) {
+    p3.strokeWeight(1);
+    p3.stroke(0, 255, 0);
+    p3.line(center.x, center.y, p3.mouseX, p3.mouseY);
+  }
 
-  // let center = p5.createVector(p5.width / 2, p5.height / 2);
-  // let cursor = p5.createVector(p5.mouseX, p5.mouseY);
-  // p5.noFill();
-  // p5.strokeWeight(3);
-  p3.stroke(0, 255, 0);
-  // p5.ellipse(center.x, center.y, 50, 50);
-
-
-
+  p3.strokeWeight(3);
+  p3.stroke(255, 0, 0);
   p3.line(center.x, center.y, cursor.x, cursor.y);
 
-
+  // p3.restore();
 }
 
 function setup() {
