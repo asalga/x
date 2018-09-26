@@ -42,16 +42,31 @@ export default class P3 {
     this._doFill = false;
   }
 
-  fill(col) {
+  fill(args) {
     this._doFill = true;
-    this.ctx.fillStyle = col;
+    if (arguments.length === 1) {
+      if (typeof(args) === 'string') {
+        this.ctx.fillStyle = args;
+      } else if (typeof(args) === 'number') {
+        let c = args;
+        this.ctx.fillStyle = `rgb(${c}, ${c}, ${c})`;
+      }
+    } else {
+      let c = [...arguments];
+      this.ctx.fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+    }
   }
 
   stroke(args) {
     this._doStroke = true;
-    if (typeof(args) === 'string') {
-      this.ctx.strokeStyle = args;
-    } else if (arguments.length === 3) {
+    if (arguments.length === 1) {
+      if (typeof(args) === 'string') {
+        this.ctx.strokeStyle = args;
+      } else if (typeof(args) === 'number') {
+        let c = args;
+        this.ctx.strokeStyle = `rgb(${c}, ${c}, ${c})`;
+      }
+    } else {
       let c = [...arguments];
       this.ctx.strokeStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
     }

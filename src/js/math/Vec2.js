@@ -23,6 +23,10 @@ export default class Vec2 {
     return this;
   }
 
+  clone() {
+    return new Vec2(this.x, this.y);
+  }
+
   mult(s) {
     this.x *= s;
     this.y *= s;
@@ -41,8 +45,10 @@ export default class Vec2 {
 
   normalize() {
     let len = this.length();
-    this.x /= len;
-    this.y /= len;
+    if (len !== 0) {
+      this.x /= len;
+      this.y /= len;
+    }
   }
 
   static dot(v1, v2) {
