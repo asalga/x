@@ -18,7 +18,10 @@ export class Entity {
     this.updateProxy && this.updateProxy(dt);
 
     this.components.forEach(c => {
-      c.update(dt, this);
+      // ok if no update method?
+      // add in entity on creation or update?
+      c.update && c.update(dt, this);
+      // c.update(dt, this);
     });
 
     if (this.vel) {
@@ -29,47 +32,10 @@ export class Entity {
 
   addComponent(c) {
     this.components.push(c);
+    this[c.name] = c;
   }
 
-  removeComponent(c){
-  	console.log('need impl');
+  removeComponent(c) {
+    console.log('needs impl');
   }
-}
-
-
-export function createUser(p3) {
-  let user = new Entity();
-  user.name = 'user';
-  user.pos.set(p3.width / 2, p3.height / 2);
-  user.size = 40;
-  user.bounds = new BoundingCircle(user.pos, user.size)
-
-  user.renderProxy = function(p3) {
-    p3.stroke(111, 150, 80);
-    p3.fill('orange');
-    p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
-
-    let center = new Vec2(this.pos.x, this.pos.y);
-    let cursor = new Vec2(p3.mouseX, p3.mouseY);
-
-    cursor.sub(center);
-    cursor.normalize();
-    cursor.mult(80);
-    cursor.add(center);
-
-    // if (debug) {
-    //   p3.strokeWeight(1);
-    //   p3.stroke(0, 255, 0);
-    //   p3.line(center.x, center.y, p3.mouseX, p3.mouseY);
-    // }
-
-    p3.save();
-    p3.strokeWeight(3);
-    p3.stroke(255, 0, 0);
-
-    p3.line(center.x, center.y, cursor.x, cursor.y);
-    p3.restore();
-  }
-
-  return user;
 }

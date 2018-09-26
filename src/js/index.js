@@ -4,7 +4,7 @@ import Timer from './core/Timer.js';
 import Utils from './Utils.js';
 import Vec2 from './math/Vec2.js';
 import P3 from './P3.js';
-import { createUser, Entity } from './entity/Entity.js';
+import { Entity } from './entity/Entity.js';
 import EntityFactory from './entity/EntityFactory.js';
 import Scene from './Scene.js';
 
@@ -37,13 +37,19 @@ function setup() {
   window.p3 = p3;
   window.scene = scene;
 
-  user = createUser(p3);
+  user = EntityFactory.create('user');
+  //createUser(p3);
   scene.addUser(user);
 
-  for(let i = 0; i < 10; ++i){
-    let mouse = EntityFactory.create('mouse');
-    scene.entities.add(mouse);
+  for (let i = 0; i < 10; ++i) {
+    let m = EntityFactory.create('mouse');
+    scene.entities.add(m);
   }
+
+  let h = EntityFactory.create('hummingbird');
+  scene.entities.add(h);
+  h.pos.set(50, 50);
+
 
   timer = new Timer();
   timer.update = function(dt) {

@@ -27,8 +27,6 @@ export default class Vec2 {
         this.x += arguments[0];
         this.y += arguments[1];
     }
-    // this.x += v.x;
-    // this.y += v.y;
     return this;
   }
 
@@ -74,6 +72,7 @@ export default class Vec2 {
       this.x /= len;
       this.y /= len;
     }
+    return this;
   }
 
   static dot(v1, v2) {
