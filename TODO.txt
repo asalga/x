@@ -1,0 +1,12 @@
+# X
+
+# Actors
+Mouse
+HummingBird
+Rhino
+Eel
+
+# TODO
+ * Enable drawing Actor bounds
+ * Create hierarchy of GoToTarget?
+ 
