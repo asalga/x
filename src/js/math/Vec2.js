@@ -39,6 +39,10 @@ export default class Vec2 {
     return this;
   }
 
+  static Sub(v1, v2) {
+    return new Vec2(v1.x - v2.x, v1.y - v2.y);
+  }
+
   length() {
     return Math.sqrt(Vec2.dot(this, this));
   }

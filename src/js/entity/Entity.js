@@ -1,6 +1,7 @@
 'use strict';
 
 import Vec2 from '../math/Vec2.js';
+import BoundingCircle from '../collision/BoundingCircle.js';
 
 export class Entity {
   constructor() {
@@ -40,13 +41,13 @@ export function createUser(p3) {
   let user = new Entity();
   user.name = 'user';
   user.pos.set(p3.width / 2, p3.height / 2);
+  user.size = 40;
+  user.bounds = new BoundingCircle(user.pos, user.size)
 
   user.renderProxy = function(p3) {
     p3.stroke(111, 150, 80);
     p3.fill('orange');
-    // p3.fill(10, 100, 10);
-    // 
-    p3.ellipse(p3.width / 2, p3.height / 2, 40, 40);
+    p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
 
     let center = new Vec2(this.pos.x, this.pos.y);
     let cursor = new Vec2(p3.mouseX, p3.mouseY);
