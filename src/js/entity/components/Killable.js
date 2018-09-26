@@ -12,5 +12,6 @@ export default class Killable {
   }
   kill() {
     this.dead = true;
+    this.hasDied();
   }
 }

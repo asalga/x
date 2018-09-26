@@ -6,43 +6,44 @@ import Vec2 from './math/Vec2.js';
 import P3 from './P3.js';
 import { createUser, Entity } from './entity/Entity.js';
 import EntityFactory from './entity/EntityFactory.js';
+import Scene from './Scene.js';
 
-let debug = true;
-let paused = false;
-let now = 0,
-  lastTime = 0,
-  gameTime = 0;
-let fps = 0;
 let timer;
-let p3;
+let gameTime = 0;
 
+let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-let user, mouse;
-let scene = new Set();
+let user;
+let scene;
+
 
 function update(dt) {
+  scene.update(dt);
   gameTime += dt;
-  scene.forEach(e => e.update(dt));
 }
 
 function render() {
   p3.clear();
-  scene.forEach(e => e.draw(p3));
+  scene.draw(p3);
 }
 
 function setup() {
   p3 = new P3(cvs, ctx);
   p3.clearColor('black');
 
+  scene = new Scene();
+  window.p3 = p3;
+  window.scene = scene;
+
   user = createUser(p3);
-  window.user = user;
+  scene.addUser(user);
 
-  mouse = EntityFactory.create(scene, 'mouse');
-
-  scene.add(user);
-  scene.add(mouse);
+  for(let i = 0; i < 10; ++i){
+    let mouse = EntityFactory.create('mouse');
+    scene.entities.add(mouse);
+  }
 
   timer = new Timer();
   timer.update = function(dt) {

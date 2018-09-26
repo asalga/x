@@ -5,15 +5,30 @@ export default class Vec2 {
     this.set(x, y);
   }
 
-  set(x, y) {
-    this.x = x;
-    this.y = y;
-    return this;
+  set() {
+    switch (arguments.length) {
+      case 1:
+        this.x = arguments[0].x;
+        this.y = arguments[0].y;
+        break;
+      case 2:
+        this.x = arguments[0];
+        this.y = arguments[1];
+    }
   }
 
   add(v) {
-    this.x += v.x;
-    this.y += v.y;
+     switch (arguments.length) {
+      case 1:
+        this.x += arguments[0].x;
+        this.y += arguments[0].y;
+        break;
+      case 2:
+        this.x += arguments[0];
+        this.y += arguments[1];
+    }
+    // this.x += v.x;
+    // this.y += v.y;
     return this;
   }
 
@@ -41,6 +56,12 @@ export default class Vec2 {
 
   static Sub(v1, v2) {
     return new Vec2(v1.x - v2.x, v1.y - v2.y);
+  }
+
+  static Rand() {
+    let x = Math.random()*2-1;
+    let y = Math.random()*2-1;
+    return new Vec2(x,y);
   }
 
   length() {
