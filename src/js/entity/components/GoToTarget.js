@@ -10,14 +10,14 @@ import Collision from '../../collision/Collision.js';
 
 export default class GoToTarget extends Component {
   constructor(e) {
-    super(e, 'gototarget')
+    super(e, 'gototarget');
     this.target = null;
     this.hasArrived = false;
     this.speed = 1;
   }
 
   arrived() {
-    console.log("arrived has not been overridden");
+    console.log('arrived has not been overridden');
   }
 
   update(dt, entity) {
@@ -30,6 +30,10 @@ export default class GoToTarget extends Component {
     toTarget.normalize();
     toTarget.scale(this.speed);
     entity.vel = toTarget;
+
+    // If collision system does all the bounds checking,
+    // then this just needs to listen to an event
+
 
     // Should this use a callback or fire an event?
     if (Collision.collided(entity, this.target)) {
