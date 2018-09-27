@@ -8,31 +8,39 @@ import Entity from './entity/Entity.js';
 import EntityFactory from './entity/EntityFactory.js';
 import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
-
+import Debug from './debug/Debug.js';
 
 let timer;
 let gameTime = 0;
+let scene;
 
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-// let user;
-let scene;
+Debug.setOn(true);
 
 function update(dt) {
   scene.update(dt);
 
+  Debug.add(`gameTime: ${Math.floor(gameTime)}`);
+
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
 
- 
   gameTime += dt;
 }
+
+function preRender() {}
 
 function render() {
   p3.clear();
   scene.draw(p3);
+  Debug.draw();
+}
+
+function postRender() {
+  Debug.postRender();
 }
 
 function setup() {
@@ -54,6 +62,7 @@ function setup() {
   timer.update = function(dt) {
     update(dt);
     render();
+    postRender();
   };
   timer.start();
 }

@@ -1,24 +1,24 @@
-let _list = [];
-let _firstTime = true;
-let _checks = 0;
-
 import Vec2 from '../math/Vec2.js';
 import EventSystem from '../event/EventSystem.js';
+import Debug from '../debug/Debug.js';
+
+let list = [];
+let firstTime = true;
+let checks = 0;
 
 export class CollisionSystem {
   static gatherCollidables() {
+    
     // if no object were added or removed, we can avoid doing this work
-    if (_firstTime || scene.entitiesAddedOrRemoved) {
-      // console.log('gathering....');
-      // debugger;
-      _firstTime = false;
-      _list.length = 0;
+    if (firstTime || scene.entitiesAddedOrRemoved) {
+      firstTime = false;
+      list.length = 0;
 
       scene.entities.forEach(e => {
-        _list.push(e);
+        list.push(e);
       });
 
-      _list = _list.filter(e => {
+      list = list.filter(e => {
         if (e.collidable) {
           return e;
         }
@@ -34,15 +34,15 @@ export class CollisionSystem {
   }
 
   static checkCollisions() {
-    _checks = 0;
+    checks = 0;
 
     let e1, e2;
 
-    for (let i = 0; i < _list.length; ++i) {
-      for (let j = i + 1; j < _list.length; ++j) {
+    for (let i = 0; i < list.length; ++i) {
+      for (let j = i + 1; j < list.length; ++j) {
 
-        e1 = _list[i];
-        e2 = _list[j];
+        e1 = list[i];
+        e2 = list[j];
 
         let type = e1.collidable.type;
         let mask = e2.collidable.mask;
@@ -53,10 +53,11 @@ export class CollisionSystem {
             let e = new EventSystem();
             e.fire({ evtName: 'collision', data: { e1, e2 } });
           }
-          _checks++;
+          checks++;
         }
       }
     }
-    // console.log(_checks);
+
+    Debug.add(`Collision Checks: ${checks}`);
   }
 }

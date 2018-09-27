@@ -48,9 +48,6 @@ export default class Scene {
     let e = new EventSystem();
     e.clear();
 
-
-    // console.log('clear event system too!');
-
     let user = EntityFactory.create('user');
     this.addUser(user);
 
