@@ -10,6 +10,8 @@ import P3 from './P3.js';
 import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
+import Event from './event/Event.js';
+
 
 let timer;
 let perfTimer;
@@ -18,6 +20,10 @@ let scene;
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
+
+cvs.onclick = function(e){
+  new Event({evtName:'GAME_CLICK', data: e}).fire();
+}
 
 function update(dt) {
   scene.update(dt);
@@ -49,7 +55,7 @@ function postRender() {
 function setup() {
   p3 = new P3(cvs, ctx);
   p3.clearColor('black');
-  Debug.setOn(true);
+  Debug.setOn(false);
 
   // Make scene and p3 static classes?
   scene = new Scene();

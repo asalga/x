@@ -62,6 +62,7 @@ export default function createMouse() {
     }
 
     // setRandPosition(e);
+
     // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
   goToTarget.ready();

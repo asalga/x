@@ -7,6 +7,7 @@ export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
+    this.timer = 0;
 
     // dirty flag
     this.entitiesAddedOrRemoved = false;
@@ -16,7 +17,14 @@ export default class Scene {
   update(dt) {
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
-    })
+    });
+    this.timer+=dt;
+
+    if(this.timer > .5){
+      this.timer = 0;
+      let m = EntityFactory.create('mouse');
+      this.add(m);
+    }
 
     this.entities.forEach(e => e.update(dt));
   }
@@ -54,16 +62,6 @@ export default class Scene {
       let m = EntityFactory.create('mouse');
       this.add(m);
     }
-
-    for(let i = 0; i < Math.PI*2; i+= Math.PI/5){
-      let b = EntityFactory.create('bullet');
-      let x = Math.cos(i)*70;
-      let y = Math.sin(i)*70;
-      b.pos.set(p3.width/2 +x, p3.height/2 + y);
-      // this.add(b);
-    }
-
-    // for (let i = 0; i < 10; ++i) {}
   }
 
   remove(e) {
