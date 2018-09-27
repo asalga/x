@@ -14,6 +14,8 @@ import Vec2 from '../../math/Vec2.js';
 
 import Debug from '../../debug/Debug.js';
 
+import EntityFactory from '../EntityFactory.js';
+
 export default function createUser() {
   let user = new Entity();
   user.name = 'user';
@@ -32,7 +34,7 @@ export default function createUser() {
 
     cursor.sub(center);
     cursor.normalize();
-    cursor.mult(80);
+    cursor.mult(60);
     cursor.add(center);
 
     // if (debug) {
@@ -48,6 +50,22 @@ export default function createUser() {
     p3.line(center.x, center.y, cursor.x, cursor.y);
     p3.restore();
   };
+
+
+  user.on('GAME_CLICK', function(e){
+    let bullet = EntityFactory.create('bullet');
+    bullet.pos.set(p3.width/2, p3.height/2);
+
+    let center = new Vec2(this.pos.x, this.pos.y);
+    let cursor = new Vec2(p3.mouseX, p3.mouseY);
+
+    cursor.sub(center);
+    cursor.normalize();
+    cursor.mult(400);
+
+    bullet.vel.set(cursor.x, cursor.y);
+    scene.add(bullet);
+  }, user);
 
   let health = new Health(user, 100);
   health.regenerationSpeed = 10;

@@ -28,7 +28,7 @@ export default class Entity {
     });
 
     if (this.vel) {
-      let d = this.vel.mult(dt);
+      let d = this.vel.clone().mult(dt);
       this.pos.add(d);
     }
   }

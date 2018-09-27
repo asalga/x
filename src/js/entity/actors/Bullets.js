@@ -38,6 +38,8 @@ export default function createBullet() {
     if (other.health) {
       other.health.hurt(100);
     }
+
+    scene.remove(e);
   }
 
   e.on('collision', hit);
