@@ -50,8 +50,9 @@ export default function createUser() {
   };
 
   let health = new Health(user, 100);
-  health.update = function(){
-    Debug.add(`Player Health: ${health.health}`);
+  health.regenerationSpeed = 10;
+  health.updateProxy = function(){
+    Debug.add(`Player Health: ${Math.floor(health.health)}`);
   };
   user.addComponent(health);
 

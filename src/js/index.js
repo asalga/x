@@ -12,8 +12,10 @@ import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 
 let timer;
-let gameTime = 0;
+window.gameTime = 0;
+
 let scene;
+let wtf = 90;
 
 let p3;
 let cvs = Utils.getEl('cvs');
@@ -22,12 +24,13 @@ let ctx = cvs.getContext('2d');
 function update(dt) {
   scene.update(dt);
 
-  Debug.add(`gameTime: ${Math.floor(gameTime)}`);
+  Debug.add(`gameTime: ${Math.floor(window.gameTime)}`);
 
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
 
-  gameTime += dt;
+  window.gameTime += dt;
+  wtf += 10;
 }
 
 function preRender() {}
@@ -51,6 +54,8 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
   window.scene = scene;
+  // window.gameTime = gameTime;
+  // window.wtf = wtf;
 
   scene.restartGame();
 

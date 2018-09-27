@@ -8,6 +8,10 @@ export default class Component {
     this.name = name;
   }
 
+  update(dt){
+  	this.updateProxy && this.updateProxy(dt);
+  }
+
   on(evtName, func, ctx){
   	(new EventSystem()).on(evtName, func, ctx);
   }
