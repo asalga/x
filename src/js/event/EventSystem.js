@@ -28,8 +28,10 @@ export default class EventSystem {
     let data = e.data;
 
     if (typeof this.listeners[evtName] !== 'undefined') {
-      this.listeners[evtName].forEach(e => {
-        e.cb.call(e.ctx, data);
+
+      // Tell all the listeners about this event
+      this.listeners[evtName].forEach(evtObj => {
+        evtObj.cb.call(evtObj.ctx, data);
       });
     }
   }
@@ -41,5 +43,7 @@ export default class EventSystem {
     this.listeners[evtName].delete(cb);
   }
 
-  // clear() ?
+  clear() {
+    this.listeners = {};
+  }
 }

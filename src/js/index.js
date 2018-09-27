@@ -7,7 +7,7 @@ import P3 from './P3.js';
 import Entity from './entity/Entity.js';
 import EntityFactory from './entity/EntityFactory.js';
 import Scene from './Scene.js';
-import {CollisionSystem} from './collision/CollisionSystem.js';
+import { CollisionSystem } from './collision/CollisionSystem.js';
 
 
 let timer;
@@ -17,7 +17,7 @@ let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-let user;
+// let user;
 let scene;
 
 function update(dt) {
@@ -26,7 +26,7 @@ function update(dt) {
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
 
-  scene.clearFlags();
+ 
   gameTime += dt;
 }
 
@@ -44,13 +44,7 @@ function setup() {
   window.p3 = p3;
   window.scene = scene;
 
-  user = EntityFactory.create('user');
-  scene.addUser(user);
-
-  for (let i = 0; i < 10; ++i) {
-    let m = EntityFactory.create('mouse');
-    scene.add(m);
-  }
+  scene.restartGame();
 
   // let h = EntityFactory.create('hummingbird');
   // scene.entities.add(h);
