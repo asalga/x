@@ -13,10 +13,7 @@ import Debug from './debug/Debug.js';
 
 let timer;
 window.gameTime = 0;
-
 let scene;
-let wtf = 90;
-
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
@@ -30,7 +27,6 @@ function update(dt) {
   CollisionSystem.checkCollisions();
 
   window.gameTime += dt;
-  wtf += 10;
 }
 
 function preRender() {}
@@ -54,8 +50,6 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
   window.scene = scene;
-  // window.gameTime = gameTime;
-  // window.wtf = wtf;
 
   scene.restartGame();
 
