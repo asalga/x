@@ -9,7 +9,7 @@ export class CollisionSystem {
   static gatherCollidables() {
     // if no object were added or removed, we can avoid doing this work
     if (_firstTime || scene.entitiesAddedOrRemoved) {
-      console.log('gathering....');
+      // console.log('gathering....');
 
       _firstTime = false;
       _list.length = 0;

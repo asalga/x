@@ -43,30 +43,16 @@ export default function createMouse() {
   goToTarget.target = scene.getUser();
   goToTarget.speed = 20;
   goToTarget.arrived = function(data) {
+    // console.log(arguments);
+    let which;
 
-    console.log(arguments);
-
-    if (data.e1.goToTarget) {
-      debugger;
-    } else if (data.e2.gototarget) {
-
-      if (data.e2.gototarget === this) {
-        console.log('yes');
-      } else {
-        console.log('no');
-      }
+    if (data.e1.goToTarget && data.e1.gototarget === this) {
+      which = data.e1;
+    } else {
+      which = data.e2;
     }
 
-
-    // if(ctx === this){
-    //   debugger;  
-    //   console.log('other ctx');
-    // }
-    // else{
-    //   console.log(data);
-    // }
-    // 
-
+    scene.remove(which);
 
     // this.target.health.hurt(e.damage);
     // setRandPosition(e);

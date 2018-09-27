@@ -7,11 +7,15 @@ export default class Scene {
 
     // dirty flag
     this.entitiesAddedOrRemoved = false;
+    this.deleteQueue = [];
   }
 
   update(dt) {
-    this.entities.forEach(e => e.update(dt));
-    
+    this.deleteQueue.forEach(e => {
+      this.entities.delete(e);
+    })
+
+    this.entities.forEach(e => e.update(dt)); 
   }
 
   clearFlags(){
@@ -31,6 +35,10 @@ export default class Scene {
   add(e){
   	this.entities.add(e);
   	this.entitiesAddedOrRemoved = true;
+  }
+
+  remove(e){
+    this.deleteQueue.push(e);
   }
 
   getUser(){
