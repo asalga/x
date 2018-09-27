@@ -1,10 +1,15 @@
-import { Entity } from '../Entity.js';
+'use strict';
+
+import Entity from '../Entity.js';
 
 import GoToTarget from '../components/GoToTarget.js';
 import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
+import Collidable from '../components/Collidable.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
+import CollisionType from '../../collision/CollisionType.js';
+
 import Vec2 from '../../math/Vec2.js';
 
 export default function createUser() {
@@ -12,7 +17,7 @@ export default function createUser() {
   user.name = 'user';
   user.pos.set(p3.width / 2, p3.height / 2);
   user.size = 40;
-  user.bounds = new BoundingCircle(user.pos, user.size)
+  user.bounds = new BoundingCircle(user.pos, user.size);
 
   user.renderProxy = function(p3) {
     p3.stroke(111, 150, 80);
@@ -39,15 +44,21 @@ export default function createUser() {
 
     p3.line(center.x, center.y, cursor.x, cursor.y);
     p3.restore();
-  }
+  };
 
   user.addComponent(new Health(user, 100));
 
   let killable = new Killable(user);
-  killable.onDeath = function(){
-    console.log('HAS DIED!');
-  }
+  killable.onDeath = function() {
+   // console.log('HAS DIED!');
+  };
   user.addComponent(killable);
+
+  // let coll = new Collidable(user);
+  let coll = new Collidable(user);
+  coll.type = CollisionType.PLAYER;
+  coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;
+  user.addComponent(coll);
 
   return user;
 }

@@ -3,7 +3,7 @@
 import Vec2 from '../math/Vec2.js';
 import BoundingCircle from '../collision/BoundingCircle.js';
 
-export class Entity {
+export default class Entity {
   constructor() {
     this.pos = new Vec2();
     this.vel = new Vec2();

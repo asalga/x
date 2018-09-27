@@ -3,7 +3,7 @@
 import Component from './Component.js';
 
 export default class SteerToTarget {
-  constructor() {
+  constructor(e) {
     super(e, 'steertotarget');
   }
 

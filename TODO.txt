@@ -9,4 +9,5 @@ Eel
 # TODO
  * Enable drawing Actor bounds
  * Create hierarchy of GoToTarget?
- 
+ * Do actual bounds testing
+ *

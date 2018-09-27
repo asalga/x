@@ -335,7 +335,7 @@ module.exports = function(grunt) {
     'copy:dev',
 
     // 'bundle',
-    // 'jshint:dev',
+    // 'jshint',
 
     'connect:livereload',
     'watch'

@@ -1,9 +1,11 @@
 'use strict';
 
-import { Entity } from '../Entity.js';
+import Entity from '../Entity.js';
 import Killable from '../components/Killable.js';
-import BoundingCircle from '../../collision/BoundingCircle.js';
+
 import BoundingBox from '../../collision/BoundingBox.js';
+import CollisionType from '../../collision/CollisionType.js';
+
 import Vec2 from '../../math/Vec2.js';
 
 export default function createHummingBird() {
@@ -14,7 +16,7 @@ export default function createHummingBird() {
   e.bounds = new BoundingBox(e.pos, e.size);
   //new BoundingCircle(e.pos, e.size);
 
-  e.updateProxy = function(dt) {}
+  e.updateProxy = function(dt) {};
 
   e.renderProxy = function(p3) {
     p3.strokeWeight(1);

@@ -15,14 +15,13 @@ export default class P3 {
     this._doStroke = true;
     this._clearCol = 'black';
 
-    this.mouseX;
-    this.mouseY;
-    let that = this;
+    this.mouseX = 0;
+    this.mouseY = 0;
 
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', (e) => {
       let rect = e.target.getBoundingClientRect();
-      that.mouseX = Math.floor(e.clientX - cvs.offsetLeft);
-      that.mouseY = Math.floor(e.clientY - cvs.offsetTop);
+      this.mouseX = Math.floor(e.clientX - this.cvs.offsetLeft);
+      this.mouseY = Math.floor(e.clientY - this.cvs.offsetTop);
     });
   }
 
@@ -33,8 +32,8 @@ export default class P3 {
   clear() {
     this.ctx.save();
     this.ctx.fillStyle = this._clearCol;
-    this.ctx.clearRect(0, 0, cvs.width, cvs.height);
-    this.ctx.fillRect(0, 0, cvs.width, cvs.height);
+    this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
+    this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
     this.ctx.restore();
   }
 

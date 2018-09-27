@@ -3,7 +3,7 @@
     "browser": true,
     "es5": true,
     "esnext": true,
-    "bitwise": true,
+    "bitwise": false,
     "camelcase": true,
     "curly": true,
     "eqeqeq": true,
@@ -20,11 +20,15 @@
     "trailing": false,
     "smarttabs": true,
 
+
+
     "globals":
     {
         "$": true,
         "p5": true,
         "jQuery": true,
-        "TWEEN": true
+        "TWEEN": true,
+        "p3": true,
+        "scene": true
     }
 }
