@@ -54,12 +54,18 @@ export default function createUser() {
 
   user.on('GAME_CLICK', function(e){
     let bullet = EntityFactory.create('bullet');
-    bullet.pos.set(p3.width/2, p3.height/2);
+    // bullet.pos.set(p3.width/2, p3.height/2);
 
     let center = new Vec2(this.pos.x, this.pos.y);
     let cursor = new Vec2(p3.mouseX, p3.mouseY);
 
+
     cursor.sub(center);
+    let gunTip = cursor.clone();
+    gunTip.normalize();
+    gunTip.mult(60);
+    bullet.pos.add(gunTip);
+
     cursor.normalize();
     cursor.mult(400);
 

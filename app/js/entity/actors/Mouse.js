@@ -43,7 +43,7 @@ export default function createMouse() {
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();
-  goToTarget.speed = 120;
+  goToTarget.speed = 60;
   goToTarget.arrived = function(data) {
     let target = data.e1;
     let mouse = data.e2;
