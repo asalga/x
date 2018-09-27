@@ -1,12 +1,14 @@
 'use strict';
 
 /*
-	arrived callback called once bounds overlaps targets bounds
+  arrived callback called once bounds overlaps targets bounds
 */
 
 import Component from './Component.js';
 // import Vec2 from '../../math/Vec2.js';
 import Collision from '../../collision/Collision.js';
+
+import EventSystem from '../../event/EventSystem.js';
 
 export default class GoToTarget extends Component {
   constructor(e) {
@@ -14,6 +16,12 @@ export default class GoToTarget extends Component {
     this.target = null;
     this.hasArrived = false;
     this.speed = 1;
+  }
+
+  ready() {
+    let evt = new EventSystem();
+    // debugger;
+    evt.on('collision', this.arrived, this);
   }
 
   arrived() {
@@ -30,16 +38,5 @@ export default class GoToTarget extends Component {
     toTarget.normalize();
     toTarget.scale(this.speed);
     entity.vel = toTarget;
-
-    // If collision system does all the bounds checking,
-    // then this just needs to listen to an event
-
-
-    // Should this use a callback or fire an event?
-    if (Collision.collided(entity, this.target)) {
-      this.arrived();
-      // let evt = new Event('ArrivedAtTarget');
-      // evt.fire();
-    }
   }
 }

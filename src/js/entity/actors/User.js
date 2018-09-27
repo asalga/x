@@ -50,15 +50,15 @@ export default function createUser() {
 
   let killable = new Killable(user);
   killable.onDeath = function() {
-    console.log('HAS DIED!');
+   // console.log('HAS DIED!');
   };
   user.addComponent(killable);
 
+  // let coll = new Collidable(user);
   let coll = new Collidable(user);
-  user.addComponent(
-    CollisionType.PLAYER,
-    CollisionType.ENEMY_BULLET | CollisionType.ENEMY
-  );
+  coll.type = CollisionType.PLAYER;
+  coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;
+  user.addComponent(coll);
 
   return user;
 }

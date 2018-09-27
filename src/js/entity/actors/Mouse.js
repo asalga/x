@@ -41,24 +41,51 @@ export default function createMouse() {
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();
-  goToTarget.speed = 200;
-  goToTarget.arrived = function() {
-    this.target.health.hurt(e.damage);
-    setRandPosition(e);
-    // let evt = new Event('HurtUser', {damage: e.damage});
-    // evt.fire();
+  goToTarget.speed = 20;
+  goToTarget.arrived = function(data) {
+
+    console.log(arguments);
+
+    if (data.e1.goToTarget) {
+      debugger;
+    } else if (data.e2.gototarget) {
+
+      if (data.e2.gototarget === this) {
+        console.log('yes');
+      } else {
+        console.log('no');
+      }
+    }
+
+
+    // if(ctx === this){
+    //   debugger;  
+    //   console.log('other ctx');
+    // }
+    // else{
+    //   console.log(data);
+    // }
+    // 
+
+
+    // this.target.health.hurt(e.damage);
+    // setRandPosition(e);
+
+    // let evt = new EventSytem();
+    // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
-  // e.on('ArrivedAtTarget', randPosition(e));
+  goToTarget.ready();
+
 
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, 10));
 
   let coll = new Collidable(e);
-  e.addComponent(
-    CollisionType.ENEMY,
-    CollisionType.PLAYER | CollisionType.PLAYER_BULLET
-  );
+  coll.type = CollisionType.ENEMY;
+  coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
+  e.addComponent(coll);
+
 
   return e;
 }

@@ -2,7 +2,8 @@ let _list = [];
 let _firstTime = true;
 let _checks = 0;
 
-
+import Vec2 from '../math/Vec2.js';
+import EventSystem from '../event/EventSystem.js';
 
 export class CollisionSystem {
   static gatherCollidables() {
@@ -25,6 +26,12 @@ export class CollisionSystem {
     }
   }
 
+  static circleCircleTest(e1, e2) {
+    let radTotal = e1.bounds.radius + e2.bounds.radius;
+    let dist = Vec2.Sub(e1.pos, e2.pos).length();
+    return dist <= radTotal;
+  }
+
   static checkCollisions() {
     _checks = 0;
 
@@ -40,13 +47,15 @@ export class CollisionSystem {
         let mask = e2.collidable.mask;
 
         if ((type & mask) !== 0) {
-          // console.log("type & mask:", type & mask);
           // console.log("checking..." , e1.name, e2.name);
+          if (CollisionSystem.circleCircleTest(e1, e2)) {
+            let e = new EventSystem();
+            e.fire({ evtName: 'collision', data: { e1, e2 } });
+          }
           _checks++;
-          // continue;
         }
       }
     }
-    console.log(_checks);
+    // console.log(_checks);
   }
 }
