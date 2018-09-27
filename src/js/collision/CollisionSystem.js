@@ -1,5 +1,5 @@
 import Vec2 from '../math/Vec2.js';
-import EventSystem from '../event/EventSystem.js';
+import Event from '../event/Event.js';
 import Debug from '../debug/Debug.js';
 
 let list = [];
@@ -8,7 +8,7 @@ let checks = 0;
 
 export class CollisionSystem {
   static gatherCollidables() {
-    
+
     // if no object were added or removed, we can avoid doing this work
     if (firstTime || scene.entitiesAddedOrRemoved) {
       firstTime = false;
@@ -48,10 +48,14 @@ export class CollisionSystem {
         let mask = e2.collidable.mask;
 
         if ((type & mask) !== 0) {
-          // console.log("checking..." , e1.name, e2.name);
           if (CollisionSystem.circleCircleTest(e1, e2)) {
-            let e = new EventSystem();
-            e.fire({ evtName: 'collision', data: { e1, e2 } });
+
+            let e = new Event({
+              evtName: 'collision',
+              data: { e1, e2 }
+            });
+            e.fire();
+
           }
           checks++;
         }

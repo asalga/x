@@ -9,7 +9,7 @@ import Collidable from '../components/Collidable.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-import EventSystem from '../../event/EventSystem.js';
+// import EventSystem from '../../event/EventSystem.js';
 
 import Vec2 from '../../math/Vec2.js';
 
@@ -70,7 +70,6 @@ export default function createMouse() {
     // }
     // setRandPosition(e);
 
-    // let evt = new EventSystem();
     // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
   goToTarget.ready();

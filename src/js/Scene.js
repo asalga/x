@@ -55,6 +55,12 @@ export default class Scene {
       let m = EntityFactory.create('mouse');
       this.add(m);
     }
+
+    for (let i = 0; i < 10; ++i) {
+      let b = EntityFactory.create('bullet');
+      b.pos.set(i * 40, p3.height/2);
+      this.add(b);
+    }
   }
 
   remove(e) {

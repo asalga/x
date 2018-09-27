@@ -12,6 +12,8 @@ import CollisionType from '../../collision/CollisionType.js';
 
 import Vec2 from '../../math/Vec2.js';
 
+import Debug from '../../debug/Debug.js';
+
 export default function createUser() {
   let user = new Entity();
   user.name = 'user';
@@ -47,7 +49,11 @@ export default function createUser() {
     p3.restore();
   };
 
-  user.addComponent(new Health(user, 100));
+  let health = new Health(user, 100);
+  health.update = function(){
+    Debug.add(`Player Health: ${health.health}`);
+  };
+  user.addComponent(health);
 
   let killable = new Killable(user);
   killable.onDeath = function() {
