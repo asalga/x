@@ -1,7 +1,7 @@
 'use strict';
 
 import createMouse from './actors/Mouse.js';
-import createHummingBird from './actors/HummingBird.js';
+import createHummingBird from './actors/Hummingbird.js';
 import createUser from './actors/User.js';
 
 let createFuncs = new Map();
