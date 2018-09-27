@@ -12,6 +12,7 @@ import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 
 let timer;
+let perfTimer;
 window.gameTime = 0;
 let scene;
 let p3;
@@ -29,15 +30,19 @@ function update(dt) {
   window.gameTime += dt;
 }
 
-function preRender() {}
+function preRender() {
+  perfTimer = new Date().getTime();
+}
 
 function render() {
   p3.clear();
   scene.draw(p3);
-  Debug.draw();
 }
 
 function postRender() {
+  let tt = new Date().getTime() - perfTimer;
+  Debug.add('render ms:' + tt);
+  Debug.draw();
   Debug.postRender();
 }
 
