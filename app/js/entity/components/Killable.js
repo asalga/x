@@ -17,10 +17,6 @@ export default class Killable extends Component {
       this.deadTime += dt;
     }
   }
-  
-  // ready() {
-  //   console.log(this.onDeath);
-  // }
 
   kill() {
     this.dead = true;

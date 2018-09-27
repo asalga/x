@@ -61,15 +61,7 @@ export default function createMouse() {
       target.health.hurt(e.damage);
     }
 
-    // if (data.e1.gototarget && data.e1.gototarget === this) {
-
-      // [target, mouse] = [mouse, target];
-    // } else if (data.e2.gototarget && data.e2.gototarget === this) {
-      // mouse = data.e2;
-      // target = data.e1;
-    // }
     // setRandPosition(e);
-
     // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
   goToTarget.ready();

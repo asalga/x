@@ -16,7 +16,6 @@ export default class Scene {
   update(dt) {
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
-      // debugger;
     })
 
     this.entities.forEach(e => e.update(dt));
@@ -56,12 +55,12 @@ export default class Scene {
       this.add(m);
     }
 
-    for(let i = 0; i < Math.PI*2; i+= Math.PI/10){
+    for(let i = 0; i < Math.PI*2; i+= Math.PI/5){
       let b = EntityFactory.create('bullet');
       let x = Math.cos(i)*70;
       let y = Math.sin(i)*70;
       b.pos.set(p3.width/2 +x, p3.height/2 + y);
-      this.add(b);
+      // this.add(b);
     }
 
     // for (let i = 0; i < 10; ++i) {}

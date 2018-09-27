@@ -29,8 +29,6 @@ export default function createBullet() {
     let e1 = data.e1;
     let e2 = data.e2;
 
-    // debugger;
-
     // Check if one of the entities passed is us
     if (e1 !== e && e2 !== e) {
       return;
@@ -42,7 +40,7 @@ export default function createBullet() {
     }
   }
 
-  e.on('collision', hit, null);
+  e.on('collision', hit);
 
   let coll = new Collidable(e);
   coll.type = CollisionType.BULLET;

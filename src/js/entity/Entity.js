@@ -38,11 +38,6 @@ export default class Entity {
     this[c.name] = c;
   }
 
-  // on(evtName, func, ctx) {
-
-  //   // let evt = new Event({evtName, func, ctx})
-  //   // evt.fire();
-  // }
   on(evtName, func, ctx) {
     (new EventSystem()).on(evtName, func, ctx);
   }
