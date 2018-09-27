@@ -14,7 +14,6 @@ export default class Health extends Component{
 
     if (this.health < 0) {
       this.entity.killable.kill();
-      //console.log('health < 0');
     }
   }
 }
