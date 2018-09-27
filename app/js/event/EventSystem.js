@@ -31,7 +31,15 @@ export default class EventSystem {
 
       // Tell all the listeners about this event
       this.listeners[evtName].forEach(evtObj => {
-        evtObj.cb.call(evtObj.ctx, data);
+
+        if(evtObj.ctx){
+          evtObj.cb.call(evtObj.ctx, data);
+        }
+        else{
+          // evtObj.cb.call(evtObj.ctx, data);
+          evtObj.cb(data);
+        }
+
       });
     }
   }

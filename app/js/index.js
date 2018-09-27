@@ -1,11 +1,12 @@
 'use strict';
 
+// import Vec2 from './math/Vec2.js';
+// import Entity from './entity/Entity.js';
+// import EntityFactory from './entity/EntityFactory.js';
+
 import Timer from './core/Timer.js';
 import Utils from './Utils.js';
-import Vec2 from './math/Vec2.js';
 import P3 from './P3.js';
-import Entity from './entity/Entity.js';
-import EntityFactory from './entity/EntityFactory.js';
 import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
@@ -17,8 +18,6 @@ let scene;
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
-
-Debug.setOn(true);
 
 function update(dt) {
   scene.update(dt);
@@ -46,6 +45,7 @@ function postRender() {
 function setup() {
   p3 = new P3(cvs, ctx);
   p3.clearColor('black');
+  Debug.setOn(true);
 
   // Make scene and p3 static classes?
   scene = new Scene();
@@ -54,13 +54,10 @@ function setup() {
 
   scene.restartGame();
 
-  // let h = EntityFactory.create('hummingbird');
-  // scene.entities.add(h);
-  // h.pos.set(50, 50);
-
   timer = new Timer();
   timer.update = function(dt) {
     update(dt);
+    preRender();
     render();
     postRender();
   };

@@ -3,6 +3,9 @@
 import Vec2 from '../math/Vec2.js';
 import BoundingCircle from '../collision/BoundingCircle.js';
 
+import Event from '../event/Event.js';
+import EventSystem from '../event/EventSystem.js';
+
 export default class Entity {
   constructor() {
     this.pos = new Vec2();
@@ -33,6 +36,15 @@ export default class Entity {
   addComponent(c) {
     this.components.push(c);
     this[c.name] = c;
+  }
+
+  // on(evtName, func, ctx) {
+
+  //   // let evt = new Event({evtName, func, ctx})
+  //   // evt.fire();
+  // }
+  on(evtName, func, ctx) {
+    (new EventSystem()).on(evtName, func, ctx);
   }
 
   removeComponent(c) {

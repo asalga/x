@@ -1,6 +1,7 @@
 'use strict';
 
 import Component from './Component.js';
+import Debug from '../../debug/Debug.js';
 
 export default class Health extends Component{
   constructor(e, amt = 100) {
@@ -10,8 +11,6 @@ export default class Health extends Component{
 
   hurt(dmg) {
     this.health -= dmg;
-    console.log(this.health);
-    // debugger;
 
     if (this.health < 0) {
       this.entity.killable.kill();

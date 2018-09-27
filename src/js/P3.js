@@ -10,12 +10,10 @@ export default class P3 {
     this.fill('blue');
     this.stroke('white');
     this.strokeWeight(1);
-
     this._doFill = true;
     this._doStroke = true;
     this._clearCol = 'black';
-
-    this.ctx.font = '28px monospace';
+    this.ctx.font = 'normal 600 14px Courier New';
 
     this.mouseX = 0;
     this.mouseY = 0;
@@ -59,11 +57,11 @@ export default class P3 {
   }
 
   text(txt, x, y) {
-    if(this._doFill){
+    if (this._doFill) {
       this.ctx.fillText(txt, x, y);
     }
-    if(this._doStroke){
-      this.ctx.strokeText(txt, x, y); 
+    if (this._doStroke) {
+      this.ctx.strokeText(txt, x, y);
     }
   }
 

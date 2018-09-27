@@ -23,7 +23,7 @@ export default class Debug {
     p3.fill(0, 255, 0);
 
     let y = 20;
-    let ySpacing = 24;
+    let ySpacing = 18;
 
     strings.forEach(s => {
       p3.text(s, 10, y);

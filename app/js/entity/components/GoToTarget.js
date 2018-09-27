@@ -5,10 +5,7 @@
 */
 
 import Component from './Component.js';
-// import Vec2 from '../../math/Vec2.js';
 import Collision from '../../collision/Collision.js';
-
-import EventSystem from '../../event/EventSystem.js';
 
 export default class GoToTarget extends Component {
   constructor(e) {
@@ -19,9 +16,7 @@ export default class GoToTarget extends Component {
   }
 
   ready() {
-    let evt = new EventSystem();
-    // debugger;
-    evt.on('collision', this.arrived, this);
+    this.on('collision', this.arrived, this);
   }
 
   arrived() {
