@@ -12,7 +12,7 @@ export default function createBullet() {
   let e = new Entity();
   e.name = 'bullet';
   e.pos.set(p3.width / 2, p3.height / 2);
-  e.size = 7;
+  e.size = 5;
   e.bounds = new BoundingCircle(e.pos, e.size);
 
   e.renderProxy = function(p3) {
@@ -25,28 +25,24 @@ export default function createBullet() {
     p3.restore();
   };
 
-  function hit(data){
+  function hit(data) {
+    let e1 = data.e1;
+    let e2 = data.e2;
+
+    // debugger;
 
     // Check if one of the entities passed is us
-    if(data.e1 !== e && data.e2 !== e){
+    if (e1 !== e && e2 !== e) {
       return;
     }
-    debugger;
+    let other = e1 === e ? e2 : e1;
 
-    let other = data.e1;
-    if(data.e1.name === 'bullet'){
-      other = data.e2;
-    }
-
-    if(other.health){
-      debugger;
+    if (other.health) {
       other.health.hurt(100);
     }
-
-
   }
 
-  // e.on('collision', hit, null);
+  e.on('collision', hit, null);
 
   let coll = new Collidable(e);
   coll.type = CollisionType.BULLET;

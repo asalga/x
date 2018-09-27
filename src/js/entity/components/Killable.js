@@ -8,20 +8,22 @@ export default class Killable extends Component {
     super(e, 'killable');
     this.dead = false;
     this.deadTime = 0;
-    this.onDeath = function(){};
+    this.onDeath = function(){
+      scene.remove(this.entity);
+    };
   }
   update(dt, entity) {
     if (this.dead) {
       this.deadTime += dt;
     }
   }
+  
   // ready() {
   //   console.log(this.onDeath);
   // }
+
   kill() {
-    // debugger;
     this.dead = true;
-    // this.onDeath &&
      this.onDeath();
   }
 }

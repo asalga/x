@@ -56,11 +56,15 @@ export default class Scene {
       this.add(m);
     }
 
-    for (let i = 0; i < 10; ++i) {
+    for(let i = 0; i < Math.PI*2; i+= Math.PI/10){
       let b = EntityFactory.create('bullet');
-      b.pos.set(i * 40, p3.height/2);
+      let x = Math.cos(i)*70;
+      let y = Math.sin(i)*70;
+      b.pos.set(p3.width/2 +x, p3.height/2 + y);
       this.add(b);
     }
+
+    // for (let i = 0; i < 10; ++i) {}
   }
 
   remove(e) {
