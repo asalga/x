@@ -12,6 +12,11 @@ export default class Timer {
       // deltaTime = (time - lastTime) / 1000.0;
       accumTime += (time - lastTime) / 1000.0;
 
+      if(accumTime > 1){
+        // debugger;
+        accumTime = deltaTime;
+      }
+
       while (accumTime > deltaTime) {
         that.update(deltaTime);
         accumTime -= deltaTime;

@@ -21,7 +21,8 @@ export default function createUser() {
 
   user.renderProxy = function(p3) {
     p3.stroke(111, 150, 80);
-    p3.fill('orange');
+    p3.fill(0,this.health.health, 0);
+    // debugger;
     p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
 
     let center = new Vec2(this.pos.x, this.pos.y);
@@ -50,7 +51,7 @@ export default function createUser() {
 
   let killable = new Killable(user);
   killable.onDeath = function() {
-   // console.log('HAS DIED!');
+    // scene.restartGame(); 
   };
   user.addComponent(killable);
 

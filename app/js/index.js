@@ -7,32 +7,40 @@ import P3 from './P3.js';
 import Entity from './entity/Entity.js';
 import EntityFactory from './entity/EntityFactory.js';
 import Scene from './Scene.js';
-import {CollisionSystem} from './collision/CollisionSystem.js';
-
+import { CollisionSystem } from './collision/CollisionSystem.js';
+import Debug from './debug/Debug.js';
 
 let timer;
 let gameTime = 0;
+let scene;
 
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-let user;
-let scene;
+Debug.setOn(true);
 
 function update(dt) {
   scene.update(dt);
 
+  Debug.add(`gameTime: ${Math.floor(gameTime)}`);
+
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
 
-  scene.clearFlags();
   gameTime += dt;
 }
+
+function preRender() {}
 
 function render() {
   p3.clear();
   scene.draw(p3);
+  Debug.draw();
+}
+
+function postRender() {
+  Debug.postRender();
 }
 
 function setup() {
@@ -44,13 +52,7 @@ function setup() {
   window.p3 = p3;
   window.scene = scene;
 
-  user = EntityFactory.create('user');
-  scene.addUser(user);
-
-  for (let i = 0; i < 10; ++i) {
-    let m = EntityFactory.create('mouse');
-    scene.add(m);
-  }
+  scene.restartGame();
 
   // let h = EntityFactory.create('hummingbird');
   // scene.entities.add(h);
@@ -60,6 +62,7 @@ function setup() {
   timer.update = function(dt) {
     update(dt);
     render();
+    postRender();
   };
   timer.start();
 }

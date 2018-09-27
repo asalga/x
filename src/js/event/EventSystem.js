@@ -19,7 +19,6 @@ export default class EventSystem {
       // Use set so we don't have to check for duplicates
       this.listeners[evtName] = new Set;
     }
-    // debugger;
     this.listeners[evtName].add({ cb, ctx });
     // console.log(this.listeners[evtName]);
   }
@@ -29,15 +28,12 @@ export default class EventSystem {
     let data = e.data;
 
     if (typeof this.listeners[evtName] !== 'undefined') {
-      this.listeners[evtName].forEach(e => {
-        // debugger;
-        // e.cb(data, e.ctx);
-        // e.apply(e.cb, data, e.ctx);
-        e.cb.call(e.ctx, data);
 
+      // Tell all the listeners about this event
+      this.listeners[evtName].forEach(evtObj => {
+        evtObj.cb.call(evtObj.ctx, data);
       });
     }
-    // console.log(evtName);
   }
 
   off(evtName, cb) {
@@ -47,5 +43,7 @@ export default class EventSystem {
     this.listeners[evtName].delete(cb);
   }
 
-  // clear() ?
+  clear() {
+    this.listeners = {};
+  }
 }

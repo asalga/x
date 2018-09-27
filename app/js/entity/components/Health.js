@@ -10,6 +10,8 @@ export default class Health extends Component{
 
   hurt(dmg) {
     this.health -= dmg;
+    console.log(this.health);
+    // debugger;
 
     if (this.health < 0) {
       this.entity.killable.kill();

@@ -15,6 +15,8 @@ export default class P3 {
     this._doStroke = true;
     this._clearCol = 'black';
 
+    this.ctx.font = '28px monospace';
+
     this.mouseX = 0;
     this.mouseY = 0;
 
@@ -53,6 +55,15 @@ export default class P3 {
     } else {
       let c = [...arguments];
       this.ctx.fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+    }
+  }
+
+  text(txt, x, y) {
+    if(this._doFill){
+      this.ctx.fillText(txt, x, y);
+    }
+    if(this._doStroke){
+      this.ctx.strokeText(txt, x, y); 
     }
   }
 

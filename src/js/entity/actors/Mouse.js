@@ -9,13 +9,15 @@ import Collidable from '../components/Collidable.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
+import EventSystem from '../../event/EventSystem.js';
+
 import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
   let e = new Entity();
   e.name = 'mouse';
   e.size = 8;
-  e.damage = 10;
+  e.damage = 20;
   e.bounds = new BoundingCircle(e.pos, e.size);
 
   let setRandPosition = function(entity) {
@@ -41,41 +43,37 @@ export default function createMouse() {
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();
-  goToTarget.speed = 20;
+  goToTarget.speed = 120;
   goToTarget.arrived = function(data) {
+    let target = data.e1;
+    let mouse = data.e2;
 
-    console.log(arguments);
-
-    if (data.e1.goToTarget) {
-      debugger;
-    } else if (data.e2.gototarget) {
-
-      if (data.e2.gototarget === this) {
-        console.log('yes');
-      } else {
-        console.log('no');
-      }
+    // Find out which entity is which
+    if (data.e2.name === 'user') {
+      target = data.e2;
+      mouse = data.e1;
     }
 
+    // Find out if |this| is from the event
+    // otherwise event is coming from another object, ignore it
+    if(mouse.gototarget === this){
+      scene.remove(mouse);
+      target.health.hurt(e.damage);
+    }
 
-    // if(ctx === this){
-    //   debugger;  
-    //   console.log('other ctx');
+    // if (data.e1.gototarget && data.e1.gototarget === this) {
+
+      // [target, mouse] = [mouse, target];
+    // } else if (data.e2.gototarget && data.e2.gototarget === this) {
+      // mouse = data.e2;
+      // target = data.e1;
     // }
-    // else{
-    //   console.log(data);
-    // }
-    // 
-
-
-    // this.target.health.hurt(e.damage);
     // setRandPosition(e);
 
-    // let evt = new EventSytem();
+    // let evt = new EventSystem();
     // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
   goToTarget.ready();
-
 
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
@@ -85,7 +83,6 @@ export default function createMouse() {
   coll.type = CollisionType.ENEMY;
   coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
   e.addComponent(coll);
-
 
   return e;
 }
