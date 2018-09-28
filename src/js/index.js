@@ -21,9 +21,12 @@ let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-cvs.onclick = function(e){
-  new Event({evtName:'GAME_CLICK', data: e}).fire();
-}
+
+document.addEventListener('mousedown', e => {
+  new Event({ evtName: 'GAME_CLICK', data: e }).fire();
+});
+document.addEventListener('contextmenu', e => e.preventDefault());
+
 
 function update(dt) {
   scene.update(dt);
@@ -54,7 +57,7 @@ function postRender() {
 
 function setup() {
   p3 = new P3(cvs, ctx);
-  p3.clearColor('black');
+  p3.clearColor(48, 66, 73);
   Debug.setOn(false);
 
   // Make scene and p3 static classes?

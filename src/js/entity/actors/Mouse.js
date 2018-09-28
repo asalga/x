@@ -5,10 +5,12 @@ import GoToTarget from '../components/GoToTarget.js';
 import Killable from '../components/Killable.js';
 import Health from '../components/Health.js';
 import Collidable from '../components/Collidable.js';
+import Stun from '../components/Stun.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
+import Debug from '../../debug/Debug.js';
 // import EventSystem from '../../event/EventSystem.js';
 
 import Vec2 from '../../math/Vec2.js';
@@ -16,9 +18,11 @@ import Vec2 from '../../math/Vec2.js';
 export default function createMouse() {
   let e = new Entity();
   e.name = 'mouse';
-  e.size = 8;
+  e.size = 10;
   e.damage = 20;
   e.bounds = new BoundingCircle(e.pos, e.size);
+  e.speed = 3;
+
 
   let setRandPosition = function(entity) {
     let r = Vec2.Rand().normalize().mult(500);
@@ -35,15 +39,19 @@ export default function createMouse() {
   e.updateProxy = function(dt) {};
 
   e.renderProxy = function(p3) {
-    p3.strokeWeight(3);
-    p3.fill(50);
-    p3.stroke(200);
+    p3.strokeWeight(4);
+
+
+    p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
+
+    p3.stroke(157, 190, 188);
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
+    Debug.add(`${this.health.health}`);
   };
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();
-  goToTarget.speed = 60;
+  goToTarget.speed = 10;
   goToTarget.arrived = function(data) {
     let target = data.e1;
     let mouse = data.e2;
@@ -56,7 +64,7 @@ export default function createMouse() {
 
     // Find out if |this| is from the event
     // otherwise event is coming from another object, ignore it
-    if(mouse.gototarget === this){
+    if (mouse.gototarget === this) {
       scene.remove(mouse);
       target.health.hurt(e.damage);
     }
@@ -69,7 +77,8 @@ export default function createMouse() {
 
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 10));
+  e.addComponent(new Stun(e, 3));
+  e.addComponent(new Health(e, 20));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;

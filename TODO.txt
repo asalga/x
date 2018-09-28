@@ -10,4 +10,5 @@ Eel
  * Enable drawing Actor bounds
  * Create hierarchy of GoToTarget?
  * Do actual bounds testing
+ * Display count of baddies killed
  *

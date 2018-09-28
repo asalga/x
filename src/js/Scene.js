@@ -20,7 +20,7 @@ export default class Scene {
     });
     this.timer+=dt;
 
-    if(this.timer > .5){
+    if(this.timer > 1.5){
       this.timer = 0;
       let m = EntityFactory.create('mouse');
       this.add(m);
