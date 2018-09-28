@@ -16,7 +16,7 @@ export default class SeekTarget extends Component {
     this.maxSteerForce = 10;//Math.random() * 25;
 
     this.lastVel = new Vec2();
-    // this.offset = Vec2.rand().mult(30);
+    // this.offset = Vec2.rand().mult(1);
   }
 
   ready() {
@@ -36,7 +36,6 @@ export default class SeekTarget extends Component {
       this.entity.vel = this.lastVel;
       return;
     }
-    // return;
 
     let targetPos = new Vec2(this.target.pos);//.add(this.offset);
     let pos = new Vec2(this.entity.pos);
