@@ -40,7 +40,7 @@ export default function createHomingMissle() {
     // let center = new Vec2(p3.width / 2, p3.height / 2);
     // this.pos.x = center.x + Math.cos(gameTime) * 250
     // this.pos.y = center.y + Math.sin(gameTime) * 250;
-  }
+  };
 
   e.on('collision', function(data) {
     let e1 = data.e1;

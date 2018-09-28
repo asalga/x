@@ -242,6 +242,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'copy:dev',
+          'jshint',
           'bundle'
         ],
         options: {
@@ -333,10 +334,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'copy:dev',
-
-    // 'bundle',
-    // 'jshint',
-
+    'jshint',
     'connect:livereload',
     'watch'
   ]);
