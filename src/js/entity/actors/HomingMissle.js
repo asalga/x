@@ -33,7 +33,7 @@ export default function createHomingMissle() {
     let a = Math.atan2(this.vel.y, this.vel.x);
     p3.rotate(a);
 
-    p3.rect(0, 0, this.size * 2, this.size);
+    p3.rect(-this.size, -this.size/2, this.size * 2, this.size);
     p3.restore();
   };
 
