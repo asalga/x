@@ -29,7 +29,6 @@ export default function createUser() {
     p3.stroke(111, 150, 80);
     let h = (this.health.health) / 100;
     p3.fill(157 * h, 192 * h, 188 * h);
-
     p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
 
     let center = new Vec2(this.pos.x, this.pos.y);
@@ -40,22 +39,36 @@ export default function createUser() {
     cursor.mult(60);
     cursor.add(center);
 
-    // if (debug) {
-    //   p3.strokeWeight(1);
-    //   p3.stroke(0, 255, 0);
-    //   p3.line(center.x, center.y, p3.mouseX, p3.mouseY);
-    // }
+    // debug
+    if (debug) {
+      p3.strokeWeight(1);
+      p3.stroke(0, 255, 0);
+      p3.line(center.x, center.y, p3.mouseX, p3.mouseY);
+    }
 
     p3.save();
     p3.strokeWeight(10);
     p3.stroke(145, 119, 130);
     p3.line(center.x, center.y, cursor.x, cursor.y);
     p3.restore();
+
+    p3.save();
+    p3.noStroke();
+    p3.fill(48, 60, 93);
+    p3.ellipse(center.x, center.y, 20, 20);
+    p3.restore();
   };
 
   let minigun = new Minigun();
   user.addComponent(minigun);
 
+
+  user.on('GAME_CLICK', function(){
+    let h = EntityFactory.create('homingmissle');
+    h.pos.set(0, 400);
+    h.seektarget.target = scene.bee;
+    scene.add(h);
+  }, user);
 
 
   let health = new Health(user, 100);
@@ -71,7 +84,6 @@ export default function createUser() {
   };
   user.addComponent(killable);
 
-  // let coll = new Collidable(user);
   let coll = new Collidable(user);
   coll.type = CollisionType.PLAYER;
   coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;

@@ -12,21 +12,20 @@ import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 import Event from './event/Event.js';
 
-
 let timer;
 let perfTimer;
 window.gameTime = 0;
-let scene;
+window.debug = false;
+window.scene = null;
+
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
-
 
 document.addEventListener('mousedown', e => {
   new Event({ evtName: 'GAME_CLICK', data: e }).fire();
 });
 document.addEventListener('contextmenu', e => e.preventDefault());
-
 
 function update(dt) {
   scene.update(dt);
@@ -49,8 +48,8 @@ function render() {
 }
 
 function postRender() {
-  let tt = new Date().getTime() - perfTimer;
-  Debug.add('render ms:' + tt);
+  let timeDiff = new Date().getTime() - perfTimer;
+  Debug.add('render ms:' + timeDiff);
   Debug.draw();
   Debug.postRender();
 }
@@ -63,7 +62,6 @@ function setup() {
   // Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  window.scene = scene;
 
   scene.restartGame();
 

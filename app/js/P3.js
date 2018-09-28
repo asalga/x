@@ -42,9 +42,8 @@ export default class P3 {
     this._doFill = false;
   }
 
-  _argColorToString(args){
+  _argColorToString(args) {
     let ret;
-        // debugger;
     if (arguments.length === 1) {
       if (typeof(args) === 'string') {
         // this.ctx.fillStyle = args;
@@ -63,7 +62,6 @@ export default class P3 {
   fill() {
     this._doFill = true;
     this.ctx.fillStyle = this._argColorToString(...arguments);
-
   }
 
   text(txt, x, y) {
@@ -78,19 +76,6 @@ export default class P3 {
   stroke() {
     this._doStroke = true;
     this.ctx.strokeStyle = this._argColorToString(...arguments);
-
-    // if (arguments.length === 1) {
-    //   if (typeof(args) === 'string') {
-    //     this.ctx.strokeStyle = args;
-    //   } else if (typeof(args) === 'number') {
-    //     let c = args;
-    //     this.ctx.strokeStyle = `rgb(${c}, ${c}, ${c})`;
-    //   }
-    // } else {
-    //   let c = [...arguments];
-    //   this.ctx.strokeStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
-    // }
-
   }
 
   strokeWeight(n) {
@@ -131,7 +116,11 @@ export default class P3 {
     }
 
     if (this._doFill) {
+      this.ctx.beginPath();
+      this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
+      this.ctx.stroke();
       this.ctx.fill();
+
     }
   }
 
