@@ -2,6 +2,7 @@
 
 import Component from './Component.js';
 import Debug from '../../debug/Debug.js';
+import Event from '../../event/Event.js';
 
 export default class Health extends Component {
   constructor(e, amt = 100, max = 100) {
@@ -16,7 +17,6 @@ export default class Health extends Component {
 
   update(dt) {
     super.update(dt);
-    
 
     if (this.isRegenerating) {
       let diff = dt * this.regenerationSpeed;
@@ -35,12 +35,13 @@ export default class Health extends Component {
 
   hurt(dmg) {
     this.health -= dmg;
+    new Event({ evtName: 'hurt', data: this.entity }).fire();
 
     if (this.canRegen && this.isRegenerating === false) {
       this.isRegenerating = true;
     }
 
-    if (this.health < 0) {
+    if (this.health <= 0) {
       this.entity.killable.kill();
     }
   }

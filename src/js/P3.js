@@ -26,7 +26,8 @@ export default class P3 {
   }
 
   clearColor(col) {
-    this._clearCol = col;
+    this._clearCol = this._argColorToString(...arguments);
+    // this._clearCol = col;
   }
 
   clear() {
@@ -41,19 +42,28 @@ export default class P3 {
     this._doFill = false;
   }
 
-  fill(args) {
-    this._doFill = true;
+  _argColorToString(args){
+    let ret;
+        // debugger;
     if (arguments.length === 1) {
       if (typeof(args) === 'string') {
-        this.ctx.fillStyle = args;
+        // this.ctx.fillStyle = args;
+        ret = args;
       } else if (typeof(args) === 'number') {
         let c = args;
-        this.ctx.fillStyle = `rgb(${c}, ${c}, ${c})`;
+        ret = `rgb(${c}, ${c}, ${c})`;
       }
     } else {
       let c = [...arguments];
-      this.ctx.fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+      ret = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
     }
+    return ret;
+  }
+
+  fill() {
+    this._doFill = true;
+    this.ctx.fillStyle = this._argColorToString(...arguments);
+
   }
 
   text(txt, x, y) {
@@ -65,19 +75,22 @@ export default class P3 {
     }
   }
 
-  stroke(args) {
+  stroke() {
     this._doStroke = true;
-    if (arguments.length === 1) {
-      if (typeof(args) === 'string') {
-        this.ctx.strokeStyle = args;
-      } else if (typeof(args) === 'number') {
-        let c = args;
-        this.ctx.strokeStyle = `rgb(${c}, ${c}, ${c})`;
-      }
-    } else {
-      let c = [...arguments];
-      this.ctx.strokeStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
-    }
+    this.ctx.strokeStyle = this._argColorToString(...arguments);
+
+    // if (arguments.length === 1) {
+    //   if (typeof(args) === 'string') {
+    //     this.ctx.strokeStyle = args;
+    //   } else if (typeof(args) === 'number') {
+    //     let c = args;
+    //     this.ctx.strokeStyle = `rgb(${c}, ${c}, ${c})`;
+    //   }
+    // } else {
+    //   let c = [...arguments];
+    //   this.ctx.strokeStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+    // }
+
   }
 
   strokeWeight(n) {

@@ -6,6 +6,7 @@
 
 import Component from './Component.js';
 import Collision from '../../collision/Collision.js';
+import Debug from '../../debug/Debug.js';
 
 export default class GoToTarget extends Component {
   constructor(e) {
@@ -31,7 +32,10 @@ export default class GoToTarget extends Component {
     let toTarget = this.target.pos.clone();
     toTarget.sub(entity.pos);
     toTarget.normalize();
-    toTarget.scale(this.speed);
+    // console.log();
+    Debug.add(`${this.speed}, ${entity.speed}`);
+    toTarget.mult(entity.speed * this.speed);
+    // toTarget.mult(0);
     entity.vel = toTarget;
   }
 }

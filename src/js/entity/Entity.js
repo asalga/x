@@ -10,6 +10,8 @@ export default class Entity {
   constructor() {
     this.pos = new Vec2();
     this.vel = new Vec2();
+
+    this.speed = 1;// velocity multiplier
     this.components = [];
   }
 

@@ -10,6 +10,8 @@ import Collidable from '../components/Collidable.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
+import Minigun from '../components/Minigun.js';
+
 import Vec2 from '../../math/Vec2.js';
 
 import Debug from '../../debug/Debug.js';
@@ -25,7 +27,8 @@ export default function createUser() {
 
   user.renderProxy = function(p3) {
     p3.stroke(111, 150, 80);
-    p3.fill(0,this.health.health, 0);
+    let h = (this.health.health) / 100;
+    p3.fill(157 * h, 192 * h, 188 * h);
     // debugger;
     p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
 
@@ -44,38 +47,20 @@ export default function createUser() {
     // }
 
     p3.save();
-    p3.strokeWeight(3);
-    p3.stroke(255, 0, 0);
-
+    p3.strokeWeight(10);
+    p3.stroke(145, 119, 130);
     p3.line(center.x, center.y, cursor.x, cursor.y);
     p3.restore();
   };
 
-
-  user.on('GAME_CLICK', function(e){
-    let bullet = EntityFactory.create('bullet');
-    // bullet.pos.set(p3.width/2, p3.height/2);
-
-    let center = new Vec2(this.pos.x, this.pos.y);
-    let cursor = new Vec2(p3.mouseX, p3.mouseY);
+  let minigun = new Minigun();
+  user.addComponent(minigun);
 
 
-    cursor.sub(center);
-    let gunTip = cursor.clone();
-    gunTip.normalize();
-    gunTip.mult(60);
-    bullet.pos.add(gunTip);
-
-    cursor.normalize();
-    cursor.mult(400);
-
-    bullet.vel.set(cursor.x, cursor.y);
-    scene.add(bullet);
-  }, user);
 
   let health = new Health(user, 100);
   health.regenerationSpeed = 10;
-  health.updateProxy = function(){
+  health.updateProxy = function() {
     Debug.add(`Player Health: ${Math.floor(health.health)}`);
   };
   user.addComponent(health);
