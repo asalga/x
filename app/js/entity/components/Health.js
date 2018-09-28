@@ -8,7 +8,7 @@ export default class Health extends Component {
   constructor(e, amt = 100, max = 100) {
     super(e, 'health');
     this.health = amt;
-    this.max = 100;
+    this.max = max;
 
     this.canRegen = true;
     this.regenerationSpeed = 0;
@@ -22,6 +22,12 @@ export default class Health extends Component {
       let diff = dt * this.regenerationSpeed;
       this.increaseHelth(diff);
     }
+  }
+
+  percentLeft(){
+    let p = this.health/this.max;
+    console.log(p);
+    return p;
   }
 
   increaseHelth(amt) {

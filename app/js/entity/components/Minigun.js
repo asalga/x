@@ -10,6 +10,7 @@ export default class Minigun extends Component {
     this.fireRate = 5;
 
     this.on('GAME_CLICK', function(e) {
+      if(e.button !== 0){return;}
       let bullet = EntityFactory.create('bullet');
       let center = new Vec2(p3.width/2, p3.height/2);
       let cursor = new Vec2(p3.mouseX, p3.mouseY);

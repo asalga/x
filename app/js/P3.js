@@ -108,6 +108,14 @@ export default class P3 {
     this.ctx.stroke();
   }
 
+  rotate(a) {
+    this.ctx.rotate(a);
+  }
+
+  translate(x, y) {
+    this.ctx.translate(x, y);
+  }
+
   ellipse(x, y, r1, r2) {
     if (this._doStroke) {
       this.ctx.beginPath();

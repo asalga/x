@@ -84,11 +84,11 @@ export default class Vec2 {
     return this;
   }
 
-  static Sub(v1, v2) {
+  static sub(v1, v2) {
     return new Vec2(v1.x - v2.x, v1.y - v2.y);
   }
 
-  static Rand() {
+  static rand() {
     let x = Math.random() * 2 - 1;
     let y = Math.random() * 2 - 1;
     return new Vec2(x, y);

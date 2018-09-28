@@ -13,7 +13,7 @@ export default class SeekTarget extends Component {
     // this.hasArrived = false;
     this.speed = 1;
     this.maxSpeed = 200;
-    this.maxForce = 2 + Math.random()*5;
+    this.maxForce = 2 + Math.random() * 5;
 
     this.entity.vel.set(40, 0);
     this.lastVel = new Vec2();
@@ -42,9 +42,9 @@ export default class SeekTarget extends Component {
     desiredVel.normalize();
     desiredVel.mult(this.maxSpeed);
 
-    let steerVel = desiredVel.sub(vel);
+    let steerVel = Vec2.sub(desiredVel, vel);
     steerVel.limit(this.maxForce);
-    
+
     vel.add(steerVel);
     this.lastVel = vel;
 

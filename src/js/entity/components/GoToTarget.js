@@ -32,8 +32,7 @@ export default class GoToTarget extends Component {
     let toTarget = this.target.pos.clone();
     toTarget.sub(entity.pos);
     toTarget.normalize();
-    // console.log();
-    Debug.add(`${this.speed}, ${entity.speed}`);
+    // Debug.add(`${this.speed}, ${entity.speed}`);
     toTarget.mult(entity.speed * this.speed);
     // toTarget.mult(0);
     entity.vel = toTarget;

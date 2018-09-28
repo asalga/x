@@ -63,11 +63,13 @@ export default function createUser() {
   user.addComponent(minigun);
 
 
-  user.on('GAME_CLICK', function(){
-    let h = EntityFactory.create('homingmissle');
-    h.pos.set(0, 400);
-    h.seektarget.target = scene.bee;
-    scene.add(h);
+  user.on('GAME_CLICK', function(e) {
+    if (e.button === 2) {
+      let h = EntityFactory.create('homingmissle');
+      h.pos.set(user.pos);
+      h.seektarget.target = scene.bee;
+      scene.add(h);
+    }
   }, user);
 
 

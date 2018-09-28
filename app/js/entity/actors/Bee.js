@@ -24,7 +24,7 @@ export default function createMouse() {
   e.renderProxy = function() {
     p3.save();
     p3.noStroke();
-    p3.fill(100, 110, 140);
+    p3.fill(100, 110, 140 * (e.health/1000));
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
     p3.restore();
   };
@@ -36,7 +36,7 @@ export default function createMouse() {
   }
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 10));
+  e.addComponent(new Health(e, 1));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;
