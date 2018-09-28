@@ -18,13 +18,13 @@ export default class Scene {
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
     });
-    this.timer+=dt;
 
-    if(this.timer > 1.5){
-      this.timer = 0;
-      let m = EntityFactory.create('mouse');
-      this.add(m);
-    }
+    this.timer += dt;
+    // if(this.timer > 1.5){
+    //   this.timer = 0;
+    //   let m = EntityFactory.create('mouse');
+    //   this.add(m);
+    // }
 
     this.entities.forEach(e => e.update(dt));
   }
@@ -62,6 +62,9 @@ export default class Scene {
       let m = EntityFactory.create('mouse');
       this.add(m);
     }
+
+    let b = EntityFactory.create('bee');
+    this.add(b);
   }
 
   remove(e) {
