@@ -63,6 +63,13 @@ export default function createUser() {
   user.addComponent(minigun);
 
 
+  user.on('GAME_CLICK', function(){
+    let h = EntityFactory.create('homingmissle');
+    h.pos.set(0, 400);
+    h.seektarget.target = scene.bee;
+    scene.add(h);
+  }, user);
+
 
   let health = new Health(user, 100);
   health.regenerationSpeed = 10;
@@ -77,7 +84,6 @@ export default function createUser() {
   };
   user.addComponent(killable);
 
-  // let coll = new Collidable(user);
   let coll = new Collidable(user);
   coll.type = CollisionType.PLAYER;
   coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;

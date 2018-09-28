@@ -30,7 +30,6 @@ export default class Minigun extends Component {
 
       bullet.vel.set(cursor.x, cursor.y);
       scene.add(bullet);
-      // console.log('test');
     }, this);
   }
 

@@ -65,6 +65,7 @@ export default class Scene {
 
     let b = EntityFactory.create('bee');
     this.add(b);
+    this.bee = b;
   }
 
   remove(e) {
