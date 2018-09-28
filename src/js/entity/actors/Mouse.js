@@ -23,15 +23,14 @@ export default function createMouse() {
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 3;
 
-
   let setRandPosition = function(entity) {
-    let r = Vec2.Rand().normalize().mult(500);
+    let r = Vec2.rand().normalize().mult(500);
 
     // just so they all don't all arrive at the user at the same time
-    let diviate = Vec2.Rand().normalize().mult(200);
+    let deviate = Vec2.rand().normalize().mult(200);
 
     let v = new Vec2(p3.width / 2, p3.height / 2);
-    v.add(r).add(diviate);
+    v.add(r).add(deviate);
     entity.pos.set(v.x, v.y);
   };
   setRandPosition(e);
@@ -41,12 +40,11 @@ export default function createMouse() {
   e.renderProxy = function(p3) {
     p3.strokeWeight(4);
 
-
     p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
 
     p3.stroke(157, 190, 188);
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
-    Debug.add(`${this.health.health}`);
+    // Debug.add(`${this.health.health}`);
   };
 
   let goToTarget = new GoToTarget(e);
@@ -66,11 +64,10 @@ export default function createMouse() {
     // otherwise event is coming from another object, ignore it
     if (mouse.gototarget === this) {
       scene.remove(mouse);
-      target.health.hurt(e.damage);
+      target.health && target.health.hurt(e.damage);
     }
 
     // setRandPosition(e);
-
     // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
   };
   goToTarget.ready();
@@ -78,7 +75,7 @@ export default function createMouse() {
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, 3));
-  e.addComponent(new Health(e, 20));
+  e.addComponent(new Health(e, 20, 20));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;

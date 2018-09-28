@@ -19,7 +19,7 @@ export default function createBullet() {
   e.damage = 10;
 
   e.renderProxy = function(p3) {
-    Debug.add(`bullet: [${this.pos.x}, ${this.pos.y}]`);
+    // Debug.add(`bullet: [${this.pos.x}, ${this.pos.y}]`);
 
     p3.save();
     p3.strokeWeight(2);
@@ -44,12 +44,9 @@ export default function createBullet() {
       other.health.hurt(e.damage);
     }
     scene.remove(e);
-
   }
 
   e.on('collision', hit);
-
-
 
   let coll = new Collidable(e);
   coll.type = CollisionType.BULLET;

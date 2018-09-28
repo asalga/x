@@ -29,7 +29,7 @@ export class CollisionSystem {
 
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
-    let dist = Vec2.Sub(e1.pos, e2.pos).length();
+    let dist = Vec2.sub(e1.pos, e2.pos).length();
     return dist <= radTotal;
   }
 

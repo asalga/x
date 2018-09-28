@@ -2,13 +2,14 @@
 
 # Actors
 Mouse
+Bee
 HummingBird
 Rhino
 Eel
 
 # TODO
- * Enable drawing Actor bounds
- * Create hierarchy of GoToTarget?
- * Do actual bounds testing
- * Display count of baddies killed
- *
+ * Create Object Pool for Vectors
+ * Create scene.getClosestEnemy()
+ * Add min speed to Homing Missle
+ * Remove entity if has left game bounds
+ * Allow switching Weapons

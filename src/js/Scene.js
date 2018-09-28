@@ -2,6 +2,7 @@
 
 import EntityFactory from './entity/EntityFactory.js';
 import EventSystem from './event/EventSystem.js';
+import Event from './event/Event.js';
 
 export default class Scene {
   constructor() {
@@ -17,16 +18,26 @@ export default class Scene {
   update(dt) {
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
+      new Event({ evtName: 'death', data: e }).fire();
     });
 
     this.timer += dt;
-    // if(this.timer > 1.5){
-    //   this.timer = 0;
-    //   let m = EntityFactory.create('mouse');
-    //   this.add(m);
-    // }
+    if (this.timer > 1.5) {
+      this.timer = 0;
+      this.add(EntityFactory.create('mouse'));
+    }
 
     this.entities.forEach(e => e.update(dt));
+  }
+
+  getRandomBaddie() {
+    let b;
+    this.entities.forEach(e => {
+      if(e.name === 'mouse'){
+        b = e;
+      }
+    });
+    return b;
   }
 
   clearFlags() {

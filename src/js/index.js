@@ -31,6 +31,7 @@ function update(dt) {
   scene.update(dt);
 
   Debug.add(`gameTime: ${Math.floor(window.gameTime)}`);
+  Debug.add(`Entities: ${scene.entities.size}`);
 
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
@@ -57,7 +58,7 @@ function postRender() {
 function setup() {
   p3 = new P3(cvs, ctx);
   p3.clearColor(48, 66, 73);
-  Debug.setOn(false);
+  // Debug.setOn(false);
 
   // Make scene and p3 static classes?
   scene = new Scene();
