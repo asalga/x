@@ -29,12 +29,12 @@ export default function createMouse() {
     p3.restore();
   };
 
-  e.updateProxy = function(dt){
-    let center = new Vec2(p3.width/2, p3.height/2);
-    this.pos.x = center.x + Math.cos(gameTime)*250
-    this.pos.y = center.y + Math.sin(gameTime)*250;
+  e.updateProxy = function(dt) {
+    let center = new Vec2(p3.width / 2, p3.height / 2);
+    this.pos.x = center.x + Math.cos(gameTime) * 250
+    this.pos.y = center.y + Math.sin(gameTime) * 250;
   }
-  
+
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, 10));
 
