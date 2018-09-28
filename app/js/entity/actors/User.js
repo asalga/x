@@ -29,7 +29,7 @@ export default function createUser() {
     p3.stroke(111, 150, 80);
     let h = (this.health.health) / 100;
     p3.fill(157 * h, 192 * h, 188 * h);
-    // debugger;
+
     p3.ellipse(p3.width / 2, p3.height / 2, user.size, user.size);
 
     let center = new Vec2(this.pos.x, this.pos.y);

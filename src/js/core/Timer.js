@@ -13,7 +13,6 @@ export default class Timer {
       accumTime += (time - lastTime) / 1000.0;
 
       if(accumTime > 1){
-        // debugger;
         accumTime = deltaTime;
       }
 
