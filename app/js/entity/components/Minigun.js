@@ -15,7 +15,7 @@ export default class Minigun extends Component {
       let center = new Vec2(p3.width/2, p3.height/2);
       let cursor = new Vec2(p3.mouseX, p3.mouseY);
 
-      if(e.button == 2){
+      if(e.button === 2){
         bullet.size = 3;
         bullet.health.health = 2;
       }

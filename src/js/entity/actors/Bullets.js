@@ -49,7 +49,7 @@ export default function createBullet() {
   e.on('collision', hit);
 
   let coll = new Collidable(e);
-  coll.type = CollisionType.BULLET;
+  coll.type = CollisionType.PLAYER_BULLET;
   coll.mask = CollisionType.ENEMY;
   e.addComponent(coll);
 

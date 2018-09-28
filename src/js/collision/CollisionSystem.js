@@ -1,3 +1,4 @@
+
 import Vec2 from '../math/Vec2.js';
 import Event from '../event/Event.js';
 import Debug from '../debug/Debug.js';
@@ -44,10 +45,13 @@ export class CollisionSystem {
         e1 = list[i];
         e2 = list[j];
 
-        let type = e1.collidable.type;
-        let mask = e2.collidable.mask;
+        let typeA = e1.collidable.type;
+        let maskB = e2.collidable.mask;
 
-        if ((type & mask) !== 0) {
+        let maskA = e1.collidable.mask;
+        let typeB = e2.collidable.type;
+        
+        if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
           if (CollisionSystem.circleCircleTest(e1, e2)) {
 
             let e = new Event({

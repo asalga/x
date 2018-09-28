@@ -20,6 +20,7 @@
     "trailing": false,
     "smarttabs": true,
 
+    "expr": true,
 
 
     "globals":
@@ -29,6 +30,8 @@
         "jQuery": true,
         "TWEEN": true,
         "p3": true,
-        "scene": true
+        "scene": true,
+        "debug": true,
+        "gameTime": true
     }
 }
