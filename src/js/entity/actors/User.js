@@ -25,6 +25,15 @@ export default function createUser() {
   user.size = 40;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
+  function getVecToCursor(center, cursor) {
+    let cur = cursor.clone();
+    cur.sub(center);
+    cur.normalize();
+    cur.mult(60);
+    cur.add(center);
+    return cur;
+  }
+
   user.renderProxy = function(p3) {
     p3.stroke(111, 150, 80);
     let h = (this.health.health) / 100;
@@ -33,13 +42,8 @@ export default function createUser() {
 
     let center = new Vec2(this.pos.x, this.pos.y);
     let cursor = new Vec2(p3.mouseX, p3.mouseY);
+    let curr = getVecToCursor(center, cursor);
 
-    cursor.sub(center);
-    cursor.normalize();
-    cursor.mult(60);
-    cursor.add(center);
-
-    // debug
     if (debug) {
       p3.strokeWeight(1);
       p3.stroke(0, 255, 0);
@@ -49,7 +53,7 @@ export default function createUser() {
     p3.save();
     p3.strokeWeight(10);
     p3.stroke(145, 119, 130);
-    p3.line(center.x, center.y, cursor.x, cursor.y);
+    p3.line(center.x, center.y, curr.x, curr.y);
     p3.restore();
 
     p3.save();
@@ -62,7 +66,7 @@ export default function createUser() {
   let minigun = new Minigun();
   user.addComponent(minigun);
 
-
+  // Temporary hack to test missles
   user.on('GAME_CLICK', function(e) {
     if (e.button === 2) {
       let h = EntityFactory.create('homingmissle');
