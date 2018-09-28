@@ -10,13 +10,13 @@ export default class SeekTarget extends Component {
   constructor(e) {
     super(e, 'seektarget');
     this.target = null;
-    // this.hasArrived = false;
-    this.speed = 1;
-    this.maxSpeed = 200;
-    this.maxForce = 2 + Math.random() * 5;
 
-    this.entity.vel.set(40, 0);
+    this.maxSpeed = 100;
+    this.maxVel = 50;
+    this.maxSteerForce = 10;//Math.random() * 25;
+
     this.lastVel = new Vec2();
+    // this.offset = Vec2.rand().mult(30);
   }
 
   ready() {
@@ -28,28 +28,30 @@ export default class SeekTarget extends Component {
   }
 
   update(dt) {
-    let targetPos = new Vec2(this.target.pos);
-    let pos = new Vec2(this.entity.pos);
-    let vel = this.entity.vel;
+    // if no longer in the scene
+    if (!this.target) { return; }
 
-    // Keep going in curr trajectory if target is dead
+    // if in scene, but dead
     if (this.target.killable.dead) {
       this.entity.vel = this.lastVel;
       return;
     }
+    // return;
+
+    let targetPos = new Vec2(this.target.pos);//.add(this.offset);
+    let pos = new Vec2(this.entity.pos);
+    let vel = this.entity.vel;
 
     let desiredVel = targetPos.sub(pos);
     desiredVel.normalize();
     desiredVel.mult(this.maxSpeed);
 
     let steerVel = Vec2.sub(desiredVel, vel);
-    steerVel.limit(this.maxForce);
+    steerVel.limit(this.maxSteerForce);
 
     vel.add(steerVel);
-    this.lastVel = vel;
+    vel.limit(this.maxVel);
 
-    // if (this.hasArrived || this.target === null) {
-    //   return;
-    // }
+    this.lastVel = vel;
   }
 }

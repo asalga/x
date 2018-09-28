@@ -334,7 +334,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'copy:dev',
-    'jshint',
+    // 'jshint',
     'connect:livereload',
     'watch'
   ]);

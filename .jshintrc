@@ -22,7 +22,6 @@
 
     "expr": true,
 
-
     "globals":
     {
         "$": true,
