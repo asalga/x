@@ -6,16 +6,13 @@ import GoToTarget from '../components/GoToTarget.js';
 import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
 import Collidable from '../components/Collidable.js';
+import Minigun from '../components/Minigun.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-import Minigun from '../components/Minigun.js';
-
 import Vec2 from '../../math/Vec2.js';
-
 import Debug from '../../debug/Debug.js';
-
 import EntityFactory from '../EntityFactory.js';
 
 export default function createUser() {
@@ -63,8 +60,72 @@ export default function createUser() {
     p3.restore();
   };
 
+  /*
+
+
+    
+    
+    ___Minigun.js
+    default export function createUserMiniGun(){
+      let e = new Entity();
+      e.name = 'minigun'
+      e.pos = new Vec2();
+
+      let lc = new LauncherComponent(e);
+      lc.fireRate = 10;
+      lc.autoFire = false;
+      lc.bulletCreation = EntityFactory.create('minigun_bullet', {speed: 10, damage:10});
+      e.addComponent(lc);
+    }
+
+    ----------
+
+    createEnemyMiniGun(){
+      let e = new Entity();
+      e.name = 'minigun'
+      e.pos = new Vec2();
+
+      let lc = new AutoLauncher(e):
+      lc.bulletCreation = EntityFactory.create('enemy_minigun', {})
+      e.addComponent(lc);
+    }
+
+    mouse.add(EntityFactory.create('enemy_minigun'));
+    minigun.range = 100;
+    minigun.
+
+    ----------
+    let minigun = EntityFactory.create('minigun');
+    minigun.autoFire = false;
+    
+    user.addGun(minigun);
+    ----------
+
+    Gun
+    - launcher component
+    - bullet function
+    
+
+    - AutoLauncher
+    - Launcher
+
+    autoLauncher.bulletCreation();
+
+  */
+
+
+  // let gun = new EntityFactory('user_minigun');
+  // user.add(gun);
+
+
+
+  // let gun = new EntitFactory('mouse_minigun');
+  // mouse.add(gun);
+
+
   let minigun = new Minigun();
   user.addComponent(minigun);
+
 
   // Temporary hack to test missles
   user.on('GAME_CLICK', function(e) {

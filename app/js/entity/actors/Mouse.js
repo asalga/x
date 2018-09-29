@@ -39,9 +39,7 @@ export default function createMouse() {
 
   e.renderProxy = function(p3) {
     p3.strokeWeight(4);
-
     p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
-
     p3.stroke(157, 190, 188);
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
     // Debug.add(`${this.health.health}`);
@@ -81,6 +79,17 @@ export default function createMouse() {
   coll.type = CollisionType.ENEMY;
   coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
   e.addComponent(coll);
+
+  // let minigun = EntitFactory.create('minigun');
+  // minigun.bullet
+  // e.add(minigun);
+  // minigun.launcher.bulletCreation = function(){
+  // EntitFactory.create('enemy_bullet');
+
+
+  // }
+
+  // minigun.getComponent('launcher')
 
   return e;
 }

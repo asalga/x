@@ -7,7 +7,9 @@ import Event from '../event/Event.js';
 import EventSystem from '../event/EventSystem.js';
 
 export default class Entity {
-  constructor() {
+  constructor(cfg) {
+    this.name = (cfg && cfg.name) || '';
+
     this.pos = new Vec2();
     this.vel = new Vec2();
     this.acc = new Vec2();
