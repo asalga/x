@@ -5,24 +5,32 @@ import createHummingBird from './actors/HummingBird.js';
 import createBee from './actors/Bee.js';
 
 import createUser from './actors/User.js';
-import createBullet from './actors/Bullets.js';
+import createUserBullet from './actors/UserBullet.js';
+import createEnemyBullet from './actors/EnemyBullet.js';
 import createHomingMissle from './actors/HomingMissle.js';
 
+import createMinigun from './actors/minigun.js';
+import createPlasmaGun from './actors/plasmagun.js';
+
+
 let createFuncs = new Map();
+
+// PLAYERS
 createFuncs.set('bee', createBee);
 createFuncs.set('mouse', createMouse);
 createFuncs.set('hummingbird', createHummingBird);
-
 createFuncs.set('user', createUser);
 
-createFuncs.set('bullet', createBullet);
+// BULLETS
+createFuncs.set('bullet', createUserBullet);
+// createFuns.set('plasma', createPlasmaBullet);
 createFuncs.set('homingmissle', createHomingMissle);
 
-/*
-	createFuncs.set('minigun', createMinigun);
-	createFuncs.set('flamer', createFlamer);
-	createFuncs.set('lasercannon', createLaserCanon);
-*/
+
+// GUNS
+createFuncs.set('minigun', createMinigun);
+createFuncs.set('plasmagun', createPlasmaGun);
+
 
 export default class EntityFactor {
   static create(str) {

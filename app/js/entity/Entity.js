@@ -14,13 +14,24 @@ export default class Entity {
     this.vel = new Vec2();
     this.acc = new Vec2();
 
-    this.speed = 1;// velocity multiplier
+    this.speed = 1; // velocity multiplier
     this.components = [];
+    this.children = [];
   }
 
-  draw(p3) {
+  draw() {
+    p3.save();
     this.renderProxy && this.renderProxy(p3);
+    this.children.forEach(c => c.draw());
+
+
+    this.components.forEach(c => {
+      c.draw && c.draw();
+    });
+
+    p3.restore();
   }
+
 
   update(dt) {
     this.updateProxy && this.updateProxy(dt);
@@ -36,6 +47,10 @@ export default class Entity {
       let d = this.vel.clone().mult(dt);
       this.pos.add(d);
     }
+
+    this.children.forEach(c => {
+      c.update(dt);
+    });
   }
 
   addComponent(c) {
@@ -43,11 +58,18 @@ export default class Entity {
     this[c.name] = c;
   }
 
+  add(e) {
+    this.children.push(e);
+  }
+
   on(evtName, func, ctx) {
     (new EventSystem()).on(evtName, func, ctx);
   }
 
+
+
   removeComponent(c) {
+    debugger;
     console.log('needs impl');
   }
 }

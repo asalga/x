@@ -1,6 +1,5 @@
 'use strict';
 
-
 /*
  */
 module.exports = function(grunt) {
@@ -242,7 +241,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'copy:dev',
-          'jshint',
+          // 'jshint',
           'bundle'
         ],
         options: {

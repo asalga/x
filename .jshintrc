@@ -31,6 +31,7 @@
         "p3": true,
         "scene": true,
         "debug": true,
+        "Debug": true,
         "gameTime": true
     }
 }

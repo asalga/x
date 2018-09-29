@@ -67,7 +67,6 @@ export default function createHomingMissle() {
   let center = new Vec2(p3.width / 2, p3.height / 2);
   let vel = Vec2.sub(cursor,center);
   e.vel = vel.normalize().mult(e.homingVel);
-  // e.vel = vel;
 
   let seek = new SeekTarget(e);
   seek.maxVel = e.homingVel;
