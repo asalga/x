@@ -16,6 +16,7 @@ let timer;
 let perfTimer;
 window.gameTime = 0;
 window.debug = false;
+window.Debug = Debug;
 window.scene = null;
 
 let p3;
