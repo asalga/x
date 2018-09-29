@@ -18,6 +18,12 @@ createFuncs.set('user', createUser);
 createFuncs.set('bullet', createBullet);
 createFuncs.set('homingmissle', createHomingMissle);
 
+/*
+	createFuncs.set('minigun', createMinigun);
+	createFuncs.set('flamer', createFlamer);
+	createFuncs.set('lasercannon', createLaserCanon);
+*/
+
 export default class EntityFactor {
   static create(str) {
     return createFuncs.get(str)();

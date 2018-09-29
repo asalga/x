@@ -25,9 +25,7 @@ export default class Health extends Component {
   }
 
   percentLeft(){
-    let p = this.health/this.max;
-    console.log(p);
-    return p;
+    return this.health/this.max;
   }
 
   increaseHelth(amt) {
