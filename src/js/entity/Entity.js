@@ -66,8 +66,6 @@ export default class Entity {
     (new EventSystem()).on(evtName, func, ctx);
   }
 
-
-
   removeComponent(c) {
     debugger;
     console.log('needs impl');

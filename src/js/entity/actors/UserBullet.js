@@ -26,7 +26,7 @@ export default function createBullet() {
     p3.restore();
   };
 
-  let payload = new Payload(e, 10);
+  let payload = new Payload(e, 5);
   e.addComponent(payload);
 
   // Remove this?

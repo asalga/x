@@ -6,7 +6,6 @@ import GoToTarget from '../components/GoToTarget.js';
 import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
 import Collidable from '../components/Collidable.js';
-// import Minigun from '../components/Minigun.js';
 import Launcher from '../components/Launcher.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
@@ -17,6 +16,7 @@ import Vec2 from '../../math/Vec2.js';
 import EntityFactory from '../EntityFactory.js';
 import createUserMiniGunBullet from './UserBullet.js';
 import createUserPlasmaBullet from './UserPlasmaBullet.js';
+import createUserRocketBullet from './UserRocketBullet.js';
 
 export default function createUser() {
   let user = new Entity();
@@ -46,40 +46,40 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { rate: 10, ammo: 10, color: 'rgb(145, 119, 130)' });
+  let miniGunLauncher = new Launcher(miniGun, { rate: 10, ammo: 999, color: 'rgb(145, 119, 130)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   user.add(miniGun);
 
   // PLASMA
-  let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { rate: 4, ammo: 50, color: 'rgb(145, 110, 255)' });
-  plamaLauncher.createFunc = createUserPlasmaBullet;
-  plasmaGun.addComponent(plamaLauncher);
-  user.add(plasmaGun);
+  // let plasmaGun = EntityFactory.create('plasmagun');
+  // let plamaLauncher = new Launcher(plasmaGun, { rate: 4, ammo: 50, color: 'rgb(145, 110, 255)' });
+  // plamaLauncher.createFunc = createUserPlasmaBullet;
+  // plasmaGun.addComponent(plamaLauncher);
+  // user.add(plasmaGun);
 
-  // FLAC
-  let flacGun = EntityFactory.create('flacgun');
-  let flacLauncher = new Launcher(flacGun, { rate: 4, ammo: 50, color: 'rgb(145, 110, 255)' });
-  flacLauncher.createFunc = createFlacBullet;
-  flacGun.addComponent(flacLauncher);
-  user.add(flacGun);
 
-  // MISSILE LAUNCHER
-
+  // FIX adding to entity
+  // MISSILE LAUNCHER / ROCKET
+  // let rocketGun = EntityFactory.create('rocketgun');
+  // let rocketLauncher = new Launcher(rocketGun, { rate: 4, ammo: 50, color: 'rgb(145, 110, 255)' });
+  // rocketLauncher.createFunc = createUserRocketBullet;
+  // rocketGun.addComponent(rocketLauncher);
+  // user.add(rocketGun);
+  
   // let weaponSwitch = new WeaponSwitch();
   // weaponSwitch.addWeapon(minigunEntity);
   // user.add(weaponSwitch);
 
   // Temporary hack to test missles
-  user.on('GAME_CLICK', function(e) {
-    if (e.button === 2) {
-      let h = EntityFactory.create('homingmissle');
-      h.pos.set(user.pos);
-      h.seektarget.target = scene.bee;
-      scene.add(h);
-    }
-  }, user);
+  // user.on('GAME_CLICK', function(e) {
+  //   if (e.button === 2) {
+  //     let h = EntityFactory.create('homingmissle');
+  //     h.pos.set(user.pos);
+  //     h.seektarget.target = scene.bee;
+  //     scene.add(h);
+  //   }
+  // }, user);
 
 
   let health = new Health(user, 100);

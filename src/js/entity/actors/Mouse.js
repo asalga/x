@@ -1,18 +1,18 @@
 'use strict';
+
 import Entity from '../Entity.js';
 
 import GoToTarget from '../components/GoToTarget.js';
 import Killable from '../components/Killable.js';
 import Health from '../components/Health.js';
+import HealthRender from '../components/HealthRender.js';
 import Collidable from '../components/Collidable.js';
 import Stun from '../components/Stun.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-import Debug from '../../debug/Debug.js';
 // import EventSystem from '../../event/EventSystem.js';
-
 import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
@@ -22,6 +22,9 @@ export default function createMouse() {
   e.damage = 20;
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 3;
+
+  e.updateProxy = function(dt) {};
+
 
   let setRandPosition = function(entity) {
     let r = Vec2.rand().normalize().mult(500);
@@ -35,14 +38,16 @@ export default function createMouse() {
   };
   setRandPosition(e);
 
-  e.updateProxy = function(dt) {};
 
   e.renderProxy = function(p3) {
-    p3.strokeWeight(4);
-    p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
-    p3.stroke(157, 190, 188);
+    p3.save();
+    // p3.strokeWeight(4);
+    // p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
+    // p3.stroke(157, 190, 188);
+    p3.noStroke();
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
     // Debug.add(`${this.health.health}`);
+    p3.restore();
   };
 
   let goToTarget = new GoToTarget(e);
@@ -72,24 +77,21 @@ export default function createMouse() {
 
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
-  e.addComponent(new Stun(e, 3));
+  // e.addComponent(new Stun(e, 3));
   e.addComponent(new Health(e, 20, 20));
+  e.addComponent(new HealthRender(e));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;
   coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
   e.addComponent(coll);
 
-  // let minigun = EntitFactory.create('minigun');
-  // minigun.bullet
-  // e.add(minigun);
-  // minigun.launcher.bulletCreation = function(){
-  // EntitFactory.create('enemy_bullet');
-
-
-  // }
-
-  // minigun.getComponent('launcher')
-
   return e;
 }
+
+// let minigun = EntitFactory.create('minigun');
+// minigun.bullet
+// e.add(minigun);
+// minigun.launcher.bulletCreation = function(){
+// EntitFactory.create('enemy_bullet');
+// minigun.getComponent('launcher')

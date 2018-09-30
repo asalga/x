@@ -25,6 +25,10 @@ export default class P3 {
     });
   }
 
+  get TAU() {
+    return Math.PI * 2;
+  }
+
   clearColor(col) {
     this._clearCol = this._argColorToString(...arguments);
     // this._clearCol = col;
@@ -126,10 +130,14 @@ export default class P3 {
     if (this._doFill) {
       this.ctx.beginPath();
       this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
-      this.ctx.stroke();
       this.ctx.fill();
-
     }
+  }
+
+  arc(x, y, r, s, e) {
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, r, s, e, false);
+    this.ctx.stroke();
   }
 
   sin(a) {
