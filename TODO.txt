@@ -24,3 +24,19 @@ Eel
  * Create Rhino baddie
  - Nova - automatic circular fire
  * Add tween library
+
+// We need a way to 'turn off' an entity
+// so that it no longer responds to events
+// and it doesn't get rendered
+// but it should still update so it can do any
+// necessary work
+
+// 1 - remove from scene?
+	 // some entities are children, so adding them back....we would need a parent pointer
+// 2 - add visible and events flag?
+// 3 - 
+
+ entity.visible = false;
+ entity.events = false;
+
+  entity.enabled.on();

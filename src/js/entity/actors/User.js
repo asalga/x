@@ -43,13 +43,16 @@ export default function createUser() {
     p3.restore();
   };
 
-
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
   let miniGunLauncher = new Launcher(miniGun, { rate: 10, ammo: 999, color: 'rgb(145, 119, 130)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   user.add(miniGun);
+
+  miniGun.visible = false;
+  
+  miniGun.setEvents(true);
 
   // PLASMA
   // let plasmaGun = EntityFactory.create('plasmagun');

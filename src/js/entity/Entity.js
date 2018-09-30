@@ -9,6 +9,8 @@ import EventSystem from '../event/EventSystem.js';
 export default class Entity {
   constructor(cfg) {
     this.name = (cfg && cfg.name) || '';
+    this.visible = true;
+    this.events = true;
 
     this.pos = new Vec2();
     this.vel = new Vec2();
@@ -20,10 +22,11 @@ export default class Entity {
   }
 
   draw() {
+    if (!this.visible) { return; }
+
     p3.save();
     this.renderProxy && this.renderProxy(p3);
     this.children.forEach(c => c.draw());
-
 
     this.components.forEach(c => {
       c.draw && c.draw();
@@ -32,7 +35,6 @@ export default class Entity {
     p3.restore();
   }
 
-
   update(dt) {
     this.updateProxy && this.updateProxy(dt);
 
@@ -40,7 +42,6 @@ export default class Entity {
       // ok if no update method?
       // add in entity on creation or update?
       c.update && c.update(dt, this);
-      // c.update(dt, this);
     });
 
     if (this.vel) {
@@ -62,8 +63,29 @@ export default class Entity {
     this.children.push(e);
   }
 
+  setEvents(b){
+    this.events = b;
+
+    // if (this.events === false) {
+    //   return;
+    // }
+
+    this.children.forEach(c => {
+      c.setEvents(b);
+      // c.update(dt);
+    });
+
+    this.components.forEach(e => {
+      e.setEvents(b);
+    });
+  }
+
   on(evtName, func, ctx) {
-    (new EventSystem()).on(evtName, func, ctx);
+    // this.eventFilter(evtName, func, ctx);
+    (new EventSystem()).on(evtName, function() {
+      if (this.events === false) { return; }
+      func(arguments);
+    }.bind(this), ctx);
   }
 
   removeComponent(c) {
