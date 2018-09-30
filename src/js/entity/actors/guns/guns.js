@@ -3,19 +3,17 @@
 import Entity from '../../Entity.js';
 
 export function createMinigun() {
-  let e = new Entity();
-  e.name = 'minigun';
-  return e;
+  return new Entity({ 'name': 'minigun' });
 }
 
 export function createPlasmaGun() {
-  let e = new Entity();
-  e.name = 'plasmagun';
-  return e;
+  return new Entity({ 'name': 'plasmagun' });
 }
 
 export function createRocketGun() {
-  let e = new Entity();
-  e.name = 'rocketgun';
-  return e;
+  return new Entity({ 'name': 'rocketgun' });
+}
+
+export function createLinkGun() {
+  return new Entity({ 'name': 'linkgun' });
 }

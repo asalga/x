@@ -25,7 +25,6 @@ export default function createMouse() {
 
   e.updateProxy = function(dt) {};
 
-
   let setRandPosition = function(entity) {
     let r = Vec2.rand().normalize().mult(500);
 
@@ -38,15 +37,12 @@ export default function createMouse() {
   };
   setRandPosition(e);
 
-
   e.renderProxy = function(p3) {
     p3.save();
-    // p3.strokeWeight(4);
-    // p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
+    p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
     // p3.stroke(157, 190, 188);
     p3.noStroke();
     p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
-    // Debug.add(`${this.health.health}`);
     p3.restore();
   };
 
@@ -77,7 +73,7 @@ export default function createMouse() {
 
   e.addComponent(goToTarget);
   e.addComponent(new Killable(e));
-  // e.addComponent(new Stun(e, 3));
+  e.addComponent(new Stun(e, 3));
   e.addComponent(new Health(e, 20, 20));
   e.addComponent(new HealthRender(e));
 

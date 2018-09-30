@@ -8,8 +8,19 @@ Rhino
 Eel
 
 # TODO
+ * Animate HealthRenderComponent
  * Create Object Pool for Vectors
  * Create scene.getClosestEnemy()
  * Add min speed to Homing Missle
  * Remove entity if has left game bounds
  * Allow switching Weapons
+ * Add firerate implementation to Launcher
+ * Add healthComponent to Rockets
+ * Create LinkGun
+ * Fix onCollision method in bullets
+ * Fix setDir for Bullets
+ * Create Flower Baddie
+ * Create Hyperwave bullet
+ * Create Rhino baddie
+ - Nova - automatic circular fire
+ * Add tween library

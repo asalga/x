@@ -73,9 +73,9 @@ export default class Scene {
       this.add(EntityFactory.create('mouse'));
     }
 
-    // let b = EntityFactory.create('bee');
-    // this.add(b);
-    // this.bee = b;
+    let b = EntityFactory.create('bee');
+    this.add(b);
+    this.bee = b;
   }
 
   remove(e) {
