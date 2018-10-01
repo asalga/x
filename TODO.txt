@@ -24,6 +24,7 @@ Eel
  * Create Rhino baddie
  - Nova - automatic circular fire
  * Add tween library
+ * Allow components to be muted
 
 // We need a way to 'turn off' an entity
 // so that it no longer responds to events
@@ -32,6 +33,7 @@ Eel
 // necessary work
 
 // 1 - remove from scene?
+	// if they are removed from the scene, they won't be updated
 	 // some entities are children, so adding them back....we would need a parent pointer
 // 2 - add visible and events flag?
 // 3 - 
@@ -40,3 +42,8 @@ Eel
  entity.events = false;
 
   entity.enabled.on();
+
+
+
+
+

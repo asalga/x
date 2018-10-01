@@ -70,23 +70,34 @@ export default class Entity {
     //   return;
     // }
 
-    this.children.forEach(c => {
-      c.setEvents(b);
-      // c.update(dt);
-    });
+    // this.children.forEach(c => {
+    //   c.setEvents(b);
+    //   // c.update(dt);
+    // });
 
-    this.components.forEach(e => {
-      e.setEvents(b);
-    });
+    // this.components.forEach(e => {
+    //   e.setEvents(b);
+    // });
   }
 
   on(evtName, func, ctx) {
+     (new EventSystem()).on(evtName, func, ctx);
+     
     // this.eventFilter(evtName, func, ctx);
-    (new EventSystem()).on(evtName, function() {
-      if (this.events === false) { return; }
-      func(arguments);
-    }.bind(this), ctx);
+    // (new EventSystem()).on(evtName, func
+      //function() {
+      // if (this.events === false) { return; }
+      // func.call(this, arguments[0], arguments[1], arguments[2]);
+    // }.bind(this), ctx);
   }
+
+  // on(evtName, func, ctx) {
+  //   // this.eventFilter(evtName, func, ctx);
+  //   (new EventSystem()).on(evtName, function() {
+  //     if (this.events === false) { return; }
+  //     func(arguments);
+  //   }.bind(this), ctx);
+  // }
 
   removeComponent(c) {
     debugger;

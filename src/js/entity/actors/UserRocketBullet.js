@@ -25,7 +25,9 @@ export default function createUserRocketBullet() {
     p3.save();
 
     p3.noStroke();
-    p3.fill(10, 30, 40);
+    // p3.fill(10, 30, 40);
+    p3.fill('rgb(245, 10, 255)');
+
 
     p3.translate(this.pos.x, this.pos.y);
     let a = Math.atan2(this.vel.y, this.vel.x);
@@ -60,7 +62,7 @@ export default function createUserRocketBullet() {
 
 
   // COMPONENTS
-  let payload = new Payload(e, 230);
+  let payload = new Payload(e, 5);
   e.addComponent(payload);
 
   let cursor = new Vec2(p3.mouseX, p3.mouseY);

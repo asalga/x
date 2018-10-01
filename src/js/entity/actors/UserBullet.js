@@ -21,7 +21,8 @@ export default function createBullet() {
   e.renderProxy = function(p3) {
     p3.save();
     p3.strokeWeight(2);
-    p3.fill(230,150,120);
+    // p3.fill(230,150,120);
+    p3.fill(120);
     p3.ellipse(this.pos.x, this.pos.y, e.size, e.size);
     p3.restore();
   };
