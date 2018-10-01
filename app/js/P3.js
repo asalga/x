@@ -126,10 +126,14 @@ export default class P3 {
     if (this._doFill) {
       this.ctx.beginPath();
       this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
-      this.ctx.stroke();
       this.ctx.fill();
-
     }
+  }
+
+  arc(x, y, r, s, e, cc) {
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, r, s, e, cc || true);
+    this.ctx.stroke();
   }
 
   sin(a) {
@@ -137,5 +141,12 @@ export default class P3 {
   }
   cos(a) {
     return Math.cos(a);
+  }
+
+  get PI() {
+    return Math.PI;
+  }
+  get TAU() {
+    return Math.PI * 2;
   }
 }

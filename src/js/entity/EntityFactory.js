@@ -9,9 +9,11 @@ import createUserBullet from './actors/UserBullet.js';
 import createEnemyBullet from './actors/EnemyBullet.js';
 import createHomingMissle from './actors/HomingMissle.js';
 
-import createMinigun from './actors/minigun.js';
-import createPlasmaGun from './actors/plasmagun.js';
-
+import {
+  createMinigun,
+  createPlasmaGun,
+  createRocketGun
+} from './actors/guns/guns.js';
 
 let createFuncs = new Map();
 
@@ -22,15 +24,14 @@ createFuncs.set('hummingbird', createHummingBird);
 createFuncs.set('user', createUser);
 
 // BULLETS
-createFuncs.set('bullet', createUserBullet);
+// createFuncs.set('bullet', createUserBullet);
 // createFuns.set('plasma', createPlasmaBullet);
-createFuncs.set('homingmissle', createHomingMissle);
-
+// createFuncs.set('homingmissle', createHomingMissle);
 
 // GUNS
 createFuncs.set('minigun', createMinigun);
 createFuncs.set('plasmagun', createPlasmaGun);
-
+createFuncs.set('rocketgun', createRocketGun);
 
 export default class EntityFactor {
   static create(str) {
