@@ -12,7 +12,7 @@ export default function createPlamaBullet() {
   e.bounds = new BoundingCircle(e.pos, e.size);
 
   e.setDir = function(d){
-    e.vel = d.clone().mult(900);
+    e.vel = d.clone().mult(600);
   }
 
   scene.add(e);

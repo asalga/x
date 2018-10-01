@@ -7,14 +7,24 @@ export default class Launcher extends Component {
   constructor(e, cfg) {
     super(e, 'launcher');
 
-    // this.props = cfg 
-    this.rate = cfg.rate;
+    this.rate = 1 / cfg.rate;
+    this.firing = false;
     this.ammo = cfg.ammo;
     this.color = cfg.color;
-
     this.direction = new Vec2();
+    this.timer = 0;
 
-    this.on('GAME_CLICK', this.fire, this);
+    this.startedFiring = function() {
+      this.firing = true;
+    }
+
+    this.stoppedFiring = function() {
+      this.firing = false;
+    }
+
+    // this.on('GAME_CLICK', this.requestFire, this);
+    this.on('GAME_MOUSE_DOWN', this.startedFiring, this);
+    this.on('GAME_MOUSE_UP', this.stoppedFiring, this);
 
     this.getVecToCursor = function() {
       let center = window.UserPos;
@@ -22,6 +32,15 @@ export default class Launcher extends Component {
       let cur = new Vec2(p3.mouseX, p3.mouseY);
       cur = Vec2.sub(cur, center);
       return cur.normalize().mult(60);
+    }
+  }
+
+  requestFire() {
+    this.firing = true;
+    if (this.timer > this.rate) {
+      let diff = this.timer % this.rate;
+      this.timer = 0;// diff;
+      this.fire();
     }
   }
 
@@ -42,9 +61,13 @@ export default class Launcher extends Component {
     bullet.setDir(dir);
   }
 
+  stopFiring() {
+    this.firing = false;
+  }
+
   draw() {
     Debug.add(`${this.entity.name} ammo: ${this.ammo}`);
-    
+
     p3.save();
     let curr = this.getVecToCursor();
     p3.strokeWeight(10);
@@ -63,6 +86,9 @@ export default class Launcher extends Component {
   }
 
   update(dt) {
-
+    this.timer += dt;
+    if (this.firing) {
+      this.requestFire();
+    }
   }
 }

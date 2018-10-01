@@ -7,7 +7,7 @@ import createBee from './actors/Bee.js';
 import createUser from './actors/User.js';
 import createUserBullet from './actors/UserBullet.js';
 import createEnemyBullet from './actors/EnemyBullet.js';
-import createHomingMissle from './actors/HomingMissle.js';
+import UserRocketBullet from './actors/UserRocketBullet.js';
 
 import {
   createMinigun,

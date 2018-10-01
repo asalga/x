@@ -35,7 +35,7 @@ export default function createMouse() {
   };
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 50, 50));
+  e.addComponent(new Health(e, 450, 450));
   e.addComponent(new HealthRender(e));
 
   let coll = new Collidable(e);

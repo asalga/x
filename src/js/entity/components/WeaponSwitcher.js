@@ -1,22 +1,46 @@
 'use strict';
 
 import Component from './Component.js';
+import Event from '../../event/Event.js';
 
 export default class WeaponSwitcher extends Component {
   constructor(e) {
     super(e, 'weaponswitcher');
     this.weapons = new Map();
+    this.mouseDown = false;
+
+    this.on('GAME_MOUSE_DOWN', function(){this.mouseDown = true}, this);
+    this.on('GAME_MOUSE_UP', function(){this.mouseDown = false}, this);
 
     document.addEventListener('keydown', e => {
-      this.turnAllWeaponsOff();
+    	this.ismdown = this.mouseDown;
 
+      this.turnAllWeaponsOff();
       let w = this.weapons.get(e.key);
       w && this.enableWeapon(w, true);
+
+      if (this.ismdown) {
+        new Event({ evtName: 'GAME_MOUSE_DOWN', data: e }).fire();
+      }
+
     });
   }
 
+  //   this.on('GAME_MOUSE_DOWN', e => {
+  //   this.turnAllWeaponsOff();
+  //   let w = this.weapons.get(e.key);
+  //   w && this.enableWeapon(w, true);
+  // }, this);
+
   enableWeapon(e, b) {
     e.visible = b;
+
+    // If we turn off the weapon but user is still holding down fire
+    // Just fire the up event.
+    if (b === false) {
+      new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire();
+    }
+
     e.setEvents(b);
   }
 

@@ -49,20 +49,20 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { rate: 10, ammo: 999, color: 'rgb(120,120, 120)' });
+  let miniGunLauncher = new Launcher(miniGun, { rate: 2.5, ammo: 999, color: 'rgb(120,120, 120)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   user.add(miniGun);
 
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { rate: 4, ammo: 50, color: 'rgb(55, 210, 55)' });
+  let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 50, color: 'rgb(55, 210, 55)' });
   plamaLauncher.createFunc = createUserPlasmaBullet;
   plasmaGun.addComponent(plamaLauncher);
   user.add(plasmaGun);
 
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, { rate: 4, ammo: 50, color: 'rgb(245, 10, 255)' });
+  let rocketLauncher = new Launcher(rocketGun, { rate: 1, ammo: 450, color: 'rgb(245, 10, 255)' });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   user.add(rocketGun);
