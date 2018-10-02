@@ -17,7 +17,6 @@ export default function createBullet() {
 
   scene.add(e);
   
-  // e.addComponent(new RoundThing());
   e.renderProxy = function(p3) {
     p3.save();
     p3.strokeWeight(2);

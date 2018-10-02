@@ -15,13 +15,15 @@ export default function createRocketBullet() {
   e.size = 10;
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 1;
-  e.homingVel = 520;
+  e.homingVel = 300;
 
   scene.add(e);
 
   e.updateProxy = function(dt) {};
  
-  e.setDir = function() {};
+  e.setDir = function(d) {
+    e.vel = d.clone().mult(this.homingVel);
+  };
 
   e.renderProxy = function() {
     p3.save();
@@ -49,7 +51,7 @@ export default function createRocketBullet() {
   }, e);
 
   // COMPONENTS
-  let payload = new Payload(e, 5);
+  let payload = new Payload(e, 1);
   e.addComponent(payload);
 
   let seek = new SeekTarget(e);

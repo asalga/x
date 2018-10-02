@@ -33,7 +33,7 @@ export default class Scene {
   getRandomBaddie() {
     let b;
     this.entities.forEach(e => {
-      if(e.name === 'mouse'){
+      if(e.killable){
         b = e;
       }
     });

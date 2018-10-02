@@ -15,7 +15,7 @@ export default function createUserRocketBullet() {
   e.size = 10;
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 1;
-  e.homingVel = 520;
+  e.homingVel = 320;
 
   scene.add(e);
 
@@ -67,6 +67,7 @@ export default function createUserRocketBullet() {
   let seek = new SeekTarget(e);
   seek.maxVel = e.homingVel;
   seek.target = scene.getRandomBaddie();
+
   e.addComponent(seek);
 
   let coll = new Collidable(e);

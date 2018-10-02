@@ -28,6 +28,10 @@ export default class Health extends Component {
     return this.health/this.max;
   }
 
+  draw(){
+    Debug.add(`${this.health}`);
+  }
+
   increaseHelth(amt) {
     this.health += amt;
     this.health = Math.min(this.health, this.max);

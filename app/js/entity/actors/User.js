@@ -21,11 +21,10 @@ import createUserMiniGunBullet from './UserBullet.js';
 import createUserPlasmaBullet from './UserPlasmaBullet.js';
 import createUserRocketBullet from './UserRocketBullet.js';
 
-
 export default function createUser() {
   let user = new Entity();
   user.name = 'user';
-  user.pos.set(p3.width / 2, p3.height / 2 + 0);
+  user.pos.set(p3.width / 2, p3.height / 2);
   user.size = 55;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
@@ -38,12 +37,12 @@ export default function createUser() {
     p3.fill(157 * h, 192 * h, 188 * h);
     p3.ellipse(0, 0, user.size, user.size);
 
-    // just a decoration
-    // p3.save();
-    // p3.noStroke();
-    // p3.fill(48, 60, 93);
-    // p3.ellipse(0, 0, 20, 20);
-    // p3.restore();
+    // top
+    p3.save();
+    p3.noStroke();
+    p3.fill(48, 60, 93);
+    p3.ellipse(0, 0, 20, 20);
+    p3.restore();
   };
 
   // MINIGUN
@@ -53,7 +52,6 @@ export default function createUser() {
   miniGun.addComponent(miniGunLauncher);
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
-
 
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
