@@ -42,7 +42,9 @@ export default class Entity {
     this.components.forEach(c => {
       // ok if no update method?
       // add in entity on creation or update?
+
       c.update && c.update(dt, this);
+      c.updateProxy && c.updateProxy(dt);
     });
 
     if (this.vel) {

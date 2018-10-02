@@ -8,8 +8,8 @@ import HealthRender from '../components/HealthRender.js';
 import Killable from '../components/Killable.js';
 import Collidable from '../components/Collidable.js';
 import Launcher from '../components/Launcher.js';
-
 import WeaponSwitcher from '../components/WeaponSwitcher.js';
+import MouseLauncherController from '../components/MouseLauncherController.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
@@ -29,9 +29,6 @@ export default function createUser() {
   user.size = 55;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
-  // TODO: FIX
-  window.UserPos = user.pos;
-
   user.renderProxy = function(p3) {
     p3.translate(this.pos.x, this.pos.y);
 
@@ -41,6 +38,7 @@ export default function createUser() {
     p3.fill(157 * h, 192 * h, 188 * h);
     p3.ellipse(0, 0, user.size, user.size);
 
+    // just a decoration
     // p3.save();
     // p3.noStroke();
     // p3.fill(48, 60, 93);
@@ -53,13 +51,16 @@ export default function createUser() {
   let miniGunLauncher = new Launcher(miniGun, { rate: 2.5, ammo: 999, color: 'rgb(120,120, 120)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
+  miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
+
 
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
   let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 50, color: 'rgb(55, 210, 55)' });
   plamaLauncher.createFunc = createUserPlasmaBullet;
   plasmaGun.addComponent(plamaLauncher);
+  plasmaGun.addComponent(new MouseLauncherController(plasmaGun));
   user.add(plasmaGun);
 
   // ROCKET
@@ -71,6 +72,7 @@ export default function createUser() {
     color: 'rgb(245, 10, 255)' });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
+  rocketGun.addComponent(new MouseLauncherController(rocketGun));
   user.add(rocketGun);
 
   // WEAPON SWITCHER

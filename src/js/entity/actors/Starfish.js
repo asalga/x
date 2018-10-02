@@ -23,7 +23,9 @@ export default function createStarFish() {
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 3;
 
-  e.updateProxy = function(dt) {};
+  e.updateProxy = function(dt) {
+
+  };
 
   e.renderProxy = function(p3) {
     p3.translate(this.pos.x, this.pos.y);
@@ -40,10 +42,13 @@ export default function createStarFish() {
   let rocketLauncher = new Launcher(rocketGun, {
     rate: 1,
     autoFire: true,
-    ammo: 450,
-    color: 'rgb(2, 10, 255)'
+    ammo: 100
   });
   rocketLauncher.createFunc = createRocketBullet;
+  rocketLauncher.updateProxy = function() {
+    this.direction.x = Math.cos(gameTime / 3.14);
+    this.direction.y = Math.sin(gameTime / 3.14);
+  }
   rocketGun.addComponent(rocketLauncher);
   e.add(rocketGun);
 

@@ -10,7 +10,9 @@ export function createMinigun() {
 }
 
 export function createPlasmaGun() {
-  return new Entity({ 'name': 'plasmagun' });
+  let e = new Entity({ 'name': 'plasmagun' });
+  e.addComponent(new LauncherRenderer(e, { color: 'green' }));
+  return e;
 }
 
 export function createRocketGun() {

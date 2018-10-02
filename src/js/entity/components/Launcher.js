@@ -69,6 +69,8 @@ export default class Launcher extends Component {
   }
 
   update(dt) {
+    this.updateProxy && this.updateProxy(dt);
+
     this.timer += dt;
     if (this.firing || this.autoFire) {
       this.requestFire();
