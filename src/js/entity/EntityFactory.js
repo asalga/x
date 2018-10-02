@@ -1,8 +1,9 @@
 'use strict';
 
-import createMouse from './actors/Mouse.js';
-import createHummingBird from './actors/HummingBird.js';
 import createBee from './actors/Bee.js';
+import createMouse from './actors/Mouse.js';
+import createStarfish from './actors/Starfish.js';
+import createHummingBird from './actors/HummingBird.js';
 
 import createUser from './actors/User.js';
 import createUserBullet from './actors/UserBullet.js';
@@ -20,13 +21,9 @@ let createFuncs = new Map();
 // PLAYERS
 createFuncs.set('bee', createBee);
 createFuncs.set('mouse', createMouse);
+createFuncs.set('starfish', createStarfish);
 createFuncs.set('hummingbird', createHummingBird);
 createFuncs.set('user', createUser);
-
-// BULLETS
-// createFuncs.set('bullet', createUserBullet);
-// createFuns.set('plasma', createPlasmaBullet);
-// createFuncs.set('homingmissle', createHomingMissle);
 
 // GUNS
 createFuncs.set('minigun', createMinigun);

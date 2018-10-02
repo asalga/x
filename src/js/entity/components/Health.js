@@ -5,10 +5,10 @@ import Debug from '../../debug/Debug.js';
 import Event from '../../event/Event.js';
 
 export default class Health extends Component {
-  constructor(e, amt = 100, max = 100) {
+  constructor(e, amt = 100) {
     super(e, 'health');
     this.health = amt;
-    this.max = max;
+    this.max = amt;
 
     this.canRegen = true;
     this.regenerationSpeed = 0;

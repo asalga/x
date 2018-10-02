@@ -19,6 +19,7 @@ export default class Entity {
     this.speed = 1; // velocity multiplier
     this.components = [];
     this.children = [];
+    this.parent = null;
   }
 
   draw() {
@@ -60,6 +61,7 @@ export default class Entity {
   }
 
   add(e) {
+    e.parent = this;
     this.children.push(e);
   }
 
@@ -78,6 +80,13 @@ export default class Entity {
     // this.components.forEach(e => {
     //   e.setEvents(b);
     // });
+  }
+
+  getWorldCoords(){
+    if(this.parent){
+      return Vec2.add(this.pos, this.parent.getWorldCoords());
+    }
+    return this.pos;
   }
 
   on(evtName, func, ctx) {

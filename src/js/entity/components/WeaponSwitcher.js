@@ -26,22 +26,16 @@ export default class WeaponSwitcher extends Component {
     });
   }
 
-  //   this.on('GAME_MOUSE_DOWN', e => {
-  //   this.turnAllWeaponsOff();
-  //   let w = this.weapons.get(e.key);
-  //   w && this.enableWeapon(w, true);
-  // }, this);
-
   enableWeapon(e, b) {
+    e.launcher.setEnable(b);
     e.visible = b;
+    e.setEvents(b);
 
     // If we turn off the weapon but user is still holding down fire
     // Just fire the up event.
     if (b === false) {
       new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire();
     }
-
-    e.setEvents(b);
   }
 
   init() {
