@@ -9,7 +9,7 @@ import CollisionType from '../../collision/CollisionType.js';
 import SeekTarget from '../components/SeekTarget.js';
 import Vec2 from '../../math/Vec2.js';
 
-export default function createUserRocketBullet() {
+export default function createRocketBullet() {
   let e = new Entity();
   e.name = 'homingmissle';
   e.size = 10;
@@ -20,14 +20,14 @@ export default function createUserRocketBullet() {
   scene.add(e);
 
   e.updateProxy = function(dt) {};
+ 
+  e.setDir = function() {};
 
   e.renderProxy = function() {
     p3.save();
 
     p3.noStroke();
-    // p3.fill(10, 30, 40);
-    p3.fill('rgb(245, 10, 255)');
-
+    p3.fill('rgb(1, 10, 255)');
     p3.translate(this.pos.x, this.pos.y);
     let a = Math.atan2(this.vel.y, this.vel.x);
     p3.rotate(a);
@@ -36,7 +36,7 @@ export default function createUserRocketBullet() {
     p3.restore();
   };
 
-  e.setDir = function() {};
+  // e.vel = e.homingVel;
 
   e.on('collision', function(data) {
     let [e1, e2] = [data.e1, data.e2];
@@ -44,34 +44,22 @@ export default function createUserRocketBullet() {
     // Check if one of the entities passed is us
     if (e1 !== e && e2 !== e) { return; }
     let other = e1 === e ? e2 : e1;
-
     other.health.hurt(e.payload.payload);
     scene.remove(e);
-  }, e);
-
-  e.on('death', function(data) {
-    if (data === e.seektarget.target) {
-      e.seektarget.target = scene.getRandomBaddie();
-    }
   }, e);
 
   // COMPONENTS
   let payload = new Payload(e, 5);
   e.addComponent(payload);
 
-  let cursor = new Vec2(p3.mouseX, p3.mouseY);
-  let center = new Vec2(p3.width / 2, p3.height / 2);
-  let vel = Vec2.sub(cursor, center);
-  e.vel = vel.normalize().mult(e.homingVel);
-
   let seek = new SeekTarget(e);
   seek.maxVel = e.homingVel;
-  seek.target = scene.getRandomBaddie();
+  seek.target = scene.getUser();
   e.addComponent(seek);
-
+  
   let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
+  coll.type = CollisionType.ENEMY_BULLET;
+  coll.mask = CollisionType.PLAYER;
   e.addComponent(coll);
 
   return e;

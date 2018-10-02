@@ -3,9 +3,9 @@
 import Component from './Component.js';
 
 export default class Collidable extends Component {
-  constructor(e) {
+  constructor(e, cfg) {
     super(e, 'collidable');
-    this.type = 0x0;
-    this.mask = 0x0;
+    this.type = (cfg && cfg.type) || 0x0;
+    this.mask = (cfg && cfg.mask) || 0x0;
   }
 }

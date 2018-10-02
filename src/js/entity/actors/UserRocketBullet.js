@@ -16,7 +16,7 @@ export default function createUserRocketBullet() {
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 1;
   e.homingVel = 520;
-  
+
   scene.add(e);
 
   e.updateProxy = function(dt) {};
@@ -28,7 +28,6 @@ export default function createUserRocketBullet() {
     // p3.fill(10, 30, 40);
     p3.fill('rgb(245, 10, 255)');
 
-
     p3.translate(this.pos.x, this.pos.y);
     let a = Math.atan2(this.vel.y, this.vel.x);
     p3.rotate(a);
@@ -37,16 +36,13 @@ export default function createUserRocketBullet() {
     p3.restore();
   };
 
-  e.setDir = function(){};
+  e.setDir = function() {};
 
   e.on('collision', function(data) {
-    let e1 = data.e1;
-    let e2 = data.e2;
+    let [e1, e2] = [data.e1, data.e2];
 
     // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) {
-      return;
-    }
+    if (e1 !== e && e2 !== e) { return; }
     let other = e1 === e ? e2 : e1;
 
     other.health.hurt(e.payload.payload);
@@ -58,8 +54,6 @@ export default function createUserRocketBullet() {
       e.seektarget.target = scene.getRandomBaddie();
     }
   }, e);
-
-
 
   // COMPONENTS
   let payload = new Payload(e, 5);
