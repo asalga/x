@@ -55,7 +55,7 @@ export default class Launcher extends Component {
     let bullet = this.createFunc();
 
     // Debug.add(`${this.entity.name} ammo: ${this.ammo}`);
-    // TODO: write: .getWorldCoords();
+
     // let gunTip = this.getVecToCursor();
     // gunTip.add(p3.width / 2, p3.height / 2);
     // bullet.pos.set(gunTip);
@@ -66,6 +66,8 @@ export default class Launcher extends Component {
     let gunTip = this.direction.clone().mult(50);
     worldCoords.add(gunTip);
     bullet.pos.set(worldCoords);
+
+    bullet.setDir(this.direction);
   }
 
   update(dt) {

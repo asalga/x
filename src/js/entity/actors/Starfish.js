@@ -19,7 +19,7 @@ import Vec2 from '../../math/Vec2.js';
 export default function createStarFish() {
   let e = new Entity();
   e.name = 'starfish';
-  e.size = 60;
+  e.size = 40;
   e.bounds = new BoundingCircle(e.pos, e.size);
   e.speed = 3;
 
@@ -29,28 +29,43 @@ export default function createStarFish() {
 
   e.renderProxy = function(p3) {
     p3.translate(this.pos.x, this.pos.y);
+    // p3.rotate(gameTime / Math.PI);
 
     p3.save();
+
     p3.fill(200);
     p3.noStroke();
     p3.ellipse(0, 0, this.size, this.size);
     p3.restore();
   };
 
-  // ROCKET
-  let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, {
-    rate: 1,
-    autoFire: true,
-    ammo: 100
-  });
-  rocketLauncher.createFunc = createRocketBullet;
-  rocketLauncher.updateProxy = function() {
-    this.direction.x = Math.cos(gameTime / 3.14);
-    this.direction.y = Math.sin(gameTime / 3.14);
+  for (let i = 0; i < 10; i++) {
+    let rocketGun = EntityFactory.create('rocketgun');
+    let rocketLauncher = new Launcher(rocketGun, {
+      rate: .125,
+      autoFire: true,
+      ammo: 0
+    });
+
+    let a = i * ((p3.TAU) / 8);
+
+    rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(40));
+    rocketLauncher.createFunc = createRocketBullet;
+
+    rocketGun.addComponent(new Health(rocketGun, 50));
+    rocketGun.addComponent(new Killable(rocketGun));
+    rocketGun.addComponent(new Collidable(rocketGun, {
+      type: CollisionType.ENEMY,
+      mask: CollisionType.PLAYER_BULLET
+    }));
+
+    rocketLauncher.updateProxy = function() {
+      this.direction.x = Math.cos((a));
+      this.direction.y = Math.sin((a));
+    }
+    rocketGun.addComponent(rocketLauncher);
+    e.add(rocketGun);
   }
-  rocketGun.addComponent(rocketLauncher);
-  e.add(rocketGun);
 
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, 1000));
