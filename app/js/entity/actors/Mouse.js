@@ -43,6 +43,7 @@ export default function createMouse() {
     p3.save();
     p3.translate(e.pos.x, e.pos.y);
     p3.noStroke();
+    p3.fill(64, 202, 238);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
   }

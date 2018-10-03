@@ -9,6 +9,15 @@ import EventSystem from '../event/EventSystem.js';
 export default class Entity {
   constructor(cfg) {
     this.name = (cfg && cfg.name) || '';
+
+    if (cfg) {
+      Object.keys(cfg).forEach(key => { 
+        this[key] = cfg[key];
+      })
+      // debugger;
+    }
+
+
     this.visible = true;
     this.events = true;
 
@@ -68,25 +77,25 @@ export default class Entity {
     this.children.push(e);
   }
 
-  setEvents(b){
+  setEvents(b) {
     this.events = b;
   }
 
-  getWorldCoords(){
-    if(this.parent){
+  getWorldCoords() {
+    if (this.parent) {
       return Vec2.add(this.pos, this.parent.getWorldCoords());
     }
     return this.pos;
   }
 
   on(evtName, func, ctx) {
-     (new EventSystem()).on(evtName, func, ctx);
-     
+    (new EventSystem()).on(evtName, func, ctx);
+
     // this.eventFilter(evtName, func, ctx);
     // (new EventSystem()).on(evtName, func
-      //function() {
-      // if (this.events === false) { return; }
-      // func.call(this, arguments[0], arguments[1], arguments[2]);
+    //function() {
+    // if (this.events === false) { return; }
+    // func.call(this, arguments[0], arguments[1], arguments[2]);
     // }.bind(this), ctx);
   }
 

@@ -20,13 +20,12 @@ import Vec2 from '../../math/Vec2.js';
 export default function createStarFish() {
   let e = new Entity({ name: 'starfish' });
   e.bounds = new BoundingCircle(e.pos, 40);
-  // e.updateProxy = function(dt) {};
 
   let spriteRender = new SpriteRender(e, { layer: 100 });
   spriteRender.draw = function() {
     p3.save();
     p3.translate(e.pos.x, e.pos.y);
-    p3.fill(200);
+    p3.fill(255, 122, 188);
     p3.noStroke();
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
@@ -38,7 +37,7 @@ export default function createStarFish() {
     let rocketLauncher = new Launcher(rocketGun, {
       rate: .25,
       autoFire: true,
-      ammo: 1
+      ammo: 100
     });
 
     let a = i * ((p3.TAU) / 10);

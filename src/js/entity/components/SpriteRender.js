@@ -6,6 +6,7 @@ export default class SpriteRender extends Component {
   constructor(e, cfg) {
     super(e, 'spriterender');
     this.renderable = true;
+    this.visible = true;
     this.layer = cfg && cfg.layer || 0;
   }
 }

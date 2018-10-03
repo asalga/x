@@ -30,7 +30,7 @@ export default class WeaponSwitcher extends Component {
 
   enableWeapon(e, b) {
     e.launcher.setEnable(b);
-    e.visible = b;
+    e.launcherrenderer.visible = b;
     e.setEvents(b);
 
     // If we turn off the weapon but user is still holding down fire

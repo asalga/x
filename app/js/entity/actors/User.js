@@ -37,13 +37,15 @@ export default function createUser() {
     // User body
     p3.stroke(111, 150, 80);
     // let h = (user.health.health) / 100;
-    p3.fill(157, 192, 188);
+    p3.fill(251,200,138);
+    //(157, 192, 188);
     p3.ellipse(0, 0, user.size, user.size);
 
     // top
     p3.save();
     p3.noStroke();
-    p3.fill(48, 60, 93);
+    // p3.fill(251,200,138);
+    //(48, 60, 93);
     p3.ellipse(0, 0, 20, 20);
     p3.restore();
     p3.restore();
@@ -60,7 +62,7 @@ export default function createUser() {
 
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 50, color: 'rgb(55, 210, 55)' });
+  let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 350, color: 'rgb(55, 210, 55)' });
   plamaLauncher.createFunc = createUserPlasmaBullet;
   plasmaGun.addComponent(plamaLauncher);
   plasmaGun.addComponent(new MouseLauncherController(plasmaGun));
@@ -87,8 +89,8 @@ export default function createUser() {
   weaponSwitcher.init();
   user.addComponent(weaponSwitcher);
 
-  let health = new Health(user, 100);
-  health.regenerationSpeed = 10;
+  let health = new Health(user, 200);
+  health.regenerationSpeed = 8;
   health.updateProxy = function() { Debug.add(`Player Health: ${Math.floor(health.health)}`); };
   user.addComponent(health);
 

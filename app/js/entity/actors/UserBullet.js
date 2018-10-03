@@ -8,7 +8,7 @@ import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
 export default function createBullet() {
-  let e = new Entity({ name: 'bullet' });
+  let e = new Entity({ name: 'bullet' , layer: 2});
   scene.add(e);
 
   e.bounds = new BoundingCircle(e.pos, 5);

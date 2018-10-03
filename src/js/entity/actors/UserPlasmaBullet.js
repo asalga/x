@@ -8,7 +8,7 @@ import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
 export default function createPlamaBullet() {
-  let e = new Entity({ name: 'plasmabullet' });
+  let e = new Entity({ name: 'plasmabullet', layer: 2 });
   e.bounds = new BoundingCircle(e.pos, 10);
 
   scene.add(e);

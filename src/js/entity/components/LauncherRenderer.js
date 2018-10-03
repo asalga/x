@@ -7,6 +7,7 @@ export default class LauncherRenderer extends Component {
     super(e, 'launcherrenderer');
     this.color = cfg.color;
     this.renderable = true;
+    this.visible = true;
     this.layer = 10;
   }
 
