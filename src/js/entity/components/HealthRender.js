@@ -6,7 +6,9 @@ export default class HealthRender extends Component {
   constructor(e,cfg) {
     super(e, 'healthrender');
     this.renderable = true;
-    this.layer = cfg && cfg.layer || 0;
+    this.visible = true;
+
+    this.layer = cfg && cfg.layer || 100;
   }
 
   update(dt) {}
@@ -17,7 +19,7 @@ export default class HealthRender extends Component {
     let world = e.getWorldCoords();
     p3.save();
     p3.translate(world.x, world.y);
-    p3.strokeWeight(3);
+    p3.strokeWeight(5);
     p3.stroke(0, 255, 0);
     p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
 
