@@ -16,7 +16,8 @@ export default class Entity {
     this.vel = new Vec2();
     this.acc = new Vec2();
 
-    this.speed = 1; // velocity multiplier
+    // TODO: fix
+    this.speed = 1;
     this.components = [];
     this.children = [];
     this.parent = null;
@@ -27,8 +28,6 @@ export default class Entity {
 
     p3.save();
 
-
-    
     this.renderProxy && this.renderProxy(p3);
     this.children.forEach(c => c.draw());
 
@@ -71,19 +70,6 @@ export default class Entity {
 
   setEvents(b){
     this.events = b;
-
-    // if (this.events === false) {
-    //   return;
-    // }
-
-    // this.children.forEach(c => {
-    //   c.setEvents(b);
-    //   // c.update(dt);
-    // });
-
-    // this.components.forEach(e => {
-    //   e.setEvents(b);
-    // });
   }
 
   getWorldCoords(){

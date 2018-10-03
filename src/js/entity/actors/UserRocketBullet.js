@@ -15,10 +15,8 @@ export default function createUserRocketBullet() {
   scene.add(e);
 
   e.bounds = new BoundingCircle(e.pos, 10);
-  e.speed = 1;
-  e.homingVel = 320;
 
-  let spriteRender = new SpriteRender(e);
+  let spriteRender = new SpriteRender(e, { layer: 20 });
   spriteRender.draw = function() {
     p3.save();
 
@@ -55,13 +53,8 @@ export default function createUserRocketBullet() {
   let payload = new Payload(e, 5);
   e.addComponent(payload);
 
-  let cursor = new Vec2(p3.mouseX, p3.mouseY);
-  let center = new Vec2(p3.width / 2, p3.height / 2);
-  let vel = Vec2.sub(cursor, center);
-  e.vel = vel.normalize().mult(e.homingVel);
-
   let seek = new SeekTarget(e);
-  seek.maxVel = e.homingVel;
+  seek.maxVel = 300;
   seek.target = scene.getRandomBaddie();
   e.addComponent(seek);
 

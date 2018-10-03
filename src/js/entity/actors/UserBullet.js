@@ -13,7 +13,7 @@ export default function createBullet() {
 
   e.bounds = new BoundingCircle(e.pos, 5);
 
-  let spriteRender = new SpriteRender(e);
+  let spriteRender = new SpriteRender(e, { layer: 100 });
   spriteRender.draw = function() {
     p3.save();
     p3.strokeWeight(2);

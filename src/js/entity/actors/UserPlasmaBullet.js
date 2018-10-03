@@ -13,7 +13,7 @@ export default function createPlamaBullet() {
 
   scene.add(e);
 
-  let spriteRender = new SpriteRender(e);
+  let spriteRender = new SpriteRender(e, { layer: 20 });
   spriteRender.draw = function() {
     p3.save();
     p3.noStroke();
@@ -24,7 +24,7 @@ export default function createPlamaBullet() {
   }
   e.addComponent(spriteRender);
 
-  let payload = new Payload(e, 30);
+  let payload = new Payload(e, 10);
   e.addComponent(payload);
 
   // Remove this?

@@ -24,31 +24,7 @@ let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
 
-
-
-
-
-// creating object for queue classs 
 var pq = new PriorityQueue();
-
-// // testing isEmpty and front on an empty queue 
-// // return true 
-// console.log(priorityQueue.isEmpty()); 
-
-// // returns "No elements in Queue" 
-// // console.log(priorityQueue.front()); 
-
-// // adding elements to the queue 
-// priorityQueue.enqueue("health", 3); 
-// priorityQueue.enqueue("particle system2", 0); 
-// priorityQueue.enqueue("gun1", 1); 
-// priorityQueue.enqueue("gun2", 1); 
-// priorityQueue.enqueue("particle system1", 0); 
-// priorityQueue.enqueue("health", 3);
-window.pq = pq;
-
-// prints [Gourav Piyush Sumit Sunny Sheru] 
-// console.log(priorityQueue.printPQueue()); 
 
 
 document.addEventListener('mousedown', e => {
@@ -76,7 +52,6 @@ function update(dt) {
 
 function preRender() {
   perfTimer = new Date().getTime();
-
 }
 
 function render() {
@@ -87,8 +62,7 @@ function render() {
 
     e.components.forEach(c => {
       if (c.renderable) {
-        pq.enqueue(c);
-        // console.log('test');
+        pq.enqueue(c, c.layer);
       }
     });
 
@@ -96,23 +70,19 @@ function render() {
       if (e.components) {
         e.components.forEach(c => {
           if (c.renderable) {
-            pq.enqueue(c);
-
+            pq.enqueue(c, c.layer);
           }
         });
       }
     });
   });
 
-  Debug.add(`to draw: ${pq.size()}`);
-
-
-
-  while(pq.isEmpty() === false){
-    let test = pq.dequeue();
-    test.draw();  
+  Debug.add('-------');
+  while (pq.isEmpty() === false) {
+    let c = pq.dequeue();
+    c.draw();
+    Debug.add(`${c.name}, ${c.layer}`);
   }
-  
 }
 
 function postRender() {

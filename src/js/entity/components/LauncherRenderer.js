@@ -7,13 +7,12 @@ export default class LauncherRenderer extends Component {
     super(e, 'launcherrenderer');
     this.color = cfg.color;
     this.renderable = true;
-    this.layer = 20;
+    this.layer = 10;
   }
 
   update(dt) {}
 
   draw() {
-    // let v = this.entity.launcher.entity.pos;
     let v = this.entity.getWorldCoords();
 
     let gun = this.entity.launcher.direction.clone().mult(60);
