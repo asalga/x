@@ -6,15 +6,19 @@ export default class LauncherRenderer extends Component {
   constructor(e, cfg) {
     super(e, 'launcherrenderer');
     this.color = cfg.color;
+    this.renderable = true;
+    this.layer = 20;
   }
 
   update(dt) {}
 
   draw() {
-    let v = this.entity.launcher.entity.pos;
+    // let v = this.entity.launcher.entity.pos;
+    let v = this.entity.getWorldCoords();
 
-    let gun = this.entity.launcher.direction.clone().mult(50);
+    let gun = this.entity.launcher.direction.clone().mult(60);
     p3.save();
+
     p3.strokeWeight(10);
     p3.stroke(this.color);
     p3.line(v.x, v.y, v.x+gun.x, v.y+gun.y);

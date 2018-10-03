@@ -26,6 +26,9 @@ export default class Entity {
     if (!this.visible) { return; }
 
     p3.save();
+
+
+    
     this.renderProxy && this.renderProxy(p3);
     this.children.forEach(c => c.draw());
 

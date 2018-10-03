@@ -45,7 +45,7 @@ export default class Scene {
   }
 
   draw(p3) {
-    this.entities.forEach(e => e.draw(p3));
+    // this.entities.forEach(e => e.draw(p3));
   }
 
   addUser(u) {

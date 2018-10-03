@@ -74,12 +74,12 @@ export default function createUser() {
   user.add(rocketGun);
 
   // WEAPON SWITCHER
-  let weaponSwitcher = new WeaponSwitcher();
+  let weaponSwitcher = new WeaponSwitcher(user);
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
   weaponSwitcher.init();
-  user.add(weaponSwitcher);
+  user.addComponent(weaponSwitcher);
 
   let health = new Health(user, 100);
   health.regenerationSpeed = 10;

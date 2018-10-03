@@ -10,6 +10,7 @@ export default function createPlamaBullet() {
   let e = new Entity({name: 'plasmabullet'});
   e.size = 10;
   e.bounds = new BoundingCircle(e.pos, e.size);
+  
 
   e.setDir = function(d){
     e.vel = d.clone().mult(600);

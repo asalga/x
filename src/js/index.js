@@ -11,6 +11,7 @@ import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 import Event from './event/Event.js';
+import PriorityQueue from './core/PriorityQueue.js';
 
 let timer;
 let perfTimer;
@@ -22,6 +23,33 @@ window.scene = null;
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
+
+
+
+
+
+// creating object for queue classs 
+var pq = new PriorityQueue();
+
+// // testing isEmpty and front on an empty queue 
+// // return true 
+// console.log(priorityQueue.isEmpty()); 
+
+// // returns "No elements in Queue" 
+// // console.log(priorityQueue.front()); 
+
+// // adding elements to the queue 
+// priorityQueue.enqueue("health", 3); 
+// priorityQueue.enqueue("particle system2", 0); 
+// priorityQueue.enqueue("gun1", 1); 
+// priorityQueue.enqueue("gun2", 1); 
+// priorityQueue.enqueue("particle system1", 0); 
+// priorityQueue.enqueue("health", 3);
+window.pq = pq;
+
+// prints [Gourav Piyush Sumit Sunny Sheru] 
+// console.log(priorityQueue.printPQueue()); 
+
 
 document.addEventListener('mousedown', e => {
   new Event({ evtName: 'GAME_CLICK', data: e }).fire();
@@ -48,11 +76,43 @@ function update(dt) {
 
 function preRender() {
   perfTimer = new Date().getTime();
+
 }
 
 function render() {
   p3.clear();
   scene.draw(p3);
+
+  scene.entities.forEach(e => {
+
+    e.components.forEach(c => {
+      if (c.renderable) {
+        pq.enqueue(c);
+        // console.log('test');
+      }
+    });
+
+    e.children.forEach(e => {
+      if (e.components) {
+        e.components.forEach(c => {
+          if (c.renderable) {
+            pq.enqueue(c);
+
+          }
+        });
+      }
+    });
+  });
+
+  Debug.add(`to draw: ${pq.size()}`);
+
+
+
+  while(pq.isEmpty() === false){
+    let test = pq.dequeue();
+    test.draw();  
+  }
+  
 }
 
 function postRender() {
@@ -60,6 +120,8 @@ function postRender() {
   Debug.add('render ms:' + timeDiff);
   Debug.draw();
   Debug.postRender();
+
+  pq.clear();
 }
 
 function setup() {
