@@ -3,29 +3,26 @@
 import Entity from '../Entity.js';
 import Collidable from '../components/Collidable.js';
 import Payload from '../components/Payload.js';
+import SpriteRender from '../components/SpriteRender.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
 export default function createPlamaBullet() {
-  let e = new Entity({name: 'plasmabullet'});
-  e.size = 10;
-  e.bounds = new BoundingCircle(e.pos, e.size);
-  
-
-  e.setDir = function(d){
-    e.vel = d.clone().mult(600);
-  }
+  let e = new Entity({ name: 'plasmabullet' });
+  e.bounds = new BoundingCircle(e.pos, 10);
 
   scene.add(e);
-  
-  // e.addComponent(new RoundThing());
-  e.renderProxy = function(p3) {
+
+  let spriteRender = new SpriteRender(e);
+  spriteRender.draw = function() {
     p3.save();
     p3.noStroke();
     p3.fill('rgb(55, 210, 55)');
-    p3.ellipse(this.pos.x, this.pos.y, e.size, e.size);
+    let sz = e.bounds.radius;
+    p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     p3.restore();
-  };
+  }
+  e.addComponent(spriteRender);
 
   let payload = new Payload(e, 30);
   e.addComponent(payload);

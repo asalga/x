@@ -21,7 +21,7 @@ export default class LauncherRenderer extends Component {
 
     p3.strokeWeight(10);
     p3.stroke(this.color);
-    p3.line(v.x, v.y, v.x+gun.x, v.y+gun.y);
+    p3.line(v.x, v.y, v.x + gun.x, v.y + gun.y);
     p3.restore();
 
     if (debug) {
