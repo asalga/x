@@ -8,7 +8,6 @@ Rhino
 Eel
 
 # TODO
- * Animate HealthRenderComponent
  * Create Object Pool for Vectors
  * Create scene.getClosestEnemy()
  * Add min speed to Homing Missle
@@ -19,7 +18,6 @@ Eel
  * Create LinkGun
  * Fix onCollision method in bullets
  * Fix setDir for Bullets
- * Create Flower Baddie
  * Create Hyperwave bullet
  * Create Rhino baddie
  - Nova - automatic circular fire
@@ -37,13 +35,3 @@ Eel
 	 // some entities are children, so adding them back....we would need a parent pointer
 // 2 - add visible and events flag?
 // 3 - 
-
- entity.visible = false;
- entity.events = false;
-
-  entity.enabled.on();
-
-
-
-
-

@@ -54,7 +54,7 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { rate: 2.5, ammo: 999, color: 'rgb(120,120, 120)' });
+  let miniGunLauncher = new Launcher(miniGun, { rate:45, autoFire:false, ammo: 999, color: 'rgb(120,120, 120)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   miniGun.addComponent(new MouseLauncherController(miniGun));

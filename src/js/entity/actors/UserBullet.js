@@ -17,6 +17,7 @@ export default function createBullet() {
   spriteRender.draw = function() {
     p3.save();
     p3.strokeWeight(2);
+    p3.stroke(20);
     p3.fill(120);
     let sz = e.bounds.radius;
     p3.ellipse(e.pos.x, e.pos.y, sz, sz);
