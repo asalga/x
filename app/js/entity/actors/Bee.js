@@ -6,6 +6,7 @@ import Killable from '../components/Killable.js';
 import Health from '../components/Health.js';
 import HealthRender from '../components/HealthRender.js';
 import Collidable from '../components/Collidable.js';
+import SpriteRender from '../components/SpriteRender.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
@@ -15,18 +16,19 @@ import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
   let e = new Entity({ name: 'bee' });
-  e.size = 20;
-  e.bounds = new BoundingCircle(e.pos, e.size);
-  e.speed = 1;
+  e.bounds = new BoundingCircle(e.pos, 20);
+  // e.speed = 1;
 
-  e.renderProxy = function() {
+  let spriteRender = new SpriteRender(e, { layer: 100 });
+  spriteRender.draw = function() {
     p3.save();
     p3.noStroke();
+    p3.translate(e.pos.x, e.pos.y);
     p3.fill(100, 111, 140);
-    // p3.fill(100, 110, 140 * (e.health/1000));
-    p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
+    p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  };
+  }
+  e.addComponent(spriteRender);
 
   e.updateProxy = function(dt) {
     let center = new Vec2(p3.width / 2, p3.height / 2);

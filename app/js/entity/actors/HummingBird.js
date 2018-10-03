@@ -14,7 +14,6 @@ export default function createHummingBird() {
   e.size = new Vec2(50, 10); 
   e.damage = 10;
   e.bounds = new BoundingBox(e.pos, e.size);
-  //new BoundingCircle(e.pos, e.size);
 
 
   e.updateProxy = function(dt) {};

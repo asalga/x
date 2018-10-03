@@ -11,6 +11,7 @@ import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 import Event from './event/Event.js';
+import PriorityQueue from './core/PriorityQueue.js';
 
 let timer;
 let perfTimer;
@@ -22,6 +23,9 @@ window.scene = null;
 let p3;
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d');
+
+var pq = new PriorityQueue();
+
 
 document.addEventListener('mousedown', e => {
   new Event({ evtName: 'GAME_CLICK', data: e }).fire();
@@ -53,6 +57,32 @@ function preRender() {
 function render() {
   p3.clear();
   scene.draw(p3);
+
+  scene.entities.forEach(e => {
+
+    e.components.forEach(c => {
+      if (c.renderable) {
+        pq.enqueue(c, c.layer);
+      }
+    });
+
+    e.children.forEach(e => {
+      if (e.components) {
+        e.components.forEach(c => {
+          if (c.renderable) {
+            pq.enqueue(c, c.layer);
+          }
+        });
+      }
+    });
+  });
+
+  Debug.add('-------');
+  while (pq.isEmpty() === false) {
+    let c = pq.dequeue();
+    c.draw();
+    Debug.add(`${c.name}, ${c.layer}`);
+  }
 }
 
 function postRender() {
@@ -60,6 +90,8 @@ function postRender() {
   Debug.add('render ms:' + timeDiff);
   Debug.draw();
   Debug.postRender();
+
+  pq.clear();
 }
 
 function setup() {

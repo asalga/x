@@ -6,6 +6,7 @@ import GoToTarget from '../components/GoToTarget.js';
 import Killable from '../components/Killable.js';
 import Health from '../components/Health.js';
 import HealthRender from '../components/HealthRender.js';
+import SpriteRender from '../components/SpriteRender.js';
 import Collidable from '../components/Collidable.js';
 import Stun from '../components/Stun.js';
 
@@ -37,14 +38,15 @@ export default function createMouse() {
   };
   setRandPosition(e);
 
-  e.renderProxy = function(p3) {
+  let spriteRender = new SpriteRender(e, { layer: 100 });
+  spriteRender.draw = function() {
     p3.save();
-    p3.fill(145 * (this.health.health * 10) / 100, 120, 130);
-    // p3.stroke(157, 190, 188);
+    p3.translate(e.pos.x, e.pos.y);
     p3.noStroke();
-    p3.ellipse(this.pos.x, this.pos.y, this.size, this.size);
+    p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  };
+  }
+  e.addComponent(spriteRender);
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();

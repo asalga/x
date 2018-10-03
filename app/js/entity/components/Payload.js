@@ -8,9 +8,11 @@ export default class Payload extends Component {
     this.payload = payload;
 
     e.on('collision', function hit(data) {
-      let [e1, e2] = [data.e1, data.e2];
+      // let [_this, other] = Utils.getWhich(data);
+      // if(_this === null){return;}
 
       // Check if one of the entities passed is us
+      let [e1, e2] = [data.e1, data.e2];
       if (e1 !== e && e2 !== e) { return; }
       let other = e1 === e ? e2 : e1;
 

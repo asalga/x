@@ -67,7 +67,7 @@ export default class Launcher extends Component {
     worldCoords.add(gunTip);
     bullet.pos.set(worldCoords);
 
-    bullet.setDir(this.direction);
+    bullet.vel.set(this.direction.clone().mult(500));
   }
 
   update(dt) {

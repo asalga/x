@@ -10,6 +10,7 @@ import Collidable from '../components/Collidable.js';
 import Launcher from '../components/Launcher.js';
 import WeaponSwitcher from '../components/WeaponSwitcher.js';
 import MouseLauncherController from '../components/MouseLauncherController.js';
+import SpriteRender from '../components/SpriteRender.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
@@ -28,13 +29,15 @@ export default function createUser() {
   user.size = 55;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
-  user.renderProxy = function(p3) {
-    p3.translate(this.pos.x, this.pos.y);
+  let spriteRender = new SpriteRender(user, { layer: 10 });
+  spriteRender.draw = function() {
+    p3.save();
+    p3.translate(user.pos.x, user.pos.y);
 
     // User body
     p3.stroke(111, 150, 80);
-    let h = (this.health.health) / 100;
-    p3.fill(157 * h, 192 * h, 188 * h);
+    // let h = (user.health.health) / 100;
+    p3.fill(157, 192, 188);
     p3.ellipse(0, 0, user.size, user.size);
 
     // top
@@ -43,7 +46,9 @@ export default function createUser() {
     p3.fill(48, 60, 93);
     p3.ellipse(0, 0, 20, 20);
     p3.restore();
-  };
+    p3.restore();
+  }
+  user.addComponent(spriteRender);
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
@@ -63,23 +68,24 @@ export default function createUser() {
 
   // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, { 
-    rate: 1, 
+  let rocketLauncher = new Launcher(rocketGun, {
+    rate: 1,
     autoFire: true,
-    ammo: 450, 
-    color: 'rgb(245, 10, 255)' });
+    ammo: 450,
+    color: 'rgb(245, 10, 255)'
+  });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));
   user.add(rocketGun);
 
   // WEAPON SWITCHER
-  let weaponSwitcher = new WeaponSwitcher();
+  let weaponSwitcher = new WeaponSwitcher(user);
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
   weaponSwitcher.init();
-  user.add(weaponSwitcher);
+  user.addComponent(weaponSwitcher);
 
   let health = new Health(user, 100);
   health.regenerationSpeed = 10;
@@ -95,7 +101,7 @@ export default function createUser() {
   coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;
   user.addComponent(coll);
 
-  user.addComponent(new HealthRender(user));
+  user.addComponent(new HealthRender(user, { layer: 10 }));
 
   return user;
 }
