@@ -21,11 +21,11 @@ export default class Scene {
       new Event({ evtName: 'death', data: e }).fire();
     });
 
-    this.timer += dt;
-    if (this.timer > 5.5) {
-      this.timer = 0;
-      this.add(EntityFactory.create('mouse'));
-    }
+    // this.timer += dt;
+    // if (this.timer > 5.5) {
+    //   this.timer = 0;
+    //   this.add(EntityFactory.create('mouse'));
+    // }
 
     this.entities.forEach(e => e.update(dt));
   }
@@ -69,14 +69,14 @@ export default class Scene {
     let user = EntityFactory.create('user');
     this.addUser(user);
 
-    let s = EntityFactory.create('starfish');
-    s.pos.x = 550;
-    s.pos.y = 150;
-    this.add(s);
+    // let s = EntityFactory.create('starfish');
+    // s.pos.x = 550;
+    // s.pos.y = 150;
+    // this.add(s);
 
-    for (let i = 0; i < 5; ++i) {
-      this.add(EntityFactory.create('mouse'));
-    }
+    // for (let i = 0; i < 5; ++i) {
+    //   this.add(EntityFactory.create('mouse'));
+    // }
 
     let b = EntityFactory.create('bee');
     this.add(b);

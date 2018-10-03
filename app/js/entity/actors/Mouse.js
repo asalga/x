@@ -13,16 +13,12 @@ import Stun from '../components/Stun.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-// import EventSystem from '../../event/EventSystem.js';
 import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
-  let e = new Entity();
-  e.name = 'mouse';
-  e.size = 10;
+  let e = new Entity({name: 'mouse'});
   e.damage = 20;
-  e.bounds = new BoundingCircle(e.pos, e.size);
-  e.speed = 3;
+  e.bounds = new BoundingCircle(e.pos, 10);
 
   e.updateProxy = function(dt) {};
 
@@ -53,24 +49,14 @@ export default function createMouse() {
   goToTarget.target = scene.getUser();
   goToTarget.speed = 10;
   goToTarget.arrived = function(data) {
-    let target = data.e1;
-    let mouse = data.e2;
-
-    // Find out which entity is which
-    if (data.e2.name === 'user') {
-      target = data.e2;
-      mouse = data.e1;
+    let [target, mouse] = [data.e1, data.e2];
+    if (data.e1 === this) {
+      [target, mouse] = [mouse, target];
     }
+    if (mouse.gototarget !== this) return;
 
-    // Find out if |this| is from the event
-    // otherwise event is coming from another object, ignore it
-    if (mouse.gototarget === this) {
-      scene.remove(mouse);
-      target.health && target.health.hurt(e.damage);
-    }
-
-    // setRandPosition(e);
-    // evt.fire({ evtName: 'hurt_user', data: { damage: e.damage } });
+    scene.remove(mouse);
+    target.health && target.health.hurt(e.damage);
   };
   goToTarget.ready();
 
@@ -87,10 +73,3 @@ export default function createMouse() {
 
   return e;
 }
-
-// let minigun = EntitFactory.create('minigun');
-// minigun.bullet
-// e.add(minigun);
-// minigun.launcher.bulletCreation = function(){
-// EntitFactory.create('enemy_bullet');
-// minigun.getComponent('launcher')
