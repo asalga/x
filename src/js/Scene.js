@@ -91,5 +91,4 @@ export default class Scene {
   getUser() {
     return this.user;
   }
-
 }

@@ -5,15 +5,13 @@ export default class Utils {
     return document.getElementById(selector);
   }
   static noop() {}
-}
 
-// }
-//   pointInRect(p, r) {
-//     if (p.x >= r.x && p.x <= r.x + r.w &&
-//       p.y >= r.y && p.y <= r.y + r.h) {
-//       return true;
-//     }
-//     return false;
-//   },
-//   noop() {}
-// };
+  static applyProps(ctx, obj) {
+    Object.keys(obj).forEach(k => {
+    	if(ctx[k]){
+    		console.log(`${ctx[k]} already exists. Overwriting`);
+    	}
+    	ctx[k] = obj[k];
+    });
+  }
+}

@@ -6,16 +6,20 @@ import BoundingCircle from '../collision/BoundingCircle.js';
 import Event from '../event/Event.js';
 import EventSystem from '../event/EventSystem.js';
 
+import Utils from '../Utils.js';
+
 export default class Entity {
   constructor(cfg) {
-    this.name = (cfg && cfg.name) || '';
+    // this.name = (cfg && cfg.name) || '';
 
-    if (cfg) {
-      Object.keys(cfg).forEach(key => { 
-        this[key] = cfg[key];
-      })
-      // debugger;
-    }
+    cfg && Utils.applyProps(this, cfg);
+
+    // if (cfg) {
+      // Utils.applyProps(this, cfg);
+      // Object.keys(cfg).forEach(key => { 
+        // this[key] = cfg[key];
+      // });
+    // }
 
 
     this.visible = true;

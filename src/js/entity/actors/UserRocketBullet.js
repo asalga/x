@@ -4,6 +4,8 @@ import Entity from '../Entity.js';
 import Collidable from '../components/Collidable.js';
 import Payload from '../components/Payload.js';
 import SpriteRender from '../components/SpriteRender.js';
+import LifetimeLimit from '../components/LifetimeLimit.js';
+
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
@@ -43,15 +45,25 @@ export default function createUserRocketBullet() {
     scene.remove(e);
   }, e);
 
+
+  // e.listenTo('death', function(data){
+    // if(data.entity === e)
+  // });
+
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
       e.seektarget.target = scene.getRandomBaddie();
+      return;
     }
   }, e);
 
   // COMPONENTS
   let payload = new Payload(e, 5);
   e.addComponent(payload);
+
+  let lifetime = new LifetimeLimit(e);
+  lifetime.limit = 5;
+  e.addComponent(lifetime);
 
   let seek = new SeekTarget(e);
   seek.maxVel = 300;

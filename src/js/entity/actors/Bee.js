@@ -40,8 +40,9 @@ export default function createMouse() {
     let center = new Vec2(p3.width / 2, p3.height / 2);
     this.pos.x = 200;
     this.pos.y = 100;
-    // this.pos.x = center.x + Math.cos(gameTime / 2) * 300;
-    // this.pos.y = center.y + Math.sin(gameTime / 2) * 200;
+    
+    this.pos.x = center.x + Math.cos(gameTime / 2) * 300;
+    this.pos.y = center.y + Math.sin(gameTime / 2) * 200;
   };
 
   e.addComponent(new Killable(e));
@@ -78,8 +79,8 @@ export default function createMouse() {
     rocketGun.on('collision', data => {
       let [e1, e2] = [data.e1, data.e2];
 
-// if(e1.name == 'bee') return;
-
+      // if(e1.name == 'bee') return;
+// debugger;
       console.log(e1, e2);
       // Check if one of the entities passed is us
       if (e1 !== rocketGun && e2 !== rocketGun) { return; }

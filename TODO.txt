@@ -7,15 +7,17 @@ HummingBird
 Rhino
 Eel
 
-# TODO
+# TODO - High Priority
  * Create Object Pool for Vectors
- * Create scene.getClosestEnemy()
- * Add min speed to Homing Missle
  * Remove entity if has left game bounds
- * Allow switching Weapons
- * Add firerate implementation to Launcher
+
+
+# TODO - Low Priority
+ * Fix scene.getClosestEnemy()
+ * Add min speed to Homing Missle
  * Add healthComponent to Rockets
  * Create LinkGun
+ * Create LaserGun
  * Fix onCollision method in bullets
  * Fix setDir for Bullets
  * Create Hyperwave bullet
