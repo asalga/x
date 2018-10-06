@@ -26,7 +26,7 @@ export default function createBullet() {
   e.addComponent(spriteRender);
 
 
-  let payload = new Payload(e, { dmg: 20, lingerTime:1 });
+  let payload = new Payload(e, { dmg: 2 });
   e.addComponent(payload);
 
   // Remove this?

@@ -45,12 +45,9 @@ export default class Entity {
   }
 
   update(dt) {
-    if(Number.isNaN(this.vel.x)){
-      debugger;
-    }
-    
-    // console.log(this.pos, this.vel);
-    let deltaTime = dt;// * 1;//this.timeScale;
+    if (Number.isNaN(this.vel.x)) { debugger; }
+
+    let deltaTime = dt * this.timeScale;
 
     this.updateProxy && this.updateProxy(deltaTime);
 
@@ -62,14 +59,12 @@ export default class Entity {
     });
 
     if (this.vel) {
-
       let d = this.vel.clone().mult(deltaTime);
       this.pos.add(d);
-      
     }
 
     this.children.forEach(c => {
-      c.update(dt);
+      c.update(deltaTime);
     });
   }
 
@@ -84,15 +79,15 @@ export default class Entity {
   }
 
   // TODO: fix
-  hasChild(name){
+  hasChild(name) {
     let found = false;
 
-    for(let i = 0; i < this.children.length; ++i){
-      if(this.children[i].name === name){
+    for (let i = 0; i < this.children.length; ++i) {
+      if (this.children[i].name === name) {
         return true;
       }
 
-      if(this.children[i].children.length > 0){
+      if (this.children[i].children.length > 0) {
         return this.children.children.hasChild(name);
       }
     }

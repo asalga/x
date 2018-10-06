@@ -22,7 +22,7 @@ export default class Scene {
     });
 
     this.timer += dt;
-    if (this.timer > 5.5) {
+    if (this.timer > 2.5) {
       this.timer = 0;
       this.add(EntityFactory.create('mouse'));
     }
@@ -74,7 +74,7 @@ export default class Scene {
     // s.pos.y = 150;
     // this.add(s);
 
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i < 15; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
 

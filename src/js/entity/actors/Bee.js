@@ -36,7 +36,7 @@ export default function createMouse() {
     p3.save();
     p3.noStroke();
     p3.translate(e.pos.x, e.pos.y);
-    console.log(e.pos);
+    // console.log(e.pos);
     p3.fill(64, 202, 238);
     //(100, 111, 140);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);

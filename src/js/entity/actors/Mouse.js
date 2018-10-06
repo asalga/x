@@ -26,39 +26,35 @@ export default function createMouse() {
     let r = Vec2.rand().normalize().mult(500);
 
     // just so they all don't all arrive at the user at the same time
-    let deviate = Vec2.rand().normalize().mult(200);
+    let deviate = Vec2.rand().normalize().mult(1200);
 
     let v = new Vec2(p3.width / 2, p3.height / 2);
     v.add(r).add(deviate);
     entity.pos.set(v.x, v.y);
-    // debugger;
   };
   setRandPosition(e);
 
-  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 20 });
+  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 120 });
   spriteRender.draw = function() {
     let sz = e.bounds.radius;
     this.p3.save();
     this.p3.clearAll();
     this.p3.noStroke();
-    // this.p3.fill(14, 202, 238);
-    this.p3.fill(255, 0, 0);
+    this.p3.fill(14, 202, 238);
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    // this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.ellipse(0, 0, sz, sz);
     this.p3.restore();
 
     p3.save();
-    // console.log(e.pos);
     p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
-    p3.drawImage(this.sprite, -sz, -sz / 2);
+    p3.drawImage(this.sprite, -sz, -sz);
     p3.restore();
   }
   e.addComponent(spriteRender);
 
   let goToTarget = new GoToTarget(e);
   goToTarget.target = scene.getUser();
-  goToTarget.speed = 10;
+  goToTarget.speed = 50;
   goToTarget.arrived = function(data) {
     let [target, mouse] = [data.e1, data.e2];
     if (data.e1 === this) {
@@ -75,7 +71,7 @@ export default function createMouse() {
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, 3));
   e.addComponent(new Health(e, 20, 20));
-  e.addComponent(new HealthRender(e));
+  e.addComponent(new HealthRender(e, {layer: 200}));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;

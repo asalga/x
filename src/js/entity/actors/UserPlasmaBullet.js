@@ -24,7 +24,7 @@ export default function createPlamaBullet() {
   }
   e.addComponent(spriteRender);
 
-  let payload = new Payload(e, { dmg: 10 });
+  let payload = new Payload(e, { dmg: 10, lingerTime: 3 });
   e.addComponent(payload);
 
   // Remove this?

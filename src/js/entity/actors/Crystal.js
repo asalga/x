@@ -12,7 +12,7 @@ export default function createCrystal() {
   e.bounds = new BoundingCircle(e.pos, 50);
   e.target = null;
 
-  let time = 2;
+  let time = 10;
 
   e.on('lifetimeexpired', data => {
     data.target.timeScale += 0.75;
@@ -21,7 +21,7 @@ export default function createCrystal() {
   e.setTarget = function(t) {
     this.target = t;
     t.timeScale -= 0.75;
-    t.addComponent(new LingerHurt(t, { dmg: 60, lingerTime: time }));
+    t.addComponent(new LingerHurt(t, { dmg: 10, lingerTime: time }));
   };
 
   let [w, h] = [150, 150];
@@ -48,7 +48,6 @@ export default function createCrystal() {
     p3.translate(worldCoords.x, worldCoords.y);
     p3.drawImage(this.sprite, -w / 2, -h / 2);
     p3.restore();
-
   }
   e.addComponent(spriteRender);
 
