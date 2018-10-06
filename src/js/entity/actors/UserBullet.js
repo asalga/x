@@ -8,7 +8,7 @@ import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
 export default function createBullet() {
-  let e = new Entity({ name: 'bullet' , layer: 2});
+  let e = new Entity({ name: 'bullet', layer: 2 });
   scene.add(e);
 
   e.bounds = new BoundingCircle(e.pos, 5);
@@ -25,7 +25,8 @@ export default function createBullet() {
   }
   e.addComponent(spriteRender);
 
-  let payload = new Payload(e, 5);
+
+  let payload = new Payload(e, { dmg: 20, lingerTime:1 });
   e.addComponent(payload);
 
   // Remove this?

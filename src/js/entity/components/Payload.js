@@ -1,23 +1,35 @@
 'use strict';
 
 import Component from './Component.js';
+import LingerHurt from './LingerHurt.js';
+
+import Utils from '../../Utils.js';
 
 export default class Payload extends Component {
-  constructor(e, payload) {
+
+  constructor(e, cfg) {
     super(e, 'payload');
-    this.payload = payload;
+    let defaults = {
+      dmg: 1,
+      lingerTime: 0
+    };
+    Utils.applyProps(this, defaults);
+    Utils.applyProps(this, cfg);
 
     e.on('collision', function hit(data) {
-      // let [_this, other] = Utils.getWhich(data);
-      // if(_this === null){return;}
-
       // Check if one of the entities passed is us
+      // TODO: Fix
       let [e1, e2] = [data.e1, data.e2];
       if (e1 !== e && e2 !== e) { return; }
       let other = e1 === e ? e2 : e1;
 
       if (other.health) {
-        other.health.hurt(this.payload);
+        if (this.lingerTime === 0) {
+          other.health.hurt(this.dmg);
+        } else {
+          let lingerHurt = new LingerHurt(other, { dmg: this.dmg, time: this.lingerTime });
+          other.addComponent(lingerHurt);
+        }
       }
       scene.remove(e);
     }, this);

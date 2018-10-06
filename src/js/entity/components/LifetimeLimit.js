@@ -3,12 +3,21 @@
 import Component from './Component.js';
 
 import Event from '../../event/Event.js';
+import Utils from '../../Utils.js';
 
 export default class LimetimeLimit extends Component {
-  constructor(e) {
+
+  /*
+    limit {Number}
+  */
+  constructor(e, cfg) {
     super(e, 'lifetimelimit');
-    this.age = 0;
-    this.limit = 1;
+    let defaults = {
+      age: 0,
+      limit: 1
+    };
+    Utils.applyProps(this, defaults);
+    Utils.applyProps(this, cfg);
   }
 
   update(dt) {

@@ -41,12 +41,12 @@ export default function createMouse() {
     this.pos.x = 200;
     this.pos.y = 100;
     
-    this.pos.x = center.x + Math.cos(gameTime / 2) * 300;
-    this.pos.y = center.y + Math.sin(gameTime / 2) * 200;
+    // this.pos.x = center.x + Math.cos(gameTime / 2) * 300;
+    // this.pos.y = center.y + Math.sin(gameTime / 2) * 200;
   };
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 450, 450));
+  e.addComponent(new Health(e, 100, 100));
   e.addComponent(new HealthRender(e));
 
   let coll = new Collidable(e);
@@ -79,14 +79,12 @@ export default function createMouse() {
     rocketGun.on('collision', data => {
       let [e1, e2] = [data.e1, data.e2];
 
-      // if(e1.name == 'bee') return;
-// debugger;
       console.log(e1, e2);
       // Check if one of the entities passed is us
       if (e1 !== rocketGun && e2 !== rocketGun) { return; }
       let other = e1 === e ? e2 : e1;
 
-      // other.health.hurt(e.payload.payload);
+      // other.health.hurt(e.payload.dmg);
       // scene.remove(rocketGun);
       rocketGun.launcherrenderer.visible = false;
       rocketGun.ammo = 0;

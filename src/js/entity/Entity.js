@@ -21,7 +21,6 @@ export default class Entity {
       // });
     // }
 
-
     this.visible = true;
     this.events = true;
 
@@ -79,6 +78,24 @@ export default class Entity {
   add(e) {
     e.parent = this;
     this.children.push(e);
+  }
+
+  remove(e){
+    // omg
+    // TODO: fix
+    let idx = -1;
+    let len = this.components.length;
+    for(let i = 0; i < len; ++i){
+      if(this.components[i] === e){
+        idx = i;
+        break;
+      }
+    }
+    if(idx !== -1){
+      this.components.splice(idx,1);
+      return true;
+    }
+    return false;
   }
 
   setEvents(b) {

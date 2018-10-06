@@ -10,9 +10,11 @@ Eel
 # TODO - High Priority
  * Create Object Pool for Vectors
  * Remove entity if has left game bounds
-
+ * If entity is remove from scene, recursively remove its children
+ * Write line circle intersection
 
 # TODO - Low Priority
+ * rename scene.deleteQueue variable
  * Fix scene.getClosestEnemy()
  * Add min speed to Homing Missle
  * Add healthComponent to Rockets

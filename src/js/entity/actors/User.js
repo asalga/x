@@ -37,7 +37,7 @@ export default function createUser() {
     // User body
     p3.stroke(111, 150, 80);
     // let h = (user.health.health) / 100;
-    p3.fill(251,200,138);
+    p3.fill(251, 200, 138);
     //(157, 192, 188);
     p3.ellipse(0, 0, user.size, user.size);
 
@@ -54,7 +54,7 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { rate:45, autoFire:false, ammo: 999, color: 'rgb(120,120, 120)' });
+  let miniGunLauncher = new Launcher(miniGun, { rate: 2, autoFire: false, ammo: 999, color: 'rgb(120,120, 120)' });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   miniGun.addComponent(new MouseLauncherController(miniGun));

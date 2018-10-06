@@ -15,6 +15,7 @@ export default class P3 {
     this._clearCol = 'black';
     this.ctx.font = 'normal 600 14px Courier New';
 
+    // this.ctx.filter = 'brightness(255)';
     this.mouseX = 0;
     this.mouseY = 0;
 
@@ -28,6 +29,11 @@ export default class P3 {
   clearColor(col) {
     this._clearCol = this._argColorToString(...arguments);
     // this._clearCol = col;
+  }
+
+  //TODO: fix
+  clearAll() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
   }
 
   clear() {
@@ -128,6 +134,10 @@ export default class P3 {
       this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
       this.ctx.fill();
     }
+  }
+
+  drawImage(image, x, y) {
+    this.ctx.drawImage(image, x, y);
   }
 
   arc(x, y, r, s, e, cc) {

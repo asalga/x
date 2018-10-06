@@ -22,7 +22,7 @@ export default function createRocketBullet() {
     // Check if one of the entities passed is us
     if (e1 !== e && e2 !== e) { return; }
     let other = e1 === e ? e2 : e1;
-    other.health.hurt(e.payload.payload);
+    other.health.hurt(e.payload.dmg);
     scene.remove(e);
   }, e);
 
@@ -44,7 +44,7 @@ export default function createRocketBullet() {
   e.addComponent(spriteRender);
 
 
-  let payload = new Payload(e, 1);
+  let payload = new Payload(e, { dmg: 1 });
   e.addComponent(payload);
 
   let seek = new SeekTarget(e);
