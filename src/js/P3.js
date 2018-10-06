@@ -52,7 +52,6 @@ export default class P3 {
     let ret;
     if (arguments.length === 1) {
       if (typeof(args) === 'string') {
-        // this.ctx.fillStyle = args;
         ret = args;
       } else if (typeof(args) === 'number') {
         let c = args;

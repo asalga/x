@@ -14,13 +14,6 @@ export default class Entity {
 
     cfg && Utils.applyProps(this, cfg);
 
-    // if (cfg) {
-      // Utils.applyProps(this, cfg);
-      // Object.keys(cfg).forEach(key => { 
-        // this[key] = cfg[key];
-      // });
-    // }
-
     this.visible = true;
     this.events = true;
 
@@ -30,6 +23,7 @@ export default class Entity {
 
     // TODO: fix
     this.speed = 1;
+    this.timeScale = 1;
     this.components = [];
     this.children = [];
     this.parent = null;
@@ -51,7 +45,14 @@ export default class Entity {
   }
 
   update(dt) {
-    this.updateProxy && this.updateProxy(dt);
+    if(Number.isNaN(this.vel.x)){
+      debugger;
+    }
+    
+    // console.log(this.pos, this.vel);
+    let deltaTime = dt;// * 1;//this.timeScale;
+
+    this.updateProxy && this.updateProxy(deltaTime);
 
     this.components.forEach(c => {
       // ok if no update method?
@@ -61,8 +62,10 @@ export default class Entity {
     });
 
     if (this.vel) {
-      let d = this.vel.clone().mult(dt);
+
+      let d = this.vel.clone().mult(deltaTime);
       this.pos.add(d);
+      
     }
 
     this.children.forEach(c => {
@@ -70,32 +73,47 @@ export default class Entity {
     });
   }
 
-  addComponent(c) {
-    this.components.push(c);
-    this[c.name] = c;
-  }
-
   add(e) {
     e.parent = this;
     this.children.push(e);
   }
 
-  remove(e){
-    // omg
-    // TODO: fix
-    let idx = -1;
-    let len = this.components.length;
-    for(let i = 0; i < len; ++i){
-      if(this.components[i] === e){
-        idx = i;
-        break;
+  removeDirectChild(e) {
+    let res = Utils.removeFromArray(this.children, e);
+    console.log('removeDirectChild: ', res);
+  }
+
+  // TODO: fix
+  hasChild(name){
+    let found = false;
+
+    for(let i = 0; i < this.children.length; ++i){
+      if(this.children[i].name === name){
+        return true;
+      }
+
+      if(this.children[i].children.length > 0){
+        return this.children.children.hasChild(name);
       }
     }
-    if(idx !== -1){
-      this.components.splice(idx,1);
-      return true;
-    }
     return false;
+  }
+
+  getRoot() {
+    if (this.parent === null) {
+      return this;
+    }
+    return this.parent.getRoot();
+  }
+
+  addComponent(c) {
+    this.components.push(c);
+    this[c.name] = c;
+  }
+
+  removeComponent(c) {
+    // TODO: fix
+    Utils.removeFromArray(this.components, c);
   }
 
   setEvents(b) {
@@ -127,9 +145,4 @@ export default class Entity {
   //     func(arguments);
   //   }.bind(this), ctx);
   // }
-
-  removeComponent(c) {
-    debugger;
-    console.log('needs impl');
-  }
 }

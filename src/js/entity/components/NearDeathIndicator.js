@@ -13,11 +13,8 @@ export default class NearDeathIndicator extends Component {
     let lifetime = this.entity.lifetimelimit;
 
     if (lifetime.limit - lifetime.age < this.timespan) {
-      let flash = new Flash(this.entity, { speed: 5 });
-      this.entity.addComponent(flash);
-
-      this.entity.remove(this);
-
+      this.entity.addComponent(new Flash(this.entity, { speed: 5 }));
+      this.entity.removeComponent(this);
     }
   }
 }

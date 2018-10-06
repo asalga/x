@@ -21,6 +21,12 @@ export function createRocketGun() {
   return e;
 }
 
+export function createFreezeGun() {
+  let e = new Entity({ 'name': 'freezegun' });
+  e.addComponent(new LauncherRenderer(e, { color: 'blue' }));
+  return e;
+}
+
 export function createLinkGun() {
   return new Entity({ 'name': 'linkgun' });
 }

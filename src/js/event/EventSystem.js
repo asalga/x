@@ -32,9 +32,14 @@ export default class EventSystem {
       // Tell all the listeners about this event
       this.listeners[evtName].forEach(evtObj => {
 
-
-        // 
+        //
+        // console.log(evtObj);
+        if(evtObj.ctx === undefined){
+          debugger;
+        } 
+        
         if(evtObj.ctx.entity){
+
           if(evtObj.ctx.entity.events === false){
             return;
           }

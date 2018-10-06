@@ -16,7 +16,7 @@ import CollisionType from '../../collision/CollisionType.js';
 import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
-  let e = new Entity({name: 'mouse'});
+  let e = new Entity({ name: 'mouse' });
   e.damage = 20;
   e.bounds = new BoundingCircle(e.pos, 10);
 
@@ -31,16 +31,27 @@ export default function createMouse() {
     let v = new Vec2(p3.width / 2, p3.height / 2);
     v.add(r).add(deviate);
     entity.pos.set(v.x, v.y);
+    // debugger;
   };
   setRandPosition(e);
 
-  let spriteRender = new SpriteRender(e, { layer: 100 });
+  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 20 });
   spriteRender.draw = function() {
+    let sz = e.bounds.radius;
+    this.p3.save();
+    this.p3.clearAll();
+    this.p3.noStroke();
+    // this.p3.fill(14, 202, 238);
+    this.p3.fill(255, 0, 0);
+    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
+    // this.p3.rect(-sz, -sz / 2, sz * 2, sz);
+    this.p3.ellipse(0, 0, sz, sz);
+    this.p3.restore();
+
     p3.save();
-    p3.translate(e.pos.x, e.pos.y);
-    p3.noStroke();
-    p3.fill(64, 202, 238);
-    p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
+    // console.log(e.pos);
+    p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
+    p3.drawImage(this.sprite, -sz, -sz / 2);
     p3.restore();
   }
   e.addComponent(spriteRender);

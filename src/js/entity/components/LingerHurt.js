@@ -8,7 +8,7 @@ export default class LingerHurt extends Component {
     super(e, 'lingerhurt');
     let defaults = {
       dmg: 0,
-      time: 0
+      lingerTime: 0
     };
     Utils.applyProps(this, defaults);
     Utils.applyProps(this, cfg);
@@ -16,13 +16,14 @@ export default class LingerHurt extends Component {
   }
 
   update(dt) {
-    let dps = dt / this.time * this.dmg;
+
+    let dps = dt / this.lingerTime * this.dmg;
 
     this.entity.health.hurt(dps);
     this.dmgLeft -= dps;
 
     if (this.dmgLeft <= 0) {
-      this.entity.remove(this);
+      this.entity.removeComponent(this);
     }
   }
 }

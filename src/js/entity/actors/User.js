@@ -19,6 +19,7 @@ import Vec2 from '../../math/Vec2.js';
 
 import EntityFactory from '../EntityFactory.js';
 import createUserMiniGunBullet from './UserBullet.js';
+import createUserFreezeBullet from './UserFreezeBullet.js';
 import createUserPlasmaBullet from './UserPlasmaBullet.js';
 import createUserRocketBullet from './UserRocketBullet.js';
 
@@ -60,6 +61,19 @@ export default function createUser() {
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
 
+  // FREEZE
+  let freezeGun = EntityFactory.create('freezegun');
+  let freezeGunLauncher = new Launcher(freezeGun, {
+    rate: 5,
+    autoFire: false,
+    ammo: 999,
+    color: 'rgb(120,120,120)'
+  });
+  freezeGunLauncher.createFunc = createUserFreezeBullet;
+  freezeGun.addComponent(freezeGunLauncher);
+  freezeGun.addComponent(new MouseLauncherController(freezeGun));
+  user.add(freezeGun);
+
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
   let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 350, color: 'rgb(55, 210, 55)' });
@@ -86,6 +100,7 @@ export default function createUser() {
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
+  weaponSwitcher.addWeapon('4', freezeGun);
   weaponSwitcher.init();
   user.addComponent(weaponSwitcher);
 

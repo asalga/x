@@ -12,7 +12,6 @@ import NearDeathIndicator from '../components/NearDeathIndicator.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-
 import Vec2 from '../../math/Vec2.js';
 
 export default function createUserRocketBullet() {

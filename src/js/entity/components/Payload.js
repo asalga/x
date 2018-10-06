@@ -27,7 +27,7 @@ export default class Payload extends Component {
         if (this.lingerTime === 0) {
           other.health.hurt(this.dmg);
         } else {
-          let lingerHurt = new LingerHurt(other, { dmg: this.dmg, time: this.lingerTime });
+          let lingerHurt = new LingerHurt(other, { dmg: this.dmg, lingerTime: this.lingerTime });
           other.addComponent(lingerHurt);
         }
       }

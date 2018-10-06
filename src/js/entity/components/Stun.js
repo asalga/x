@@ -11,7 +11,7 @@ export default class Stun extends Component {
 
       if (e === this.entity && e.health.percentLeft() <= 0.5) {
         // debugger;
-        e.speed *= 1/multiplier;
+        // e.speed *= 1/multiplier;
       }
     }, this);
   }
