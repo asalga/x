@@ -27,17 +27,13 @@ export default function createCrystal() {
   let [w, h] = [150, 150];
   let spriteRender = new SpriteRender(e, { width: w, height: h, layer: 100 });
   spriteRender.draw = function() {
-
     let sz = e.getRoot().bounds.radius + 10;
-    // p3.fill('rgba(184, 222, 238, .5)');
 
     this.p3.clearAll();
     // this.p3.clear();
     this.p3.save();
     this.p3.stroke(33, 66, 130);
     this.p3.strokeWeight(4);
-    this.p3.noFill();
-    // this.p3.fill('rgb(45, 10, 200, .5)');
     this.p3.fill('rgb(200, 200, 255, .5)');
     this.p3.translate(w / 2, h / 2);
     this.p3.rotate(Math.PI / 4);

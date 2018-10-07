@@ -7,13 +7,16 @@
 import Component from './Component.js';
 import Collision from '../../collision/Collision.js';
 import Debug from '../../debug/Debug.js';
+import Utils from '../../Utils.js';
 
 export default class GoToTarget extends Component {
-  constructor(e) {
+  constructor(e, cfg) {
     super(e, 'gototarget');
-    this.target = null;
-    this.hasArrived = false;
-    this.speed = 1;
+    let defaults = {
+      target: null,
+      speed:1
+    };
+    Utils.applyProps(this, defaults, cfg);
   }
 
   ready() {
@@ -33,8 +36,9 @@ export default class GoToTarget extends Component {
     toTarget.sub(entity.pos);
     toTarget.normalize();
     // Debug.add(`${this.speed}, ${entity.speed}`);
-    toTarget.mult(entity.speed * this.speed);
-    // toTarget.mult(0);
+    // toTarget.mult(entity.speed * this.speed);
+
+    toTarget.mult(this.speed * entity.speed * 1);
     entity.vel = toTarget;
   }
 }

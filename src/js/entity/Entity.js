@@ -45,6 +45,7 @@ export default class Entity {
   }
 
   update(dt) {
+    // sanity check
     if (Number.isNaN(this.vel.x)) { debugger; }
 
     let deltaTime = dt * this.timeScale;
@@ -75,7 +76,10 @@ export default class Entity {
 
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
-    console.log('removeDirectChild: ', res);
+  }
+
+  removeChild(e){
+    debugger;
   }
 
   // TODO: fix
@@ -107,8 +111,8 @@ export default class Entity {
   }
 
   removeComponent(c) {
-    // TODO: fix
     Utils.removeFromArray(this.components, c);
+    this.components[c.name] = undefined;
   }
 
   setEvents(b) {

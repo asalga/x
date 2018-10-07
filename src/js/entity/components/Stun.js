@@ -10,8 +10,7 @@ export default class Stun extends Component {
     this.on('hurt', function(e) {
 
       if (e === this.entity && e.health.percentLeft() <= 0.5) {
-        // debugger;
-        // e.speed *= 1/multiplier;
+        e.speed *= 1/multiplier;
       }
     }, this);
   }

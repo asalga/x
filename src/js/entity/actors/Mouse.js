@@ -8,6 +8,7 @@ import Health from '../components/Health.js';
 import HealthRender from '../components/HealthRender.js';
 import SpriteRender from '../components/SpriteRender.js';
 import Collidable from '../components/Collidable.js';
+import MeleePayload from '../components/MeleePayload.js';
 import Stun from '../components/Stun.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
@@ -17,16 +18,15 @@ import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
   let e = new Entity({ name: 'mouse' });
-  e.damage = 20;
   e.bounds = new BoundingCircle(e.pos, 10);
 
   e.updateProxy = function(dt) {};
 
   let setRandPosition = function(entity) {
-    let r = Vec2.rand().normalize().mult(500);
+    let r = Vec2.rand().normalize().mult(200);
 
     // just so they all don't all arrive at the user at the same time
-    let deviate = Vec2.rand().normalize().mult(1200);
+    let deviate = Vec2.rand().normalize().mult(20);
 
     let v = new Vec2(p3.width / 2, p3.height / 2);
     v.add(r).add(deviate);
@@ -52,26 +52,12 @@ export default function createMouse() {
   }
   e.addComponent(spriteRender);
 
-  let goToTarget = new GoToTarget(e);
-  goToTarget.target = scene.getUser();
-  goToTarget.speed = 50;
-  goToTarget.arrived = function(data) {
-    let [target, mouse] = [data.e1, data.e2];
-    if (data.e1 === this) {
-      [target, mouse] = [mouse, target];
-    }
-    if (mouse.gototarget !== this) return;
-
-    scene.remove(mouse);
-    target.health && target.health.hurt(e.damage);
-  };
-  goToTarget.ready();
-
-  e.addComponent(goToTarget);
+  e.addComponent(new GoToTarget(e, { target: scene.getUser(), speed: 50 }));
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, 3));
   e.addComponent(new Health(e, 20, 20));
-  e.addComponent(new HealthRender(e, {layer: 200}));
+  e.addComponent(new HealthRender(e, { layer: 200 }));
+  e.addComponent(new MeleePayload(e, { damage: 20 }));
 
   let coll = new Collidable(e);
   coll.type = CollisionType.ENEMY;

@@ -6,13 +6,23 @@ export default class Utils {
   }
   static noop() {}
 
-  static applyProps(ctx, obj) {
-    Object.keys(obj).forEach(k => {
-      if (ctx[k]) {
-        console.log(`${ctx[k]} already exists. Overwriting`);
-      }
-      ctx[k] = obj[k];
+  static applyProps(ctx, def, cfg) {
+
+    Object.keys(def).forEach(k => {
+      // if (ctx[k]) {
+        // console.log(`${ctx[k]} already exists. Overwriting`);
+      // }
+      ctx[k] = def[k];
     });
+
+    if (cfg) {
+      Object.keys(cfg).forEach(k => {
+        // if (ctx[k]) {
+          // console.log(`${ctx[k]} already exists. Overwriting`);
+        // }
+        ctx[k] = cfg[k];
+      });
+    }
   }
 
   // this is shit
