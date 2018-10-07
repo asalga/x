@@ -110,7 +110,7 @@ export default function createUser() {
   user.addComponent(weaponSwitcher);
 
   let health = new Health(user, 200);
-  health.regenerationSpeed = 8;
+  health.regenerationSpeed = .25;
   health.updateProxy = function() { Debug.add(`Player Health: ${Math.floor(health.health)}`); };
   user.addComponent(health);
 

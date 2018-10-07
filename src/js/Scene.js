@@ -22,7 +22,7 @@ export default class Scene {
     });
 
     this.timer += dt;
-    if (this.timer > 2.5) {
+    if (this.timer > 1.5) {
       this.timer = 0;
       this.add(EntityFactory.create('mouse'));
     }
@@ -69,14 +69,14 @@ export default class Scene {
     let user = EntityFactory.create('user');
     this.addUser(user);
 
-    // let s = EntityFactory.create('starfish');
-    // s.pos.x = 550;
-    // s.pos.y = 150;
-    // this.add(s);
+    let s = EntityFactory.create('starfish');
+    s.pos.x = 550;
+    s.pos.y = 150;
+    this.add(s);
 
-    for (let i = 0; i < 15; ++i) {
-      this.add(EntityFactory.create('mouse'));
-    }
+    // for (let i = 0; i < 15; ++i) {
+    //   this.add(EntityFactory.create('mouse'));
+    // }
 
     // let b = EntityFactory.create('bee');
     // this.bee = b;

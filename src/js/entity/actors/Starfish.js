@@ -32,15 +32,17 @@ export default function createStarFish() {
   }
   e.addComponent(spriteRender);
 
-  for (let i = 0; i < 10; i++) {
+  let numGuns = 6;
+
+  for (let i = 0; i < numGuns; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
     let rocketLauncher = new Launcher(rocketGun, {
-      rate: .25,
+      rate: .125,
       autoFire: true,
       ammo: 100
     });
 
-    let a = i * ((p3.TAU) / 10);
+    let a = i * ((p3.TAU) / numGuns);
 
     rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(0));
     rocketLauncher.createFunc = createRocketBullet;
@@ -61,7 +63,7 @@ export default function createStarFish() {
   }
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 1000));
+  e.addComponent(new Health(e, 500));
   e.addComponent(new HealthRender(e, { layer: 100 }));
   e.addComponent(new Collidable(e, {
     type: CollisionType.ENEMY,

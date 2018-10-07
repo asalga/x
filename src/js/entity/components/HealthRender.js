@@ -31,7 +31,7 @@ export default class HealthRender extends Component {
 
     this.p3.save();
     this.p3.clearAll();
-    this.p3.strokeWeight(3);
+    this.p3.strokeWeight(5);
     this.p3.stroke(0, 255, 0);
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);

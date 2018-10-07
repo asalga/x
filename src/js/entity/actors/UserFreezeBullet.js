@@ -25,8 +25,10 @@ export default function createFreezeBullet() {
     this.p3.clearAll();
     this.p3.save();
     this.p3.stroke(255);
+    this.p3.noStroke();
     this.p3.strokeWeight(3);
-    this.p3.fill('rgba(33, 66, 139, 100)');
+
+    this.p3.fill('rgba(200, 200, 200, .2)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.rect(-sz, -sz, sz, sz);
     this.p3.restore();

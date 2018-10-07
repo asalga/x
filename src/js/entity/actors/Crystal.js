@@ -37,7 +37,8 @@ export default function createCrystal() {
     this.p3.stroke(33, 66, 130);
     this.p3.strokeWeight(4);
     this.p3.noFill();
-    // this.p3.fill('rgb(45, 10, 200, 40)');
+    // this.p3.fill('rgb(45, 10, 200, .5)');
+    this.p3.fill('rgb(200, 200, 255, .5)');
     this.p3.translate(w / 2, h / 2);
     this.p3.rotate(Math.PI / 4);
     this.p3.rect(-sz, -sz, sz * 2, sz * 2);

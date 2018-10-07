@@ -98,6 +98,9 @@ export default class P3 {
 
   rect(x, y, w, h) {
     // let arrArgs = [...arguments];
+    
+    // this.ctx.globalAlpha = 0.8;
+
     if (this._doStroke) {
       this.ctx.strokeRect(x, y, w, h);
     }
