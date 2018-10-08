@@ -12,16 +12,13 @@ export default function createCrystal() {
   e.bounds = new BoundingCircle(e.pos, 50);
   e.target = null;
 
-  let time = 10;
-
-  e.on('lifetimeexpired', data => {
-    data.target.timeScale += 0.75;
-  }, e);
+  let time = 5;
+  let slowdownFactor = 0.5;
 
   e.setTarget = function(t) {
     this.target = t;
-    t.timeScale -= 0.75;
-    t.addComponent(new LingerHurt(t, { dmg: 10, lingerTime: time }));
+    t.timeScale -= slowdownFactor;
+    t.addComponent(new LingerHurt(t, { dmg: 9, lingerTime: time }));
   };
 
   let [w, h] = [150, 150];
@@ -48,6 +45,12 @@ export default function createCrystal() {
   }
   e.addComponent(spriteRender);
 
-  e.addComponent(new LifetimeLimit(e, { limit: time }));
+  e.addComponent(new LifetimeLimit(e, {
+    limit: time,
+    cb: function() {
+      e.target.timeScale += slowdownFactor;
+    }
+  }));
+
   return e;
 }

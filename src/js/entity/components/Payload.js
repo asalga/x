@@ -13,12 +13,10 @@ export default class Payload extends Component {
       dmg: 1,
       lingerTime: 0
     };
-    Utils.applyProps(this, defaults);
-    Utils.applyProps(this, cfg);
+    Utils.applyProps(this, defaults, cfg);
 
     e.on('collision', function hit(data) {
-      // Check if one of the entities passed is us
-      // TODO: Fix
+      // TODO: Fixs
       let [e1, e2] = [data.e1, data.e2];
       if (e1 !== e && e2 !== e) { return; }
       let other = e1 === e ? e2 : e1;

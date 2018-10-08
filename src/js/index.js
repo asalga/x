@@ -53,7 +53,7 @@ function preRender() {
 
 function render() {
   p3.clear();
-  scene.draw(p3);
+  // scene.draw(p3);
 
   // Place entities in their respective layers
   scene.entities.forEach(e => {

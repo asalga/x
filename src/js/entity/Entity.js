@@ -10,7 +10,6 @@ import Utils from '../Utils.js';
 
 export default class Entity {
   constructor(cfg) {
-    // this.name = (cfg && cfg.name) || '';
 
     cfg && Utils.applyProps(this, cfg);
 
@@ -20,6 +19,7 @@ export default class Entity {
     this.pos = new Vec2();
     this.vel = new Vec2();
     this.acc = new Vec2();
+    this.rot = 0;
 
     // TODO: fix
     this.speed = 1;
@@ -48,7 +48,8 @@ export default class Entity {
     // sanity check
     if (Number.isNaN(this.vel.x)) { debugger; }
 
-    let deltaTime = dt * this.timeScale;
+    // let deltaTime = dt * this.timeScale;
+    let deltaTime = dt;// * this.timeScale;
 
     this.updateProxy && this.updateProxy(deltaTime);
 
@@ -60,7 +61,7 @@ export default class Entity {
     });
 
     if (this.vel) {
-      let d = this.vel.clone().mult(deltaTime);
+      let d = this.vel.clone().mult(deltaTime * this.timeScale);
       this.pos.add(d);
     }
 

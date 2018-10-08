@@ -24,7 +24,7 @@ export default class HealthRender extends Component {
 
   draw() {
     let e = this.entity;
-    let healthPercent = e.health.health / e.health.max;
+    let healthPercent = e.health.amt / e.health.max;
     let world = e.getWorldCoords();
 
     let sz = e.bounds.radius;

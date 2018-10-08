@@ -10,17 +10,23 @@ export default class LingerHurt extends Component {
       dmg: 0,
       lingerTime: 0
     };
-    Utils.applyProps(this, defaults);
-    Utils.applyProps(this, cfg);
+    Utils.applyProps(this, defaults, cfg);
+
     this.dmgLeft = this.dmg;
+    this.dmgRemoved = 0;
   }
 
   update(dt) {
+    let dps = (dt * this.dmg)/ this.lingerTime;
 
-    let dps = dt / this.lingerTime * this.dmg;
-
-    this.entity.health.hurt(dps);
-    this.dmgLeft -= dps;
+    // Make sure we don't subtract too much
+    if (this.dmgLeft - dps < 0) {
+      this.dmgLeft = 0;
+      this.entity.health.hurt(this.dmgLeft);
+    } else {
+      this.dmgLeft -= dps;
+      this.entity.health.hurt(dps);
+    }
 
     if (this.dmgLeft <= 0) {
       this.entity.removeComponent(this);

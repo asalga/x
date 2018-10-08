@@ -1,16 +1,20 @@
 'use strict';
 
 import Component from './Component.js';
-import Debug from '../../debug/Debug.js';
+
 import Event from '../../event/Event.js';
+import Utils from '../../Utils.js';
 
 export default class Health extends Component {
-  constructor(e, amt = 100) {
+  constructor(e, cfg) {
     super(e, 'health');
-    this.health = amt;
-    this.max = amt;
+    let defaults = {
+      amt: 1,
+      canRegen: false,
+    };
+    Utils.applyProps(this, defaults, cfg);
+    this.max = this.amt;
 
-    this.canRegen = true;
     this.regenerationSpeed = 0;
     this.isRegenerating = false;
   }
@@ -24,32 +28,32 @@ export default class Health extends Component {
     }
   }
 
-  percentLeft(){
-    return this.health/this.max;
+  percentLeft() {
+    return this.amt / this.max;
   }
 
-  draw(){
-    Debug.add(`${this.health}`);
+  draw() {
+    Debug.add(`${this.amt}`);
   }
 
-  increaseHelth(amt) {
-    this.health += amt;
-    this.health = Math.min(this.health, this.max);
+  increaseHelth(a) {
+    this.amt += a;
+    this.amt = Math.min(this.amt, this.max);
 
-    if (this.health === this.max) {
+    if (this.amt === this.max) {
       this.isRegenerating = false;
     }
   }
 
   hurt(dmg) {
-    this.health -= dmg;
+    this.amt -= dmg;
     new Event({ evtName: 'hurt', data: this.entity }).fire();
 
     if (this.canRegen && this.isRegenerating === false) {
       this.isRegenerating = true;
     }
 
-    if (this.health <= 0) {
+    if (this.amt <= 0 && this.entity.killable) {
       this.entity.killable.kill();
     }
   }

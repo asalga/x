@@ -23,15 +23,8 @@ export default function createPlamaBullet() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-
-  let payload = new Payload(e, { dmg: 10, lingerTime: 3 });
-  e.addComponent(payload);
-
-  // Remove this?
-  let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
-  e.addComponent(coll);
+  e.addComponent(new Payload(e, { dmg: 10, lingerTime: 3 }));
+  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
 
   return e;
 }

@@ -10,7 +10,7 @@ Eel
 # TODO - High Priority
  * Create Object Pool for Vectors
  * Remove entity if has left game bounds
- * If entity is remove from scene, recursively remove its children
+ * If entity is removed from scene, recursively remove its children(?)
  * Write line circle intersection
 
 # TODO - Low Priority
@@ -27,7 +27,8 @@ Eel
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
-
+ * Fix calls to e.on('collision', function hit(data) 
+ 
 // We need a way to 'turn off' an entity
 // so that it no longer responds to events
 // and it doesn't get rendered

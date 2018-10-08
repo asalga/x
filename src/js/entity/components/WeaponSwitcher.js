@@ -42,7 +42,7 @@ export default class WeaponSwitcher extends Component {
 
   init() {
     this.turnAllWeaponsOff();
-    this.enableWeapon(this.weapons.get('4'), true);
+    this.enableWeapon(this.weapons.get('5'), true);
   }
 
   turnAllWeaponsOff() {

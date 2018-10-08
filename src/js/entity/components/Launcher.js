@@ -6,20 +6,27 @@
 
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
+import Utils from '../../Utils.js';
 
 export default class Launcher extends Component {
   constructor(e, cfg) {
     super(e, 'launcher');
+    let defaults = {
+      ammo: 1,
+      enabled: true,
+      shotsPerSecond: 1,
+      autoFire: false,
+      bulletVel: 500,
+      direction: new Vec2(1, 0)
+    };
+    Utils.applyProps(this, defaults, cfg);
 
-    this.enabled = true;
-    this.rate = 1 / cfg.rate;
-    this.ammo = cfg.ammo;
-    this.autoFire = cfg.autoFire;
     this.firing = false;
     this.timer = 0;
+    // Specify rate as number
+    this.rate = 1 / this.shotsPerSecond;
 
-    this.color = cfg.color;
-    this.direction = new Vec2(1,0);
+
 
     this.on('GAME_MOUSE_DOWN', function() { this.firing = true; }, this);
     this.on('GAME_MOUSE_UP', function() { this.firing = false; }, this);
@@ -67,7 +74,7 @@ export default class Launcher extends Component {
     worldCoords.add(gunTip);
     bullet.pos.set(worldCoords);
 
-    bullet.vel.set(this.direction.clone().mult(500));
+    bullet.vel.set(this.direction.clone().mult(this.bulletVel));
   }
 
   update(dt) {
@@ -84,24 +91,4 @@ export default class Launcher extends Component {
   stopFiring() {
     this.firing = false;
   }
-
-  // draw() {
-  //   Debug.add(`${this.entity.name} ammo: ${this.ammo}`);
-
-  //   p3.save();
-  //   let curr = this.getVecToCursor();
-  //   p3.strokeWeight(10);
-  //   p3.stroke(this.color);
-  //   p3.line(0, 0, curr.x, curr.y);
-
-  //   p3.restore();
-
-  //   if (debug) {
-  //     p3.save();
-  //     p3.strokeWeight(2);
-  //     p3.stroke(120, 255, 0);
-  //     p3.line(0, 0, p3.mouseX - p3.width / 2, p3.mouseY - p3.height / 2);
-  //     p3.restore();
-  //   }
-  // }
 }

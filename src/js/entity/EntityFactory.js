@@ -17,7 +17,8 @@ import {
   createMinigun,
   createPlasmaGun,
   createRocketGun,
-  createFreezeGun
+  createFreezeGun,
+  createFlakGun
 } from './actors/guns/guns.js';
 
 let createFuncs = new Map();
@@ -29,14 +30,15 @@ createFuncs.set('starfish', createStarfish);
 createFuncs.set('hummingbird', createHummingBird);
 createFuncs.set('user', createUser);
 
-// ?
-createFuncs.set('crystal', createCrystal);
-
 // GUNS
 createFuncs.set('minigun', createMinigun);
 createFuncs.set('plasmagun', createPlasmaGun);
 createFuncs.set('rocketgun', createRocketGun);
 createFuncs.set('freezegun', createFreezeGun);
+createFuncs.set('flakgun', createFlakGun);
+
+// DECORATORS?
+createFuncs.set('crystal', createCrystal);
 
 export default class EntityFactor {
   static create(str) {

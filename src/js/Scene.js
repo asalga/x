@@ -44,9 +44,9 @@ export default class Scene {
     this.entitiesAddedOrRemoved = false;
   }
 
-  draw(p3) {
+  // draw(p3) {
     // this.entities.forEach(e => e.draw(p3));
-  }
+  // }
 
   addUser(u) {
     this.user = u;
@@ -74,7 +74,7 @@ export default class Scene {
     s.pos.y = 150;
     this.add(s);
 
-    for (let i = 0; i < 15; ++i) {
+    for (let i = 0; i < 1; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
 

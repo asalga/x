@@ -46,10 +46,8 @@ export default function createFreezeBullet() {
     if (e1 !== e && e2 !== e) { return; }
     let other = e1 === e ? e2 : e1;
 
-    // if other already has a crystal
-    if(other.hasChild('crystal')){
-      return;
-    }
+    // Doesn't make sense to be frozen twice
+    if (other.hasChild('crystal')) { return; }
 
     let crystal = EntityFactory.create('crystal');
     crystal.setTarget(other);
@@ -58,17 +56,10 @@ export default function createFreezeBullet() {
     scene.remove(e);
   }, e);
 
-  // TODO: fix
-  // Need to include this just so that the bullet gets
-  // removed.
-  // let payload = new Payload(e, { dmg: 10, lingerTime: 10 });
-  // e.addComponent(payload);
-
-  // Remove this?
-  let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
-  e.addComponent(coll);
+  e.addComponent(new Collidable(e, {
+    type: CollisionType.PLAYER_BULLET,
+    mask: CollisionType.ENEMY
+  }));
 
   return e;
 }

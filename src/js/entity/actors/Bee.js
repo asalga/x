@@ -28,7 +28,7 @@ export default function createMouse() {
   e.vel.y = 50;
 
   e.pos.x = p3.width / 2;
-  e.pos.y = p3.height / 2  - 150;
+  e.pos.y = p3.height / 2 - 150;
 
 
   let spriteRender = new SpriteRender(e, { layer: 100 });
@@ -47,7 +47,7 @@ export default function createMouse() {
   e.updateProxy = function(dt) {
     let center = new Vec2(p3.width / 2, p3.height / 2);
 
-    this.vel.x = Math.cos(gameTime) * 300 ;
+    this.vel.x = Math.cos(gameTime) * 300;
     this.vel.y = Math.sin(gameTime) * 150;
 
     // if(this.pos.x > p3.width){
@@ -62,7 +62,7 @@ export default function createMouse() {
   };
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 100, 100));
+  e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
 
   let coll = new Collidable(e);
@@ -83,7 +83,7 @@ export default function createMouse() {
     rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(0));
     rocketLauncher.createFunc = createRocketBullet;
 
-    rocketGun.addComponent(new Health(rocketGun, 40));
+    rocketGun.addComponent(new Health(rocketGun, { amt: 50 }));
     rocketGun.addComponent(new Killable(rocketGun));
     rocketGun.addComponent(new Collidable(rocketGun, {
       type: CollisionType.ENEMY,
