@@ -10,7 +10,7 @@ import LifetimeLimit from '../components/LifetimeLimit.js';
 import NearDeathIndicator from '../components/NearDeathIndicator.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import Vec2 from '../../math/Vec2.js';
 
@@ -27,22 +27,23 @@ export default function createUserRocketBullet() {
     scene.remove(e);
   }, e, { onlySelf: true });
 
+  // If our target has died, get a new one
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
-      // debugger;
       e.seektarget.target = scene.getRandomBaddie();
-      return;
     }
   }, e);
 
 
   // COMPONENTS
-  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 20 });
+  let spriteSz = 32;
+  let spriteRender = new SpriteRender(e, { width: spriteSz, height: spriteSz, layer: 20 });
   spriteRender.draw = function() {
     let sz = e.bounds.radius;
 
     this.p3.clearAll();
     this.p3.save();
+    // this.p3.clear();
     this.p3.noStroke();
     this.p3.fill('rgb(245, 10, 255)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
@@ -51,25 +52,16 @@ export default function createUserRocketBullet() {
     this.p3.restore();
 
     p3.save();
-    p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
-    p3.drawImage(this.sprite, -sz, -sz / 2);
+    p3.translate(e.pos.x - (spriteSz / 2), e.pos.y - (spriteSz / 2));
+    p3.drawImage(this.sprite, 0, 0);
     p3.restore();
-
-    // TODO: 
-    // let trans = this.entity.getTransform();
-    // p3.applyMatrix(trans);    
   }
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5 }));
   e.addComponent(new LifetimeLimit(e, { limit: 10 }));
-
-  let seek = new SeekTarget(e);
-  seek.maxVel = 300;
-  seek.target = scene.getRandomBaddie();
-  
-  e.addComponent(seek);
-  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
+  e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   return e;
 }

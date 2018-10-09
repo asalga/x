@@ -19,29 +19,31 @@ export default function createFlakBullet(cfg) {
 
   scene.add(e);
 
-  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 20 });
-
-  spriteRender.update = function(dt) {
-    this.entity.rot += dt * 10;
+  e.updateProxy = function(dt) {
+    this.rot += dt * 10;
   }
+
+  let spriteSz = 32;
+  let spriteRender = new SpriteRender(e, { width: spriteSz, height: spriteSz, layer: 20 });
 
   spriteRender.draw = function() {
     let sz = e.bounds.radius;
 
     this.p3.clearAll();
+    // this.p3.clear();
     this.p3.save();
     this.p3.strokeWeight(2);
     this.p3.stroke('yellow');
 
     this.p3.fill('rgb(0,0,0)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    this.p3.rotate(Math.atan2(e.vel.y, e.vel.x) + this.entity.rot);
+    this.p3.rotate(e.rot);
     this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.restore();
 
     p3.save();
-    p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
-    p3.drawImage(this.sprite, -sz, -sz / 2);
+    p3.translate(e.pos.x - (spriteSz / 2), e.pos.y - (spriteSz / 2));
+    p3.drawImage(this.sprite, 0, 0);
     p3.restore();
   }
 

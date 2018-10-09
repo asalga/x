@@ -68,7 +68,7 @@ export default function createUser() {
 
   // FREEZE
   let freezeGun = EntityFactory.create('freezegun');
-  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999 });
+  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100 });
   freezeGunLauncher.createFunc = createUserFreezeBullet;
   freezeGun.addComponent(freezeGunLauncher);
   freezeGun.addComponent(new MouseLauncherController(freezeGun));

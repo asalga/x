@@ -8,10 +8,14 @@ Rhino
 Eel
 
 # TODO - High Priority
- * Create Object Pool for Vectors
+ * Fix bullet spawn point
+ # Fix Explosion centering on flak bullet
  * Remove entity if has left game bounds
  * If entity is removed from scene, recursively remove its children(?)
  * Write line circle intersection
+
+# TODO - Medium Priority
+ * Create Object Pool for Vectors
 
 # TODO - Low Priority
  * rename scene.deleteQueue variable
@@ -24,11 +28,9 @@ Eel
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
- * Fix calls to e.on('collision', function hit(data) 
 
  * Create LinkGun
  * Create LaserGun
- * Create FlakGun
  * Create ShieldGun
  * Create HyperwaveGun
  
