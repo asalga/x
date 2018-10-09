@@ -15,7 +15,7 @@ import createRocketBullet from './RocketBullet.js';
 
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import Debug from '../../debug/Debug.js';
 import Vec2 from '../../math/Vec2.js';
@@ -64,11 +64,7 @@ export default function createMouse() {
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
-
-  let coll = new Collidable(e);
-  coll.type = CollisionType.ENEMY;
-  coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
-  e.addComponent(coll);
+  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
 
   for (let i = 0; i < 4; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
@@ -85,10 +81,7 @@ export default function createMouse() {
 
     rocketGun.addComponent(new Health(rocketGun, { amt: 50 }));
     rocketGun.addComponent(new Killable(rocketGun));
-    rocketGun.addComponent(new Collidable(rocketGun, {
-      type: CollisionType.ENEMY,
-      mask: CollisionType.PLAYER_BULLET
-    }));
+    rocketGun.addComponent(new Collidable(rocketGun, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
     rocketGun.bounds = new BoundingCircle(rocketGun.pos, 30);
     scene.add(rocketGun);
 

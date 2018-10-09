@@ -2,17 +2,17 @@
 
 import Entity from '../Entity.js';
 
-import GoToTarget from '../components/GoToTarget.js';
-import Killable from '../components/Killable.js';
+import Stun from '../components/Stun.js';
 import Health from '../components/Health.js';
+import Killable from '../components/Killable.js';
+import GoToTarget from '../components/GoToTarget.js';
+import Collidable from '../components/Collidable.js';
 import HealthRender from '../components/HealthRender.js';
 import SpriteRender from '../components/SpriteRender.js';
-import Collidable from '../components/Collidable.js';
 import MeleePayload from '../components/MeleePayload.js';
-import Stun from '../components/Stun.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import Vec2 from '../../math/Vec2.js';
 
@@ -54,20 +54,16 @@ export default function createMouse() {
     speed: 25,
     hasArrived: function(data) {
       // if (data.self !== this) { return; }
-      // debugger;
       // setRandPosition(e);
     }
   }));
-  
+
   e.addComponent(new Killable(e));
-  e.addComponent(new Stun(e, 3));
+  e.addComponent(new Stun(e, { multiplier: 5 }));
   e.addComponent(new Health(e, { amt: 10 }));
   e.addComponent(new HealthRender(e, { layer: 200 }));
   e.addComponent(new MeleePayload(e, { damage: 20 }));
-  e.addComponent(new Collidable(e, {
-    type: CollisionType.ENEMY,
-    mask: CollisionType.PLAYER | CollisionType.PLAYER_BULLET
-  }));
+  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
 
   return e;
 }

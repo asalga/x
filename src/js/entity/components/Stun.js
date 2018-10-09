@@ -1,18 +1,20 @@
 'use strict';
 
 import Component from './Component.js';
+import Utils from '../../Utils.js';
 
 export default class Stun extends Component {
-  constructor(e, multiplier) {
+  constructor(e, cfg) {
     super(e, 'stun');
-    this.multiplier = multiplier;
+    let defaults = {
+      multiplier: 2
+    };
+    Utils.applyProps(this, defaults, cfg);
 
     this.on('hurt', function(e) {
-
-      if (e === this.entity && e.health.percentLeft() <= 0.5) {
-        e.speed *= 1/multiplier;
-      }
-    }, this);
+      if (e.health.percentLeft > 0.5) { return; }
+      e.timeScale = 1 / this.multiplier;
+    }, this, { onlySelf: true });
   }
 
   update(dt) {}
