@@ -1,14 +1,18 @@
 'use strict';
 
 import Component from './Component.js';
+import Utils from '../../Utils.js';
 
 export default class LauncherRenderer extends Component {
   constructor(e, cfg) {
     super(e, 'launcherrenderer');
-    this.color = cfg.color;
-    this.renderable = true;
-    this.visible = true;
-    this.layer = 10;
+    let defaults = {
+      color: 'rbg(0,0,0)',
+      renderable: true,
+      visible: true,
+      layer: 10
+    }
+    Utils.applyProps(this, defaults, cfg);
   }
 
   update(dt) {}
@@ -17,8 +21,8 @@ export default class LauncherRenderer extends Component {
     let v = this.entity.getWorldCoords();
 
     let gun = this.entity.launcher.direction.clone().mult(60);
-    p3.save();
 
+    p3.save();
     p3.strokeWeight(10);
     p3.stroke(this.color);
     p3.line(v.x, v.y, v.x + gun.x, v.y + gun.y);

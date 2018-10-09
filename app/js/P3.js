@@ -10,11 +10,17 @@ export default class P3 {
     this.fill('blue');
     this.stroke('white');
     this.strokeWeight(1);
+
+    this._imageMode = 'center';
+    this._rectMode = 'center';
+    this._ellipseMode = 'center';
+
     this._doFill = true;
     this._doStroke = true;
     this._clearCol = 'black';
     this.ctx.font = 'normal 600 14px Courier New';
 
+    // this.ctx.filter = 'brightness(255)';
     this.mouseX = 0;
     this.mouseY = 0;
 
@@ -28,6 +34,25 @@ export default class P3 {
   clearColor(col) {
     this._clearCol = this._argColorToString(...arguments);
     // this._clearCol = col;
+  }
+
+  //TODO: fix
+  clearAll() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
+  imageMode(str) {
+    this._imageMode = str;
+  }
+
+  rectMode(str) {
+    this._rectMode = str;
+  }
+
+  ellipseMode(str) {
+    // debugger;
+    // console.log('implement me');
+    this._ellipseMode = str;
   }
 
   clear() {
@@ -46,7 +71,6 @@ export default class P3 {
     let ret;
     if (arguments.length === 1) {
       if (typeof(args) === 'string') {
-        // this.ctx.fillStyle = args;
         ret = args;
       } else if (typeof(args) === 'number') {
         let c = args;
@@ -93,6 +117,9 @@ export default class P3 {
 
   rect(x, y, w, h) {
     // let arrArgs = [...arguments];
+
+    // this.ctx.globalAlpha = 0.8;
+
     if (this._doStroke) {
       this.ctx.strokeRect(x, y, w, h);
     }
@@ -117,17 +144,35 @@ export default class P3 {
   }
 
   ellipse(x, y, r1, r2) {
+
+    let [_x, _y] = [x, y];
+    if (this._ellipseMode === 'center') {
+      _x = x;
+      _y = y;
+    }
+
     if (this._doStroke) {
       this.ctx.beginPath();
-      this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
+      this.ctx.arc(_x, _y, r1, 0, 2 * Math.PI, false);
       this.ctx.stroke();
     }
 
     if (this._doFill) {
       this.ctx.beginPath();
-      this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
+      this.ctx.arc(_x, _y, r1, 0, 2 * Math.PI, false);
       this.ctx.fill();
     }
+  }
+
+  drawImage(image, x, y) {
+    let [_x, _y] = [x, y];
+
+    if (this._imageMode === 'center') {
+      _x = x - image.width / 2;
+      _y = y - image.height / 2;
+    }
+
+    this.ctx.drawImage(image, _x, _y);
   }
 
   arc(x, y, r, s, e, cc) {
@@ -136,17 +181,9 @@ export default class P3 {
     this.ctx.stroke();
   }
 
-  sin(a) {
-    return Math.sin(a);
-  }
-  cos(a) {
-    return Math.cos(a);
-  }
-
-  get PI() {
-    return Math.PI;
-  }
-  get TAU() {
-    return Math.PI * 2;
-  }
+  sin(a) { return Math.sin(a); }
+  cos(a) { return Math.cos(a); }
+  tan(a) { return Math.tan(a); }
+  get PI() { return Math.PI; }
+  get TAU() { return Math.PI * 2; }
 }

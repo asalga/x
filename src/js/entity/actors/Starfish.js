@@ -11,7 +11,7 @@ import Launcher from '../components/Launcher.js';
 import SpriteRender from '../components/SpriteRender.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import createRocketBullet from './RocketBullet.js';
 
@@ -32,25 +32,19 @@ export default function createStarFish() {
   }
   e.addComponent(spriteRender);
 
-  for (let i = 0; i < 10; i++) {
-    let rocketGun = EntityFactory.create('rocketgun');
-    let rocketLauncher = new Launcher(rocketGun, {
-      rate: .25,
-      autoFire: true,
-      ammo: 100
-    });
+  let numGuns = 6;
 
-    let a = i * ((p3.TAU) / 10);
+  for (let i = 0; i < numGuns; i++) {
+    let rocketGun = EntityFactory.create('rocketgun');
+    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 0.25, autoFire: true, ammo: 3 });
+    let a = i * ((p3.TAU) / numGuns);
 
     rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(0));
     rocketLauncher.createFunc = createRocketBullet;
 
     rocketGun.addComponent(new Health(rocketGun, 40));
     rocketGun.addComponent(new Killable(rocketGun));
-    rocketGun.addComponent(new Collidable(rocketGun, {
-      type: CollisionType.ENEMY,
-      mask: CollisionType.PLAYER_BULLET
-    }));
+    rocketGun.addComponent(new Collidable(rocketGun, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
 
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
@@ -61,12 +55,9 @@ export default function createStarFish() {
   }
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 1000));
+  e.addComponent(new Health(e, { amt: 500 }));
   e.addComponent(new HealthRender(e, { layer: 100 }));
-  e.addComponent(new Collidable(e, {
-    type: CollisionType.ENEMY,
-    mask: CollisionType.PLAYER_BULLET
-  }));
+  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
 
   return e;
 }

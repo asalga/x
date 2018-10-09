@@ -4,16 +4,19 @@ import Component from './Component.js';
 import Collision from '../../collision/Collision.js';
 import Debug from '../../debug/Debug.js';
 
+import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
 export default class SeekTarget extends Component {
-  constructor(e) {
+  constructor(e, cfg) {
     super(e, 'seektarget');
-    this.target = null;
-
-    this.maxSpeed = 100;
-    this.maxVel = 50;
-    this.maxSteerForce = 10;//Math.random() * 25;
+    let defaults = {
+      target: null,
+      maxSpeed: 100,
+      maxVel: 50,
+      maxSteerForce: 10,
+    };
+    Utils.applyProps(this, defaults, cfg)
 
     this.lastVel = new Vec2();
     // this.offset = Vec2.rand().mult(1);
@@ -37,7 +40,7 @@ export default class SeekTarget extends Component {
       return;
     }
 
-    let targetPos = new Vec2(this.target.pos);//.add(this.offset);
+    let targetPos = new Vec2(this.target.pos); //.add(this.offset);
     let pos = new Vec2(this.entity.pos);
     let vel = this.entity.vel;
 

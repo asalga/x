@@ -6,14 +6,21 @@ import createStarfish from './actors/Starfish.js';
 import createHummingBird from './actors/HummingBird.js';
 
 import createUser from './actors/User.js';
-import createUserBullet from './actors/UserBullet.js';
-import createEnemyBullet from './actors/EnemyBullet.js';
-import UserRocketBullet from './actors/UserRocketBullet.js';
+
+// What category is this?
+import createCrystal from './actors/Crystal.js';
+import createExplosion from './actors/Explosion.js';
+
+// import createUserBullet from './actors/UserBullet.js';
+// import createEnemyBullet from './actors/EnemyBullet.js';
+// import UserRocketBullet from './actors/UserRocketBullet.js';
 
 import {
   createMinigun,
   createPlasmaGun,
-  createRocketGun
+  createRocketGun,
+  createFreezeGun,
+  createFlakGun
 } from './actors/guns/guns.js';
 
 let createFuncs = new Map();
@@ -29,6 +36,12 @@ createFuncs.set('user', createUser);
 createFuncs.set('minigun', createMinigun);
 createFuncs.set('plasmagun', createPlasmaGun);
 createFuncs.set('rocketgun', createRocketGun);
+createFuncs.set('freezegun', createFreezeGun);
+createFuncs.set('flakgun', createFlakGun);
+
+// DECORATORS?
+createFuncs.set('crystal', createCrystal);
+createFuncs.set('explosion', createExplosion);
 
 export default class EntityFactor {
   static create(str) {

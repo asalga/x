@@ -1,67 +1,64 @@
 'use strict';
 
 import Entity from '../Entity.js';
-import Collidable from '../components/Collidable.js';
-import Payload from '../components/Payload.js';
-import SpriteRender from '../components/SpriteRender.js';
-import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
 
+import Payload from '../components/Payload.js';
+import Collidable from '../components/Collidable.js';
 import SeekTarget from '../components/SeekTarget.js';
+import SpriteRender from '../components/SpriteRender.js';
+import LifetimeLimit from '../components/LifetimeLimit.js';
+import NearDeathIndicator from '../components/NearDeathIndicator.js';
+
+import BoundingCircle from '../../collision/BoundingCircle.js';
+import CType from '../../collision/CollisionType.js';
+
 import Vec2 from '../../math/Vec2.js';
 
 export default function createUserRocketBullet() {
   let e = new Entity({ name: 'homingmissle' });
   scene.add(e);
 
+  // TODO: move to component
   e.bounds = new BoundingCircle(e.pos, 10);
 
-  let spriteRender = new SpriteRender(e, { layer: 20 });
-  spriteRender.draw = function() {
-    p3.save();
-
-    p3.noStroke();
-    p3.fill('rgb(245, 10, 255)');
-    p3.translate(e.pos.x, e.pos.y);
-    let a = Math.atan2(e.vel.y, e.vel.x);
-    p3.rotate(a);
-
-    let sz = e.bounds.radius;
-    p3.rect(-sz, -sz / 2, sz * 2, sz);
-    p3.restore();
-  }
-  e.addComponent(spriteRender);
-
-  e.on('collision', function(data) {
-    let [e1, e2] = [data.e1, data.e2];
-
-    // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) { return; }
-    let other = e1 === e ? e2 : e1;
-
-    other.health.hurt(e.payload.payload);
+  // EVENTS
+  e.on('collision', data => {
+    data.other.health.hurt(e.payload.dmg);
     scene.remove(e);
-  }, e);
+  }, e, { onlySelf: true });
 
+  // If our target has died, get a new one
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
       e.seektarget.target = scene.getRandomBaddie();
     }
   }, e);
 
+
   // COMPONENTS
-  let payload = new Payload(e, 5);
-  e.addComponent(payload);
+  let spriteSz = 32;
+  let spriteRender = new SpriteRender(e, { width: spriteSz, height: spriteSz, layer: 20 });
+  spriteRender.draw = function() {
+    let sz = e.bounds.radius;
 
-  let seek = new SeekTarget(e);
-  seek.maxVel = 300;
-  seek.target = scene.getRandomBaddie();
-  e.addComponent(seek);
+    this.p3.clearAll();
+    this.p3.save();
+    // this.p3.clear();
+    this.p3.noStroke();
+    this.p3.fill('rgb(245, 10, 255)');
+    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
+    this.p3.rotate(Math.atan2(e.vel.y, e.vel.x));
+    this.p3.rect(-sz, -sz / 2, sz * 2, sz);
+    this.p3.restore();
 
-  let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
-  e.addComponent(coll);
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+  }
+  e.addComponent(spriteRender);
+  e.addComponent(new NearDeathIndicator(e));
+  e.addComponent(new Payload(e, { dmg: 5 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 10 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
+  e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   return e;
 }

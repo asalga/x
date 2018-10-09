@@ -53,7 +53,7 @@ function preRender() {
 
 function render() {
   p3.clear();
-  scene.draw(p3);
+  // scene.draw(p3);
 
   // Place entities in their respective layers
   scene.entities.forEach(e => {
@@ -113,7 +113,7 @@ function setup() {
   // Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  // Debug.setOn(false);
+  Debug.setOn(false);
 
   scene.restartGame();
 

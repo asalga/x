@@ -1,40 +1,36 @@
 'use strict';
 
-/*
-  arrived callback called once bounds overlaps targets bounds
-*/
-
 import Component from './Component.js';
 import Collision from '../../collision/Collision.js';
 import Debug from '../../debug/Debug.js';
+import Utils from '../../Utils.js';
+
+import Vec2 from '../../math/Vec2.js';
 
 export default class GoToTarget extends Component {
-  constructor(e) {
+  constructor(e, cfg) {
     super(e, 'gototarget');
-    this.target = null;
-    this.hasArrived = false;
-    this.speed = 1;
+    let defaults = {
+      target: null,
+      speed: 1,
+      hasArrived: Utils.noop()
+    };
+    Utils.applyProps(this, defaults, cfg);
+
+    e.on('collision', this.hasArrived, e, { onlySelf: true });
   }
 
-  ready() {
-    this.on('collision', this.arrived, this);
-  }
-
-  arrived() {
+  hasArrived() {
     console.log('arrived has not been overridden');
   }
 
   update(dt, entity) {
-    if (this.hasArrived || this.target === null) {
-      return;
-    }
+    if (this.target === null) { return; }
 
     let toTarget = this.target.pos.clone();
     toTarget.sub(entity.pos);
     toTarget.normalize();
-    // Debug.add(`${this.speed}, ${entity.speed}`);
-    toTarget.mult(entity.speed * this.speed);
-    // toTarget.mult(0);
+    toTarget.mult(this.speed);
     entity.vel = toTarget;
   }
 }

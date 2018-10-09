@@ -16,6 +16,10 @@ export default class Vec2 {
     this.set(x, y);
   }
 
+  toArray(){
+    return [this.x, this.y];
+  }
+
   set() {
     switch (arguments.length) {
       case 1:
@@ -73,6 +77,10 @@ export default class Vec2 {
 
   length() {
     return Math.sqrt(Vec2.dot(this, this));
+  }
+
+  lengthSq() {
+    return Vec2.dot(this, this);
   }
 
   normalize() {

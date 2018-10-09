@@ -7,23 +7,33 @@ HummingBird
 Rhino
 Eel
 
-# TODO
- * Create Object Pool for Vectors
- * Create scene.getClosestEnemy()
- * Add min speed to Homing Missle
+# TODO - High Priority
+ # Fix Explosion centering on flak bullet
  * Remove entity if has left game bounds
- * Allow switching Weapons
- * Add firerate implementation to Launcher
+ * implement imageMode(CENTER)
+ * If entity is removed from scene, recursively remove its children(?)
+ * Write line circle intersection
+
+# TODO - Medium Priority
+ * Create Object Pool for Vectors
+
+# TODO - Low Priority
+ * rename scene.deleteQueue variable
+ * Fix scene.getClosestEnemy()
+ * Add min speed to Homing Missle
  * Add healthComponent to Rockets
- * Create LinkGun
  * Fix onCollision method in bullets
  * Fix setDir for Bullets
- * Create Hyperwave bullet
  * Create Rhino baddie
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
 
+ * Create LinkGun
+ * Create LaserGun
+ * Create ShieldGun
+ * Create HyperwaveGun
+ 
 // We need a way to 'turn off' an entity
 // so that it no longer responds to events
 // and it doesn't get rendered

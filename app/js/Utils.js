@@ -1,19 +1,51 @@
 'use strict';
 
+let id = -1;
+
 export default class Utils {
   static getEl(selector) {
     return document.getElementById(selector);
   }
   static noop() {}
-}
 
-// }
-//   pointInRect(p, r) {
-//     if (p.x >= r.x && p.x <= r.x + r.w &&
-//       p.y >= r.y && p.y <= r.y + r.h) {
-//       return true;
-//     }
-//     return false;
-//   },
-//   noop() {}
-// };
+  static getId(){
+    return ++id;
+  }
+
+  static applyProps(ctx, def, cfg) {
+
+    Object.keys(def).forEach(k => {
+      // if (ctx[k]) {
+        // console.log(`${ctx[k]} already exists. Overwriting`);
+      // }
+      ctx[k] = def[k];
+    });
+
+    if (cfg) {
+      Object.keys(cfg).forEach(k => {
+        // if (ctx[k]) {
+          // console.log(`${ctx[k]} already exists. Overwriting`);
+        // }
+        ctx[k] = cfg[k];
+      });
+    }
+  }
+
+  // this is shit
+  static removeFromArray(arr, el) {
+    let idx = -1;
+    for (let i = arr.length - 1; i > -1; --i) {
+      if (el === arr[i]) {
+        idx = i;
+        break;
+      }
+    }
+
+    if (idx === -1) {
+      return false;
+    }
+
+    arr.splice(idx, 1);
+    return true;
+  }
+}

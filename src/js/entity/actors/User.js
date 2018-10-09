@@ -19,14 +19,16 @@ import Vec2 from '../../math/Vec2.js';
 
 import EntityFactory from '../EntityFactory.js';
 import createUserMiniGunBullet from './UserBullet.js';
+import createUserFreezeBullet from './UserFreezeBullet.js';
 import createUserPlasmaBullet from './UserPlasmaBullet.js';
 import createUserRocketBullet from './UserRocketBullet.js';
+import createUserFlakBullet from './UserFlakBullet.js';
 
 export default function createUser() {
   let user = new Entity();
   user.name = 'user';
   user.pos.set(p3.width / 2, p3.height / 2);
-  user.size = 55;
+  user.size = 40;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
   let spriteRender = new SpriteRender(user, { layer: 10 });
@@ -34,76 +36,91 @@ export default function createUser() {
     p3.save();
     p3.translate(user.pos.x, user.pos.y);
 
-    // User body
+    // body
     p3.stroke(111, 150, 80);
     // let h = (user.health.health) / 100;
-    p3.fill(251,200,138);
+    p3.fill(251, 200, 138);
     //(157, 192, 188);
-    p3.ellipse(0, 0, user.size, user.size);
 
+    // p3.save();
+    let [x, y] = user.getWorldCoords().toArray();
+    // p3.translate(x, y);
+    p3.ellipse(0, 0, user.size, user.size);
+    
     // top
-    p3.save();
-    p3.noStroke();
+    // p3.save();
+    // p3.noStroke();
     // p3.fill(251,200,138);
     //(48, 60, 93);
-    p3.ellipse(0, 0, 20, 20);
-    p3.restore();
+    // p3.ellipse(0, 0, 20, 20);
+    // p3.restore();
     p3.restore();
   }
   user.addComponent(spriteRender);
 
+
+
+
+
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { rate:45, autoFire:false, ammo: 999, color: 'rgb(120,120, 120)' });
+  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 10, ammo: 999 });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
 
+  // FREEZE
+  let freezeGun = EntityFactory.create('freezegun');
+  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100 });
+  freezeGunLauncher.createFunc = createUserFreezeBullet;
+  freezeGun.addComponent(freezeGunLauncher);
+  freezeGun.addComponent(new MouseLauncherController(freezeGun));
+  user.add(freezeGun);
+
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { rate: 5, ammo: 350, color: 'rgb(55, 210, 55)' });
+  let plamaLauncher = new Launcher(plasmaGun, { shotsPerSecond: 5, ammo: 350 });
   plamaLauncher.createFunc = createUserPlasmaBullet;
   plasmaGun.addComponent(plamaLauncher);
   plasmaGun.addComponent(new MouseLauncherController(plasmaGun));
   user.add(plasmaGun);
 
+  // FLAK
+  let flakGun = EntityFactory.create('flakgun');
+  let flakLauncher = new Launcher(flakGun, { shotsPerSecond: 5, ammo: 100, bulletVel: 100 });
+  flakLauncher.createFunc = createUserFlakBullet;
+  flakGun.addComponent(flakLauncher);
+  flakGun.addComponent(new MouseLauncherController(flakGun));
+  user.add(flakGun);
+
   // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, {
-    rate: 1,
-    autoFire: true,
-    ammo: 450,
-    color: 'rgb(245, 10, 255)'
-  });
+  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 1, autoFire: true, ammo: 450 });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));
   user.add(rocketGun);
+
+
+
 
   // WEAPON SWITCHER
   let weaponSwitcher = new WeaponSwitcher(user);
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
+  weaponSwitcher.addWeapon('4', freezeGun);
+  weaponSwitcher.addWeapon('5', flakGun);
   weaponSwitcher.init();
   user.addComponent(weaponSwitcher);
 
-  let health = new Health(user, 200);
-  health.regenerationSpeed = 8;
-  health.updateProxy = function() { Debug.add(`Player Health: ${Math.floor(health.health)}`); };
-  user.addComponent(health);
 
-  let killable = new Killable(user);
-  killable.onDeath = function() { /*scene.restartGame();*/ };
-  user.addComponent(killable);
-
-  let coll = new Collidable(user);
-  coll.type = CollisionType.PLAYER;
-  coll.mask = CollisionType.ENEMY_BULLET | CollisionType.ENEMY;
-  user.addComponent(coll);
-
+  user.addComponent(new Collidable(user, { type: CollisionType.PLAYER, mask: CollisionType.ENEMY_BULLET | CollisionType.ENEMY }));
+  user.addComponent(new Killable(user));
   user.addComponent(new HealthRender(user, { layer: 10 }));
+  user.addComponent(new Health(user, { amt: 1000 }));
 
   return user;
 }
+// health.updateProxy = function() { Debug.add(`Player Health: ${Math.floor(health.health)}`); };

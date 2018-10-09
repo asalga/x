@@ -1,32 +1,32 @@
 'use strict';
 
 import Entity from '../Entity.js';
-import Collidable from '../components/Collidable.js';
+
 import Payload from '../components/Payload.js';
+import Collidable from '../components/Collidable.js';
+import SeekTarget from '../components/SeekTarget.js';
 import SpriteRender from '../components/SpriteRender.js';
+
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
-import SeekTarget from '../components/SeekTarget.js';
 import Vec2 from '../../math/Vec2.js';
 
 export default function createRocketBullet() {
   let e = new Entity({ name: 'homingmissle' });
+
   scene.add(e);
 
-  e.bounds = new BoundingCircle(e.pos, 10);
-
-  e.on('collision', function(data) {
-    let [e1, e2] = [data.e1, data.e2];
-
-    // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) { return; }
-    let other = e1 === e ? e2 : e1;
-    other.health.hurt(e.payload.payload);
+  e.on('collision', data => {
+    data.other.health && data.other.health.hurt(e.payload.dmg);
     scene.remove(e);
-  }, e);
+  }, e, { onlySelf: true });
 
   // COMPONENTS
+  
+  // TODO: fix
+  e.bounds = new BoundingCircle(e.pos, 10);
+
   let spriteRender = new SpriteRender(e, { layer: 20 });
   spriteRender.draw = function() {
     p3.save();
@@ -42,20 +42,9 @@ export default function createRocketBullet() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-
-
-  let payload = new Payload(e, 1);
-  e.addComponent(payload);
-
-  let seek = new SeekTarget(e);
-  seek.maxVel = 300;
-  seek.target = scene.getUser();
-  e.addComponent(seek);
-
-  let coll = new Collidable(e);
-  coll.type = CollisionType.ENEMY_BULLET;
-  coll.mask = CollisionType.PLAYER;
-  e.addComponent(coll);
+  e.addComponent(new Payload(e, { dmg: 1 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getUser() }));
+  e.addComponent(new Collidable(e, { type: CollisionType.ENEMY_BULLET, mask: CollisionType.PLAYER }));
 
   return e;
 }

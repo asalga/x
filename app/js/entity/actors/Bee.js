@@ -15,7 +15,7 @@ import createRocketBullet from './RocketBullet.js';
 
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import Debug from '../../debug/Debug.js';
 import Vec2 from '../../math/Vec2.js';
@@ -24,11 +24,19 @@ export default function createMouse() {
   let e = new Entity({ name: 'bee' });
   e.bounds = new BoundingCircle(e.pos, 30);
 
+  e.vel.x = 100;
+  e.vel.y = 50;
+
+  e.pos.x = p3.width / 2;
+  e.pos.y = p3.height / 2 - 150;
+
+
   let spriteRender = new SpriteRender(e, { layer: 100 });
   spriteRender.draw = function() {
     p3.save();
     p3.noStroke();
     p3.translate(e.pos.x, e.pos.y);
+    // console.log(e.pos);
     p3.fill(64, 202, 238);
     //(100, 111, 140);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
@@ -38,20 +46,25 @@ export default function createMouse() {
 
   e.updateProxy = function(dt) {
     let center = new Vec2(p3.width / 2, p3.height / 2);
-    this.pos.x = 200;
-    this.pos.y = 100;
+
+    this.vel.x = Math.cos(gameTime) * 300;
+    this.vel.y = Math.sin(gameTime) * 150;
+
+    // if(this.pos.x > p3.width){
+    //   this.vel.x *= -1;
+    // }
+    // if(this.pox.y > p3.height){
+    //   this.vel.y *= -1;
+    // }
+
     // this.pos.x = center.x + Math.cos(gameTime / 2) * 300;
     // this.pos.y = center.y + Math.sin(gameTime / 2) * 200;
   };
 
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, 450, 450));
+  e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
-
-  let coll = new Collidable(e);
-  coll.type = CollisionType.ENEMY;
-  coll.mask = CollisionType.PLAYER | CollisionType.PLAYER_BULLET;
-  e.addComponent(coll);
+  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
 
   for (let i = 0; i < 4; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
@@ -66,31 +79,16 @@ export default function createMouse() {
     rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(0));
     rocketLauncher.createFunc = createRocketBullet;
 
-    rocketGun.addComponent(new Health(rocketGun, 40));
+    rocketGun.addComponent(new Health(rocketGun, { amt: 50 }));
     rocketGun.addComponent(new Killable(rocketGun));
-    rocketGun.addComponent(new Collidable(rocketGun, {
-      type: CollisionType.ENEMY,
-      mask: CollisionType.PLAYER_BULLET
-    }));
+    rocketGun.addComponent(new Collidable(rocketGun, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
     rocketGun.bounds = new BoundingCircle(rocketGun.pos, 30);
     scene.add(rocketGun);
 
     rocketGun.on('collision', data => {
-      let [e1, e2] = [data.e1, data.e2];
-
-// if(e1.name == 'bee') return;
-
-      console.log(e1, e2);
-      // Check if one of the entities passed is us
-      if (e1 !== rocketGun && e2 !== rocketGun) { return; }
-      let other = e1 === e ? e2 : e1;
-
-      // other.health.hurt(e.payload.payload);
-      // scene.remove(rocketGun);
       rocketGun.launcherrenderer.visible = false;
       rocketGun.ammo = 0;
-    }, rocketGun);
-
+    }, rocketGun, { onlySelf: true });
 
     rocketLauncher.direction.set = new Vec2(Math.cos(a), Math.sin(a));
     rocketLauncher.updateProxy = function() {
