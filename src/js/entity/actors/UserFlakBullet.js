@@ -46,7 +46,6 @@ export default function createFlakBullet(cfg) {
   e.addComponent(spriteRender);
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
 
-
   let detonate = function() {
     let v = e.getWorldCoords();
 
