@@ -68,7 +68,7 @@ export default class Scene {
     let s = EntityFactory.create('starfish');
     s.pos.x = 550;
     s.pos.y = 150;
-    this.add(s);
+    // this.add(s);
 
     for (let i = 0; i < 10; ++i) {
       this.add(EntityFactory.create('mouse'));

@@ -5,6 +5,7 @@ import Entity from '../Entity.js';
 import Collidable from '../components/Collidable.js';
 import SpriteRender from '../components/SpriteRender.js';
 import LifetimeLimit from '../components/LifetimeLimit.js';
+import Payload from '../components/Payload.js';
 
 import CType from '../../collision/CollisionType.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
@@ -35,7 +36,7 @@ export default function createExplosion() {
   // console.log(e.id);
 
   e.on('collision', data => {
-    data.other.health.hurt(30);
+    // data.other.health.hurt(30);
     // data.other.health.hurtOnce(e, 30);
     scene.remove(e);
   }, e, {
@@ -67,6 +68,7 @@ export default function createExplosion() {
     p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
+  e.addComponent(new Payload(e, { dmg: 30, lingerTime: 1 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
   e.addComponent(new LifetimeLimit(e, { limit: 0.2 }));
 
