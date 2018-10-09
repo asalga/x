@@ -29,7 +29,7 @@ export default function createUserRocketBullet() {
 
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
-      debugger;
+      // debugger;
       e.seektarget.target = scene.getRandomBaddie();
       return;
     }

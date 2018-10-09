@@ -24,7 +24,7 @@ export default class Scene {
     this.timer += dt;
     if (this.timer > 1.5) {
       this.timer = 0;
-      // this.add(EntityFactory.create('mouse'));
+      this.add(EntityFactory.create('mouse'));
     }
 
     this.entities.forEach(e => e.update(dt));
