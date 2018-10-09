@@ -71,7 +71,7 @@ export default class Scene {
     this.add(s);
 
     for (let i = 0; i < 10; ++i) {
-      // this.add(EntityFactory.create('mouse'));
+      this.add(EntityFactory.create('mouse'));
     }
 
     // let b = EntityFactory.create('bee');

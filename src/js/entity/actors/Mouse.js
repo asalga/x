@@ -45,10 +45,7 @@ export default function createMouse() {
     this.p3.ellipse(0, 0, sz, sz);
     this.p3.restore();
 
-    p3.save();
-    p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
-    p3.drawImage(this.sprite, -sz, -sz);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
 

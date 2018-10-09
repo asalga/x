@@ -25,10 +25,7 @@ export default class HealthRender extends Component {
   draw() {
     let e = this.entity;
     let healthPercent = e.health.amt / e.health.max;
-    let world = e.getWorldCoords();
-
-    let sz = e.bounds.radius;
-
+    
     this.p3.save();
     this.p3.clearAll();
     this.p3.strokeWeight(5);
@@ -37,11 +34,6 @@ export default class HealthRender extends Component {
     this.p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
     this.p3.restore();
 
-    // TODO: fix. this repeats for all componentes that get rendered.
-    p3.save();
-    let [x, y] = this.entity.getWorldCoords().toArray();
-    p3.translate(x, y);
-    p3.drawImage(this.sprite, 0, 0);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
 }

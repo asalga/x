@@ -32,7 +32,7 @@ export default function createExplosion() {
   //   debugger;
   // }, e, { onlySelf: true, });
 
-  console.log(e.id);
+  // console.log(e.id);
 
   e.on('collision', data => {
     data.other.health.hurt(30);
