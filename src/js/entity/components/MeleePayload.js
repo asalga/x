@@ -11,10 +11,11 @@ export default class MeleePayload extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    this.on('collision', function(data) {
-      data.other.health.hurt(e.damage);
-      scene.remove(this.entity);
-    }, this, { onlySelf: true });
+    e.on('collision', function(data) {
+      if (!data.other.health) { return; }
+      data.other.health.hurt(this.meleepayload.damage);
+      scene.remove(e);
+    }, e, { onlySelf: true });
   }
 
   update(dt) {}

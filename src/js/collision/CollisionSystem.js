@@ -50,14 +50,12 @@ export class CollisionSystem {
         let maskA = e1.collidable.mask;
         let typeB = e2.collidable.type;
 
-        // if(e1.collidable.once || e2.collidable.once)
-
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
           if (CollisionSystem.circleCircleTest(e1, e2)) {
 
             let e = new Event({
               evtName: 'collision',
-              data: { e1, e2, self: e1, other: e2 }
+              data: { self: e1, other: e2 }
             });
             e.fire();
 

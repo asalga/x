@@ -13,6 +13,8 @@ export default class Entity {
 
     cfg && Utils.applyProps(this, cfg);
 
+    this.id = Utils.getId();
+
     this.visible = true;
     this.events = true;
 

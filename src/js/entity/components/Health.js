@@ -13,10 +13,11 @@ export default class Health extends Component {
       canRegen: false,
     };
     Utils.applyProps(this, defaults, cfg);
-    this.max = this.amt;
 
+    this.max = this.amt;
     this.regenerationSpeed = 0;
     this.isRegenerating = false;
+    this.oneTimeHurt = [];
   }
 
   update(dt) {
@@ -43,6 +44,10 @@ export default class Health extends Component {
     if (this.amt === this.max) {
       this.isRegenerating = false;
     }
+  }
+
+  hurtOnce(other, dmg) {
+
   }
 
   hurt(dmg) {

@@ -16,8 +16,8 @@ export default class GoToTarget extends Component {
       hasArrived: Utils.noop()
     };
     Utils.applyProps(this, defaults, cfg);
-    
-    this.on('collision', this.hasArrived, this.entity);
+
+    e.on('collision', this.hasArrived, e, { onlySelf: true });
   }
 
   hasArrived() {

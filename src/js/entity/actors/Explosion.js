@@ -23,17 +23,27 @@ export default function createExplosion() {
   // e.once('collision', )
   // e.listenTo('collision')
 
-  // provide ID to event
-  // when event occurs, get ID compare to
-
   // let ID = 105;
+  // event name
+  // entity
+  // other
 
-  // Event should happen once per entity - entity combination
-  
+  // e.on('collisionenter', data => {
+  //   debugger;
+  // }, e, { onlySelf: true, });
+
+  console.log(e.id);
+
   e.on('collision', data => {
     data.other.health.hurt(30);
+    // data.other.health.hurtOnce(e, 30);
     scene.remove(e);
-  }, e, { onlySelf: true });
+  }, e, {
+    onlySelf: true,
+    once: true
+    // hash: createHash()
+  });
+
 
 
 
@@ -61,6 +71,7 @@ export default function createExplosion() {
   }
   e.addComponent(spriteRender);
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
+  // e.addComponent(new CollisionEnter(e, ))
   e.addComponent(new LifetimeLimit(e, { limit: 0.1 }));
 
   return e;

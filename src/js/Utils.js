@@ -1,10 +1,16 @@
 'use strict';
 
+let id = -1;
+
 export default class Utils {
   static getEl(selector) {
     return document.getElementById(selector);
   }
   static noop() {}
+
+  static getId(){
+    return ++id;
+  }
 
   static applyProps(ctx, def, cfg) {
 

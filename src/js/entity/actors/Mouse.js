@@ -56,15 +56,17 @@ export default function createMouse() {
     target: scene.getUser(),
     speed: 25,
     hasArrived: function(data) {
-      if (data.e2 !== this) { return; }
-      setRandPosition(data.e2)
+      // if (data.self !== this) { return; }
+      // debugger;
+      // setRandPosition(e);
     }
   }));
+  
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, 3));
   e.addComponent(new Health(e, { amt: 10 }));
   e.addComponent(new HealthRender(e, { layer: 200 }));
-  // e.addComponent(new MeleePayload(e, { damage: 20 }));
+  e.addComponent(new MeleePayload(e, { damage: 20 }));
   e.addComponent(new Collidable(e, {
     type: CollisionType.ENEMY,
     mask: CollisionType.PLAYER | CollisionType.PLAYER_BULLET
