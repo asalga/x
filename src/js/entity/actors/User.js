@@ -36,20 +36,24 @@ export default function createUser() {
     p3.save();
     p3.translate(user.pos.x, user.pos.y);
 
-    // User body
+    // body
     p3.stroke(111, 150, 80);
     // let h = (user.health.health) / 100;
     p3.fill(251, 200, 138);
     //(157, 192, 188);
-    p3.ellipse(0, 0, user.size, user.size);
 
+    // p3.save();
+    let [x, y] = user.getWorldCoords().toArray();
+    // p3.translate(x, y);
+    p3.ellipse(0, 0, user.size, user.size);
+    
     // top
-    p3.save();
-    p3.noStroke();
+    // p3.save();
+    // p3.noStroke();
     // p3.fill(251,200,138);
     //(48, 60, 93);
-    p3.ellipse(0, 0, 20, 20);
-    p3.restore();
+    // p3.ellipse(0, 0, 20, 20);
+    // p3.restore();
     p3.restore();
   }
   user.addComponent(spriteRender);

@@ -50,6 +50,8 @@ export default class P3 {
   }
 
   ellipseMode(str) {
+    // debugger;
+    // console.log('implement me');
     this._ellipseMode = str;
   }
 
@@ -142,15 +144,22 @@ export default class P3 {
   }
 
   ellipse(x, y, r1, r2) {
+
+    let [_x, _y] = [x, y];
+    if (this._ellipseMode === 'center') {
+      _x = x;
+      _y = y;
+    }
+
     if (this._doStroke) {
       this.ctx.beginPath();
-      this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
+      this.ctx.arc(_x, _y, r1, 0, 2 * Math.PI, false);
       this.ctx.stroke();
     }
 
     if (this._doFill) {
       this.ctx.beginPath();
-      this.ctx.arc(x, y, r1, 0, 2 * Math.PI, false);
+      this.ctx.arc(_x, _y, r1, 0, 2 * Math.PI, false);
       this.ctx.fill();
     }
   }
