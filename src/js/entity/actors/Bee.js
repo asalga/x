@@ -93,19 +93,9 @@ export default function createMouse() {
     scene.add(rocketGun);
 
     rocketGun.on('collision', data => {
-      let [e1, e2] = [data.e1, data.e2];
-
-      // console.log(e1, e2);
-      // Check if one of the entities passed is us
-      if (e1 !== rocketGun && e2 !== rocketGun) { return; }
-      let other = e1 === e ? e2 : e1;
-
-      // other.health.hurt(e.payload.dmg);
-      // scene.remove(rocketGun);
       rocketGun.launcherrenderer.visible = false;
       rocketGun.ammo = 0;
-    }, rocketGun);
-
+    }, rocketGun, { onlySelf: true });
 
     rocketLauncher.direction.set = new Vec2(Math.cos(a), Math.sin(a));
     rocketLauncher.updateProxy = function() {

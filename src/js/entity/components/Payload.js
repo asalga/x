@@ -15,21 +15,23 @@ export default class Payload extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    e.on('collision', function hit(data) {
-      // TODO: Fixs
-      let [e1, e2] = [data.e1, data.e2];
-      if (e1 !== e && e2 !== e) { return; }
-      let other = e1 === e ? e2 : e1;
 
-      if (other.health) {
-        if (this.lingerTime === 0) {
-          other.health.hurt(this.dmg);
-        } else {
-          let lingerHurt = new LingerHurt(other, { dmg: this.dmg, lingerTime: this.lingerTime });
-          other.addComponent(lingerHurt);
-        }
+    e.on('collision', function hit(data) {
+      let other = data.other;
+
+      if (!other.health) { return; }
+
+      if (this.payload.lingerTime === 0) {
+        other.health.hurt(this.payload.dmg);
+      } else {
+        let lingerHurt = new LingerHurt(other, {
+          dmg: this.payload.dmg,
+          lingerTime: this.payload.lingerTime
+        });
+        other.addComponent(lingerHurt);
       }
+
       scene.remove(e);
-    }, this);
+    }, e, { onlySelf: true });
   }
 }

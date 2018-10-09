@@ -3,7 +3,6 @@
 /*
   Responsible for launching bullets at a certain rate.
 */
-
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
 import Utils from '../../Utils.js';
@@ -23,13 +22,10 @@ export default class Launcher extends Component {
 
     this.firing = false;
     this.timer = 0;
-    // Specify rate as number
     this.rate = 1 / this.shotsPerSecond;
 
-
-
-    this.on('GAME_MOUSE_DOWN', function() { this.firing = true; }, this);
-    this.on('GAME_MOUSE_UP', function() { this.firing = false; }, this);
+    this.on('GAME_MOUSE_DOWN', () => { this.firing = true }, this);
+    this.on('GAME_MOUSE_UP', () => { this.firing = false; }, this);
 
     // this.getVecToCursor = function() {
     //   let center = window.UserPos;
@@ -59,22 +55,20 @@ export default class Launcher extends Component {
 
   fire() {
     this.ammo--;
-    let bullet = this.createFunc();
 
-    // Debug.add(`${this.entity.name} ammo: ${this.ammo}`);
+    let worldCoords = this.entity.getWorldCoords();
+    let gunTip = this.direction.clone().mult(60);
+    worldCoords.add(gunTip);
+
+    let bullet = this.createFunc({ pos: worldCoords });
+    bullet.pos.set(worldCoords);
+    bullet.vel.set(this.direction.clone().mult(this.bulletVel));
+
 
     // let gunTip = this.getVecToCursor();
     // gunTip.add(p3.width / 2, p3.height / 2);
     // bullet.pos.set(gunTip);
     // let dir = gunTip.sub(UserPos).normalize();
-    // bullet.setDir(dir);
-
-    let worldCoords = this.entity.getWorldCoords();
-    let gunTip = this.direction.clone().mult(50);
-    worldCoords.add(gunTip);
-    bullet.pos.set(worldCoords);
-
-    bullet.vel.set(this.direction.clone().mult(this.bulletVel));
   }
 
   update(dt) {

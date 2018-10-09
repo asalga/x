@@ -19,6 +19,8 @@ export default class LingerHurt extends Component {
   update(dt) {
     let dps = (dt * this.dmg)/ this.lingerTime;
 
+    if(!this.entity.health){ debugger;}
+
     // Make sure we don't subtract too much
     if (this.dmgLeft - dps < 0) {
       this.dmgLeft = 0;

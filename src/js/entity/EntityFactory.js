@@ -7,7 +7,9 @@ import createHummingBird from './actors/HummingBird.js';
 
 import createUser from './actors/User.js';
 
+// What category is this?
 import createCrystal from './actors/Crystal.js';
+import createExplosion from './actors/Explosion.js';
 
 // import createUserBullet from './actors/UserBullet.js';
 // import createEnemyBullet from './actors/EnemyBullet.js';
@@ -39,6 +41,7 @@ createFuncs.set('flakgun', createFlakGun);
 
 // DECORATORS?
 createFuncs.set('crystal', createCrystal);
+createFuncs.set('explosion', createExplosion);
 
 export default class EntityFactor {
   static create(str) {

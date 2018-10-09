@@ -9,14 +9,14 @@ import Utils from '../../Utils.js';
   Removes its associated entity from the scene. Either directly
   from the scene or by telling the entity to remove the child
 */
-export default class LimetimeLimit extends Component {
+export default class LifetimeLimit extends Component {
 
   constructor(e, cfg) {
     super(e, 'lifetimelimit');
     let defaults = {
       age: 0,
       limit: 1,
-      cb: Utils.noop()
+      cb: Utils.noop
     };
     Utils.applyProps(this, defaults, cfg);
   }

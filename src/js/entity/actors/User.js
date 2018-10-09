@@ -28,7 +28,7 @@ export default function createUser() {
   let user = new Entity();
   user.name = 'user';
   user.pos.set(p3.width / 2, p3.height / 2);
-  user.size = 55;
+  user.size = 40;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
   let spriteRender = new SpriteRender(user, { layer: 10 });
@@ -115,7 +115,7 @@ export default function createUser() {
   user.addComponent(new Collidable(user, { type: CollisionType.PLAYER, mask: CollisionType.ENEMY_BULLET | CollisionType.ENEMY }));
   user.addComponent(new Killable(user));
   user.addComponent(new HealthRender(user, { layer: 10 }));
-  user.addComponent(new Health(user, { amt: 100 }));
+  user.addComponent(new Health(user, { amt: 1000 }));
 
   return user;
 }

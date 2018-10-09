@@ -127,22 +127,7 @@ export default class Entity {
     return this.pos;
   }
 
-  on(evtName, func, ctx) {
-    (new EventSystem()).on(evtName, func, ctx);
-
-    // this.eventFilter(evtName, func, ctx);
-    // (new EventSystem()).on(evtName, func
-    //function() {
-    // if (this.events === false) { return; }
-    // func.call(this, arguments[0], arguments[1], arguments[2]);
-    // }.bind(this), ctx);
+  on(evtName, cb, ctx, cfg) {
+    (new EventSystem()).on(evtName, cb, ctx, cfg);
   }
-
-  // on(evtName, func, ctx) {
-  //   // this.eventFilter(evtName, func, ctx);
-  //   (new EventSystem()).on(evtName, function() {
-  //     if (this.events === false) { return; }
-  //     func(arguments);
-  //   }.bind(this), ctx);
-  // }
 }

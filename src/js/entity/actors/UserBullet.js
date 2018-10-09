@@ -1,9 +1,11 @@
 'use strict';
 
 import Entity from '../Entity.js';
+
 import Collidable from '../components/Collidable.js';
 import Payload from '../components/Payload.js';
 import SpriteRender from '../components/SpriteRender.js';
+
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
@@ -24,16 +26,8 @@ export default function createBullet() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-
-
-  let payload = new Payload(e, { dmg: 2 });
-  e.addComponent(payload);
-
-  // Remove this?
-  let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
-  e.addComponent(coll);
+  e.addComponent(new Payload(e, { dmg: 2 }));
+  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
 
   return e;
 }

@@ -22,25 +22,14 @@ export default function createUserRocketBullet() {
   e.bounds = new BoundingCircle(e.pos, 10);
 
   // EVENTS
-  e.on('collision', function(data) {
-    let [e1, e2] = [data.e1, data.e2];
-
-    // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) { return; }
-    let other = e1 === e ? e2 : e1;
-
-    other.health.hurt(e.payload.dmg);
+  e.on('collision', data => {
+    data.other.health.hurt(e.payload.dmg);
     scene.remove(e);
-  }, e);
-
-
-  // TODO: Use this way?
-  // e.listenTo('death', function(data){
-  // if(data.entity === e)
-  // });
+  }, e, { onlySelf: true });
 
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
+      debugger;
       e.seektarget.target = scene.getRandomBaddie();
       return;
     }
@@ -78,12 +67,9 @@ export default function createUserRocketBullet() {
   let seek = new SeekTarget(e);
   seek.maxVel = 300;
   seek.target = scene.getRandomBaddie();
+  
   e.addComponent(seek);
-
-  let coll = new Collidable(e);
-  coll.type = CollisionType.PLAYER_BULLET;
-  coll.mask = CollisionType.ENEMY;
-  e.addComponent(coll);
+  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
 
   return e;
 }

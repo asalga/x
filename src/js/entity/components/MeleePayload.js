@@ -12,15 +12,9 @@ export default class MeleePayload extends Component {
     Utils.applyProps(this, defaults, cfg);
 
     this.on('collision', function(data) {
-      let [target, entity] = [data.e1, data.e2];
-      if (data.e1 === this.entity) {
-        [target, entity] = [entity, target];
-      }
-      if (entity.meleepayload !== this) return;
-
-      target.health.hurt(e.damage);
+      data.other.health.hurt(e.damage);
       scene.remove(this.entity);
-    }, this);
+    }, this, { onlySelf: true });
   }
 
   update(dt) {}

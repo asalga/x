@@ -17,14 +17,9 @@ export default function createRocketBullet() {
   e.bounds = new BoundingCircle(e.pos, 10);
 
   e.on('collision', function(data) {
-    let [e1, e2] = [data.e1, data.e2];
-
-    // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) { return; }
-    let other = e1 === e ? e2 : e1;
-    other.health.hurt(e.payload.dmg);
+    data.other.health && data.other.health.hurt(e.payload.dmg);
     scene.remove(e);
-  }, e);
+  }, e, { onlySelf: true });
 
   // COMPONENTS
   let spriteRender = new SpriteRender(e, { layer: 20 });
@@ -44,8 +39,7 @@ export default function createRocketBullet() {
   e.addComponent(spriteRender);
 
 
-  let payload = new Payload(e, { dmg: 1 });
-  e.addComponent(payload);
+  e.addComponent(new Payload(e, { dmg: 1 }));
 
   let seek = new SeekTarget(e);
   seek.maxVel = 300;

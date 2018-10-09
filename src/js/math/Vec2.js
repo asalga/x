@@ -75,6 +75,10 @@ export default class Vec2 {
     return Math.sqrt(Vec2.dot(this, this));
   }
 
+  lengthSq() {
+    return Vec2.dot(this, this);
+  }
+
   normalize() {
     let len = this.length();
     if (len !== 0) {

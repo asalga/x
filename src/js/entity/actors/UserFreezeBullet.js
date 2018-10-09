@@ -41,11 +41,8 @@ export default function createFreezeBullet() {
   e.addComponent(spriteRender);
 
   e.on('collision', data => {
-    let [e1, e2] = [data.e1, data.e2];
-    // Check if one of the entities passed is us
-    if (e1 !== e && e2 !== e) { return; }
-    let other = e1 === e ? e2 : e1;
-
+    let other = data.other;
+    
     // Doesn't make sense to be frozen twice
     if (other.hasChild('crystal')) { return; }
 
@@ -54,7 +51,7 @@ export default function createFreezeBullet() {
     other.add(crystal);
 
     scene.remove(e);
-  }, e);
+  }, e, { onlySelf: true });
 
   e.addComponent(new Collidable(e, {
     type: CollisionType.PLAYER_BULLET,

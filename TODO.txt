@@ -18,16 +18,19 @@ Eel
  * Fix scene.getClosestEnemy()
  * Add min speed to Homing Missle
  * Add healthComponent to Rockets
- * Create LinkGun
- * Create LaserGun
  * Fix onCollision method in bullets
  * Fix setDir for Bullets
- * Create Hyperwave bullet
  * Create Rhino baddie
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
  * Fix calls to e.on('collision', function hit(data) 
+
+ * Create LinkGun
+ * Create LaserGun
+ * Create FlakGun
+ * Create ShieldGun
+ * Create HyperwaveGun
  
 // We need a way to 'turn off' an entity
 // so that it no longer responds to events
