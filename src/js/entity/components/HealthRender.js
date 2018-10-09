@@ -39,9 +39,9 @@ export default class HealthRender extends Component {
 
     // TODO: fix. this repeats for all componentes that get rendered.
     p3.save();
-    let worldCoords = this.entity.getWorldCoords();
-    p3.translate(worldCoords.x, worldCoords.y);
-    p3.drawImage(this.sprite, -this.sprite.width / 2, -this.sprite.height / 2);
+    let [x, y] = this.entity.getWorldCoords().toArray();
+    p3.translate(x, y);
+    p3.drawImage(this.sprite, 0, 0);
     p3.restore();
   }
 }

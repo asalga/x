@@ -16,6 +16,10 @@ export default class Vec2 {
     this.set(x, y);
   }
 
+  toArray(){
+    return [this.x, this.y];
+  }
+
   set() {
     switch (arguments.length) {
       case 1:

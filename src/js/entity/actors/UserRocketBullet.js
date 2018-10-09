@@ -51,10 +51,7 @@ export default function createUserRocketBullet() {
     this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.restore();
 
-    p3.save();
-    p3.translate(e.pos.x - (spriteSz / 2), e.pos.y - (spriteSz / 2));
-    p3.drawImage(this.sprite, 0, 0);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));

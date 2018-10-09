@@ -34,17 +34,13 @@ export default function createFlakBullet(cfg) {
     this.p3.save();
     this.p3.strokeWeight(2);
     this.p3.stroke('yellow');
-
-    this.p3.fill('rgb(0,0,0)');
+    this.p3.fill('rgb(0, 0, 0)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.rotate(e.rot);
     this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.restore();
 
-    p3.save();
-    p3.translate(e.pos.x - (spriteSz / 2), e.pos.y - (spriteSz / 2));
-    p3.drawImage(this.sprite, 0, 0);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
 
   e.addComponent(spriteRender);
@@ -62,9 +58,9 @@ export default function createFlakBullet(cfg) {
     scene.remove(e);
   };
 
-  // e.on('collision', data => {
-  //   detonate();
-  // });
+  e.on('collision', data => {
+    detonate();
+  }, e, { onlySelf: true });
 
   e.addComponent(new DistanceCountdown(e, {
     distance: 110,

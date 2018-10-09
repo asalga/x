@@ -10,6 +10,11 @@ export default class P3 {
     this.fill('blue');
     this.stroke('white');
     this.strokeWeight(1);
+
+    this._imageMode = 'center';
+    this._rectMode = 'center';
+    this._ellipseMode = 'center';
+
     this._doFill = true;
     this._doStroke = true;
     this._clearCol = 'black';
@@ -34,6 +39,18 @@ export default class P3 {
   //TODO: fix
   clearAll() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
+  imageMode(str) {
+    this._imageMode = str;
+  }
+
+  rectMode(str) {
+    this._rectMode = str;
+  }
+
+  ellipseMode(str) {
+    this._ellipseMode = str;
   }
 
   clear() {
@@ -98,7 +115,7 @@ export default class P3 {
 
   rect(x, y, w, h) {
     // let arrArgs = [...arguments];
-    
+
     // this.ctx.globalAlpha = 0.8;
 
     if (this._doStroke) {
@@ -139,7 +156,14 @@ export default class P3 {
   }
 
   drawImage(image, x, y) {
-    this.ctx.drawImage(image, x, y);
+    let [_x, _y] = [x, y];
+
+    if (this._imageMode === 'center') {
+      _x = x - image.width / 2;
+      _y = y - image.height / 2;
+    }
+
+    this.ctx.drawImage(image, _x, _y);
   }
 
   arc(x, y, r, s, e, cc) {
@@ -148,17 +172,9 @@ export default class P3 {
     this.ctx.stroke();
   }
 
-  sin(a) {
-    return Math.sin(a);
-  }
-  cos(a) {
-    return Math.cos(a);
-  }
-
-  get PI() {
-    return Math.PI;
-  }
-  get TAU() {
-    return Math.PI * 2;
-  }
+  sin(a) { return Math.sin(a); }
+  cos(a) { return Math.cos(a); }
+  tan(a) { return Math.tan(a); }
+  get PI() { return Math.PI; }
+  get TAU() { return Math.PI * 2; }
 }

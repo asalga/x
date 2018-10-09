@@ -6,7 +6,7 @@ import Collidable from '../components/Collidable.js';
 import SpriteRender from '../components/SpriteRender.js';
 import LifetimeLimit from '../components/LifetimeLimit.js';
 
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 import BoundingCircle from '../../collision/BoundingCircle.js';
 
 export default function createExplosion() {
@@ -64,14 +64,10 @@ export default function createExplosion() {
     this.p3.ellipse(0, 0, sz, sz);
     this.p3.restore();
 
-    p3.save();
-    p3.translate(e.pos.x - (sz / 2), e.pos.y - (sz / 2));
-    p3.drawImage(this.sprite, -sz, -sz / 2);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
-  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
-  // e.addComponent(new CollisionEnter(e, ))
+  e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
   e.addComponent(new LifetimeLimit(e, { limit: 0.1 }));
 
   return e;

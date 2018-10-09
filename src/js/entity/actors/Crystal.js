@@ -37,11 +37,8 @@ export default function createCrystal() {
     this.p3.rect(-sz, -sz, sz * 2, sz * 2);
     this.p3.restore();
 
-    p3.save();
-    let worldCoords = this.entity.getWorldCoords();
-    p3.translate(worldCoords.x, worldCoords.y);
-    p3.drawImage(this.sprite, -w / 2, -h / 2);
-    p3.restore();
+    let [x,y] = this.entity.getWorldCoords().toArray();
+    p3.drawImage(this.sprite,x,y);
   }
   e.addComponent(spriteRender);
 
