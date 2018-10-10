@@ -4,7 +4,7 @@
 // import Entity from './entity/Entity.js';
 // import EntityFactory from './entity/EntityFactory.js';
 
-import Timer from './core/Timer.js';
+import GameTimer from './core/GameTimer.js';
 import Utils from './Utils.js';
 import P3 from './P3.js';
 import Scene from './Scene.js';
@@ -86,7 +86,7 @@ function render() {
       while (pq.isEmpty() === false) {
         let c = pq.dequeue();
         c.draw();
-        Debug.add(`${c.name}, ${c.layer}`);
+        // Debug.add(`${c.name}, ${c.layer}`);
       }
     });
 
@@ -113,11 +113,11 @@ function setup() {
   // Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  Debug.setOn(false);
+  // Debug.setOn(false);
 
   scene.restartGame();
 
-  timer = new Timer();
+  timer = new GameTimer();
   timer.update = function(dt) {
     update(dt);
     preRender();

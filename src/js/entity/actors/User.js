@@ -88,7 +88,7 @@ export default function createUser() {
 
   // FLAK
   let flakGun = EntityFactory.create('flakgun');
-  let flakLauncher = new Launcher(flakGun, { shotsPerSecond: 5, ammo: 100, bulletVel: 100 });
+  let flakLauncher = new Launcher(flakGun, { shotsPerSecond: 5, ammo: 100, bulletVel: 300 });
   flakLauncher.createFunc = createUserFlakBullet;
   flakGun.addComponent(flakLauncher);
   flakGun.addComponent(new MouseLauncherController(flakGun));

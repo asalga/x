@@ -1,16 +1,8 @@
 # X
 
-# Actors
-Mouse
-Bee
-HummingBird
-Rhino
-Eel
 
 # TODO - High Priority
- # Fix Explosion centering on flak bullet
  * Remove entity if has left game bounds
- * implement imageMode(CENTER)
  * If entity is removed from scene, recursively remove its children(?)
  * Write line circle intersection
 
@@ -28,6 +20,7 @@ Eel
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
+ * Create Carrier
 
  * Create LinkGun
  * Create LaserGun

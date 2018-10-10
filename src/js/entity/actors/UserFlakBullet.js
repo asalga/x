@@ -20,7 +20,7 @@ export default function createFlakBullet(cfg) {
   scene.add(e);
 
   e.updateProxy = function(dt) {
-    this.rot += dt * 10;
+    this.rot += dt * 20;
   }
 
   let spriteSz = 32;
@@ -51,7 +51,6 @@ export default function createFlakBullet(cfg) {
 
     let explosion = EntityFactory.create('explosion');
     explosion.pos.set(v);
-    explosion.bounds.radius = 50;
 
     scene.add(explosion);
     scene.remove(e);

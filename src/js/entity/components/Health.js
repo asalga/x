@@ -27,15 +27,14 @@ export default class Health extends Component {
       let diff = dt * this.regenerationSpeed;
       this.increaseHelth(diff);
     }
+      Debug.add(`${this.amt}`);
   }
 
   percentLeft() {
     return this.amt / this.max;
   }
 
-  draw() {
-    Debug.add(`${this.amt}`);
-  }
+  draw() {}
 
   increaseHelth(a) {
     this.amt += a;
@@ -46,9 +45,7 @@ export default class Health extends Component {
     }
   }
 
-  hurtOnce(other, dmg) {
-
-  }
+  hurtOnce(other, dmg) {}
 
   hurt(dmg) {
     this.amt -= dmg;
@@ -58,7 +55,7 @@ export default class Health extends Component {
       this.isRegenerating = true;
     }
 
-    if (this.amt <= 0 && this.entity.killable) {
+    if (this.amt <= 0.001 && this.entity.killable) {
       this.entity.killable.kill();
     }
   }
