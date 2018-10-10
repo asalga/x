@@ -35,9 +35,7 @@ export default class LifetimeLimit extends Component {
         // new Event({ evtName: 'lifetimeexpired', data: this.entity }).fire();
         this.entity.parent.removeDirectChild(this.entity);
       } else {
-        debugger;
         scene.remove(this.entity);
-
       }
 
     }

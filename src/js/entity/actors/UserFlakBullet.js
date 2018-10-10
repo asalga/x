@@ -20,7 +20,7 @@ export default function createFlakBullet(cfg) {
   scene.add(e);
 
   e.updateProxy = function(dt) {
-    this.rot += dt * 20;
+    this.rot = this.distancecountdown.travelled() / 15;
   }
 
   let spriteSz = 32;

@@ -43,10 +43,12 @@ export default class Launcher extends Component {
   requestFire() {
     this.firing = true;
 
+
     if (this.ammo <= 0) { return; }
     if (this.enabled === false) { return; }
 
     if (this.timer > this.rate) {
+      debugger;
       let diff = this.timer % this.rate;
       this.timer = 0;
       this.fire();
@@ -75,7 +77,9 @@ export default class Launcher extends Component {
     this.updateProxy && this.updateProxy(dt);
 
     this.timer += dt;
+
     if (this.firing || this.autoFire) {
+
       this.requestFire();
     }
   }

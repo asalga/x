@@ -15,11 +15,13 @@ export default class DistanceCountdown extends Component {
     Utils.applyProps(this, defaults, cfg);
   }
 
-  update(dt) {
+  travelled() {
     let currPos = this.entity.getWorldCoords();
-    let travelled = Vec2.sub(this.startPos, currPos).length();
+    return Vec2.sub(this.startPos, currPos).length();
+  }
 
-    if (travelled > this.distance) {
+  update(dt) {
+    if (this.travelled() > this.distance) {
       this.arrived();
     }
   }

@@ -15,7 +15,7 @@ export default class AreaPayload extends Component {
     Utils.applyProps(this, defaults, cfg);
     let entitiesAlreadyHurt = new Set();
 
-    e.on('collision', function hit(data) {
+    this.hit = function(data) {
       let other = data.other;
 
       if (!other.health) { return; }
@@ -29,7 +29,13 @@ export default class AreaPayload extends Component {
         lingerTime: 0.5
       });
       other.addComponent(lingerHurt);
+    };
 
-    }, e, { onlySelf: true });
+    e.on('collision', this.hit, e, { onlySelf: true });
   }
+
+  // indicateRemove() {
+  //   console.log(`${this.entity.id} - ${this.entity.name}`);
+  //   this.entity.off('collision', this.hit);
+  // }
 }

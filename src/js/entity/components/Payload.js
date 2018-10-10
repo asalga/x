@@ -15,8 +15,7 @@ export default class Payload extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-
-    e.on('collision', function hit(data) {
+    this.hit = function(data) {
       let other = data.other;
 
       if (!other.health) { return; }
@@ -29,6 +28,12 @@ export default class Payload extends Component {
       other.addComponent(lingerHurt);
 
       scene.remove(e);
-    }, e, { onlySelf: true });
+    };
+
+    e.on('collision', this.hit, e, { onlySelf: true });
+  }
+
+  indicateRemove() {
+    this.entity.off('collision', this.hit);
   }
 }

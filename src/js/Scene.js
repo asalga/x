@@ -3,6 +3,7 @@
 import EntityFactory from './entity/EntityFactory.js';
 import EventSystem from './event/EventSystem.js';
 import Event from './event/Event.js';
+import Spawner from './entity/actors/Spawner.js';
 
 export default class Scene {
   constructor() {
@@ -16,16 +17,16 @@ export default class Scene {
   }
 
   update(dt) {
+    // Allow the entities to do any cleanup
+    this.deleteQueue.forEach(e => e.indicateRemove());
+
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
+      // TODO: change event to remove?
       new Event({ evtName: 'death', data: e }).fire();
     });
 
-    this.timer += dt;
-    if (this.timer > 2.5) {
-      this.timer = 0;
-      // this.add(EntityFactory.create('mouse'));
-    }
+    this.deleteQueue = [];
 
     this.entities.forEach(e => e.update(dt));
   }
@@ -59,24 +60,15 @@ export default class Scene {
     this.entities.clear();
     this.deleteQueue = [];
 
-    let e = new EventSystem();
-    e.clear();
-
     let user = EntityFactory.create('user');
     this.addUser(user);
-
-    let s = EntityFactory.create('starfish');
-    s.pos.x = 550;
-    s.pos.y = 150;
-    // this.add(s);
 
     for (let i = 0; i < 10; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
 
-    // let b = EntityFactory.create('bee');
-    // this.bee = b;
-    // this.add(b);
+    let e = new EventSystem();
+    e.clear();
   }
 
   remove(e) {

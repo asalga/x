@@ -8,6 +8,7 @@
 
 # TODO - Medium Priority
  * Create Object Pool for Vectors
+ * Test adding 2 components to an entity and removing one of them
 
 # TODO - Low Priority
  * rename scene.deleteQueue variable
