@@ -34,6 +34,6 @@ export default class Payload extends Component {
   }
 
   indicateRemove() {
-    this.entity.off('collision', this.hit);
+    // this.entity.off('collision', this.hit);
   }
 }

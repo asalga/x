@@ -111,6 +111,9 @@ export default class Entity {
   }
 
   addComponent(c) {
+    if(this[c.name]){
+      console.log(`Warning: ${this.name} already has ${c.name}`);
+    }
     this.components.push(c);
     this[c.name] = c;
   }
@@ -134,7 +137,6 @@ export default class Entity {
 
   on(evtName, cb, ctx, cfg) {
     this.registeredEvents.set(evtName, cb);
-    // debugger;
     (new EventSystem()).on(evtName, cb, ctx, cfg);
   }
 

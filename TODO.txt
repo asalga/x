@@ -1,12 +1,12 @@
 # X
 
-
 # TODO - High Priority
- * Remove entity if has left game bounds
+ * Find solution for adding 2 LingerHurt Components to an entity
  * If entity is removed from scene, recursively remove its children(?)
  * Write line circle intersection
 
 # TODO - Medium Priority
+ * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
  * Create Object Pool for Vectors
  * Test adding 2 components to an entity and removing one of them
 

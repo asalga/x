@@ -22,6 +22,7 @@ export default class Scene {
 
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
+      // debugger;
       // TODO: change event to remove?
       new Event({ evtName: 'death', data: e }).fire();
     });
@@ -63,7 +64,7 @@ export default class Scene {
     let user = EntityFactory.create('user');
     this.addUser(user);
 
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 0; i < 1; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
 
@@ -72,6 +73,13 @@ export default class Scene {
   }
 
   remove(e) {
+
+    for(let i = 0; i < this.deleteQueue.length; i++){
+      if(e === this.deleteQueue[i]){
+        debugger;
+      }
+    }
+
     this.deleteQueue.push(e);
     this.entitiesAddedOrRemoved = true;
   }

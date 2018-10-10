@@ -48,7 +48,6 @@ export default class Launcher extends Component {
     if (this.enabled === false) { return; }
 
     if (this.timer > this.rate) {
-      // debugger;
       let diff = this.timer % this.rate;
       this.timer = 0;
       this.fire();
