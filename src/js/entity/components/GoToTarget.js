@@ -17,10 +17,12 @@ export default class GoToTarget extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
+// debugger;
     e.on('collision', this.hasArrived, e, { onlySelf: true });
   }
 
   hasArrived() {
+    // debugger;
     console.log('arrived has not been overridden');
   }
 

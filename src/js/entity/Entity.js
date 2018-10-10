@@ -134,6 +134,7 @@ export default class Entity {
 
   on(evtName, cb, ctx, cfg) {
     this.registeredEvents.set(evtName, cb);
+    // debugger;
     (new EventSystem()).on(evtName, cb, ctx, cfg);
   }
 

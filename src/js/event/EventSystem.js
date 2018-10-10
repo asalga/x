@@ -80,6 +80,7 @@ export default class EventSystem {
         }
 
         evtObj.cb.call(evtObj.ctx, data);
+        
       } else {
         evtObj.cb(data);
       }
@@ -101,6 +102,7 @@ export default class EventSystem {
   }
 
   clear() {
+    debugger;
     this.listeners = {};
   }
 }

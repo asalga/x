@@ -67,8 +67,8 @@ export default class Scene {
       this.add(EntityFactory.create('mouse'));
     }
 
-    let e = new EventSystem();
-    e.clear();
+    // let e = new EventSystem();
+    // e.clear();
   }
 
   remove(e) {
