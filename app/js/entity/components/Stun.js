@@ -11,7 +11,7 @@ export default class Stun extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    this.on('hurt', function(e) {
+    e.on('hurt', e => {
       if (e.health.percentLeft > 0.5) { return; }
       e.timeScale = 1 / this.multiplier;
     }, this, { onlySelf: true });

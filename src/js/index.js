@@ -1,16 +1,13 @@
 'use strict';
 
-// import Vec2 from './math/Vec2.js';
-// import Entity from './entity/Entity.js';
-// import EntityFactory from './entity/EntityFactory.js';
-
-import Timer from './core/Timer.js';
+import GameTimer from './core/GameTimer.js';
 import Utils from './Utils.js';
 import P3 from './P3.js';
 import Scene from './Scene.js';
 import { CollisionSystem } from './collision/CollisionSystem.js';
 import Debug from './debug/Debug.js';
 import Event from './event/Event.js';
+import EventSystem from './event/EventSystem.js';
 import PriorityQueue from './core/PriorityQueue.js';
 
 window.gameTime = 0;
@@ -18,9 +15,17 @@ window.debug = false;
 window.Debug = Debug;
 window.scene = null;
 
+    // this.timer += dt;
+    // if (this.timer > 2.5) {
+    //   this.timer = 0;
+    //   // this.add(EntityFactory.create('mouse'));
+    // }
+
+
 let p3;
 let timer;
 let perfTimer;
+// TODO:fix
 let layers = {
   '0': [],
   '1': [],
@@ -38,8 +43,10 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 function update(dt) {
   scene.update(dt);
 
-  Debug.add(`gameTime: ${Math.floor(window.gameTime)}`);
-  Debug.add(`Entities: ${scene.entities.size}`);
+  Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
+  Debug.add(`Entity count: ${scene.entities.size}`);
+  (new EventSystem()).printDebug();
+  // Events.printDebug();
 
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
@@ -86,7 +93,7 @@ function render() {
       while (pq.isEmpty() === false) {
         let c = pq.dequeue();
         c.draw();
-        Debug.add(`${c.name}, ${c.layer}`);
+        // Debug.add(`${c.name}, ${c.layer}`);
       }
     });
 
@@ -109,15 +116,15 @@ function postRender() {
 function setup() {
   p3 = new P3(cvs, ctx);
   p3.clearColor(25,80,100);
-  //(234, 231, 175);
-  // Make scene and p3 static classes?
+
+  // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  Debug.setOn(false);
+  // Debug.setOn(false);
 
   scene.restartGame();
 
-  timer = new Timer();
+  timer = new GameTimer();
   timer.update = function(dt) {
     update(dt);
     preRender();

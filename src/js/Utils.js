@@ -8,15 +8,19 @@ export default class Utils {
   }
   static noop() {}
 
-  static getId(){
+  static getId() {
     return ++id;
+  }
+
+  static get undef() {
+    return undefined;
   }
 
   static applyProps(ctx, def, cfg) {
 
     Object.keys(def).forEach(k => {
       // if (ctx[k]) {
-        // console.log(`${ctx[k]} already exists. Overwriting`);
+      // console.log(`${ctx[k]} already exists. Overwriting`);
       // }
       ctx[k] = def[k];
     });
@@ -24,7 +28,7 @@ export default class Utils {
     if (cfg) {
       Object.keys(cfg).forEach(k => {
         // if (ctx[k]) {
-          // console.log(`${ctx[k]} already exists. Overwriting`);
+        // console.log(`${ctx[k]} already exists. Overwriting`);
         // }
         ctx[k] = cfg[k];
       });

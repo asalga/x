@@ -7,13 +7,10 @@ import createHummingBird from './actors/HummingBird.js';
 
 import createUser from './actors/User.js';
 
-// What category is this?
+// What category are these?
 import createCrystal from './actors/Crystal.js';
 import createExplosion from './actors/Explosion.js';
-
-// import createUserBullet from './actors/UserBullet.js';
-// import createEnemyBullet from './actors/EnemyBullet.js';
-// import UserRocketBullet from './actors/UserRocketBullet.js';
+import createSpawner from './actors/Spawner.js';
 
 import {
   createMinigun,
@@ -22,6 +19,8 @@ import {
   createFreezeGun,
   createFlakGun
 } from './actors/guns/guns.js';
+
+
 
 let createFuncs = new Map();
 
@@ -42,6 +41,9 @@ createFuncs.set('flakgun', createFlakGun);
 // DECORATORS?
 createFuncs.set('crystal', createCrystal);
 createFuncs.set('explosion', createExplosion);
+
+createFuncs.set('spawner', createSpawner);
+
 
 export default class EntityFactor {
   static create(str) {

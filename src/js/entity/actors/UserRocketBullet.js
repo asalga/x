@@ -21,19 +21,12 @@ export default function createUserRocketBullet() {
   // TODO: move to component
   e.bounds = new BoundingCircle(e.pos, 10);
 
-  // EVENTS
-  e.on('collision', data => {
-    data.other.health.hurt(e.payload.dmg);
-    scene.remove(e);
-  }, e, { onlySelf: true });
-
   // If our target has died, get a new one
   e.on('death', function(data) {
     if (data === e.seektarget.target) {
       e.seektarget.target = scene.getRandomBaddie();
     }
   }, e);
-
 
   // COMPONENTS
   let spriteSz = 32;

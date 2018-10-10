@@ -13,6 +13,15 @@ export default class EventSystem {
 
   once(evtName, cb) {}
 
+  printDebug() {
+    Debug.add('Event System');
+    
+    Object.keys(this.listeners).forEach(listener => {
+      let list = this.listeners[listener];
+      Debug.add(`  ${listener} : ${list.size} `);
+    });
+  }
+
   on(evtName, cb, ctx, cfg) {
     // don't have any listeners for this event yet
     if (typeof this.listeners[evtName] === 'undefined') {
@@ -20,11 +29,8 @@ export default class EventSystem {
       this.listeners[evtName] = new Set();
     }
 
-    // debugger;
-
     // create the event object
     this.listeners[evtName].add({ cb, ctx, cfg });
-    // console.log(this.listeners[evtName]);
   }
 
   fire(e) {
@@ -74,6 +80,7 @@ export default class EventSystem {
         }
 
         evtObj.cb.call(evtObj.ctx, data);
+        
       } else {
         evtObj.cb(data);
       }
@@ -85,10 +92,17 @@ export default class EventSystem {
     if (typeof this.listeners[evtName] === 'undefined') {
       return;
     }
-    this.listeners[evtName].delete(cb);
+
+    for (let e of this.listeners[evtName]) {
+      if (e.cb === cb) {
+        this.listeners[evtName].delete(e);
+        return;
+      }
+    }
   }
 
   clear() {
+    debugger;
     this.listeners = {};
   }
 }

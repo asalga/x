@@ -1,9 +1,12 @@
 'use strict';
 
 import Entity from '../Entity.js';
-import Collidable from '../components/Collidable.js';
+
 import Payload from '../components/Payload.js';
+import Collidable from '../components/Collidable.js';
 import SpriteRender from '../components/SpriteRender.js';
+import LifetimeLimit from '../components/LifetimeLimit.js';
+
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
@@ -25,6 +28,7 @@ export default function createPlamaBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 10, lingerTime: 3 }));
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
+  e.addComponent(new LifetimeLimit(e, {limit: .5}));
 
   return e;
 }

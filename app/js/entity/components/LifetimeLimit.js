@@ -21,6 +21,10 @@ export default class LifetimeLimit extends Component {
     Utils.applyProps(this, defaults, cfg);
   }
 
+  timeLeft() {
+    return this.limit - this.age;
+  }
+
   update(dt) {
     this.age += dt;
     if (this.age >= this.limit) {

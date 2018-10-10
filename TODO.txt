@@ -1,21 +1,14 @@
 # X
 
-# Actors
-Mouse
-Bee
-HummingBird
-Rhino
-Eel
-
 # TODO - High Priority
- # Fix Explosion centering on flak bullet
- * Remove entity if has left game bounds
- * implement imageMode(CENTER)
+ * Find solution for adding 2 LingerHurt Components to an entity
  * If entity is removed from scene, recursively remove its children(?)
  * Write line circle intersection
 
 # TODO - Medium Priority
+ * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
  * Create Object Pool for Vectors
+ * Test adding 2 components to an entity and removing one of them
 
 # TODO - Low Priority
  * rename scene.deleteQueue variable
@@ -28,6 +21,7 @@ Eel
  - Nova - automatic circular fire
  * Add tween library
  * Allow components to be muted
+ * Create Carrier
 
  * Create LinkGun
  * Create LaserGun

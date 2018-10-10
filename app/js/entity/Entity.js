@@ -17,6 +17,7 @@ export default class Entity {
 
     this.visible = true;
     this.events = true;
+    this.registeredEvents = new Map();
 
     this.pos = new Vec2();
     this.vel = new Vec2();
@@ -39,6 +40,7 @@ export default class Entity {
     this.renderProxy && this.renderProxy(p3);
     this.children.forEach(c => c.draw());
 
+    // TODO: fix
     this.components.forEach(c => {
       c.draw && c.draw();
     });
@@ -51,7 +53,7 @@ export default class Entity {
     if (Number.isNaN(this.vel.x)) { debugger; }
 
     // let deltaTime = dt * this.timeScale;
-    let deltaTime = dt;// * this.timeScale;
+    let deltaTime = dt; // * this.timeScale;
 
     this.updateProxy && this.updateProxy(deltaTime);
 
@@ -81,7 +83,7 @@ export default class Entity {
     let res = Utils.removeFromArray(this.children, e);
   }
 
-  removeChild(e){
+  removeChild(e) {
     debugger;
   }
 
@@ -109,6 +111,9 @@ export default class Entity {
   }
 
   addComponent(c) {
+    if(this[c.name]){
+      console.log(`Warning: ${this.name} already has ${c.name}`);
+    }
     this.components.push(c);
     this[c.name] = c;
   }
@@ -116,6 +121,7 @@ export default class Entity {
   removeComponent(c) {
     Utils.removeFromArray(this.components, c);
     this.components[c.name] = undefined;
+    // this.components[c.name] = Utils.undef;
   }
 
   setEvents(b) {
@@ -130,6 +136,18 @@ export default class Entity {
   }
 
   on(evtName, cb, ctx, cfg) {
+    this.registeredEvents.set(evtName, cb);
     (new EventSystem()).on(evtName, cb, ctx, cfg);
+  }
+
+  off(evtName, cb) {
+    (new EventSystem()).off(evtName, cb);
+  }
+
+  indicateRemove() {
+    this.children.forEach(c => c.indicateRemove());
+    this.components.forEach(c => c.indicateRemove());
+
+    this.registeredEvents.forEach((cb, evtName) => this.off(evtName, cb));
   }
 }

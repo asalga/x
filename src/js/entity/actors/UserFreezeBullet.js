@@ -5,6 +5,7 @@ import Entity from '../Entity.js';
 import Collidable from '../components/Collidable.js';
 import Payload from '../components/Payload.js';
 import SpriteRender from '../components/SpriteRender.js';
+import LifetimeLimit from '../components/LifetimeLimit.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CType from '../../collision/CollisionType.js';
@@ -29,10 +30,10 @@ export default function createFreezeBullet() {
     this.p3.strokeWeight(2);
     this.p3.fill('rgba(200, 200, 200, .2)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    this.p3.rotate(Math.PI/4);
-    this.p3.rect(-sz/2, -sz/2, sz, sz);
+    this.p3.rotate(Math.PI / 4);
+    this.p3.rect(-sz / 2, -sz / 2, sz, sz);
     this.p3.restore();
-    
+
     p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
@@ -51,6 +52,7 @@ export default function createFreezeBullet() {
   }, e, { onlySelf: true });
 
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
+  e.addComponent(new LifetimeLimit(e, { limit: 1.5 }));
 
   return e;
 }

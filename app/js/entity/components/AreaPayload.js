@@ -5,35 +5,37 @@ import LingerHurt from './LingerHurt.js';
 
 import Utils from '../../Utils.js';
 
-export default class Payload extends Component {
+export default class AreaPayload extends Component {
 
   constructor(e, cfg) {
-    super(e, 'payload');
+    super(e, 'areapayload');
     let defaults = {
-      dmg: 1,
-      lingerTime: 0
+      dmg: 1
     };
     Utils.applyProps(this, defaults, cfg);
+    let entitiesAlreadyHurt = new Set();
 
     this.hit = function(data) {
       let other = data.other;
 
       if (!other.health) { return; }
+      if (entitiesAlreadyHurt.has(other.id)) { return; }
 
-      // other.health.hurt(this.payload.dmg);
+      entitiesAlreadyHurt.add(other.id);
+
+      // data.other.health.hurt(this.areapayload.dmg);
       let lingerHurt = new LingerHurt(other, {
-        dmg: this.payload.dmg,
-        lingerTime: this.payload.lingerTime
+        dmg: this.areapayload.dmg,
+        lingerTime: 0.5
       });
       other.addComponent(lingerHurt);
-
-      scene.remove(e);
     };
 
     e.on('collision', this.hit, e, { onlySelf: true });
   }
 
-  indicateRemove() {
-    // this.entity.off('collision', this.hit);
-  }
+  // indicateRemove() {
+  //   console.log(`${this.entity.id} - ${this.entity.name}`);
+  //   this.entity.off('collision', this.hit);
+  // }
 }
