@@ -103,6 +103,9 @@ function render() {
 function postRender() {
   let timeDiff = new Date().getTime() - perfTimer;
   Debug.add('render ms:' + timeDiff);
+
+  let bytes = window.performance.memory.totalJSHeapSize.toLocaleString();
+  Debug.add(`heap: ${bytes} bytes`);
   Debug.draw();
   Debug.postRender();
 
