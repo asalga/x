@@ -30,10 +30,12 @@ document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', 
 document.addEventListener('contextmenu', e => e.preventDefault());
 
 function update(dt) {
-  scene.update(dt);
-
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
   Debug.add(`Entity count: ${scene.entities.size}`);
+
+
+  scene.update(dt);
+
   (new EventSystem()).printDebug();
 
   CollisionSystem.gatherCollidables();
