@@ -1,41 +1,30 @@
 # X
 
-# TODO - High Priority
+# TODO - High
  * Find solution for adding 2 LingerHurt Components to an entity
  * If entity is removed from scene, recursively remove its children(?)
- * Write line circle intersection
 
-# TODO - Medium Priority
+
+# TODO - Medium
  * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
- * Create Object Pool for Vectors
+ * Create Object Pool
  * Test adding 2 components to an entity and removing one of them
+ 
 
-# TODO - Low Priority
+# TODO - Low
  * rename scene.deleteQueue variable
  * Fix scene.getClosestEnemy()
  * Add min speed to Homing Missle
  * Add healthComponent to Rockets
  * Fix onCollision method in bullets
- * Fix setDir for Bullets
- * Create Rhino baddie
- - Nova - automatic circular fire
- * Add tween library
  * Allow components to be muted
- * Create Carrier
+ * Figure out entity death animation
+ * Allow spawner to accept entity queue
+ * Create Entity data queue?
 
+# Entities to Write
+ * Create Carrier Baddie
  * Create LinkGun
  * Create LaserGun
  * Create ShieldGun
  * Create HyperwaveGun
- 
-// We need a way to 'turn off' an entity
-// so that it no longer responds to events
-// and it doesn't get rendered
-// but it should still update so it can do any
-// necessary work
-
-// 1 - remove from scene?
-	// if they are removed from the scene, they won't be updated
-	 // some entities are children, so adding them back....we would need a parent pointer
-// 2 - add visible and events flag?
-// 3 - 

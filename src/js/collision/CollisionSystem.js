@@ -6,7 +6,7 @@ let list = [];
 let firstTime = true;
 let checks = 0;
 
-export class CollisionSystem {
+export default class CollisionSystem {
   static gatherCollidables() {
 
     // if no object were added or removed, we can avoid doing this work
