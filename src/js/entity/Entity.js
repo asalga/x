@@ -16,6 +16,8 @@ export default class Entity {
     this.id = Utils.getId();
 
     this.visible = true;
+    this.opacity = 1;
+
     this.events = true;
     this.registeredEvents = new Map();
 
@@ -33,19 +35,23 @@ export default class Entity {
   }
 
   draw() {
-    if (!this.visible) { return; }
+    // if (!this.visible) { return; }
 
     p3.save();
 
     this.renderProxy && this.renderProxy(p3);
-    this.children.forEach(c => c.draw());
+    // this.children.forEach(c => c.draw());
 
-    // TODO: fix
-    this.components.forEach(c => {
-      c.draw && c.draw();
-    });
+    // // TODO: fix
+    // this.components.forEach(c => {
+    //   c.draw && c.draw();
+    // });
 
     p3.restore();
+  }
+
+  setPropertyRecursive(name, v) {
+    debugger;
   }
 
   update(dt) {
@@ -111,7 +117,7 @@ export default class Entity {
   }
 
   addComponent(c) {
-    if(this[c.name]){
+    if (this[c.name]) {
       console.log(`Warning: ${this.name} already has ${c.name}`);
     }
     this.components.push(c);

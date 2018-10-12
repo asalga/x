@@ -19,25 +19,25 @@ import CType from '../../collision/CollisionType.js';
 import Debug from '../../debug/Debug.js';
 import Vec2 from '../../math/Vec2.js';
 
-
 export default function createHummingBird() {
   let e = new Entity({ name: 'hummingbird' });
-  e.bounds = new BoundingCircle(e.pos, 30);
+  e.bounds = new BoundingCircle(e.pos, 50);
 
-  // e.vel.x = 100;
-  // e.vel.y = 50;
+  let sz = e.bounds.radius;
+  let spriteRender = new SpriteRender(e, { width: sz*2, height: sz*2, layer: 100 });
+  spriteRender.drawProxy = function() {
+    
+    this.p3.save();
+    this.p3.clearAll();
+    // this.p3.ctx.globalAlpha = this.entity.opacity;
+    
+    this.p3.noStroke();
+    this.p3.fill(224, 112, 38);
+    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
+    this.p3.ellipse(0, 0, sz, sz);
+    this.p3.restore();
 
-  // e.pos.x = p3.width / 2;
-  // e.pos.y = p3.height / 2 - 150;
-
-  let spriteRender = new SpriteRender(e, { layer: 100 });
-  spriteRender.draw = function() {
-    p3.save();
-    p3.noStroke();
-    p3.translate(e.pos.x, e.pos.y);
-    p3.fill(224, 112, 38);
-    p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
-    p3.restore();
+    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
 
@@ -47,9 +47,37 @@ export default function createHummingBird() {
   //   this.vel.y = Math.sin(gameTime) * 150;
   // };
 
-  e.addComponent(new Teleporter(e,{}));
+
+
+  let numGuns = 3;
+
+  for (let i = 0; i < numGuns; i++) {
+    let rocketGun = EntityFactory.create('rocketgun');
+    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 0.125, autoFire: true, ammo: 20 });
+    let a = i * (Math.PI*2) / numGuns;
+
+    // rocketLauncher.entity.launcherrenderer.layer = -100;
+
+    rocketGun.pos.set(new Vec2(Math.cos(a), Math.sin(a)).mult(0));
+    rocketLauncher.createFunc = createRocketBullet;
+
+   // rocketGun.addComponent(new Health(rocketGun, 40));
+   // rocketGun.addComponent(new Killable(rocketGun));
+    //rocketGun.addComponent(new Collidable(rocketGun, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
+
+   rocketLauncher.updateProxy = function() {
+     this.direction.x = Math.cos((a));
+     this.direction.y = Math.sin((a));
+   }
+    rocketGun.addComponent(rocketLauncher);
+    e.add(rocketGun);
+  }
+
+
+
+  e.addComponent(new Teleporter(e, {}));
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, { amt: 200 }));
+  e.addComponent(new Health(e, { amt: 400 }));
   e.addComponent(new HealthRender(e));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
 

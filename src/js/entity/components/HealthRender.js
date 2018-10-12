@@ -24,10 +24,11 @@ export default class HealthRender extends Component {
 
   draw() {
     let e = this.entity;
-    let healthPercent = e.health.amt / e.health.max;
-    
+    let healthPercent = e.health.amt / e.health.max;    
+
     this.p3.save();
     this.p3.clearAll();
+    // this.p3.ctx.globalAlpha = this.entity.opacity;
     this.p3.strokeWeight(5);
     this.p3.stroke(0, 255, 0);
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);

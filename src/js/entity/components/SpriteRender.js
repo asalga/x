@@ -9,6 +9,7 @@ export default class SpriteRender extends Component {
     super(e, 'spriterender');
     this.renderable = true;
     this.visible = true;
+    this.opacity = 1;
     this.layer = cfg && cfg.layer || 0;
     Utils.applyProps(this, cfg);
 
@@ -18,4 +19,13 @@ export default class SpriteRender extends Component {
     this.spriteCtx = this.sprite.getContext('2d');
     this.p3 = new _P3(this.sprite, this.spriteCtx);
   }
+
+  // renderProxy(){
+  //   console.log('test');
+  // }
+
+    draw(){
+        
+        this.drawProxy();
+    }  
 }

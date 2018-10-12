@@ -43,12 +43,17 @@ export default class CollisionSystem {
 
         e1 = list[i];
         e2 = list[j];
+        
+        if (e1.collidable.enabled === false || e2.collidable.enabled === false) {
+          continue;
+        }
 
         let typeA = e1.collidable.type;
         let maskB = e2.collidable.mask;
 
         let maskA = e1.collidable.mask;
         let typeB = e2.collidable.type;
+
 
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
           if (CollisionSystem.circleCircleTest(e1, e2)) {

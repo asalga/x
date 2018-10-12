@@ -17,63 +17,89 @@ export default class Teleporter extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    this.timer = new Timer({
-      countDown: true
-    });
+    let noObj = {};
+    let positionId = 0;
+    let nextPos = new Vec2();
 
-    this.entity.pos.set(50, 50);
+    let setNextPos = function() {
+      positionId++;
+      if (positionId === 4) {
+        positionId = 0;
+      }
 
-    this.positionId = 0;
+      let minX = 80;
+      let maxX = p3.width - 80;
+      let minY = 80;
+      let maxY = p3.height - 80;
 
+      switch (positionId) {
+        case 0:nextPos.set(minX, minY);break;
+        case 1:nextPos.set(maxX, minY);break;
+        case 2:nextPos.set(maxX, maxY);break;
+        case 3:nextPos.set(minX, maxY);break;
+        default:break;
+      }
+    }
+    setNextPos();
 
-    let t1 = new TimelineMax({ yoyo: true, repeat: 100 });
-    t1.to(this.entity.pos, 1, { x: 300 });
+    this.entity.pos.set(nextPos);
+    let fadeTime = .4;
+    let tl = new TimelineMax();
+    let obj = new Vec2();
+    this.opacity = {v:1};
 
+    let that = this;
+    let nextSequence = function() {
+      setNextPos();
+
+      tl.to({}, 1, {}) // IDLE
+        .to(that.opacity, fadeTime, { // FADE OUT
+          v: 0.1,
+          data: that.entity,
+
+          onCompleteScope: that,
+          onComplete: function() {
+            this.entity.collidable.enabled = false;
+          },
+          onUpdate: function(){
+            let value = this.target.v;
+// console.log(value);
+// debugger;
+            let root = this.data.getRoot();
+            
+            root.opacity = value;
+            // root.setPropertyRecursive('opacity', value);
+          },
+        })
+        .to(that.entity.pos, 1, nextPos) // MOVE
+        .to(that.opacity, fadeTime, {// FADE IN
+          v: 1,
+          delay: .5,
+          data: that.entity,
+
+          // onUpdateScope: that,
+          onUpdate: function(){
+            let value = this.target.v;
+
+            let root = this.data.getRoot();
+
+            // Debug.add('----->' +  value);
+            root.opacity =value;
+            // root.setPropertyRecursive('opacity', value);
+          },
+          
+          onCompleteScope: that,
+          onComplete: function() {
+            this.entity.collidable.enabled = true;
+            nextSequence();
+          }
+        });
+    };
+
+    nextSequence();
   }
 
   update(dt, entity) {
-    this.timer.update(dt);
-
-
-
-    // this.timer.onDone.add(function(){
-
-    // 	// start fade out
-    // 	console.log(TweenMax);
-
-    // 	// pause 
-
-    // 	// start fade in
-    // });
-
-    // if (this.timer.elapsed() > 2) {
-    //   let t = this.timer.elapsed();
-    //   this.timer.reset();
-
-    //   this.positionId++;
-    //   if (this.positionId === 4) {
-    //     this.positionId = 0;
-    //   }
-
-    //   let minX = 80;
-    //   let maxX = p3.width - 80;
-    //   let minY = 80;
-    //   let maxY = p3.height - 80;
-
-    //   switch (this.positionId) {
-    //     case 0:
-    //       this.entity.pos.set(minX, minY);
-    //       break;
-    //     case 1:
-    //       this.entity.pos.set(maxX, minY);
-    //       break;
-    //     case 2:
-    //       this.entity.pos.set(maxX, maxY);
-    //       break;
-    //     case 3:
-    //       this.entity.pos.set(minX, maxY);
-    //       break;
-    //   }
-    // }
+    Debug.add('----->' +  this.opacity.v);
   }
 }

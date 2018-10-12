@@ -12,6 +12,11 @@ export default class Renderer {
 
     // Place entities in their respective layers
     scene.entities.forEach(e => {
+
+      if (e.visible === false || e.opacity === 0) {
+        return;
+      }
+
       let id = e.layer || 0;
 
       if (layers[id] === undefined) {
@@ -26,17 +31,26 @@ export default class Renderer {
 
       layer.forEach(e => {
 
+        let rootOpacity = e.opacity;
+
         // SELF
         e.components.forEach(c => {
-          if (c.renderable && c.visible) {
+          if (c.renderable && c.visible) { // && c.opacity > 0
+            c.opacity = rootOpacity;
             pq.enqueue(c, c.layer);
           }
         });
 
         // CHILDREN
         e.children.forEach(e => {
+          
+          e.opacity = rootOpacity;
+
           if (e.components) {
             e.components.forEach(c => {
+              
+              c.opacity = rootOpacity;
+
               if (c.renderable && c.visible) {
                 pq.enqueue(c, c.layer);
               }
@@ -46,7 +60,18 @@ export default class Renderer {
 
         while (pq.isEmpty() === false) {
           let c = pq.dequeue();
+
+          p3.save();
+          p3.ctx.globalAlpha = c.opacity;
           c.draw();
+          p3.restore();
+          
+
+          if(c.name === 'launcherrenderer'){
+            let test = 42;
+            Debug.add(c.opacity);
+          }
+          
           // Debug.add(`${c.name}, ${c.layer}`);
         }
       });

@@ -72,7 +72,7 @@ function setup() {
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  // Debug.setOn(false);
+  Debug.setOn(false);
 
   scene.restartGame();
 
