@@ -17,7 +17,13 @@ import Vec2 from '../../math/Vec2.js';
 export default class Teleporter extends Component {
   constructor(e, cfg) {
     super(e, 'teleporter');
-    let defaults = { speed: 1, fadeTime: 0.5 };
+    let defaults = {
+      // speed: 1,
+      fadeTime: 0.5,
+      moveTime: 4,
+      idleTime: 0.2,
+      minOpacity: 0.02
+    };
     Utils.applyProps(this, defaults, cfg);
 
     this.root = null;
@@ -30,21 +36,23 @@ export default class Teleporter extends Component {
       // TODO: fix, we shouldn't need to call this.
       this.entity.removeSelf();
 
-      // root is now vulnerable
-      // create a new timeline fading in the opacity?s
-      this.root.collidable.enabled = true;
-      this.root.opacity = 1;
+      let tl2 = new TimelineMax();
+      tl2.to(this.root, this.fadeTime, {
+        opacity: 1,
+        data: this.root,
+      });
 
+      this.root.collidable.enabled = true;
     }.bind(this);
   }
 
   setup(e) {
     this.root = e.getRoot();
 
-    const minX = 80;
-    const maxX = p3.width - 80;
-    const minY = 80;
-    const maxY = p3.height - 80;
+    const minX = 100;
+    const maxX = p3.width - 100;
+    const minY = 100;
+    const maxY = p3.height - 100;
 
     let waypoints = [
       new Vec2(minX, minY),
@@ -62,45 +70,32 @@ export default class Teleporter extends Component {
     }
 
     this.root.pos.set(waypoints[currWaypoint]);
-
-    this.op = { v: 1 };
-
     let that = this;
+
     let nextSequence = function() {
       setNextWaypoint();
 
-      that.tl.to({}, 1, {}) // IDLE
-        .to(that.op, that.fadeTime, { // FADE OUT
-          v: 0.1,
-          data: that.root,
+      let setCollisions = function(b) {
+        that.entity.collidable.enabled = b;
+        that.root.collidable.enabled = b;
+      };
 
+
+      that.tl.to({}, that.idleTime, {}) // IDLE
+        .to(that.root, that.fadeTime, { // FADE OUT
+          opacity: that.minOpacity,
           onCompleteScope: that,
           onComplete: function() {
-            that.entity.collidable.enabled = false;
-            that.root.collidable.enabled = false;
-          },
-          onUpdate: function() {
-            let value = this.target.v;
-            let root = this.data.getRoot();
-            root.opacity = value;
-          },
+            setCollisions(false);
+          }
         })
-        .to(that.root.pos, 1, waypoints[currWaypoint]) // MOVE
-        .to(that.op, that.fadeTime, { // FADE IN
-          v: 1,
+        .to(that.root.pos, that.moveTime, waypoints[currWaypoint]) // MOVE
+        .to(that.root, that.fadeTime, { // FADE IN
+          opacity: 1,
           delay: .5,
-          data: that.root,
-
-          onUpdate: function() {
-            let value = this.target.v;
-            let root = this.data.getRoot();
-            root.opacity = value;
-          },
-
           onCompleteScope: that,
           onComplete: function() {
-            that.root.collidable.enabled = true;
-            that.entity.collidable.enabled = true;
+            setCollisions(true);
             nextSequence();
           }
         });
@@ -108,7 +103,5 @@ export default class Teleporter extends Component {
     nextSequence();
   }
 
-  update(dt, entity) {
-    // Debug.add('----->' +  this.opacity.v);
-  }
+  update(dt, entity) {}
 }

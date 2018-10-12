@@ -21,7 +21,7 @@ import Vec2 from '../../math/Vec2.js';
 
 export default function createHummingBird() {
   let e = new Entity({ name: 'hummingbird' });
-  e.bounds = new BoundingCircle(e.pos, 50);
+  e.bounds = new BoundingCircle(e.pos, 40);
 
   let sz = e.bounds.radius;
   let spriteRender = new SpriteRender(e, { width: sz * 2, height: sz * 2, layer: 100 });
