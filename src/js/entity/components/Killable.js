@@ -2,6 +2,7 @@
 
 import Component from './Component.js';
 import Utils from '../../Utils.js';
+// import Signal from '../../events/Signal.js';
 
 export default class Killable extends Component {
   constructor(e) {
@@ -9,9 +10,13 @@ export default class Killable extends Component {
     this.dead = false;
     this.deadTime = 0;
 
+    // this.onDeath = new Signal();
+    // this.onDeath.add(function(){
+      // this.entity.removeSelf();
+    // });
+
     this.onDeath = function() {
       this.entity.removeSelf();
-      // scene.remove(this.entity);
     };
 
   }

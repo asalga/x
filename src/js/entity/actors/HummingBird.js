@@ -34,7 +34,7 @@ export default function createHummingBird() {
     this.p3.ellipse(0, 0, sz, sz);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, 0,0);// e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0, 0); // e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
 
@@ -69,9 +69,10 @@ export default function createHummingBird() {
     e.add(rocketGun);
   }
 
-  let m = EntityFactory.create('teleporter');
-  e.add(m);
-  debugger;
+  let teleporterEntity = EntityFactory.create('teleporter');
+  e.add(teleporterEntity);
+  teleporterEntity.setup(e);
+  
 
   // e.addComponent(new Teleporter(e, {}));
   e.addComponent(new Killable(e));

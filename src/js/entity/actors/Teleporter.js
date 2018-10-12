@@ -1,7 +1,7 @@
 'use strict';
 
 import Entity from '../Entity.js';
-import EntityFactory from '../EntityFactory.js';
+// import EntityFactory from '../EntityFactory.js';
 
 import Killable from '../components/Killable.js';
 import Health from '../components/Health.js';
@@ -9,20 +9,19 @@ import HealthRender from '../components/HealthRender.js';
 import Collidable from '../components/Collidable.js';
 import SpriteRender from '../components/SpriteRender.js';
 import Teleporter from '../components/Teleporter.js';
-// import Launcher from '../components/Launcher.js';
-
-// import createRocketBullet from './RocketBullet.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CType from '../../collision/CollisionType.js';
-
-// import Debug from '../../debug/Debug.js';
-// import Vec2 from '../../math/Vec2.js';
 
 export default function createTeleporter() {
   let e = new Entity({ name: 'teleporter' });
   e.bounds = new BoundingCircle(e.pos, 30);
   e.pos.x = -100;
+
+  e.setup = function(entity){
+    e.addComponent(new Teleporter(e, {}));
+    e.teleporter.setup(entity);
+  };
 
   let spriteRender = new SpriteRender(e, { layer: 100 });
   spriteRender.draw = function() {
@@ -34,9 +33,10 @@ export default function createTeleporter() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-  e.addComponent(new Teleporter(e, {}));
+  
+  // force the user to add the Teleporter it via setup()
   e.addComponent(new Killable(e));
-  e.addComponent(new Health(e, { amt: 30 }));
+  e.addComponent(new Health(e, { amt: 10 }));
   e.addComponent(new HealthRender(e));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
 

@@ -4,86 +4,103 @@ import Component from './Component.js';
 import Collision from '../../collision/Collision.js';
 import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
-
 import Timer from '../../core/Timer.js';
-
 import Vec2 from '../../math/Vec2.js';
+
+/*
+  The teleporter behaviour is added to a teleporter entity.
+  
+  Once setup is called, this component will walk up the scenegrpah
+  to get the reference to the root entity which it will then control
+*/
 
 export default class Teleporter extends Component {
   constructor(e, cfg) {
     super(e, 'teleporter');
-    let defaults = {
-      speed: 1
-    };
+    let defaults = { speed: 1, fadeTime: 0.5 };
     Utils.applyProps(this, defaults, cfg);
 
-    let positionId = 0;
-    let nextPos = new Vec2();
+    this.root = null;
+    this.tl = new TimelineMax();
 
-    let setNextPos = function() {
-      positionId++;
-      if (positionId === 4) {
-        positionId = 0;
-      }
+    // If the associated entity dies, we need to update the state
+    // of the root entity
+    this.entity.killable.onDeath = function() {
+      this.tl.kill();
+      // TODO: fix, we shouldn't need to call this.
+      this.entity.removeSelf();
 
-      let minX = 80;
-      let maxX = p3.width - 80;
-      let minY = 80;
-      let maxY = p3.height - 80;
+      // root is now vulnerable
+      // create a new timeline fading in the opacity?s
+      this.root.collidable.enabled = true;
+      this.root.opacity = 1;
 
-      switch (positionId) {
-        case 0:nextPos.set(minX, minY);break;
-        case 1:nextPos.set(maxX, minY);break;
-        case 2:nextPos.set(maxX, maxY);break;
-        case 3:nextPos.set(minX, maxY);break;
-        default:break;
+    }.bind(this);
+  }
+
+  setup(e) {
+    this.root = e.getRoot();
+
+    const minX = 80;
+    const maxX = p3.width - 80;
+    const minY = 80;
+    const maxY = p3.height - 80;
+
+    let waypoints = [
+      new Vec2(minX, minY),
+      new Vec2(maxX, minY),
+      new Vec2(maxX, maxY),
+      new Vec2(minX, maxY)
+    ];
+
+    let currWaypoint = 0;
+    let setNextWaypoint = function() {
+      currWaypoint++;
+      if (currWaypoint > waypoints.length - 1) {
+        currWaypoint = 0;
       }
     }
-    setNextPos();
 
-    this.entity.getRoot().pos.set(nextPos);
-    let fadeTime = .4;
-    let tl = new TimelineMax();
+    this.root.pos.set(waypoints[currWaypoint]);
+
     this.op = { v: 1 };
 
-// 
-    let rootEnt = this.entity.getRoot();
-debugger;
     let that = this;
     let nextSequence = function() {
-      setNextPos();
+      setNextWaypoint();
 
-      tl.to({}, 1, {}) // IDLE
-        .to(that.op, fadeTime, { // FADE OUT
+      that.tl.to({}, 1, {}) // IDLE
+        .to(that.op, that.fadeTime, { // FADE OUT
           v: 0.1,
-          data: rootEnt,
+          data: that.root,
 
           onCompleteScope: that,
           onComplete: function() {
-            this.entity.getRoot().collidable.enabled = false;
+            that.entity.collidable.enabled = false;
+            that.root.collidable.enabled = false;
           },
-          onUpdate: function(){
+          onUpdate: function() {
             let value = this.target.v;
             let root = this.data.getRoot();
             root.opacity = value;
           },
         })
-        .to(rootEnt.pos, 1, nextPos) // MOVE
-        .to(that.op, fadeTime, {// FADE IN
+        .to(that.root.pos, 1, waypoints[currWaypoint]) // MOVE
+        .to(that.op, that.fadeTime, { // FADE IN
           v: 1,
           delay: .5,
-          data: rootEnt,
+          data: that.root,
 
-          // onUpdateScope: that,
-          onUpdate: function(){
+          onUpdate: function() {
             let value = this.target.v;
             let root = this.data.getRoot();
             root.opacity = value;
           },
-          
+
           onCompleteScope: that,
           onComplete: function() {
-            this.entity.collidable.enabled = true;
+            that.root.collidable.enabled = true;
+            that.entity.collidable.enabled = true;
             nextSequence();
           }
         });

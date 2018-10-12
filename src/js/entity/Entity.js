@@ -34,6 +34,8 @@ export default class Entity {
     this.parent = null;
   }
 
+  setup(){}
+
   draw() {
     // if (!this.visible) { return; }
 
@@ -82,7 +84,6 @@ export default class Entity {
 
   add(e) {
     e.parent = this;
-    debugger;
     this.children.push(e);
   }
 
