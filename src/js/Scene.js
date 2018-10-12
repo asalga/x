@@ -77,7 +77,8 @@ export default class Scene {
 
     for(let i = 0; i < this.deleteQueue.length; i++){
       if(e === this.deleteQueue[i]){
-        debugger;
+        continue;
+        // debugger;
       }
     }
 

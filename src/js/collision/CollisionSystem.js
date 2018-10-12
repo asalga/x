@@ -15,21 +15,29 @@ export default class CollisionSystem {
       list.length = 0;
 
       scene.entities.forEach(e => {
+
+        e._collisionTransform = e.getWorldCoords();
+
+        // root        
         list.push(e);
+
+        e.children.forEach( ch => {
+          if(ch.collidable){
+            ch._collisionTransform = ch.getWorldCoords();
+            list.push(ch);
+          }
+        });
       });
 
-      list = list.filter(e => {
-        if (e.collidable) {
-          return e;
-        }
-      });
+      // shouldn't this be done sooner?
+      list = list.filter(e => e.collidable);
       scene.clearFlags();
     }
   }
 
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
-    let dist = Vec2.sub(e1.pos, e2.pos).length();
+    let dist = Vec2.sub(e1._collisionTransform, e2._collisionTransform).length();
     return dist <= radTotal;
   }
 
@@ -43,7 +51,7 @@ export default class CollisionSystem {
 
         e1 = list[i];
         e2 = list[j];
-        
+
         if (e1.collidable.enabled === false || e2.collidable.enabled === false) {
           continue;
         }

@@ -82,7 +82,21 @@ export default class Entity {
 
   add(e) {
     e.parent = this;
+    debugger;
     this.children.push(e);
+  }
+
+  /*
+    If a component needs to remove the associate entity,
+    give it a method that abstracts out whether the entity
+    is in a scenegraph or directly in the scene.
+  */
+  removeSelf() {
+    if (this.parent) {
+      this.parent.removeDirectChild(this);
+    } else {
+      scene.remove(this);
+    }
   }
 
   removeDirectChild(e) {

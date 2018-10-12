@@ -34,7 +34,7 @@ export default function createUser() {
   let spriteRender = new SpriteRender(user, { layer: 10 });
   spriteRender.draw = function() {
     p3.save();
-    p3.translate(user.pos.x, user.pos.y);
+    // p3.translate(user.pos.x, user.pos.y);
 
     // body
     p3.stroke(111, 150, 80);
@@ -43,7 +43,7 @@ export default function createUser() {
     //(157, 192, 188);
 
     // p3.save();
-    let [x, y] = user.getWorldCoords().toArray();
+    // let [x, y] = user.getWorldCoords().toArray();
     // p3.translate(x, y);
     p3.ellipse(0, 0, user.size, user.size);
     

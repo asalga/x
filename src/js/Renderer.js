@@ -63,16 +63,10 @@ export default class Renderer {
 
           p3.save();
           p3.ctx.globalAlpha = c.opacity;
+          let pos = c.getWorldCoords();
+          p3.translate(pos.x, pos.y);
           c.draw();
           p3.restore();
-          
-
-          if(c.name === 'launcherrenderer'){
-            let test = 42;
-            Debug.add(c.opacity);
-          }
-          
-          // Debug.add(`${c.name}, ${c.layer}`);
         }
       });
     });

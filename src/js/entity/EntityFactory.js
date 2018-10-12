@@ -1,15 +1,17 @@
 'use strict';
 
-import createBee from './actors/Bee.js';
-import createMouse from './actors/Mouse.js';
-import createStarfish from './actors/Starfish.js';
-import createHummingBird from './actors/HummingBird.js';
+import bee from './actors/Bee.js';
+import mouse from './actors/Mouse.js';
+import starfish from './actors/Starfish.js';
+import hummingbird from './actors/HummingBird.js';
+import teleporter from './actors/Teleporter.js';
 
 import createUser from './actors/User.js';
 
 // What category are these?
 import createCrystal from './actors/Crystal.js';
 import createExplosion from './actors/Explosion.js';
+
 import createSpawner from './actors/Spawner.js';
 
 import {
@@ -25,10 +27,10 @@ import {
 let createFuncs = new Map();
 
 // PLAYERS
-createFuncs.set('bee', createBee);
-createFuncs.set('mouse', createMouse);
-createFuncs.set('starfish', createStarfish);
-createFuncs.set('hummingbird', createHummingBird);
+createFuncs.set('bee', bee);
+createFuncs.set('mouse', mouse);
+createFuncs.set('starfish', starfish);
+createFuncs.set('hummingbird', hummingbird);
 createFuncs.set('user', createUser);
 
 // GUNS
@@ -42,8 +44,10 @@ createFuncs.set('flakgun', createFlakGun);
 createFuncs.set('crystal', createCrystal);
 createFuncs.set('explosion', createExplosion);
 
-createFuncs.set('spawner', createSpawner);
+createFuncs.set('teleporter', teleporter);
 
+
+createFuncs.set('spawner', createSpawner);
 
 export default class EntityFactor {
   static create(str) {

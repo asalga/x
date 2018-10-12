@@ -16,15 +16,17 @@
  * Fix scene.getClosestEnemy()
  * Add min speed to Homing Missle
  * Add healthComponent to Rockets
- * Fix onCollision method in bullets
  * Allow components to be muted
  * Figure out entity death animation
  * Allow spawner to accept entity queue
- * Create Entity data queue?
+ * Create Entity data queue for waves?
 
-# Entities to Write
+
+# Entities/Components to Write
  * Create Carrier Baddie
  * Create LinkGun
  * Create LaserGun
  * Create ShieldGun
  * Create HyperwaveGun
+ * Create Targetable component
+ * Create ParticleSystem

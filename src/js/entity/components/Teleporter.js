@@ -17,7 +17,6 @@ export default class Teleporter extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    let noObj = {};
     let positionId = 0;
     let nextPos = new Vec2();
 
@@ -42,50 +41,44 @@ export default class Teleporter extends Component {
     }
     setNextPos();
 
-    this.entity.pos.set(nextPos);
+    this.entity.getRoot().pos.set(nextPos);
     let fadeTime = .4;
     let tl = new TimelineMax();
-    let obj = new Vec2();
-    this.opacity = {v:1};
+    this.op = { v: 1 };
 
+// 
+    let rootEnt = this.entity.getRoot();
+debugger;
     let that = this;
     let nextSequence = function() {
       setNextPos();
 
       tl.to({}, 1, {}) // IDLE
-        .to(that.opacity, fadeTime, { // FADE OUT
+        .to(that.op, fadeTime, { // FADE OUT
           v: 0.1,
-          data: that.entity,
+          data: rootEnt,
 
           onCompleteScope: that,
           onComplete: function() {
-            this.entity.collidable.enabled = false;
+            this.entity.getRoot().collidable.enabled = false;
           },
           onUpdate: function(){
             let value = this.target.v;
-// console.log(value);
-// debugger;
             let root = this.data.getRoot();
-            
             root.opacity = value;
-            // root.setPropertyRecursive('opacity', value);
           },
         })
-        .to(that.entity.pos, 1, nextPos) // MOVE
-        .to(that.opacity, fadeTime, {// FADE IN
+        .to(rootEnt.pos, 1, nextPos) // MOVE
+        .to(that.op, fadeTime, {// FADE IN
           v: 1,
           delay: .5,
-          data: that.entity,
+          data: rootEnt,
 
           // onUpdateScope: that,
           onUpdate: function(){
             let value = this.target.v;
-
             let root = this.data.getRoot();
-
-            // Debug.add('----->' +  value);
-            root.opacity =value;
-            // root.setPropertyRecursive('opacity', value);
+            root.opacity = value;
           },
           
           onCompleteScope: that,
@@ -95,11 +88,10 @@ export default class Teleporter extends Component {
           }
         });
     };
-
     nextSequence();
   }
 
   update(dt, entity) {
-    Debug.add('----->' +  this.opacity.v);
+    // Debug.add('----->' +  this.opacity.v);
   }
 }

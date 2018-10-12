@@ -28,13 +28,12 @@ export default class HealthRender extends Component {
 
     this.p3.save();
     this.p3.clearAll();
-    // this.p3.ctx.globalAlpha = this.entity.opacity;
     this.p3.strokeWeight(5);
     this.p3.stroke(0, 255, 0);
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
   }
 }
