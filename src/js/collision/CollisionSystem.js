@@ -4,7 +4,9 @@ import Debug from '../debug/Debug.js';
 
 let list = [];
 let firstTime = true;
+
 let checks = 0;
+let debugChecks = [];
 
 export default class CollisionSystem {
   static gatherCollidables() {
@@ -43,6 +45,7 @@ export default class CollisionSystem {
 
   static checkCollisions() {
     checks = 0;
+    debugChecks = [];
 
     let e1, e2;
 
@@ -64,6 +67,9 @@ export default class CollisionSystem {
 
 
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
+
+          debugChecks.push(`${e1.name} <-> ${e2.name}`);
+
           if (CollisionSystem.circleCircleTest(e1, e2)) {
 
             let e = new Event({
@@ -79,5 +85,9 @@ export default class CollisionSystem {
     }
 
     Debug.add(`Collision Checks: ${checks}`);
+    debugChecks.forEach( s => {
+      Debug.add('  ' + debugChecks);
+    });
+
   }
 }

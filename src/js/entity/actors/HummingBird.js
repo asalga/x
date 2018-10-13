@@ -49,7 +49,7 @@ export default function createHummingBird() {
 
   for (let i = 0; i < numGuns; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
-    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: true, ammo: 100 });
+    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 1, autoFire: true, ammo: 100 });
     let a = i * (Math.PI * 2) / numGuns;
 
     rocketLauncher.entity.launcherrenderer.layer = 100;
@@ -78,7 +78,11 @@ export default function createHummingBird() {
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
-  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
+  e.addComponent(new Collidable(e, {
+    type: CType.ENEMY,
+    mask: /*CType.PLAYER |*/
+      CType.PLAYER_BULLET
+  }));
 
   return e;
 }

@@ -20,7 +20,7 @@
  * Figure out entity death animation
  * Allow spawner to accept entity queue
  * Create Entity data queue for waves?
-
+ * Create move() to move entityes to/from scene to/from entities
 
 # Entities/Components to Write
  * Create Carrier Baddie

@@ -16,11 +16,11 @@ import CType from '../../collision/CollisionType.js';
 export default function createTeleporter() {
   let e = new Entity({ name: 'teleporter' });
   e.bounds = new BoundingCircle(e.pos, 20);
-  
+
   e.pos.x = -60;
   e.pos.y = -60;
 
-  e.setup = function(entity){
+  e.setup = function(entity) {
     e.addComponent(new Teleporter(e, {}));
     e.teleporter.setup(entity);
   };
@@ -35,12 +35,17 @@ export default function createTeleporter() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-  
+
   // force the user to add the Teleporter it via setup()
   e.addComponent(new Killable(e));
   e.addComponent(new Health(e, { amt: 120 }));
   e.addComponent(new HealthRender(e));
-  e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
+  e.addComponent(new Collidable(e, {
+    type: CType.ENEMY,
+    mask:
+      // CType.PLAYER | 
+      CType.PLAYER_BULLET
+  }));
 
   return e;
 }

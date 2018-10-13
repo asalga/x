@@ -50,7 +50,7 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 10 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 5 }));
   e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 

@@ -29,7 +29,10 @@ export default function createBullet() {
   }
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 2 }));
-  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
+  e.addComponent(new Collidable(e, {
+    type: CollisionType.PLAYER_BULLET,
+    mask: CollisionType.ENEMY | CollisionType.ENEMY_BULLET
+  }));
   e.addComponent(new LifetimeLimit(e, { limit: 1 }));
 
   return e;

@@ -65,6 +65,7 @@ export default function createMouse() {
   e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
+  // e.addComponent(new AIBehaviour(e, {}));
 
   for (let i = 0; i < 4; i++) {
     let rocketGun = EntityFactory.create('rocketgun');

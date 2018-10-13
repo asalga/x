@@ -3,7 +3,9 @@
 import Component from './Component.js';
 import LingerHurt from './LingerHurt.js';
 
+import EntityFactory from '../EntityFactory.js';
 import Utils from '../../Utils.js';
+import Event from '../../event/Event.js';
 
 export default class Payload extends Component {
 
@@ -18,6 +20,25 @@ export default class Payload extends Component {
     this.hit = function(data) {
       let other = data.other;
 
+      // (new Event({ evtName: 'payload' })).fire();
+      // let test = new Event({ evtName: 'payloaddelivered', data: this.entity });
+      // debugger;
+      //.fire();
+
+      // let psys = EntityFactory.create('particlesystem');
+      // scene.add(psys);
+
+      // psys.add(new Emitter(psys {
+      //   ageRange: [1, 2],
+      //   sizeRange: [1, 4],
+      //   spriteRenderer
+      // }));
+
+      // psys.add(new Emitter(psys, {
+      //   ageRange: [2,3],
+      //   sizeRnage: [3,4]
+      // }))
+
       if (!other.health) { return; }
 
       // other.health.hurt(this.payload.dmg);
@@ -26,14 +47,9 @@ export default class Payload extends Component {
         lingerTime: this.payload.lingerTime
       });
       other.addComponent(lingerHurt);
-
       scene.remove(e);
     };
 
-    e.on('collision', this.hit, e, { onlySelf: true });
-  }
-
-  indicateRemove() {
-    // this.entity.off('collision', this.hit);
+    e.on('collision', this.hit, e, { onlySelf: true, debugFlag:99 });
   }
 }

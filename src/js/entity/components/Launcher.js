@@ -46,6 +46,7 @@ export default class Launcher extends Component {
     // }
 
     this.createBullet = function() {
+      // debugger;
       this.ammo--;
 
       let worldCoords = this.entity.getWorldCoords();

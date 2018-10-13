@@ -17,6 +17,8 @@ window.gameTime = 0;
 window.debug = false;
 window.Debug = Debug;
 window.scene = null;
+window.vec2_ctor = 0;
+window.Events = new EventSystem();
 
 let p3;
 let timer;
@@ -32,7 +34,7 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
   Debug.add(`Entity count: ${scene.entities.size}`);
-
+  Debug.add(`${window.vec2_ctor}`);
 
   scene.update(dt);
 
@@ -72,7 +74,7 @@ function setup() {
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  Debug.setOn(false);
+  // Debug.setOn(false);
 
   scene.restartGame();
 

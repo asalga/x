@@ -19,7 +19,8 @@ export default class Entity {
     this.id = Utils.getId();
 
     this.events = true;
-    this.registeredEvents = new Map();
+    // this.registeredEvents = new Map();
+    this.registeredEvents = [];
 
     this.pos = new Vec2();
     this.vel = new Vec2();
@@ -130,16 +131,14 @@ export default class Entity {
   }
 
   /*
+    TODO: move this. This is too specific to live on Entity
     TODO: Keep track of which ones are already off?    
-  */
-  setWeaponsEnabled(b){
-    // try to find any children that have launchers and set them to b.
-    this.children.forEach(c => {
-      if (c.launcher) {
-        c.launcher.setEnable(b);
-      }
-    });
 
+    - Should this be generalized into setChildEnabled(b)?
+  */
+  setWeaponsEnabled(b) {
+    this.children.filter(c => c.launcher)
+      .forEach(e => e.launcher.setEnable(b));
   }
 
   getRoot() {
@@ -174,21 +173,28 @@ export default class Entity {
     return this.pos;
   }
 
+  /*
+    Returns the event ID which the calling code can use
+    to turn the event off
+  */
   on(evtName, cb, ctx, cfg) {
-    this.registeredEvents.set(evtName, cb);
-    // Events.on(evtName, cb, ctx, cfg);
-    (new EventSystem()).on(evtName, cb, ctx, cfg);
+    let id = Events.on(evtName, cb, ctx, cfg);
+    this.registeredEvents.push(id);
+    return id;
   }
 
-  off(evtName, cb) {
-    // Events.off(evtName, cb);
-    (new EventSystem()).off(evtName, cb);
+  off(id) {
+    Utils.removeFromArray(this.registeredEvents, id);
+    Events.off(id);
   }
 
   indicateRemove() {
     this.children.forEach(c => c.indicateRemove());
     this.components.forEach(c => c.indicateRemove());
 
-    this.registeredEvents.forEach((cb, evtName) => this.off(evtName, cb));
+    // don't call off(), since we don't want to modify an
+    // array while we iterate over it.
+    this.registeredEvents.forEach(id => Events.off(id));
+    this.registeredEvents = [];
   }
 }
