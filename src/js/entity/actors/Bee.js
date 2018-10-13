@@ -91,6 +91,7 @@ export default function createMouse() {
     }, rocketGun, { onlySelf: true });
 
     rocketLauncher.direction.set = new Vec2(Math.cos(a), Math.sin(a));
+
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));

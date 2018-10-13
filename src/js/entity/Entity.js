@@ -10,13 +10,13 @@ import Utils from '../Utils.js';
 
 export default class Entity {
   constructor(cfg) {
-
-    cfg && Utils.applyProps(this, cfg);
+    let defaults = {
+      opacity: 1,
+      visible: true
+    };
+    Utils.applyProps(this, defaults, cfg);
 
     this.id = Utils.getId();
-
-    this.visible = true;
-    this.opacity = 1;
 
     this.events = true;
     this.registeredEvents = new Map();
@@ -34,9 +34,10 @@ export default class Entity {
     this.parent = null;
   }
 
-  setup(){}
+  setup() {}
 
   draw() {
+    // taken care of in the Renderer
     // if (!this.visible) { return; }
 
     p3.save();
@@ -80,6 +81,9 @@ export default class Entity {
     this.children.forEach(c => {
       c.update(deltaTime);
     });
+
+    Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
+    // Health: ${this.health.amt}`
   }
 
   add(e) {
@@ -102,6 +106,7 @@ export default class Entity {
 
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
+    return res;
   }
 
   removeChild(e) {
@@ -122,6 +127,19 @@ export default class Entity {
       }
     }
     return false;
+  }
+
+  /*
+    TODO: Keep track of which ones are already off?    
+  */
+  setWeaponsEnabled(b){
+    // try to find any children that have launchers and set them to b.
+    this.children.forEach(c => {
+      if (c.launcher) {
+        c.launcher.setEnable(b);
+      }
+    });
+
   }
 
   getRoot() {
@@ -158,10 +176,12 @@ export default class Entity {
 
   on(evtName, cb, ctx, cfg) {
     this.registeredEvents.set(evtName, cb);
+    // Events.on(evtName, cb, ctx, cfg);
     (new EventSystem()).on(evtName, cb, ctx, cfg);
   }
 
   off(evtName, cb) {
+    // Events.off(evtName, cb);
     (new EventSystem()).off(evtName, cb);
   }
 

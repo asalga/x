@@ -49,7 +49,7 @@ export default function createHummingBird() {
 
   for (let i = 0; i < numGuns; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
-    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 0.125, autoFire: true, ammo: 20 });
+    let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: true, ammo: 100 });
     let a = i * (Math.PI * 2) / numGuns;
 
     rocketLauncher.entity.launcherrenderer.layer = 100;
@@ -72,7 +72,7 @@ export default function createHummingBird() {
   let teleporterEntity = EntityFactory.create('teleporter');
   e.add(teleporterEntity);
   teleporterEntity.setup(e);
-  
+
 
   // e.addComponent(new Teleporter(e, {}));
   e.addComponent(new Killable(e));

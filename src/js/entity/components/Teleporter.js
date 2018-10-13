@@ -76,30 +76,32 @@ export default class Teleporter extends Component {
       setNextWaypoint();
 
       let setCollisions = function(b) {
-        that.entity.collidable.enabled = b;
-        that.root.collidable.enabled = b;
-      };
+        this.entity.collidable.enabled = b;
+        this.root.collidable.enabled = b;
+      }.bind(this);
 
-
-      that.tl.to({}, that.idleTime, {}) // IDLE
-        .to(that.root, that.fadeTime, { // FADE OUT
-          opacity: that.minOpacity,
-          onCompleteScope: that,
+      this.tl.to({}, this.idleTime, {}) // IDLE
+        .to(this.root, this.fadeTime, { // FADE OUT
+          opacity: this.minOpacity,
+          onCompleteScope: this,
+          onStart: () => {this.root.setWeaponsEnabled(false)},
           onComplete: function() {
             setCollisions(false);
           }
         })
-        .to(that.root.pos, that.moveTime, waypoints[currWaypoint]) // MOVE
-        .to(that.root, that.fadeTime, { // FADE IN
+        .to(this.root.pos, this.moveTime, waypoints[currWaypoint]) // MOVE
+        .to(this.root, this.fadeTime, { // FADE IN
           opacity: 1,
           delay: .5,
-          onCompleteScope: that,
+          onCompleteScope: this,
+          onStart: () => {this.root.setWeaponsEnabled(true)},
           onComplete: function() {
             setCollisions(true);
             nextSequence();
           }
         });
-    };
+    }.bind(this);
+
     nextSequence();
   }
 

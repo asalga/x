@@ -33,7 +33,7 @@ export default function createRocketBullet() {
 
     p3.noStroke();
     p3.fill('rgb(245, 10, 255)');
-    p3.translate(e.pos.x, e.pos.y);
+    // p3.translate(e.pos.x, e.pos.y);
     let a = Math.atan2(e.vel.y, e.vel.x);
     p3.rotate(a);
 
