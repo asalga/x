@@ -4,9 +4,11 @@ import Debug from '../debug/Debug.js';
 
 let list = [];
 let firstTime = true;
-let checks = 0;
 
-export class CollisionSystem {
+let checks = 0;
+let debugChecks = [];
+
+export default class CollisionSystem {
   static gatherCollidables() {
 
     // if no object were added or removed, we can avoid doing this work
@@ -15,26 +17,35 @@ export class CollisionSystem {
       list.length = 0;
 
       scene.entities.forEach(e => {
+
+        e._collisionTransform = e.getWorldCoords();
+
+        // root        
         list.push(e);
+
+        e.children.forEach( ch => {
+          if(ch.collidable){
+            ch._collisionTransform = ch.getWorldCoords();
+            list.push(ch);
+          }
+        });
       });
 
-      list = list.filter(e => {
-        if (e.collidable) {
-          return e;
-        }
-      });
+      // shouldn't this be done sooner?
+      list = list.filter(e => e.collidable);
       scene.clearFlags();
     }
   }
 
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
-    let dist = Vec2.sub(e1.pos, e2.pos).length();
+    let dist = Vec2.sub(e1._collisionTransform, e2._collisionTransform).length();
     return dist <= radTotal;
   }
 
   static checkCollisions() {
     checks = 0;
+    debugChecks = [];
 
     let e1, e2;
 
@@ -44,13 +55,21 @@ export class CollisionSystem {
         e1 = list[i];
         e2 = list[j];
 
+        if (e1.collidable.enabled === false || e2.collidable.enabled === false) {
+          continue;
+        }
+
         let typeA = e1.collidable.type;
         let maskB = e2.collidable.mask;
 
         let maskA = e1.collidable.mask;
         let typeB = e2.collidable.type;
 
+
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
+
+          debugChecks.push(`${e1.name} <-> ${e2.name}`);
+
           if (CollisionSystem.circleCircleTest(e1, e2)) {
 
             let e = new Event({
@@ -66,5 +85,9 @@ export class CollisionSystem {
     }
 
     Debug.add(`Collision Checks: ${checks}`);
+    debugChecks.forEach( s => {
+      Debug.add('  ' + debugChecks);
+    });
+
   }
 }

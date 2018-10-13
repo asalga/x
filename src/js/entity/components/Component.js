@@ -29,6 +29,10 @@ export default class Component {
     this.events = b;
   }
 
+  getWorldCoords(){
+    return this.entity.getWorldCoords();
+  }
+
   /*
     When the associated entity is removed from the scene,
     we give the component a chance to do any cleanup such

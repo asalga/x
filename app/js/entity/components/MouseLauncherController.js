@@ -22,3 +22,15 @@ export default class MouseLauncherController extends Component {
 
   draw() {}
 }
+
+// - make controller generic
+// let m = MouseLauncherController();
+// this.entity.launcher.setController(m);
+// this.entity.launcher.setController(null);
+// this.entity.launcher.setController(RandomTargetingController);
+
+// let f = FiringRate();
+ // - Rate() / expressed from 0.1
+ // - Conservative
+ // - Overheating
+// Launcher.setFiringRate(f)

@@ -7,6 +7,8 @@ import _P3 from '../../P3.js';
 export default class HealthRender extends Component {
   constructor(e, cfg) {
     super(e, 'healthrender');
+    this.sz = cfg && cfg.sz || 5; 
+
     // TODO: fix, inherit from SpriteRender?
     this.renderable = true;
     this.visible = true;
@@ -24,16 +26,16 @@ export default class HealthRender extends Component {
 
   draw() {
     let e = this.entity;
-    let healthPercent = e.health.amt / e.health.max;
-    
+    let healthPercent = e.health.amt / e.health.max;    
+
     this.p3.save();
     this.p3.clearAll();
-    this.p3.strokeWeight(5);
+    this.p3.strokeWeight(this.sz);
     this.p3.stroke(0, 255, 0);
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
   }
 }

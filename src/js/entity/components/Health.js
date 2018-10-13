@@ -27,7 +27,6 @@ export default class Health extends Component {
       let diff = dt * this.regenerationSpeed;
       this.increaseHelth(diff);
     }
-      Debug.add(`Entity #${this.entity.id} Health: ${this.amt}`);
   }
 
   percentLeft() {

@@ -2,6 +2,9 @@
 
 import Entity from '../Entity.js';
 
+import Health from '../components/Health.js';
+import Killable from '../components/Killable.js';
+import HealthRender from '../components/HealthRender.js';
 import Payload from '../components/Payload.js';
 import Collidable from '../components/Collidable.js';
 import SeekTarget from '../components/SeekTarget.js';
@@ -17,13 +20,19 @@ export default function createRocketBullet() {
 
   scene.add(e);
 
+  // console.log('rocket created');
+
   e.on('collision', data => {
-    data.other.health && data.other.health.hurt(e.payload.dmg);
+    console.log('rocket collision');
+
+    if (data.other.health) {
+      data.other.health.hurt(e.payload.dmg);
+    }
     scene.remove(e);
-  }, e, { onlySelf: true });
+  }, e, { onlySelf: true, debugFlag:42 });
 
   // COMPONENTS
-  
+
   // TODO: fix
   e.bounds = new BoundingCircle(e.pos, 10);
 
@@ -33,7 +42,7 @@ export default function createRocketBullet() {
 
     p3.noStroke();
     p3.fill('rgb(245, 10, 255)');
-    p3.translate(e.pos.x, e.pos.y);
+    // p3.translate(e.pos.x, e.pos.y);
     let a = Math.atan2(e.vel.y, e.vel.x);
     p3.rotate(a);
 
@@ -43,8 +52,14 @@ export default function createRocketBullet() {
   }
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 1 }));
-  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getUser() }));
-  e.addComponent(new Collidable(e, { type: CollisionType.ENEMY_BULLET, mask: CollisionType.PLAYER }));
+  e.addComponent(new SeekTarget(e, { maxVel: 120, target: scene.getUser() }));
+  e.addComponent(new Health(e, { amt: 2.5 }));
+  e.addComponent(new Killable(e));
+  e.addComponent(new HealthRender(e, { sz: 1 }));
+  e.addComponent(new Collidable(e, {
+    type: CollisionType.ENEMY_BULLET,
+    mask: CollisionType.PLAYER | CollisionType.PLAYER_BULLET
+  }));
 
   return e;
 }

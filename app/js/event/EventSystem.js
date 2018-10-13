@@ -2,6 +2,8 @@
 
 let instance = null;
 
+import Utils from '../Utils.js';
+
 export default class EventSystem {
   constructor() {
     if (instance === null) {
@@ -15,43 +17,54 @@ export default class EventSystem {
 
   printDebug() {
     Debug.add('Event System');
-    
+
     Object.keys(this.listeners).forEach(listener => {
       let list = this.listeners[listener];
       Debug.add(`  ${listener} : ${list.size} `);
     });
   }
 
+  /*
+    Register an event
+
+    returns an id which we can use to turn the event off.
+  */
   on(evtName, cb, ctx, cfg) {
-    // don't have any listeners for this event yet
+
+    // We don't have any listeners for this event yet
     if (typeof this.listeners[evtName] === 'undefined') {
-      // Use set so we don't have to check for duplicates
-      this.listeners[evtName] = new Set();
+      this.listeners[evtName] = new Map();
+      // this.listeners[evtName] = new Set();
     }
 
-    // create the event object
-    this.listeners[evtName].add({ cb, ctx, cfg });
+    let id = Utils.getId();
+    this.listeners[evtName].set(id, { cb, ctx, cfg });
+    //.add({ cb, ctx, cfg });
+    return id;
   }
 
   fire(e) {
     let evtName = e.evtName;
-    let data = e.data;
 
     if (typeof this.listeners[evtName] === 'undefined') {
       return;
     }
 
-    // Tell all the listeners about this event
-    this.listeners[evtName].forEach(evtObj => {
+    // If the 'collision' event was fired, we need to tell 
+    // all the listeners about this event
 
+    let evtObjs = this.listeners[evtName]; //.evtObjs();
+
+    evtObjs.forEach((v, k) => {
+      let evtObj = v;
+      let data = e.data;
+
+      // TODO: remove?
       if (!evtObj.ctx) { debugger; }
 
-      if (evtObj.ctx.entity) {
-
-        // 
-        if (evtObj.ctx.entity.events === false) {
-          return;
-        }
+      // TODO: rename to eventsOn
+      if (evtObj.ctx.entity && evtObj.ctx.entity.events === false) {
+        return;
       }
 
       if (evtObj.ctx) {
@@ -60,6 +73,8 @@ export default class EventSystem {
         if (evtObj.cfg && evtObj.cfg.onlySelf) {
 
           let found = false;
+
+          // TODO: use filter?
           Object.values(data).forEach(v => {
             if (v === evtObj.ctx) {
               found = true;
@@ -80,28 +95,32 @@ export default class EventSystem {
         }
 
         evtObj.cb.call(evtObj.ctx, data);
-        
+
       } else {
         evtObj.cb(data);
       }
-
     });
   }
 
-  off(evtName, cb) {
-    if (typeof this.listeners[evtName] === 'undefined') {
-      return;
-    }
+  /*
+   */
+  off(id) {
+    let res = false;
 
-    for (let e of this.listeners[evtName]) {
-      if (e.cb === cb) {
-        this.listeners[evtName].delete(e);
-        return;
+    // Iterate over all the eventNames
+    let eventNames = Object.values(this.listeners);
+
+    eventNames.forEach(li => {
+      if (li.has(id)) {
+        res = li.delete(id);
       }
-    }
+    });
+
+    return res;
   }
 
   clear() {
+    // be super careful when calling this!
     debugger;
     this.listeners = {};
   }

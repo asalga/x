@@ -28,16 +28,8 @@ export default class LifetimeLimit extends Component {
   update(dt) {
     this.age += dt;
     if (this.age >= this.limit) {
-
       this.cb();
-
-      if (this.entity.parent) {
-        // new Event({ evtName: 'lifetimeexpired', data: this.entity }).fire();
-        this.entity.parent.removeDirectChild(this.entity);
-      } else {
-        scene.remove(this.entity);
-      }
-
+      this.entity.removeSelf();
     }
   }
 }

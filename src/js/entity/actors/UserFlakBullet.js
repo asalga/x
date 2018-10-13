@@ -40,7 +40,11 @@ export default function createFlakBullet(cfg) {
     this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0,0);// e.pos.x, e.pos.y);
+  }
+
+  spriteRender.composite = function(){
+    
   }
 
   e.addComponent(spriteRender);

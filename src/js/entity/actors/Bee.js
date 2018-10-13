@@ -65,6 +65,7 @@ export default function createMouse() {
   e.addComponent(new Health(e, { amt: 100 }));
   e.addComponent(new HealthRender(e));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
+  // e.addComponent(new AIBehaviour(e, {}));
 
   for (let i = 0; i < 4; i++) {
     let rocketGun = EntityFactory.create('rocketgun');
@@ -91,6 +92,7 @@ export default function createMouse() {
     }, rocketGun, { onlySelf: true });
 
     rocketLauncher.direction.set = new Vec2(Math.cos(a), Math.sin(a));
+
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));

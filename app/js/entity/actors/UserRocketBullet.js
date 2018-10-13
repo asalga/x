@@ -44,12 +44,13 @@ export default function createUserRocketBullet() {
     this.p3.rect(-sz, -sz / 2, sz * 2, sz);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0, 0);
+    // p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 10 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 5 }));
   e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 

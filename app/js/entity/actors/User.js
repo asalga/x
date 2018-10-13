@@ -34,7 +34,7 @@ export default function createUser() {
   let spriteRender = new SpriteRender(user, { layer: 10 });
   spriteRender.draw = function() {
     p3.save();
-    p3.translate(user.pos.x, user.pos.y);
+    // p3.translate(user.pos.x, user.pos.y);
 
     // body
     p3.stroke(111, 150, 80);
@@ -43,7 +43,7 @@ export default function createUser() {
     //(157, 192, 188);
 
     // p3.save();
-    let [x, y] = user.getWorldCoords().toArray();
+    // let [x, y] = user.getWorldCoords().toArray();
     // p3.translate(x, y);
     p3.ellipse(0, 0, user.size, user.size);
     
@@ -67,6 +67,7 @@ export default function createUser() {
   let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 10, ammo: 999 });
   miniGunLauncher.createFunc = createUserMiniGunBullet;
   miniGun.addComponent(miniGunLauncher);
+  // miniGun.addComponent(new LauncherRenderer(e, {color:'grey'}));
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
 
@@ -96,7 +97,7 @@ export default function createUser() {
 
   // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 1, autoFire: true, ammo: 450 });
+  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 4, autoFire: true, ammo: 111 });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));

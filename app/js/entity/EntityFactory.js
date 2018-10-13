@@ -1,48 +1,61 @@
 'use strict';
 
-import createBee from './actors/Bee.js';
-import createMouse from './actors/Mouse.js';
-import createStarfish from './actors/Starfish.js';
-import createHummingBird from './actors/HummingBird.js';
+import bee from './actors/Bee.js';
+import mouse from './actors/Mouse.js';
+import starfish from './actors/Starfish.js';
+import hummingbird from './actors/HummingBird.js';
+import user from './actors/User.js';
 
-import createUser from './actors/User.js';
+import crystal from './actors/Crystal.js';
+import explosion from './actors/Explosion.js';
+import teleporter from './actors/Teleporter.js';
 
-// What category are these?
-import createCrystal from './actors/Crystal.js';
-import createExplosion from './actors/Explosion.js';
 import createSpawner from './actors/Spawner.js';
 
+import particleSystem from './actors/ParticleSystem.js';
+
 import {
-  createMinigun,
-  createPlasmaGun,
-  createRocketGun,
-  createFreezeGun,
-  createFlakGun
+  miniGun,
+  plasmaGun,
+  rocketGun,
+  freezeGun,
+  flakGun
 } from './actors/guns/guns.js';
-
-
 
 let createFuncs = new Map();
 
 // PLAYERS
-createFuncs.set('bee', createBee);
-createFuncs.set('mouse', createMouse);
-createFuncs.set('starfish', createStarfish);
-createFuncs.set('hummingbird', createHummingBird);
-createFuncs.set('user', createUser);
+createFuncs.set('bee', bee);
+createFuncs.set('mouse', mouse);
+createFuncs.set('starfish', starfish);
+createFuncs.set('hummingbird', hummingbird);
+createFuncs.set('user', user);
 
 // GUNS
-createFuncs.set('minigun', createMinigun);
-createFuncs.set('plasmagun', createPlasmaGun);
-createFuncs.set('rocketgun', createRocketGun);
-createFuncs.set('freezegun', createFreezeGun);
-createFuncs.set('flakgun', createFlakGun);
+createFuncs.set('minigun', miniGun);
+createFuncs.set('plasmagun', plasmaGun);
+createFuncs.set('rocketgun', rocketGun);
+createFuncs.set('freezegun', freezeGun);
+createFuncs.set('flakgun', flakGun);
 
-// DECORATORS?
-createFuncs.set('crystal', createCrystal);
-createFuncs.set('explosion', createExplosion);
+// DECORATIONS
+createFuncs.set('particlesystem', particleSystem);
+// createFuncs.set('bonusPoints', bonusPoints);
 
-createFuncs.set('spawner', createSpawner);
+// CONTROLLERS
+// createFuncs.set('spawner', spawner);
+
+// ZONES 
+// ?
+
+// PROPS
+// createFuncs.set('health', health);
+// 
+
+// MISC
+createFuncs.set('crystal', crystal);
+createFuncs.set('explosion', explosion);
+createFuncs.set('teleporter', teleporter);
 
 
 export default class EntityFactor {

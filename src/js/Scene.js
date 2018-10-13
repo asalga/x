@@ -67,6 +67,7 @@ export default class Scene {
     for (let i = 0; i < 1; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
+    this.add(EntityFactory.create('hummingbird'));
 
     // let e = new EventSystem();
     // e.clear();
@@ -76,7 +77,9 @@ export default class Scene {
 
     for(let i = 0; i < this.deleteQueue.length; i++){
       if(e === this.deleteQueue[i]){
-        debugger;
+        continue;
+        // TODO: fix this!
+        // debugger;
       }
     }
 

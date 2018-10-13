@@ -21,3 +21,10 @@ export default class Spawner {
   // this.bee = b;
   // this.add(b);
 }
+
+    // this.timer += dt;
+    // if (this.timer > 2.5) {
+    //   this.timer = 0;
+    //   // this.add(EntityFactory.create('mouse'));
+    // }
+

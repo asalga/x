@@ -41,6 +41,7 @@ export default class SeekTarget extends Component {
     }
 
     let targetPos = new Vec2(this.target.pos); //.add(this.offset);
+    // debugger;
     let pos = new Vec2(this.entity.pos);
     let vel = this.entity.vel;
 

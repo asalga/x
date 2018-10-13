@@ -10,14 +10,17 @@ import Utils from '../Utils.js';
 
 export default class Entity {
   constructor(cfg) {
-
-    cfg && Utils.applyProps(this, cfg);
+    let defaults = {
+      opacity: 1,
+      visible: true
+    };
+    Utils.applyProps(this, defaults, cfg);
 
     this.id = Utils.getId();
 
-    this.visible = true;
     this.events = true;
-    this.registeredEvents = new Map();
+    // this.registeredEvents = new Map();
+    this.registeredEvents = [];
 
     this.pos = new Vec2();
     this.vel = new Vec2();
@@ -32,20 +35,27 @@ export default class Entity {
     this.parent = null;
   }
 
+  setup() {}
+
   draw() {
-    if (!this.visible) { return; }
+    // taken care of in the Renderer
+    // if (!this.visible) { return; }
 
     p3.save();
 
     this.renderProxy && this.renderProxy(p3);
-    this.children.forEach(c => c.draw());
+    // this.children.forEach(c => c.draw());
 
-    // TODO: fix
-    this.components.forEach(c => {
-      c.draw && c.draw();
-    });
+    // // TODO: fix
+    // this.components.forEach(c => {
+    //   c.draw && c.draw();
+    // });
 
     p3.restore();
+  }
+
+  setPropertyRecursive(name, v) {
+    debugger;
   }
 
   update(dt) {
@@ -72,6 +82,9 @@ export default class Entity {
     this.children.forEach(c => {
       c.update(deltaTime);
     });
+
+    Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
+    // Health: ${this.health.amt}`
   }
 
   add(e) {
@@ -79,8 +92,22 @@ export default class Entity {
     this.children.push(e);
   }
 
+  /*
+    If a component needs to remove the associate entity,
+    give it a method that abstracts out whether the entity
+    is in a scenegraph or directly in the scene.
+  */
+  removeSelf() {
+    if (this.parent) {
+      this.parent.removeDirectChild(this);
+    } else {
+      scene.remove(this);
+    }
+  }
+
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
+    return res;
   }
 
   removeChild(e) {
@@ -103,6 +130,17 @@ export default class Entity {
     return false;
   }
 
+  /*
+    TODO: move this. This is too specific to live on Entity
+    TODO: Keep track of which ones are already off?    
+
+    - Should this be generalized into setChildEnabled(b)?
+  */
+  setWeaponsEnabled(b) {
+    this.children.filter(c => c.launcher)
+      .forEach(e => e.launcher.setEnable(b));
+  }
+
   getRoot() {
     if (this.parent === null) {
       return this;
@@ -111,7 +149,7 @@ export default class Entity {
   }
 
   addComponent(c) {
-    if(this[c.name]){
+    if (this[c.name]) {
       console.log(`Warning: ${this.name} already has ${c.name}`);
     }
     this.components.push(c);
@@ -135,19 +173,28 @@ export default class Entity {
     return this.pos;
   }
 
+  /*
+    Returns the event ID which the calling code can use
+    to turn the event off
+  */
   on(evtName, cb, ctx, cfg) {
-    this.registeredEvents.set(evtName, cb);
-    (new EventSystem()).on(evtName, cb, ctx, cfg);
+    let id = Events.on(evtName, cb, ctx, cfg);
+    this.registeredEvents.push(id);
+    return id;
   }
 
-  off(evtName, cb) {
-    (new EventSystem()).off(evtName, cb);
+  off(id) {
+    Utils.removeFromArray(this.registeredEvents, id);
+    Events.off(id);
   }
 
   indicateRemove() {
     this.children.forEach(c => c.indicateRemove());
     this.components.forEach(c => c.indicateRemove());
 
-    this.registeredEvents.forEach((cb, evtName) => this.off(evtName, cb));
+    // don't call off(), since we don't want to modify an
+    // array while we iterate over it.
+    this.registeredEvents.forEach(id => Events.off(id));
+    this.registeredEvents = [];
   }
 }

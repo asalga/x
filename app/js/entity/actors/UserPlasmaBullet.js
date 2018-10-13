@@ -22,13 +22,14 @@ export default function createPlamaBullet() {
     p3.noStroke();
     p3.fill('rgb(55, 210, 55)');
     let sz = e.bounds.radius;
-    p3.ellipse(e.pos.x, e.pos.y, sz, sz);
+    // p3.ellipse(e.pos.x, e.pos.y, sz, sz);
+    p3.ellipse(0, 0, sz, sz);
     p3.restore();
   }
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 10, lingerTime: 3 }));
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
-  e.addComponent(new LifetimeLimit(e, {limit: .5}));
+  e.addComponent(new LifetimeLimit(e, { limit: 1 }));
 
   return e;
 }

@@ -37,7 +37,7 @@ export default function createExplosion() {
     this.p3.ellipse(0, 0, sz, sz);
     this.p3.restore();
 
-    p3.drawImage(this.sprite, e.pos.x, e.pos.y);
+    p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
   };
 
   e.addComponent(spriteRender);

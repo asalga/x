@@ -2,6 +2,16 @@
 
 /*
   Responsible for launching bullets at a certain rate.
+
+  When fire is called, it may or may not actually fire a bullet.
+  The success depends on
+    - ammo remaining
+    - rate at which the launcher can fire
+    - if the launcher is on or not.
+
+  We can set the autoFire to true and at the same time, the launcher can
+  be off. This allows us to easily switch between continuously firing, then
+  pausing (Works well for cloaked entities)
 */
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
@@ -34,15 +44,35 @@ export default class Launcher extends Component {
     //   cur = Vec2.sub(cur, center);
     //   return cur.normalize().mult(60);
     // }
+
+    this.createBullet = function() {
+      // debugger;
+      this.ammo--;
+
+      let worldCoords = this.entity.getWorldCoords();
+      let gunTip = this.direction.clone().mult(60);
+      worldCoords.add(gunTip);
+
+      let bullet = this.createFunc({ pos: worldCoords });
+      bullet.pos.set(worldCoords);
+      bullet.vel.set(this.direction.clone().mult(this.bulletVel));
+
+    }
+    // let gunTip = this.getVecToCursor();
+    // gunTip.add(p3.width / 2, p3.height / 2);
+    // bullet.pos.set(gunTip);
+    // let dir = gunTip.sub(UserPos).normalize();
   }
 
   setEnable(b) {
     this.enabled = b;
   }
 
-  requestFire() {
+  /*
+    
+  */
+  fire() {
     this.firing = true;
-
 
     if (this.ammo <= 0) { return; }
     if (this.enabled === false) { return; }
@@ -50,26 +80,9 @@ export default class Launcher extends Component {
     if (this.timer > this.rate) {
       let diff = this.timer % this.rate;
       this.timer = 0;
-      this.fire();
+
+      this.createBullet();
     }
-  }
-
-  fire() {
-    this.ammo--;
-
-    let worldCoords = this.entity.getWorldCoords();
-    let gunTip = this.direction.clone().mult(60);
-    worldCoords.add(gunTip);
-
-    let bullet = this.createFunc({ pos: worldCoords });
-    bullet.pos.set(worldCoords);
-    bullet.vel.set(this.direction.clone().mult(this.bulletVel));
-
-
-    // let gunTip = this.getVecToCursor();
-    // gunTip.add(p3.width / 2, p3.height / 2);
-    // bullet.pos.set(gunTip);
-    // let dir = gunTip.sub(UserPos).normalize();
   }
 
   update(dt) {
@@ -77,15 +90,11 @@ export default class Launcher extends Component {
 
     this.timer += dt;
 
+    if (!this.enabled) { return; }
+
     if (this.firing || this.autoFire) {
-
-      this.requestFire();
+      // this.requestFire();
+      this.fire();
     }
-  }
-
-  /*
-   */
-  stopFiring() {
-    this.firing = false;
   }
 }
