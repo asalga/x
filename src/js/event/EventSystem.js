@@ -13,7 +13,20 @@ export default class EventSystem {
     return instance;
   }
 
-  // once(evtName, cb) {}
+  // The collision system doesn't know about how the
+  // listeners will consume the data, so it's up to the event
+  // system to order the values nicely for the listeners.
+  // This makes the logic in the collision listeners much cleaner.
+  reorderEntities(data, evtObj) {
+    if (data.self === evtObj.ctx) return;
+    [data.other, data.self] = [data.self, data.other];
+  }
+
+  // Occurs on the WeaponSwitcher
+  eventsAreOffForEntity(ctx) {
+    if (!ctx.entity) return false;
+    return !ctx.entity.eventsOn;
+  }
 
   printDebug() {
     Debug.add('Event System');
@@ -44,14 +57,11 @@ export default class EventSystem {
   fire(e) {
     let evtName = e.evtName;
 
-    // no listeners exist yet
     if (typeof this.listeners[evtName] === 'undefined') {
-      console.warn('no listeners setup yet');
+      // console.warn(`${e.data.name} is not listening to "${evtName}"`);
+      // console.warn(`There isn't anything listening to: "${evtName}"`);
       return;
     }
-
-    // If the 'collision' event was fired, we need to tell 
-    // all the listeners about this event
 
     let evtObjs = this.listeners[evtName];
 
@@ -59,51 +69,25 @@ export default class EventSystem {
       let evtObj = v;
       let data = e.data;
 
-      // TODO: wtf?
-      if (!evtObj.ctx) { debugger; }
-
-      // TODO: rename to eventsOn
-      if (evtObj.ctx.entity && evtObj.ctx.entity.events === false) {
+      // If there isn't a context, just invoke the callback
+      if (!evtObj.ctx) {
+        evtObj.cb(data);
         return;
       }
 
-      if (evtObj.ctx) {
+      if (this.eventsAreOffForEntity(evtObj.ctx)) { return; }
 
-        // If the listener only wants events that occured on itself
-        if (evtObj.cfg && evtObj.cfg.onlySelf) {
+      this.reorderEntities(data, evtObj);
 
-          let foundSelf = false;
-
-          console.log(data.ctx);
-
-          // TODO: use filter?
-          Object.values(data).forEach(v => {
-            
-            // console.log("...>", v);
-
-            if (v === evtObj.ctx) {
-              foundSelf = true;
-            }
-          });
-
-          if (foundSelf === false) { return; }
-        }
-
-        // The collision system doesn't know about how the
-        // listeners will consume the data, so it's up to the event
-        // system to order the values nicely for the listeners.
-        // This makes the logic in the collision listeners much cleaner.
-        //
-        // swap, if they are in the wrong order
-        if (data.other === evtObj.ctx) {
-          [data.other, data.self] = [data.self, data.other];
-        }
-
-        evtObj.cb.call(evtObj.ctx, data);
-
-      } else {
-        evtObj.cb(data);
+      // if(this.onlyWantEventsOnSelf()){
+      // }
+      // If the listener only wants events that occured on itself
+      if (evtObj.cfg && evtObj.cfg.onlySelf) {
+        let res = Object.values(data).filter(v => v === evtObj.ctx);
+        if (res.length === 0) return;
       }
+
+      evtObj.cb.call(evtObj.ctx, data);
     });
   }
 

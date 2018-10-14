@@ -16,6 +16,10 @@ export default function createBullet() {
 
   e.bounds = new BoundingCircle(e.pos, 5);
 
+  // e.on('death', function(){
+  //   // console.log('bullet death');
+  // });
+
   let spriteRender = new SpriteRender(e, { layer: 100 });
   spriteRender.draw = function() {
     p3.save();
@@ -27,6 +31,7 @@ export default function createBullet() {
     // p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     p3.restore();
   }
+
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 2 }));
   e.addComponent(new Collidable(e, {
