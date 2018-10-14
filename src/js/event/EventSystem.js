@@ -65,11 +65,10 @@ export default class EventSystem {
 
     let evtObjs = this.listeners[evtName];
 
-    evtObjs.forEach((v, k) => {
-      let evtObj = v;
+    evtObjs.forEach((evtObj, k) => {
       let data = e.data;
 
-      // If there isn't a context, just invoke the callback
+      // TODO: wtf?
       if (!evtObj.ctx) {
         evtObj.cb(data);
         return;
@@ -79,8 +78,6 @@ export default class EventSystem {
 
       this.reorderEntities(data, evtObj);
 
-      // if(this.onlyWantEventsOnSelf()){
-      // }
       // If the listener only wants events that occured on itself
       if (evtObj.cfg && evtObj.cfg.onlySelf) {
         let res = Object.values(data).filter(v => v === evtObj.ctx);
