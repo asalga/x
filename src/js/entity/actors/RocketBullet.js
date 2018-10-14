@@ -20,16 +20,12 @@ export default function createRocketBullet() {
 
   scene.add(e);
 
-  // console.log('rocket created');
-
   e.on('collision', data => {
-    console.log('rocket collision');
-
     if (data.other.health) {
       data.other.health.hurt(e.payload.dmg);
     }
     scene.remove(e);
-  }, e, { onlySelf: true, debugFlag:42 });
+  }, e, { onlySelf: true });
 
   // COMPONENTS
 

@@ -8,6 +8,4 @@ export default class Template extends Component {
   }
 
   update(dt) {}
-
-  indicateRemove() {}
 }

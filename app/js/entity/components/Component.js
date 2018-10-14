@@ -6,7 +6,6 @@ export default class Component {
   constructor(e, name) {
     this.entity = e;
     this.name = name;
-    // this.events = true;
   }
 
   update(dt) {
@@ -16,7 +15,7 @@ export default class Component {
   // on(evtName, func, ctx) {
   // this.eventFilter(evtName, func, ctx);
   // (new EventSystem()).on(evtName, function() {
-  //   if (this.events === false) { return; }
+  //   if (this.eventsOn === false) { return; }
   //   func.call(this, arguments[0], arguments[1], arguments[2]);
   // }.bind(this), ctx);
   // }
@@ -26,7 +25,7 @@ export default class Component {
   }
 
   setEvents(b) {
-    this.events = b;
+    this.eventsOn = b;
   }
 
   getWorldCoords(){

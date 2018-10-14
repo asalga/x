@@ -68,7 +68,7 @@ export default class CollisionSystem {
 
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
 
-          debugChecks.push(`${e1.name} <-> ${e2.name}`);
+          // debugChecks.push(`${e1.name} <-> ${e2.name}`);
 
           if (CollisionSystem.circleCircleTest(e1, e2)) {
 

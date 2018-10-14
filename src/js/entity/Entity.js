@@ -18,7 +18,7 @@ export default class Entity {
 
     this.id = Utils.getId();
 
-    this.events = true;
+    this.eventsOn = true;
     // this.registeredEvents = new Map();
     this.registeredEvents = [];
 
@@ -83,7 +83,7 @@ export default class Entity {
       c.update(deltaTime);
     });
 
-    Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
+    // Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
     // Health: ${this.health.amt}`
   }
 
@@ -163,7 +163,7 @@ export default class Entity {
   }
 
   setEvents(b) {
-    this.events = b;
+    this.eventsOn = b;
   }
 
   getWorldCoords() {
