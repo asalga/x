@@ -13,7 +13,7 @@ export default class EventSystem {
     return instance;
   }
 
-  once(evtName, cb) {}
+  // once(evtName, cb) {}
 
   printDebug() {
     Debug.add('Event System');
@@ -34,32 +34,32 @@ export default class EventSystem {
     // We don't have any listeners for this event yet
     if (typeof this.listeners[evtName] === 'undefined') {
       this.listeners[evtName] = new Map();
-      // this.listeners[evtName] = new Set();
     }
 
     let id = Utils.getId();
     this.listeners[evtName].set(id, { cb, ctx, cfg });
-    //.add({ cb, ctx, cfg });
     return id;
   }
 
   fire(e) {
     let evtName = e.evtName;
 
+    // no listeners exist yet
     if (typeof this.listeners[evtName] === 'undefined') {
+      console.warn('no listeners setup yet');
       return;
     }
 
     // If the 'collision' event was fired, we need to tell 
     // all the listeners about this event
 
-    let evtObjs = this.listeners[evtName]; //.evtObjs();
+    let evtObjs = this.listeners[evtName];
 
     evtObjs.forEach((v, k) => {
       let evtObj = v;
       let data = e.data;
 
-      // TODO: remove?
+      // TODO: wtf?
       if (!evtObj.ctx) { debugger; }
 
       // TODO: rename to eventsOn
@@ -72,16 +72,21 @@ export default class EventSystem {
         // If the listener only wants events that occured on itself
         if (evtObj.cfg && evtObj.cfg.onlySelf) {
 
-          let found = false;
+          let foundSelf = false;
+
+          console.log(data.ctx);
 
           // TODO: use filter?
           Object.values(data).forEach(v => {
+            
+            // console.log("...>", v);
+
             if (v === evtObj.ctx) {
-              found = true;
+              foundSelf = true;
             }
           });
 
-          if (found === false) { return; }
+          if (foundSelf === false) { return; }
         }
 
         // The collision system doesn't know about how the
