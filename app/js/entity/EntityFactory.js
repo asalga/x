@@ -13,6 +13,8 @@ import teleporter from './actors/Teleporter.js';
 import createSpawner from './actors/Spawner.js';
 
 import particleSystem from './actors/ParticleSystem.js';
+import ui from './actors/Ui.js';
+
 
 import {
   miniGun,
@@ -40,7 +42,9 @@ createFuncs.set('flakgun', flakGun);
 
 // DECORATIONS
 createFuncs.set('particlesystem', particleSystem);
+createFuncs.set('ui', ui);
 // createFuncs.set('bonusPoints', bonusPoints);
+
 
 // CONTROLLERS
 // createFuncs.set('spawner', spawner);

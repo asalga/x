@@ -13,6 +13,8 @@ export default class SpriteRender extends Component {
     this.layer = cfg && cfg.layer || 0;
     Utils.applyProps(this, cfg);
 
+    this.dirty = true;
+
     this.sprite = document.createElement('canvas');
     this.sprite.width = cfg.width;
     this.sprite.height = cfg.height;

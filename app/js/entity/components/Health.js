@@ -47,6 +47,8 @@ export default class Health extends Component {
   hurtOnce(other, dmg) {}
 
   hurt(dmg) {
+    if (this.entity.killable.dead) { return; }
+
     this.amt -= dmg;
     new Event({ evtName: 'hurt', data: this.entity }).fire();
 

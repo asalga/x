@@ -33,7 +33,7 @@ export default function createBullet() {
   }
 
   e.addComponent(spriteRender);
-  e.addComponent(new Payload(e, { dmg: 2 }));
+  e.addComponent(new Payload(e, { dmg: 1, lingerTime:1 }));
   e.addComponent(new Collidable(e, {
     type: CollisionType.PLAYER_BULLET,
     mask: CollisionType.ENEMY | CollisionType.ENEMY_BULLET

@@ -139,6 +139,10 @@ export default class P3 {
     this.ctx.rotate(a);
   }
 
+  scale(x,y){
+    this.ctx.scale(x,y);
+  }
+
   translate(x, y) {
     this.ctx.translate(x, y);
   }

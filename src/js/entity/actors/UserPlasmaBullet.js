@@ -27,7 +27,7 @@ export default function createPlamaBullet() {
     p3.restore();
   }
   e.addComponent(spriteRender);
-  e.addComponent(new Payload(e, { dmg: 10, lingerTime: 3 }));
+  e.addComponent(new Payload(e, { dmg: 10, lingerTime: 2 }));
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
   e.addComponent(new LifetimeLimit(e, { limit: 1 }));
 

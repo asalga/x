@@ -13,6 +13,10 @@ export default class Renderer {
     // Place entities in their respective layers
     scene.entities.forEach(e => {
 
+
+      // TODO: write this
+      // if(CollisionSystem.intersects(gameBounds, e.bounds))
+
       if (e.visible === false || e.opacity === 0) {
         return;
       }

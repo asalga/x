@@ -7,6 +7,7 @@ import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
 import GoToTarget from '../components/GoToTarget.js';
 import Collidable from '../components/Collidable.js';
+import ScorePoints from '../components/ScorePoints.js';
 import HealthRender from '../components/HealthRender.js';
 import SpriteRender from '../components/SpriteRender.js';
 import MeleePayload from '../components/MeleePayload.js';
@@ -23,7 +24,7 @@ export default function createMouse() {
   e.updateProxy = function(dt) {};
 
   let setRandPosition = function(entity) {
-    let r = Vec2.rand().normalize().mult(400);
+    let r = Vec2.rand().normalize().mult(200);
 
     // just so they all don't all arrive at the user at the same time
     let deviate = Vec2.rand().normalize().mult(20);
@@ -36,16 +37,20 @@ export default function createMouse() {
 
   let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 120 });
   spriteRender.draw = function() {
-    let sz = e.bounds.radius;
-    this.p3.save();
-    this.p3.clearAll();
-    this.p3.noStroke();
-    this.p3.fill(14, 202, 238);
-    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    this.p3.ellipse(0, 0, sz, sz);
-    this.p3.restore();
 
-    p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
+    if (this.dirty) {
+      let sz = e.bounds.radius;
+      this.p3.save();
+      this.p3.clearAll();
+      this.p3.noStroke();
+      this.p3.fill(14, 202, 238);
+      this.p3.translate(this.p3.width / 2, this.p3.height / 2);
+      this.p3.ellipse(0, 0, sz, sz);
+      this.p3.restore();
+      this.dirty = false;
+    }
+
+    p3.drawImage(this.sprite, 0, 0);
   }
   e.addComponent(spriteRender);
 
@@ -59,8 +64,9 @@ export default function createMouse() {
   }));
 
   e.addComponent(new Killable(e));
+  e.addComponent(new ScorePoints(e, { points: 100 }));
   e.addComponent(new Stun(e, { multiplier: 5 }));
-  e.addComponent(new Health(e, { amt: 4 }));
+  e.addComponent(new Health(e, { amt: 3 }));
   e.addComponent(new HealthRender(e, { layer: 200 }));
   e.addComponent(new MeleePayload(e, { damage: 20 }));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));

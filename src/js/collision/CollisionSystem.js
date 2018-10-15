@@ -37,6 +37,18 @@ export default class CollisionSystem {
     }
   }
 
+  // circle_Circle
+  // circle_AABB
+  // circle_lineSegment
+
+  // AABB_AABB
+  // AABB_lineSegment
+
+  // lineSegment_lineSegment
+  
+  /*
+    TODO: this should be more generic.
+  */
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
     let dist = Vec2.sub(e1._collisionTransform, e2._collisionTransform).length();

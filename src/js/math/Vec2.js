@@ -2,9 +2,8 @@
 
 export default class Vec2 {
   constructor() {
-    
     window.vec2_ctor++;
-
+    
     let x, y;
 
     if (arguments.length === 0) {
