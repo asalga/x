@@ -41,7 +41,7 @@ export default function createExplosion() {
   };
 
   e.addComponent(spriteRender);
-  e.addComponent(new AreaPayload(e, { dmg: 10 }));
+  e.addComponent(new AreaPayload(e, { dmg: 1 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
   e.addComponent(new LifetimeLimit(e, { limit: time }));
 

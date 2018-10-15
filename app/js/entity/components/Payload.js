@@ -50,6 +50,6 @@ export default class Payload extends Component {
       scene.remove(e);
     };
 
-    e.on('collision', this.hit, e, { onlySelf: true, debugFlag:99 });
+    e.on('collision', this.hit, e, { onlySelf: true });
   }
 }

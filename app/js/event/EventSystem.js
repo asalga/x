@@ -8,16 +8,31 @@ export default class EventSystem {
   constructor() {
     if (instance === null) {
       instance = this;
+
       this.listeners = {};
+      this.onlyOnceEvents = new Set();
     }
+
     return instance;
+  }
+
+  arrToKey(arr) {
+    return arr.sort().join(':');
+  }
+
+  listenerListEmpty(evtName) {
+    return typeof this.listeners[evtName] === 'undefined';
+    // console.warn(`${e.data.name} is not listening to "${evtName}"`);
+    // console.warn(`There isn't anything listening to: "${evtName}"`);
+    // return;
+    // }
   }
 
   // The collision system doesn't know about how the
   // listeners will consume the data, so it's up to the event
   // system to order the values nicely for the listeners.
   // This makes the logic in the collision listeners much cleaner.
-  reorderEntities(data, evtObj) {
+  orderEntities(data, evtObj) {
     if (data.self === evtObj.ctx) return;
     [data.other, data.self] = [data.self, data.other];
   }
@@ -44,29 +59,24 @@ export default class EventSystem {
   */
   on(evtName, cb, ctx, cfg) {
 
-    // We don't have any listeners for this event yet
-    if (typeof this.listeners[evtName] === 'undefined') {
+    if (this.listenerListEmpty(evtName)) {
       this.listeners[evtName] = new Map();
     }
 
     let id = Utils.getId();
     this.listeners[evtName].set(id, { cb, ctx, cfg });
+
     return id;
   }
 
   fire(e) {
     let evtName = e.evtName;
 
-    if (typeof this.listeners[evtName] === 'undefined') {
-      // console.warn(`${e.data.name} is not listening to "${evtName}"`);
-      // console.warn(`There isn't anything listening to: "${evtName}"`);
-      return;
-    }
+    if (this.listenerListEmpty(evtName)) { return; }
 
     let evtObjs = this.listeners[evtName];
 
-    evtObjs.forEach((v, k) => {
-      let evtObj = v;
+    evtObjs.forEach((evtObj, id) => {
       let data = e.data;
 
       // If there isn't a context, just invoke the callback
@@ -77,14 +87,25 @@ export default class EventSystem {
 
       if (this.eventsAreOffForEntity(evtObj.ctx)) { return; }
 
-      this.reorderEntities(data, evtObj);
+      this.orderEntities(data, evtObj);
 
-      // if(this.onlyWantEventsOnSelf()){
-      // }
-      // If the listener only wants events that occured on itself
-      if (evtObj.cfg && evtObj.cfg.onlySelf) {
-        let res = Object.values(data).filter(v => v === evtObj.ctx);
-        if (res.length === 0) return;
+      if (evtObj.cfg) {
+        let cfg = evtObj.cfg;
+
+        if (cfg.onlySelf) {
+          // TODO: shouldn't we be checking for ctx === 'self'??
+          let res = Object.values(data).filter(v => v === evtObj.ctx);
+          if (res.length === 0) return;
+        }
+
+        if (cfg.onlyOnce) {
+          let key = this.arrToKey(cfg.onlyOnce(data));
+          if (this.onlyOnceEvents.has(key)) {
+            return;
+          } else {
+            this.onlyOnceEvents.add(key, 0);
+          }
+        }
       }
 
       evtObj.cb.call(evtObj.ctx, data);

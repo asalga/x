@@ -67,7 +67,7 @@ export default class Scene {
     for (let i = 0; i < 1; ++i) {
       this.add(EntityFactory.create('mouse'));
     }
-    this.add(EntityFactory.create('hummingbird'));
+    // this.add(EntityFactory.create('hummingbird'));
 
     // let e = new EventSystem();
     // e.clear();

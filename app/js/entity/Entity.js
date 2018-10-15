@@ -84,6 +84,10 @@ export default class Entity {
     });
 
     // Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
+
+    if (this.health) {
+      Debug.add(`Entity ${this.health.amt} `);
+    }
     // Health: ${this.health.amt}`
   }
 
