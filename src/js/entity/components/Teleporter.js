@@ -20,7 +20,7 @@ export default class Teleporter extends Component {
     let defaults = {
       // speed: 1,
       fadeTime: 0.5,
-      moveTime: 4,
+      moveTime: 2,
       idleTime: 0.2,
       minOpacity: 0.02
     };
