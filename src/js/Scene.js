@@ -17,16 +17,22 @@ export default class Scene {
   }
 
   update(dt) {
-    // Allow the entities to do any cleanup
-    this.deleteQueue.forEach(e => e.indicateRemove());
+
+    // Seems like this is the best place for this flag 
+    // to be turned on.
+    if (this.deleteQueue.length > 0) {
+      this.entitiesAddedOrRemoved = true;
+    }
 
     this.deleteQueue.forEach(e => {
-      this.entities.delete(e);
-      this.entitiesAddedOrRemoved = true;
-      // TODO: change event name to 'remove'?
       new Event({ evtName: 'death', data: e }).fire();
+      // console.log('death called');
+
+      this.entities.delete(e);
     });
 
+    // Allow the entities to do any cleanup
+    this.deleteQueue.forEach(e => e.indicateRemove());
     this.deleteQueue = [];
 
     this.entities.forEach(e => e.update(dt));
@@ -61,12 +67,12 @@ export default class Scene {
     this.entities.clear();
     this.deleteQueue = [];
 
-    let user = EntityFactory.create('user');
-    this.addUser(user);
+    this.addUser(EntityFactory.create('user'));
+    this.add(EntityFactory.create('ui'));
 
     for (let i = 0; i < 50; ++i) {
       let m1 = EntityFactory.create('mouse');
-      // m1.pos.mult(i/10);
+      m1.pos.mult(3);
       // let m2 = EntityFactory.create('mouse');
       // m1.pos.set(150, 250);
       // m2.pos.set(130, 250);

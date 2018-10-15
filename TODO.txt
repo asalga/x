@@ -15,7 +15,6 @@
  * rename scene.deleteQueue variable
  * Fix scene.getClosestEnemy()
  * Add min speed to Homing Missle
- * Add healthComponent to Rockets
  * Allow components to be muted
  * Figure out entity death animation
  * Allow spawner to accept entity queue

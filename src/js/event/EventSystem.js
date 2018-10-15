@@ -78,8 +78,14 @@ export default class EventSystem {
 
     let evtObjs = this.listeners[evtName];
 
+
     evtObjs.forEach((evtObj, id) => {
       let data = e.data;
+
+      // if(e.data.name === 'mouse'){
+        // debugger;  
+      // }
+      
 
       // If there isn't a context, just invoke the callback
       if (!evtObj.ctx) {
@@ -97,7 +103,9 @@ export default class EventSystem {
         if (cfg.onlySelf) {
           // TODO: shouldn't we be checking for ctx === 'self'??
           let res = Object.values(data).filter(v => v === evtObj.ctx);
-          if (res.length === 0) return;
+
+          // TODO: clean this up.
+          if (res.length === 0 && data !== evtObj.ctx) return;
         }
 
         if (cfg.onlyOnce) {

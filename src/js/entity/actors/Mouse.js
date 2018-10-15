@@ -7,6 +7,7 @@ import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
 import GoToTarget from '../components/GoToTarget.js';
 import Collidable from '../components/Collidable.js';
+import ScorePoints from '../components/ScorePoints.js';
 import HealthRender from '../components/HealthRender.js';
 import SpriteRender from '../components/SpriteRender.js';
 import MeleePayload from '../components/MeleePayload.js';
@@ -53,18 +54,19 @@ export default function createMouse() {
   }
   e.addComponent(spriteRender);
 
-  // e.addComponent(new GoToTarget(e, {
-  //   target: scene.getUser(),
-  //   speed: 25,
-  //   hasArrived: function(data) {
-  //     // if (data.self !== this) { return; }
-  //     // setRandPosition(e);
-  //   }
-  // }));
+  e.addComponent(new GoToTarget(e, {
+    target: scene.getUser(),
+    speed: 25,
+    hasArrived: function(data) {
+      // if (data.self !== this) { return; }
+      // setRandPosition(e);
+    }
+  }));
 
   e.addComponent(new Killable(e));
+  e.addComponent(new ScorePoints(e, { points: 100 }));
   e.addComponent(new Stun(e, { multiplier: 5 }));
-  e.addComponent(new Health(e, { amt: 4 }));
+  e.addComponent(new Health(e, { amt: 3 }));
   e.addComponent(new HealthRender(e, { layer: 200 }));
   e.addComponent(new MeleePayload(e, { damage: 20 }));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));

@@ -3,8 +3,9 @@
 import EntityFactory from '../EntityFactory.js';
 
 export default class Spawner {
-
-  constructor() {}
+  constructor() {
+    console.log('spawner created');
+  }
 
   start() {
     let s = EntityFactory.create('starfish');
@@ -22,9 +23,8 @@ export default class Spawner {
   // this.add(b);
 }
 
-    // this.timer += dt;
-    // if (this.timer > 2.5) {
-    //   this.timer = 0;
-    //   // this.add(EntityFactory.create('mouse'));
-    // }
-
+// this.timer += dt;
+// if (this.timer > 2.5) {
+//   this.timer = 0;
+//   // this.add(EntityFactory.create('mouse'));
+// }

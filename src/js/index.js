@@ -14,6 +14,7 @@ import CollisionSystem from './collision/CollisionSystem.js';
 import Renderer from './Renderer.js';
 
 window.gameTime = 0;
+window.gameFrameCount = 0;
 window.debug = false;
 window.Debug = Debug;
 window.scene = null;
@@ -32,8 +33,7 @@ document.addEventListener('mousedown', e => new Event({ evtName: 'GAME_MOUSE_DOW
 document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire());
 document.addEventListener('contextmenu', e => e.preventDefault());
 // document.addEventListener('keydown', function() {
-  // debugger;
-  // window.ignoreDirty = !window.ignoreDirty;
+// window.ignoreDirty = !window.ignoreDirty;
 // });
 
 function update(dt) {
@@ -60,6 +60,7 @@ function preRender() {
 
 function render() {
   Renderer.render();
+  gameFrameCount++;
 }
 
 function postRender() {
@@ -76,14 +77,43 @@ function postRender() {
 
 function setup() {
   p3 = new P3(cvs, ctx);
-
   p3.clearColor(25, 80, 100);
 
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  // Debug.setOn(false);
 
+  // spawner = EntityFactory.create('spawner');
+  // list of waves (?)
+  // spawner.add(entityQueue);
+  // scene.add(spawner);
+  // spawner.start();
+  // spawner.pause() ?
+
+  // let waveQueue = [{
+  //     time: 0,
+  //     wave: 'line',
+  //     params: {
+  //       position: ['right', 0]
+  //       count: 10,
+  //       entity: 'mouse'
+  //     }
+  //   },
+  //   {
+  //     time: 1.5,
+  //     wave: 'circle',
+  //     params: {
+  //       count: 5,
+  //       distance: 200,
+  //       entity: 'starfish',
+  //       position: [0, 0]
+  //     }
+  //   }
+  // ]
+
+  // spawner = new Spawner();
+  // spawner.addSpawnQueue(wave1);
+  Debug.setOn(false);
 
   scene.restartGame();
 

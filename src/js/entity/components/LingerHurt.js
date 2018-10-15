@@ -16,7 +16,6 @@ export default class LingerHurt extends Component {
     Utils.applyProps(this, defaults, cfg);
 
     this.dmgLeft = this.dmg;
-
   }
 
   update(dt) {

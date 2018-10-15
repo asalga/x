@@ -43,9 +43,7 @@ export default function createFlakBullet(cfg) {
     p3.drawImage(this.sprite, 0,0);// e.pos.x, e.pos.y);
   }
 
-  spriteRender.composite = function(){
-    
-  }
+  // spriteRender.composite = function(){}
 
   e.addComponent(spriteRender);
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
