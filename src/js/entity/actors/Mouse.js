@@ -23,7 +23,7 @@ export default function createMouse() {
   e.updateProxy = function(dt) {};
 
   let setRandPosition = function(entity) {
-    let r = Vec2.rand().normalize().mult(200);
+    let r = Vec2.rand().normalize().mult(400);
 
     // just so they all don't all arrive at the user at the same time
     let deviate = Vec2.rand().normalize().mult(20);
@@ -49,14 +49,14 @@ export default function createMouse() {
   }
   e.addComponent(spriteRender);
 
-  // e.addComponent(new GoToTarget(e, {
-  //   target: scene.getUser(),
-  //   speed: 25,
-  //   hasArrived: function(data) {
-  //     // if (data.self !== this) { return; }
-  //     // setRandPosition(e);
-  //   }
-  // }));
+  e.addComponent(new GoToTarget(e, {
+    target: scene.getUser(),
+    speed: 25,
+    hasArrived: function(data) {
+      // if (data.self !== this) { return; }
+      // setRandPosition(e);
+    }
+  }));
 
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, { multiplier: 5 }));

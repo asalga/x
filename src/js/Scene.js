@@ -22,8 +22,8 @@ export default class Scene {
 
     this.deleteQueue.forEach(e => {
       this.entities.delete(e);
-      // debugger;
-      // TODO: change event to remove?
+      this.entitiesAddedOrRemoved = true;
+      // TODO: change event name to 'remove'?
       new Event({ evtName: 'death', data: e }).fire();
     });
 
@@ -64,8 +64,14 @@ export default class Scene {
     let user = EntityFactory.create('user');
     this.addUser(user);
 
-    for (let i = 0; i < 1; ++i) {
-      this.add(EntityFactory.create('mouse'));
+    for (let i = 0; i < 50; ++i) {
+      let m1 = EntityFactory.create('mouse');
+      m1.pos.mult(i/10);
+      // let m2 = EntityFactory.create('mouse');
+      // m1.pos.set(150, 250);
+      // m2.pos.set(130, 250);
+      this.add(m1);
+      // this.add(m2);
     }
     // this.add(EntityFactory.create('hummingbird'));
 
@@ -74,17 +80,15 @@ export default class Scene {
   }
 
   remove(e) {
-
-    for(let i = 0; i < this.deleteQueue.length; i++){
-      if(e === this.deleteQueue[i]){
+    for (let i = 0; i < this.deleteQueue.length; i++) {
+      if (e === this.deleteQueue[i]) {
         continue;
-        // TODO: fix this!
-        // debugger;
+        // TODO: Entities are being put in this list more than once
       }
     }
 
     this.deleteQueue.push(e);
-    this.entitiesAddedOrRemoved = true;
+    // this.entitiesAddedOrRemoved = true;
   }
 
   getUser() {
