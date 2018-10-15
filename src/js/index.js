@@ -19,6 +19,7 @@ window.Debug = Debug;
 window.scene = null;
 window.vec2_ctor = 0;
 window.Events = new EventSystem();
+window.ignoreDirty = false;
 
 let p3;
 let timer;
@@ -30,11 +31,17 @@ let ctx = cvs.getContext('2d');
 document.addEventListener('mousedown', e => new Event({ evtName: 'GAME_MOUSE_DOWN', data: e }).fire());
 document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire());
 document.addEventListener('contextmenu', e => e.preventDefault());
+// document.addEventListener('keydown', function() {
+  // debugger;
+  // window.ignoreDirty = !window.ignoreDirty;
+// });
 
 function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
   Debug.add(`Entity count: ${scene.entities.size}`);
-  Debug.add(`${window.vec2_ctor}`);
+
+  let totalVec2Calls = vec2_ctor.toLocaleString();
+  Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
 
   scene.update(dt);
 
@@ -69,12 +76,14 @@ function postRender() {
 
 function setup() {
   p3 = new P3(cvs, ctx);
+
   p3.clearColor(25, 80, 100);
 
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  Debug.setOn(false);
+  // Debug.setOn(false);
+
 
   scene.restartGame();
 

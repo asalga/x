@@ -23,7 +23,7 @@ export default function createMouse() {
   e.updateProxy = function(dt) {};
 
   let setRandPosition = function(entity) {
-    let r = Vec2.rand().normalize().mult(400);
+    let r = Vec2.rand().normalize().mult(200);
 
     // just so they all don't all arrive at the user at the same time
     let deviate = Vec2.rand().normalize().mult(20);
@@ -36,27 +36,31 @@ export default function createMouse() {
 
   let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 120 });
   spriteRender.draw = function() {
-    let sz = e.bounds.radius;
-    this.p3.save();
-    this.p3.clearAll();
-    this.p3.noStroke();
-    this.p3.fill(14, 202, 238);
-    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    this.p3.ellipse(0, 0, sz, sz);
-    this.p3.restore();
 
-    p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
+    if (this.dirty) {
+      let sz = e.bounds.radius;
+      this.p3.save();
+      this.p3.clearAll();
+      this.p3.noStroke();
+      this.p3.fill(14, 202, 238);
+      this.p3.translate(this.p3.width / 2, this.p3.height / 2);
+      this.p3.ellipse(0, 0, sz, sz);
+      this.p3.restore();
+      this.dirty = false;
+    }
+
+    p3.drawImage(this.sprite, 0, 0);
   }
   e.addComponent(spriteRender);
 
-  e.addComponent(new GoToTarget(e, {
-    target: scene.getUser(),
-    speed: 25,
-    hasArrived: function(data) {
-      // if (data.self !== this) { return; }
-      // setRandPosition(e);
-    }
-  }));
+  // e.addComponent(new GoToTarget(e, {
+  //   target: scene.getUser(),
+  //   speed: 25,
+  //   hasArrived: function(data) {
+  //     // if (data.self !== this) { return; }
+  //     // setRandPosition(e);
+  //   }
+  // }));
 
   e.addComponent(new Killable(e));
   e.addComponent(new Stun(e, { multiplier: 5 }));

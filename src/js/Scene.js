@@ -66,7 +66,7 @@ export default class Scene {
 
     for (let i = 0; i < 50; ++i) {
       let m1 = EntityFactory.create('mouse');
-      m1.pos.mult(i/10);
+      // m1.pos.mult(i/10);
       // let m2 = EntityFactory.create('mouse');
       // m1.pos.set(150, 250);
       // m2.pos.set(130, 250);
