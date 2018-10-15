@@ -10,7 +10,7 @@ export default class EventSystem {
       instance = this;
 
       this.listeners = {};
-      this.onlyOnceEvents = new Set();
+      this.onlyOnceEvents = new Map();
     }
 
     return instance;
@@ -50,6 +50,8 @@ export default class EventSystem {
       let list = this.listeners[listener];
       Debug.add(`  ${listener} : ${list.size} `);
     });
+
+    Debug.add(`onlyOnce entries: ${this.onlyOnceEvents.size}`);
   }
 
   /*
@@ -100,11 +102,8 @@ export default class EventSystem {
 
         if (cfg.onlyOnce) {
           let key = this.arrToKey(cfg.onlyOnce(data));
-          if (this.onlyOnceEvents.has(key)) {
-            return;
-          } else {
-            this.onlyOnceEvents.add(key, 0);
-          }
+          if (this.onlyOnceEvents.has(key)) { return; }
+          this.onlyOnceEvents.set(key, id);
         }
       }
 
@@ -113,11 +112,22 @@ export default class EventSystem {
   }
 
   /*
+    This method is a bit aggressive in that it doesn't 
+    check if the id is associated with an onlyOnce event.
+    But since events are unique, this shouldn't be a problem(?)
+  */
+  removeFromOnlyOnce(searchId) {
+    this.onlyOnceEvents.forEach(function(id, key, m) {
+      if (searchId === id) {
+        m.delete(key);
+      }
+    });
+  }
+
+  /*
    */
   off(id) {
     let res = false;
-
-    // Iterate over all the eventNames
     let eventNames = Object.values(this.listeners);
 
     eventNames.forEach(li => {
@@ -126,6 +136,7 @@ export default class EventSystem {
       }
     });
 
+    this.removeFromOnlyOnce(id);
     return res;
   }
 

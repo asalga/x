@@ -3,6 +3,9 @@
 import Component from './Component.js';
 import Utils from '../../Utils.js';
 
+/*
+  TODO: fix floating point precision issues
+*/
 export default class LingerHurt extends Component {
   constructor(e, cfg) {
     super(e, 'lingerhurt');
@@ -31,7 +34,6 @@ export default class LingerHurt extends Component {
     let inflict = 0;
     // Make sure we don't subtract too much
     if (this.dmgLeft - dps < 0) {
-      debugger;
       inflict = this.dmgLeft;
       this.dmgLeft = 0;
     } else {

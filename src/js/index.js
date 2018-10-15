@@ -38,7 +38,7 @@ function update(dt) {
 
   scene.update(dt);
 
-  (new EventSystem()).printDebug();
+  Events.printDebug();
 
   CollisionSystem.gatherCollidables();
   CollisionSystem.checkCollisions();
@@ -74,7 +74,7 @@ function setup() {
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-  // Debug.setOn(false);
+  Debug.setOn(false);
 
   scene.restartGame();
 
