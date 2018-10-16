@@ -4,30 +4,41 @@ import EntityFactory from './entity/EntityFactory.js';
 import EventSystem from './event/EventSystem.js';
 import Event from './event/Event.js';
 import Spawner from './entity/actors/Spawner.js';
+import Vec2 from './math/Vec2.js';
+
 
 export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 0;
+    this.timer = 4.5;
 
-    // dirty flag
-    this.entitiesAddedOrRemoved = false;
+    this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
   }
 
   update(dt) {
 
-    // Seems like this is the best place for this flag 
-    // to be turned on.
+    this.timer += dt;
+    if (this.timer > 8) {
+      this.timer = 0;
+
+      let circularWave = EntityFactory.create('circularwave');
+      circularWave.setup({
+        entity: 'mouse',
+        distance: 300
+      });
+      circularWave.launch();
+    }
+
+    // Seems like this is the best place for this flag to be turned on.
     if (this.deleteQueue.length > 0) {
-      this.entitiesAddedOrRemoved = true;
+      this.entitiesAddedOrRemovedDirty = true;
     }
 
     this.deleteQueue.forEach(e => {
       new Event({ evtName: 'death', data: e }).fire();
       // console.log('death called');
-
       this.entities.delete(e);
     });
 
@@ -47,7 +58,10 @@ export default class Scene {
     let b = null;
 
     this.entities.forEach(e => {
-      if (e.killable && !e.killable.dead && e.name !== 'user') {
+      if (e.killable &&
+        !e.killable.dead &&
+        e.targetable &&
+        e.name !== 'user') {
         b = e;
       }
     });
@@ -55,19 +69,48 @@ export default class Scene {
     return b;
   }
 
+  /*
+    Make this generic, we'll need to use it in other contexts
+  */
+  getClosestBaddie(v) {
+    let ls = [];
+    this.entities.forEach(e => {
+      if (e.killable && !e.killable.dead && e.targetable && e.name !== 'user') {
+        ls.push(e);
+      }
+    });
+
+    if (ls.length === 0) { return null; }
+
+    let len = Infinity;
+    let closest = ls[0];
+
+    ls.forEach(l => {
+      let d = Vec2.sub(l.pos, v).length();
+
+      if (d <= len) {
+        closest = l;
+        len = d;
+      }
+    });
+
+    return closest;
+  }
+
   clearFlags() {
-    this.entitiesAddedOrRemoved = false;
+    this.entitiesAddedOrRemovedDirty = false;
   }
 
   addUser(u) {
     this.user = u;
     this.entities.add(u);
-    this.entitiesAddedOrRemoved = true;
+    this.entitiesAddedOrRemovedDirty = true;
   }
 
   add(e) {
     this.entities.add(e);
-    this.entitiesAddedOrRemoved = true;
+    this.entitiesAddedOrRemovedDirty = true;
+    new Event({ evtName: 'entityadded', data: e }).fire();
   }
 
   restartGame() {
@@ -77,18 +120,7 @@ export default class Scene {
     this.addUser(EntityFactory.create('user'));
     this.add(EntityFactory.create('ui'));
 
-    for (let i = 0; i < 3; ++i) {
-      let m1 = EntityFactory.create('mouse');
-      // m1.pos.mult(3);
-      // let m2 = EntityFactory.create('mouse');
-      // m1.pos.set(150, 250);
-      // m2.pos.set(130, 250);
-      this.add(m1);
-      // this.add(m2);
-    }
-
     // this.add(EntityFactory.create('hummingbird'));
-
     // let e = new EventSystem();
     // e.clear();
   }
@@ -102,7 +134,7 @@ export default class Scene {
     }
 
     this.deleteQueue.push(e);
-    // this.entitiesAddedOrRemoved = true;
+    // this.entitiesAddedOrRemovedDirty = true;
   }
 
   getUser() {

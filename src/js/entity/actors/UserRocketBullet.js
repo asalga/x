@@ -24,8 +24,7 @@ export default function createUserRocketBullet() {
   e.on('killed', function(data) {
     if (data === e.seektarget.target) {
       // potentially can return null
-      e.seektarget.target = scene.getRandomBaddie();
-      // console.log('new target: ' + e.seektarget.target.id);
+      e.seektarget.target = scene.getClosestBaddie(e.pos);
     }
   }, e);
 
@@ -38,7 +37,8 @@ export default function createUserRocketBullet() {
     this.p3.clearAll();
     this.p3.save();
     // this.p3.clear();
-    this.p3.noStroke();
+    this.p3.stroke(0);
+    this.p3.strokeWeight(2);
     this.p3.fill('rgb(245, 10, 255)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.rotate(Math.atan2(e.vel.y, e.vel.x));
@@ -53,11 +53,13 @@ export default function createUserRocketBullet() {
   e.addComponent(new Payload(e, { dmg: 15 }));
   e.addComponent(new LifetimeLimit(e, { limit: 25 }));
 
-
-  let target = scene.getRandomBaddie();
-
-  e.addComponent(new SeekTarget(e, { maxVel: 300, target: target }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
+
+  // TODO: is this the best place for this?
+  e.postLaunch = function() {
+    this.seektarget.target = scene.getClosestBaddie(this.pos);
+  }
 
   return e;
 }

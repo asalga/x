@@ -15,6 +15,7 @@ import createSpawner from './actors/Spawner.js';
 import particleSystem from './actors/ParticleSystem.js';
 import ui from './actors/Ui.js';
 
+import circularWave from './waves/circularWave.js';
 
 import {
   miniGun,
@@ -55,6 +56,10 @@ createFuncs.set('ui', ui);
 // PROPS
 // createFuncs.set('health', health);
 // 
+
+// WAVES
+createFuncs.set('circularwave', circularWave);
+
 
 // MISC
 createFuncs.set('crystal', crystal);

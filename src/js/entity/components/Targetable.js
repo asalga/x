@@ -3,14 +3,17 @@
 import Component from './Component.js';
 import Utils from '../../Utils.js';
 
-export default class Template extends Component {
+export default class Targetable extends Component {
   constructor(e, cfg) {
-    super(e, 'template');
-    let defaults = {
-    	
-    };
+    super(e, 'targetable');
+    let defaults = {};
+    this.trackers = [];
     Utils.applyProps(this, defaults, cfg);
   }
+
+  loseTrackers() {}
+
+  gainTrackers() {}
 
   update(dt) {}
 }
