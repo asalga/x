@@ -70,7 +70,7 @@ export default class Scene {
     this.addUser(EntityFactory.create('user'));
     this.add(EntityFactory.create('ui'));
 
-    for (let i = 0; i < 50; ++i) {
+    for (let i = 0; i < 10; ++i) {
       let m1 = EntityFactory.create('mouse');
       m1.pos.mult(3);
       // let m2 = EntityFactory.create('mouse');
@@ -79,6 +79,7 @@ export default class Scene {
       this.add(m1);
       // this.add(m2);
     }
+
     // this.add(EntityFactory.create('hummingbird'));
 
     // let e = new EventSystem();

@@ -113,7 +113,7 @@ function setup() {
 
   // spawner = new Spawner();
   // spawner.addSpawnQueue(wave1);
-  Debug.setOn(false);
+  // Debug.setOn(false);
 
   scene.restartGame();
 
