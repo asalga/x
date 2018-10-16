@@ -22,7 +22,6 @@ export default class SeekTarget extends Component {
     // e.on('entityadded', tryToTarget)
 
     e.on('entityadded', data => {
-      console.log('entityadded');
       this.tryToTarget(data);
     }, e);
 

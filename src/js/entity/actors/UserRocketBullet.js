@@ -1,6 +1,7 @@
 'use strict';
 
 import Entity from '../Entity.js';
+import EntityFactory from '../EntityFactory.js';
 
 import Payload from '../components/Payload.js';
 import Collidable from '../components/Collidable.js';
@@ -60,6 +61,15 @@ export default function createUserRocketBullet() {
   e.postLaunch = function() {
     this.seektarget.target = scene.getClosestBaddie(this.pos);
   }
+
+  let emitter = EntityFactory.create('emitter');
+  // let smoke = EntityFactory.create('smoke');
+  emitter.setup({
+    // count: 10
+    rate: .1,
+    particle: 'smoke'
+  });
+  e.add(emitter);
 
   return e;
 }

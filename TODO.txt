@@ -1,15 +1,25 @@
 # X
 
+
+
 Events
  - entityadded
  - collision
- - hurt
+ - hurt 
  - killed
  - death <- rename to entityremoved?
  - increasescore
+ - payload
  
  - GAME_MOUSE_DOWN
  - GAME_MOUSE_UP
+
+
+Entities
+ - 'mouse'
+ - 'bee'
+ - 'hummingbird'
+ - 'emitter'
 
 
 # TODO - High
@@ -45,9 +55,12 @@ Events
 
 
 --------
+* Add property to make Missiles only target entities
+that haven't been targeted
+
 * Make SeekTarget listen to 'entitiesadded'
 
-* How to conditionally add LingerHurtComponent
- 
- *Bullets have linger hurt 
+* How to conditionally add LingerHurtComponent (Missiles should just be hurt)
+
+* Bullets have linger hurt 
  if bullets kill an enemy rocket, the rockets should immediately be destroyed

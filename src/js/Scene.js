@@ -11,7 +11,7 @@ export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 4.5;
+    this.timer = 1.5;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
@@ -19,8 +19,10 @@ export default class Scene {
 
   update(dt) {
 
+
+
     this.timer += dt;
-    if (this.timer > 8) {
+    if (this.timer > 100.0) {
       this.timer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
@@ -30,6 +32,9 @@ export default class Scene {
       });
       circularWave.launch();
     }
+
+
+    
 
     // Seems like this is the best place for this flag to be turned on.
     if (this.deleteQueue.length > 0) {

@@ -1,5 +1,6 @@
 'use strict';
 
+// PLAYERS
 import bee from './actors/Bee.js';
 import mouse from './actors/Mouse.js';
 import starfish from './actors/Starfish.js';
@@ -10,11 +11,16 @@ import crystal from './actors/Crystal.js';
 import explosion from './actors/Explosion.js';
 import teleporter from './actors/Teleporter.js';
 
-import createSpawner from './actors/Spawner.js';
+// DECORATIONS
+import emitter from './actors/decorations/Emitter.js';
+import smoke from './actors/decorations/Smoke.js';
+import spark from './actors/decorations/Spark.js';
 
-import particleSystem from './actors/ParticleSystem.js';
+
 import ui from './actors/Ui.js';
 
+// WAVES
+import createSpawner from './actors/Spawner.js';
 import circularWave from './waves/circularWave.js';
 
 import {
@@ -42,13 +48,15 @@ createFuncs.set('freezegun', freezeGun);
 createFuncs.set('flakgun', flakGun);
 
 // DECORATIONS
-createFuncs.set('particlesystem', particleSystem);
+createFuncs.set('emitter', emitter);
+createFuncs.set('smoke', smoke);
+// smoke
+// spark
+
+
 createFuncs.set('ui', ui);
 // createFuncs.set('bonusPoints', bonusPoints);
 
-
-// CONTROLLERS
-// createFuncs.set('spawner', spawner);
 
 // ZONES 
 // ?
@@ -58,6 +66,7 @@ createFuncs.set('ui', ui);
 // 
 
 // WAVES
+// createFuncs.set('spawner', spawner);
 createFuncs.set('circularwave', circularWave);
 
 
