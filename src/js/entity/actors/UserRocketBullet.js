@@ -18,13 +18,14 @@ export default function createUserRocketBullet() {
   let e = new Entity({ name: 'homingmissle' });
   scene.add(e);
 
-  // TODO: move to component
   e.bounds = new BoundingCircle(e.pos, 10);
 
   // If our target has died, get a new one
-  e.on('death', function(data) {
+  e.on('killed', function(data) {
     if (data === e.seektarget.target) {
+      // potentially can return null
       e.seektarget.target = scene.getRandomBaddie();
+      // console.log('new target: ' + e.seektarget.target.id);
     }
   }, e);
 
@@ -50,8 +51,12 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 15 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 5 }));
-  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
+  e.addComponent(new LifetimeLimit(e, { limit: 25 }));
+
+
+  let target = scene.getRandomBaddie();
+
+  e.addComponent(new SeekTarget(e, { maxVel: 300, target: target }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   return e;

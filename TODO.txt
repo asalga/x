@@ -1,5 +1,15 @@
 # X
 
+
+Events
+ - collision
+ - hurt
+ - killed
+ - death
+ - increasescore
+ - GAME_MOUSE_DOWN
+ - GAME_MOUSE_UP
+
 # TODO - High
  * Find solution for adding 2 LingerHurt Components to an entity
  * If entity is removed from scene, recursively remove its children(?)

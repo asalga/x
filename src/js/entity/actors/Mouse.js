@@ -54,14 +54,14 @@ export default function createMouse() {
   }
   e.addComponent(spriteRender);
 
-  e.addComponent(new GoToTarget(e, {
-    target: scene.getUser(),
-    speed: 25,
-    hasArrived: function(data) {
-      // if (data.self !== this) { return; }
-      // setRandPosition(e);
-    }
-  }));
+  // e.addComponent(new GoToTarget(e, {
+  //   target: scene.getUser(),
+  //   speed: 25,
+  //   hasArrived: function(data) {
+  //     // if (data.self !== this) { return; }
+  //     // setRandPosition(e);
+  //   }
+  // }));
 
   e.addComponent(new Killable(e));
   e.addComponent(new ScorePoints(e, { points: 100 }));

@@ -38,13 +38,20 @@ export default class Scene {
     this.entities.forEach(e => e.update(dt));
   }
 
+  /*
+    TODO: fix this
+      - Only target entities that are visible
+      - Return from the Set search earlier
+  */
   getRandomBaddie() {
-    let b;
+    let b = null;
+
     this.entities.forEach(e => {
-      if (e.killable) {
+      if (e.killable && !e.killable.dead && e.name !== 'user') {
         b = e;
       }
     });
+
     return b;
   }
 
@@ -70,9 +77,9 @@ export default class Scene {
     this.addUser(EntityFactory.create('user'));
     this.add(EntityFactory.create('ui'));
 
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 0; i < 3; ++i) {
       let m1 = EntityFactory.create('mouse');
-      m1.pos.mult(3);
+      // m1.pos.mult(3);
       // let m2 = EntityFactory.create('mouse');
       // m1.pos.set(150, 250);
       // m2.pos.set(130, 250);
