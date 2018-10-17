@@ -19,11 +19,15 @@ export default function createEmitter() {
     timer += dt;
 
     if (timer > params.rate) {
-      // debugger;
       // timer = 0;
-      particles[0].spriterender.visible = true;
-      let w = this.getWorldCoords();
-      particles[0].pos.set(w);
+
+      if (!particles[0]._test) {
+        particles[0].spriterender.visible = true;
+        particles[0]._test = true;
+
+        let w = this.getWorldCoords();
+        particles[0].pos.set(w);
+      }
     }
 
 

@@ -62,14 +62,14 @@ export default function createUserRocketBullet() {
     this.seektarget.target = scene.getClosestBaddie(this.pos);
   }
 
-  let emitter = EntityFactory.create('emitter');
-  // let smoke = EntityFactory.create('smoke');
-  emitter.setup({
-    // count: 10
-    rate: .1,
-    particle: 'smoke'
-  });
-  e.add(emitter);
+  // let emitter = EntityFactory.create('emitter');
+  // // let smoke = EntityFactory.create('smoke');
+  // emitter.setup({
+  //   // count: 10
+  //   rate: .1,
+  //   particle: 'smoke'
+  // });
+  // e.add(emitter);
 
   return e;
 }

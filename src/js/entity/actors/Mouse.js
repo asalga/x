@@ -20,7 +20,7 @@ import Vec2 from '../../math/Vec2.js';
 
 export default function createMouse() {
   let e = new Entity({ name: 'mouse' });
-  e.bounds = new BoundingCircle(e.pos, 20);
+  e.bounds = new BoundingCircle(e.pos, 10);
 
   e.updateProxy = function(dt) {};
 
@@ -58,7 +58,7 @@ export default function createMouse() {
 
   e.addComponent(new GoToTarget(e, {
     target: scene.getUser(),
-    speed: 60,
+    speed: 30,
     hasArrived: function(data) {
       // if (data.self !== this) { return; }
       // setRandPosition(e);

@@ -11,7 +11,7 @@ export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 1.5;
+    this.timer = 9.5;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
@@ -22,7 +22,7 @@ export default class Scene {
 
 
     this.timer += dt;
-    if (this.timer > 100.0) {
+    if (this.timer > 8.0) {
       this.timer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
