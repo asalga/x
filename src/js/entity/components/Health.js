@@ -33,8 +33,6 @@ export default class Health extends Component {
     return this.amt / this.max;
   }
 
-  draw() {}
-
   increaseHelth(a) {
     this.amt += a;
     this.amt = Math.min(this.amt, this.max);
@@ -43,8 +41,6 @@ export default class Health extends Component {
       this.isRegenerating = false;
     }
   }
-
-  hurtOnce(other, dmg) {}
 
   hurt(dmg) {
     if (this.entity.killable.dead) { return; }

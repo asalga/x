@@ -49,7 +49,7 @@ export default function createRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 1 }));
   e.addComponent(new SeekTarget(e, { maxVel: 120, target: scene.getUser() }));
-  e.addComponent(new Health(e, { amt: 5 }));
+  e.addComponent(new Health(e, { amt: 1 }));
   e.addComponent(new Killable(e));
   e.addComponent(new HealthRender(e, { sz: 1 }));
   e.addComponent(new Collidable(e, {

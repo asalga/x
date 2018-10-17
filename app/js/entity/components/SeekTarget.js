@@ -18,8 +18,27 @@ export default class SeekTarget extends Component {
     };
     Utils.applyProps(this, defaults, cfg)
 
+    // this.connectToTarget(target);
+    // e.on('entityadded', tryToTarget)
+
+    e.on('entityadded', data => {
+      this.tryToTarget(data);
+    }, e);
+
     this.lastVel = new Vec2();
     // this.offset = Vec2.rand().mult(1);
+  }
+
+  tryToTarget(e){
+    if (!this.target && e.killable && e.targetable) {
+      this.target = e;
+    }
+  }
+
+  connectToTarget(target) {
+    // if(target && target.targetable){
+    // target.targetable.push(this);
+    // }
   }
 
   ready() {
@@ -41,7 +60,7 @@ export default class SeekTarget extends Component {
     }
 
     let targetPos = new Vec2(this.target.pos); //.add(this.offset);
-    // debugger;
+
     let pos = new Vec2(this.entity.pos);
     let vel = this.entity.vel;
 

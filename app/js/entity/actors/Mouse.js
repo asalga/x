@@ -7,6 +7,7 @@ import Health from '../components/Health.js';
 import Killable from '../components/Killable.js';
 import GoToTarget from '../components/GoToTarget.js';
 import Collidable from '../components/Collidable.js';
+import Targetable from '../components/Targetable.js';
 import ScorePoints from '../components/ScorePoints.js';
 import HealthRender from '../components/HealthRender.js';
 import SpriteRender from '../components/SpriteRender.js';
@@ -24,7 +25,7 @@ export default function createMouse() {
   e.updateProxy = function(dt) {};
 
   let setRandPosition = function(entity) {
-    let r = Vec2.rand().normalize().mult(200);
+    let r = Vec2.rand().mult(400);
 
     // just so they all don't all arrive at the user at the same time
     let deviate = Vec2.rand().normalize().mult(20);
@@ -35,7 +36,8 @@ export default function createMouse() {
   };
   setRandPosition(e);
 
-  let spriteRender = new SpriteRender(e, { width: 32, height: 32, layer: 120 });
+  let sz = e.bounds.radius;
+  let spriteRender = new SpriteRender(e, { width: sz * 2, height: sz * 2, layer: 120 });
   spriteRender.draw = function() {
 
     if (this.dirty) {
@@ -56,7 +58,7 @@ export default function createMouse() {
 
   e.addComponent(new GoToTarget(e, {
     target: scene.getUser(),
-    speed: 25,
+    speed: 30,
     hasArrived: function(data) {
       // if (data.self !== this) { return; }
       // setRandPosition(e);
@@ -70,6 +72,7 @@ export default function createMouse() {
   e.addComponent(new HealthRender(e, { layer: 200 }));
   e.addComponent(new MeleePayload(e, { damage: 20 }));
   e.addComponent(new Collidable(e, { type: CType.ENEMY, mask: CType.PLAYER | CType.PLAYER_BULLET }));
+  e.addComponent(new Targetable(e));
 
   return e;
 }

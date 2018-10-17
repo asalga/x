@@ -1,6 +1,8 @@
 'use strict';
 
 import Component from './Component.js';
+import Targetable from './Targetable.js';
+
 import Collision from '../../collision/Collision.js';
 import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
@@ -84,7 +86,12 @@ export default class Teleporter extends Component {
         .to(this.root, this.fadeTime, { // FADE OUT
           opacity: this.minOpacity,
           onCompleteScope: this,
-          onStart: () => {this.root.setWeaponsEnabled(false)},
+          onStart: () => {
+            this.root.setWeaponsEnabled(false);
+            // lose targeting tells any entities to find another target
+            // this.root.targetable.loseTrackers();
+            // this.root.removeComponentByName(this.root.targetable);
+          },
           onComplete: function() {
             setCollisions(false);
           }
@@ -94,7 +101,11 @@ export default class Teleporter extends Component {
           opacity: 1,
           delay: .5,
           onCompleteScope: this,
-          onStart: () => {this.root.setWeaponsEnabled(true)},
+          onStart: () => {
+            this.root.setWeaponsEnabled(true);
+            // this.root.targetable.gainTrackers();
+            // this.root.addComponent(new Targetable(e));
+          },
           onComplete: function() {
             setCollisions(true);
             nextSequence();

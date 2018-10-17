@@ -20,6 +20,6 @@ export default class ScorePoints extends Component {
       evt.fire();
     };
 
-    e.on('death', this.increaseScore, e, { onlySelf: true });
+    e.on('killed', this.increaseScore, e, { onlySelf: true });
   }
 }

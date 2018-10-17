@@ -46,7 +46,6 @@ export default class Launcher extends Component {
     // }
 
     this.createBullet = function() {
-      // debugger;
       this.ammo--;
 
       let worldCoords = this.entity.getWorldCoords();
@@ -57,6 +56,8 @@ export default class Launcher extends Component {
       bullet.pos.set(worldCoords);
       bullet.vel.set(this.direction.clone().mult(this.bulletVel));
 
+      // TODO: find better way for this?
+      bullet.postLaunch && bullet.postLaunch();
     }
     // let gunTip = this.getVecToCursor();
     // gunTip.add(p3.width / 2, p3.height / 2);
@@ -77,10 +78,10 @@ export default class Launcher extends Component {
     if (this.ammo <= 0) { return; }
     if (this.enabled === false) { return; }
 
+    // TODO: fix
     if (this.timer > this.rate) {
-      let diff = this.timer % this.rate;
+      // let diff = this.timer % this.rate;
       this.timer = 0;
-
       this.createBullet();
     }
   }

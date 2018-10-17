@@ -1,6 +1,7 @@
 'use strict';
 
 import Entity from '../Entity.js';
+import EntityFactory from '../EntityFactory.js';
 
 import Payload from '../components/Payload.js';
 import Collidable from '../components/Collidable.js';
@@ -18,13 +19,13 @@ export default function createUserRocketBullet() {
   let e = new Entity({ name: 'homingmissle' });
   scene.add(e);
 
-  // TODO: move to component
   e.bounds = new BoundingCircle(e.pos, 10);
 
   // If our target has died, get a new one
-  e.on('death', function(data) {
+  e.on('killed', function(data) {
     if (data === e.seektarget.target) {
-      e.seektarget.target = scene.getRandomBaddie();
+      // potentially can return null
+      e.seektarget.target = scene.getClosestBaddie(e.pos);
     }
   }, e);
 
@@ -37,7 +38,8 @@ export default function createUserRocketBullet() {
     this.p3.clearAll();
     this.p3.save();
     // this.p3.clear();
-    this.p3.noStroke();
+    this.p3.stroke(0);
+    this.p3.strokeWeight(2);
     this.p3.fill('rgb(245, 10, 255)');
     this.p3.translate(this.p3.width / 2, this.p3.height / 2);
     this.p3.rotate(Math.atan2(e.vel.y, e.vel.x));
@@ -50,9 +52,24 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 15 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 5 }));
-  e.addComponent(new SeekTarget(e, { maxVel: 300, target: scene.getRandomBaddie() }));
+  e.addComponent(new LifetimeLimit(e, { limit: 25 }));
+
+  e.addComponent(new SeekTarget(e, { maxVel: 300 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
+
+  // TODO: is this the best place for this?
+  e.postLaunch = function() {
+    this.seektarget.target = scene.getClosestBaddie(this.pos);
+  }
+
+  // let emitter = EntityFactory.create('emitter');
+  // // let smoke = EntityFactory.create('smoke');
+  // emitter.setup({
+  //   // count: 10
+  //   rate: .1,
+  //   particle: 'smoke'
+  // });
+  // e.add(emitter);
 
   return e;
 }

@@ -1,9 +1,30 @@
 # X
 
-# TODO - High
- * Find solution for adding 2 LingerHurt Components to an entity
- * If entity is removed from scene, recursively remove its children(?)
 
+
+Events
+ - entityadded
+ - collision
+ - hurt 
+ - killed
+ - death <- rename to entityremoved?
+ - increasescore
+ - payload
+ 
+ - GAME_MOUSE_DOWN
+ - GAME_MOUSE_UP
+
+
+Entities
+ - 'mouse'
+ - 'bee'
+ - 'hummingbird'
+ - 'emitter'
+
+
+# TODO - High
+ * Find solution for adding 2 of the same Components (ie. LingerHurt)
+ * If entity is removed from scene, recursively remove its children(?)
 
 # TODO - Medium
  * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
@@ -29,3 +50,17 @@
  * Create HyperwaveGun
  * Create Targetable component
  * Create ParticleSystem
+
+* Create method to getClosestBaddieOnGameBoard
+
+
+--------
+* Add property to make Missiles only target entities
+that haven't been targeted
+
+* Make SeekTarget listen to 'entitiesadded'
+
+* How to conditionally add LingerHurtComponent (Missiles should just be hurt)
+
+* Bullets have linger hurt 
+ if bullets kill an enemy rocket, the rockets should immediately be destroyed

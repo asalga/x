@@ -13,8 +13,7 @@ export default class Flash extends Component {
       visible: true,
       speed: 1
     };
-    Utils.applyProps(this, defaults);
-    Utils.applyProps(this, cfg);
+    Utils.applyProps(this, defaults, cfg);
   }
 
   draw() {

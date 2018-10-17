@@ -3,6 +3,7 @@
 import Component from './Component.js';
 import Utils from '../../Utils.js';
 // import Signal from '../../events/Signal.js';
+import Event from '../../event/Event.js';
 
 export default class Killable extends Component {
   constructor(e) {
@@ -12,7 +13,7 @@ export default class Killable extends Component {
 
     // this.onDeath = new Signal();
     // this.onDeath.add(function(){
-      // this.entity.removeSelf();
+    // this.entity.removeSelf();
     // });
 
     this.onDeath = function() {
@@ -26,8 +27,12 @@ export default class Killable extends Component {
     }
   }
 
+  /*
+    Health will call this if value reaches 0
+  */
   kill() {
     this.dead = true;
     this.onDeath();
+    new Event({ evtName: 'killed', data: this.entity }).fire();
   }
 }

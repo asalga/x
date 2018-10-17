@@ -166,6 +166,15 @@ export default class Entity {
     // this.components[c.name] = Utils.undef;
   }
 
+  removeComponentByName(str){
+    let c = this.components[str];
+    if(c){
+      Utils.removeFromArray(this.components, c);
+      return true;
+    }
+    return false;
+  }
+
   setEvents(b) {
     this.eventsOn = b;
   }

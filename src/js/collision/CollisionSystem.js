@@ -12,7 +12,7 @@ export default class CollisionSystem {
   static gatherCollidables() {
 
     // if no object were added or removed, we can avoid doing this work
-    if (firstTime || scene.entitiesAddedOrRemoved) {
+    if (firstTime || scene.entitiesAddedOrRemovedDirty) {
       firstTime = false;
       list.length = 0;
 

@@ -83,6 +83,7 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
 
+
   // spawner = EntityFactory.create('spawner');
   // list of waves (?)
   // spawner.add(entityQueue);
