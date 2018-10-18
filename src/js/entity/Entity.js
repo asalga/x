@@ -86,18 +86,18 @@ export default class Entity {
   }
 
   /*
-    Should 
+    c - child entity
   */
-  add(e) {    
-    e.parent = this;
-    this.children.push(e);
+  add(c) {
+    c.parent = this;
+    this.children.push(c);
+    new Event({ evtName: 'childaddedtoparent', data: { parent: this, child: c } }).fire();
   }
 
   /*
     Move node from parent to scene/root
   */
-  detachFromParent(){
-    console.log('detachFromParent')
+  detachFromParent() {
     scene.add(this);
     this.parent.removeDirectChild(this);
   }
@@ -108,6 +108,7 @@ export default class Entity {
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
+    console.log('remove self:', this.name);
     if (this.parent) {
       this.parent.removeDirectChild(this);
     } else {
@@ -173,9 +174,9 @@ export default class Entity {
     // this.components[c.name] = Utils.undef;
   }
 
-  removeComponentByName(str){
+  removeComponentByName(str) {
     let c = this.components[str];
-    if(c){
+    if (c) {
       Utils.removeFromArray(this.components, c);
       return true;
     }

@@ -68,7 +68,23 @@ export default class Renderer {
           p3.save();
           p3.ctx.globalAlpha = c.opacity;
           let pos = c.getWorldCoords();
-          p3.translate(pos.x, pos.y);
+
+          // if(Math.floor(pos.x) !== pos.x){
+            // console.warn('position coords are not floors. Perf may suffer');
+          // }
+
+
+          // TOOD: fix
+          // Emitters are attached to other nodes, but we don't want
+          // their transforms.
+          if(c.renderAtRoot === true){
+            p3.translate(0,0);
+            
+          }
+          else{
+            p3.translate(pos.x, pos.y);  
+          }
+          
           c.draw();
           p3.restore();
         }

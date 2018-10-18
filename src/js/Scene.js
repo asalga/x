@@ -15,41 +15,46 @@ export default class Scene {
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
+    this.eventsToFireNextFrame = [];
   }
 
   update(dt) {
-
-
 
     this.timer += dt;
     if (this.timer > 8.0) {
       this.timer = 0;
 
-      let circularWave = EntityFactory.create('circularwave');
-      circularWave.setup({
-        entity: 'mouse',
-        distance: 300
-      });
-      circularWave.launch();
+      // let circularWave = EntityFactory.create('circularwave');
+      // circularWave.setup({
+      //   entity: 'mouse',
+      //   distance: 300
+      // });
+      // circularWave.launch();
     }
 
-
-    
+    // We can't fire events while we are iterating of the 
+    // objects being removed, it breaks everything.
+    this.eventsToFireNextFrame.forEach(e => e.fire());
+    this.eventsToFireNextFrame.length = 0;
 
     // Seems like this is the best place for this flag to be turned on.
     if (this.deleteQueue.length > 0) {
       this.entitiesAddedOrRemovedDirty = true;
+
+      // let the children do any cleanup.
+      this.deleteQueue.forEach(e => {
+        let evt = new Event({ evtName: 'remove', data: e });
+        evt.fire();
+      });
+
+      this.deleteQueue.forEach(e => {
+        this.entities.delete(e);
+      });
+
+      // Allow the entities to do any cleanup
+      this.deleteQueue.forEach(e => e.indicateRemove());
+      this.deleteQueue.length = 0;
     }
-
-    this.deleteQueue.forEach(e => {
-      new Event({ evtName: 'death', data: e }).fire();
-      // console.log('death called');
-      this.entities.delete(e);
-    });
-
-    // Allow the entities to do any cleanup
-    this.deleteQueue.forEach(e => e.indicateRemove());
-    this.deleteQueue = [];
 
     this.entities.forEach(e => e.update(dt));
   }
@@ -131,6 +136,10 @@ export default class Scene {
   }
 
   remove(e) {
+    console.log('remove() ', e.id, e.name);
+    if (e.name === 'emitter') {
+      debugger;
+    }
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;

@@ -139,8 +139,8 @@ export default class P3 {
     this.ctx.rotate(a);
   }
 
-  scale(x,y){
-    this.ctx.scale(x,y);
+  scale(x, y) {
+    this.ctx.scale(x, y);
   }
 
   translate(x, y) {
@@ -168,12 +168,18 @@ export default class P3 {
     }
   }
 
+  random(_min, _max) {
+    return (Math.random() * (_max - _min)) + _min;
+  }
+
   drawImage(image, x, y) {
     let [_x, _y] = [x, y];
 
     if (this._imageMode === 'center') {
       _x = x - image.width / 2;
       _y = y - image.height / 2;
+    } else {
+      // debugger;
     }
 
     this.ctx.drawImage(image, _x, _y);

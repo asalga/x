@@ -52,9 +52,9 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 15 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 25 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 2 }));
 
-  e.addComponent(new SeekTarget(e, { maxVel: 300 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 100 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   // TODO: is this the best place for this?
@@ -62,14 +62,11 @@ export default function createUserRocketBullet() {
     this.seektarget.target = scene.getClosestBaddie(this.pos);
   }
 
-  let emitter = EntityFactory.create('emitter', { parent: e });
-  // e.addChild(e, emitter);
+  let emitter = EntityFactory.create('emitter');
+  emitter.setup({
+    ageRange: [.1, .1]
+  })
   e.add(emitter);
-
-
-  // e.indicateRemove = function() {
-  //   debugger;
-  // }
 
   // // let smoke = EntityFactory.create('smoke');
   // emitter.setup({
