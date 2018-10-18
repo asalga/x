@@ -38,22 +38,19 @@ export default class Entity {
   setup() {}
 
   draw() {
-    // taken care of in the Renderer
+    // now taken care of in the Renderer
     // if (!this.visible) { return; }
-
     p3.save();
 
     this.renderProxy && this.renderProxy(p3);
     // this.children.forEach(c => c.draw());
 
-    // // TODO: fix
-    // this.components.forEach(c => {
-    //   c.draw && c.draw();
-    // });
-
+    // TODO: fix
+    // this.components.forEach(c => {c.draw && c.draw();});
     p3.restore();
   }
 
+  // TODO: yup, implement this too
   setPropertyRecursive(name, v) {
     debugger;
   }
@@ -84,16 +81,25 @@ export default class Entity {
     });
 
     // Debug.add(`Entity #${this.id} "${this.name}" ${this.pos.x} `);
-
-    if (this.health) {
-      // Debug.add(`Entity ${this.health.amt} `);
-    }
+    // if (this.health) {Debug.add(`Entity ${this.health.amt} `);}
     // Health: ${this.health.amt}`
   }
 
-  add(e) {
+  /*
+    Should 
+  */
+  add(e) {    
     e.parent = this;
     this.children.push(e);
+  }
+
+  /*
+    Move node from parent to scene/root
+  */
+  detachFromParent(){
+    console.log('detachFromParent')
+    scene.add(this);
+    this.parent.removeDirectChild(this);
   }
 
   /*
@@ -111,6 +117,7 @@ export default class Entity {
 
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
+    e.parent = null;
     return res;
   }
 

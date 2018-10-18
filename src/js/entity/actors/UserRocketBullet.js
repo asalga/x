@@ -62,7 +62,15 @@ export default function createUserRocketBullet() {
     this.seektarget.target = scene.getClosestBaddie(this.pos);
   }
 
-  // let emitter = EntityFactory.create('emitter');
+  let emitter = EntityFactory.create('emitter', { parent: e });
+  // e.addChild(e, emitter);
+  e.add(emitter);
+
+
+  // e.indicateRemove = function() {
+  //   debugger;
+  // }
+
   // // let smoke = EntityFactory.create('smoke');
   // emitter.setup({
   //   // count: 10
@@ -70,6 +78,12 @@ export default function createUserRocketBullet() {
   //   particle: 'smoke'
   // });
   // e.add(emitter);
+
+  // When does the emitter need the root?
+  // - particle creation
+  // - death
+
+  // Entity.addChild(e, emitter);
 
   return e;
 }
