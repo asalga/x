@@ -52,9 +52,9 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 15 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 2 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 4 }));
 
-  e.addComponent(new SeekTarget(e, { maxVel: 100 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   // TODO: is this the best place for this?
@@ -64,23 +64,14 @@ export default function createUserRocketBullet() {
 
   let emitter = EntityFactory.create('emitter');
   emitter.setup({
-    ageRange: [.1, .1]
-  })
-  e.add(emitter);
-
-  // // let smoke = EntityFactory.create('smoke');
-  // emitter.setup({
-  //   // count: 10
-  //   rate: .1,
-  //   particle: 'smoke'
-  // });
-  // e.add(emitter);
-
-  // When does the emitter need the root?
-  // - particle creation
-  // - death
-
-  // Entity.addChild(e, emitter);
+    rate: 2,
+    ageRange: [.5, .5],
+    sizeRange: [2, 2],
+    opacityRange: [.7, .7]
+  });
+  emitter.virtualParent = e;
+  scene.add(emitter);
+  //e.add(emitter);
 
   return e;
 }

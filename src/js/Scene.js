@@ -21,15 +21,17 @@ export default class Scene {
   update(dt) {
 
     this.timer += dt;
-    if (this.timer > 8.0) {
+    if (this.timer > 18.0) {
       this.timer = 0;
 
-      // let circularWave = EntityFactory.create('circularwave');
-      // circularWave.setup({
-      //   entity: 'mouse',
-      //   distance: 300
-      // });
-      // circularWave.launch();
+      let circularWave = EntityFactory.create('circularwave');
+      circularwave.addComponent(new LifetimeLimit(1))
+      
+      circularWave.setup({
+        entity: 'mouse',
+        distance: 300
+      });
+      circularWave.launch();
     }
 
     // We can't fire events while we are iterating of the 
@@ -137,9 +139,9 @@ export default class Scene {
 
   remove(e) {
     console.log('remove() ', e.id, e.name);
-    if (e.name === 'emitter') {
-      debugger;
-    }
+    // if (e.name === 'emitter') {
+      // debugger;
+    // }
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;
