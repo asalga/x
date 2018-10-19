@@ -11,7 +11,7 @@ export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 9.5;
+    this.timer = 5;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
@@ -21,11 +21,11 @@ export default class Scene {
   update(dt) {
 
     this.timer += dt;
-    if (this.timer > 18.0) {
+    if (this.timer > 5.0) {
       this.timer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
-      circularwave.addComponent(new LifetimeLimit(1))
+      // circularWave.addComponent(new LifetimeLimit(1))
       
       circularWave.setup({
         entity: 'mouse',
@@ -132,7 +132,7 @@ export default class Scene {
     this.addUser(EntityFactory.create('user'));
     this.add(EntityFactory.create('ui'));
 
-    // this.add(EntityFactory.create('hummingbird'));
+    // this.add(EntityFactory.create('mouse'));
     // let e = new EventSystem();
     // e.clear();
   }

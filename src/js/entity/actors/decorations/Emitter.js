@@ -155,7 +155,7 @@ export default function createEmitter() {
 
         _age[i] += dt;
         _opacity[i] = 1 - (_age[i] / _maxAge[i]);
-        _size[i] += dt * (_age[i] / _maxAge[i]) * 80;
+        _size[i] += dt * (_age[i] / _maxAge[i]) * 30;
 
         if (_age[i] > _maxAge[i]) {
           this.killParticle(i);
@@ -195,8 +195,6 @@ export default function createEmitter() {
   e.play = function() {
     console.log('emitter play');
   }
-
-
 
   e.stop = function() {
     console.log('emitter stop');

@@ -6,14 +6,14 @@ import Flash from './Flash.js';
 export default class NearDeathIndicator extends Component {
   constructor(e) {
     super(e, 'neardeathindicator');
-    this.timespan = 2;
+    this.timespan = .5;
   }
 
   update(dt) {
     let lifetime = this.entity.lifetimelimit;
 
     if (lifetime.limit - lifetime.age < this.timespan) {
-      this.entity.addComponent(new Flash(this.entity, { speed: 5 }));
+      this.entity.addComponent(new Flash(this.entity, { speed: 10 }));
       this.entity.removeComponent(this);
     }
   }

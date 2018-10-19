@@ -64,9 +64,9 @@ export default function createUserRocketBullet() {
 
   let emitter = EntityFactory.create('emitter');
   emitter.setup({
-    rate: 2,
-    ageRange: [.5, .5],
-    sizeRange: [2, 2],
+    rate: 5,
+    ageRange: [.5, 4.],
+    sizeRange: [.25, .25],
     opacityRange: [.7, .7]
   });
   emitter.virtualParent = e;
