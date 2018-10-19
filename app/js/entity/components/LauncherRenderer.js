@@ -29,12 +29,12 @@ export default class LauncherRenderer extends Component {
     p3.line(0, 0, gun.x, gun.y);
     p3.restore();
 
-    if (debug) {
-      p3.save();
-      p3.strokeWeight(2);
-      p3.stroke(120, 255, 0);
-      p3.line(0, 0, p3.mouseX - p3.width / 2, p3.mouseY - p3.height / 2);
-      p3.restore();
-    }
+    // if (debug) {
+    //   p3.save();
+    //   p3.strokeWeight(2);
+    //   p3.stroke(120, 255, 0);
+    //   p3.line(0, 0, p3.mouseX - p3.width / 2, p3.mouseY - p3.height / 2);
+    //   p3.restore();
+    // }
   }
 }

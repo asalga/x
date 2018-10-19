@@ -52,7 +52,7 @@ export default function createUserRocketBullet() {
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 15 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 25 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 4 }));
 
   e.addComponent(new SeekTarget(e, { maxVel: 300 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
@@ -62,14 +62,16 @@ export default function createUserRocketBullet() {
     this.seektarget.target = scene.getClosestBaddie(this.pos);
   }
 
-  // let emitter = EntityFactory.create('emitter');
-  // // let smoke = EntityFactory.create('smoke');
-  // emitter.setup({
-  //   // count: 10
-  //   rate: .1,
-  //   particle: 'smoke'
-  // });
-  // e.add(emitter);
+  let emitter = EntityFactory.create('emitter');
+  emitter.setup({
+    rate: 5,
+    ageRange: [.5, 4.],
+    sizeRange: [.25, .25],
+    opacityRange: [.7, .7]
+  });
+  emitter.virtualParent = e;
+  scene.add(emitter);
+  //e.add(emitter);
 
   return e;
 }

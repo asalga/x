@@ -11,8 +11,6 @@ export default class ScorePoints extends Component {
     Utils.applyProps(this, { points: 1 }, cfg);
 
     this.increaseScore = function() {
-      console.log('increasescore: ', this.id);
-
       let evt = new Event({
         evtName: 'increasescore',
         data: { points: this.scorepoints.points }

@@ -15,7 +15,7 @@ import Renderer from './Renderer.js';
 
 window.gameTime = 0;
 window.gameFrameCount = 0;
-window.debug = false;
+window.debug = true;
 window.Debug = Debug;
 window.scene = null;
 window.vec2_ctor = 0;
@@ -27,14 +27,20 @@ let timer;
 let perfTimer;
 
 let cvs = Utils.getEl('cvs');
-let ctx = cvs.getContext('2d');
+let ctx = cvs.getContext('2d', {alpha: false});
 
 document.addEventListener('mousedown', e => new Event({ evtName: 'GAME_MOUSE_DOWN', data: e }).fire());
 document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire());
 document.addEventListener('contextmenu', e => e.preventDefault());
-// document.addEventListener('keydown', function() {
+document.addEventListener('keydown', function(evt) {
+
+  if(evt.code === 'KeyD'){
+    window.debug = !window.debug;
+    Debug.setOn(window.debug);
+
+  }
 // window.ignoreDirty = !window.ignoreDirty;
-// });
+});
 
 function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
@@ -114,7 +120,7 @@ function setup() {
 
   // spawner = new Spawner();
   // spawner.addSpawnQueue(wave1);
-  Debug.setOn(false);
+  Debug.setOn(window.debug);
 
   scene.restartGame();
 

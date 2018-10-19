@@ -13,7 +13,6 @@ export default class Renderer {
     // Place entities in their respective layers
     scene.entities.forEach(e => {
 
-
       // TODO: write this
       // if(CollisionSystem.intersects(gameBounds, e.bounds))
 
@@ -29,6 +28,8 @@ export default class Renderer {
 
       layers[id].push(e);
     });
+
+
 
     //
     Object.values(layers).forEach(layer => {
@@ -68,7 +69,24 @@ export default class Renderer {
           p3.save();
           p3.ctx.globalAlpha = c.opacity;
           let pos = c.getWorldCoords();
-          p3.translate(pos.x, pos.y);
+
+          // if(Math.floor(pos.x) !== pos.x){
+            // console.warn('position coords are not floors. Perf may suffer');
+          // }
+
+
+          // TOOD: fix
+          // Emitters are attached to other nodes, but we don't want
+          // their transforms.
+          if(c.renderAtRoot === true){
+            p3.translate(0,0);
+
+          }
+          else{
+            p3.translate(pos.x, pos.y);  
+          }
+          // console.log(c.parent.name);
+          
           c.draw();
           p3.restore();
         }
