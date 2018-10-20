@@ -10,6 +10,12 @@ export default class Renderer {
     p3.clear();
     // scene.draw(p3);
 
+    
+    if(window.effects){
+      window.effects.getContext('2d').clearRect(0, 0, gameWidth, gameHeight);
+    }
+
+
     // Place entities in their respective layers
     scene.entities.forEach(e => {
 
@@ -48,12 +54,12 @@ export default class Renderer {
 
         // CHILDREN
         e.children.forEach(e => {
-          
+
           e.opacity = rootOpacity;
 
           if (e.components) {
             e.components.forEach(c => {
-              
+
               c.opacity = rootOpacity;
 
               if (c.renderable && c.visible) {
@@ -71,27 +77,34 @@ export default class Renderer {
           let pos = c.getWorldCoords();
 
           // if(Math.floor(pos.x) !== pos.x){
-            // console.warn('position coords are not floors. Perf may suffer');
+          // console.warn('position coords are not floors. Perf may suffer');
           // }
 
 
           // TOOD: fix
           // Emitters are attached to other nodes, but we don't want
           // their transforms.
-          if(c.renderAtRoot === true){
-            p3.translate(0,0);
+          if (c.renderAtRoot === true) {
+            p3.translate(0, 0);
 
-          }
-          else{
-            p3.translate(pos.x, pos.y);  
+          } else {
+            p3.translate(pos.x, pos.y);
           }
           // console.log(c.parent.name);
-          
+
           c.draw();
           p3.restore();
         }
       });
     });
+
+
+    p3.save();
+    p3.translate(640/2, 480/2);
+
+    p3.drawImage(window.effects, 0, 0);
+    p3.restore();
+
   }
 
   static preRender() {}

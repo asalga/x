@@ -11,7 +11,7 @@ export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 5;
+    this.timer = 4;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
@@ -29,6 +29,7 @@ export default class Scene {
       
       circularWave.setup({
         entity: 'mouse',
+        count: 10,
         distance: 300
       });
       circularWave.launch();
@@ -138,7 +139,7 @@ export default class Scene {
   }
 
   remove(e) {
-    console.log('remove() ', e.id, e.name);
+    // console.log('remove() ', e.id, e.name);
     // if (e.name === 'emitter') {
       // debugger;
     // }

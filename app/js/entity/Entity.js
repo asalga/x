@@ -108,7 +108,7 @@ export default class Entity {
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
-    console.log('remove self:', this.name);
+    // console.log('remove self:', this.name);
     if (this.parent) {
       this.parent.removeDirectChild(this);
     } else {
