@@ -37,22 +37,21 @@ export default function createMouse() {
   setRandPosition(e);
 
   let sz = e.bounds.radius;
-  let spriteRender = new SpriteRender(e, { width: sz * 2, height: sz * 2, layer: 120 });
-  spriteRender.draw = function() {
+  let spriteRender = new SpriteRender(e, { layer: 1 });
 
-    if (this.dirty) {
-      let sz = e.bounds.radius;
-      this.p3.save();
-      this.p3.clearAll();
-      this.p3.noStroke();
-      this.p3.fill(14, 202, 238);
-      this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-      this.p3.ellipse(0, 0, sz, sz);
-      this.p3.restore();
-      this.dirty = false;
-    }
-
-    p3.drawImage(this.sprite, 0, 0);
+  spriteRender.draw = function(_p3) {
+    // if (this.dirty) {
+    let sz = e.bounds.radius;
+    _p3.save();
+    // _p3.clearAll();
+    _p3.noStroke();
+    _p3.fill(14, 202, 238);
+    // _p3.translate(this.p3.width / 2, this.p3.height / 2);
+    _p3.ellipse(this.entity.pos.x, this.entity.pos.y, sz, sz);
+    _p3.restore();
+    // this.dirty = true;
+    // }
+    // _p3.drawImage(this.sprite, 0, 0);
   }
   e.addComponent(spriteRender);
 

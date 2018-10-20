@@ -29,7 +29,7 @@ export default class Scene {
       
       circularWave.setup({
         entity: 'mouse',
-        count: 10,
+        count: 5,
         distance: 300
       });
       circularWave.launch();
@@ -131,7 +131,7 @@ export default class Scene {
     this.deleteQueue = [];
 
     this.addUser(EntityFactory.create('user'));
-    this.add(EntityFactory.create('ui'));
+    // this.add(EntityFactory.create('ui'));
 
     // this.add(EntityFactory.create('mouse'));
     // let e = new EventSystem();

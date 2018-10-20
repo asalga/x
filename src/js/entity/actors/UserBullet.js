@@ -20,16 +20,16 @@ export default function createBullet() {
   //   // console.log('bullet death');
   // });
 
-  let spriteRender = new SpriteRender(e, { layer: 100 });
-  spriteRender.draw = function() {
-    p3.save();
-    p3.strokeWeight(2);
-    p3.stroke(20);
-    p3.fill(120);
+  let spriteRender = new SpriteRender(e, { layer: 1 });
+  spriteRender.draw = function(_p3) {
+    _p3.save();
+    _p3.strokeWeight(2);
+    _p3.stroke(20);
+    _p3.fill(120);
     let sz = e.bounds.radius;
-    p3.ellipse(0, 0, sz, sz);
+    _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     // p3.ellipse(e.pos.x, e.pos.y, sz, sz);
-    p3.restore();
+    _p3.restore();
   }
 
   e.addComponent(spriteRender);

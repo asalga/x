@@ -17,6 +17,10 @@ window.gameTime = 0;
 window.gameFrameCount = 0;
 window.gameWidth = 640;
 window.gameHeight = 480;
+
+window.Renderer = Renderer;
+
+window.count = 0;
 window.debug = true;
 window.Debug = Debug;
 window.scene = null;
@@ -50,6 +54,7 @@ function update(dt) {
 
   let totalVec2Calls = vec2_ctor.toLocaleString();
   Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
+  Debug.add(`${window.count}`);
 
   scene.update(dt);
 
@@ -91,9 +96,9 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
 
-  window.effects = document.createElement('canvas');
-  window.effects.width = 640;
-  window.effects.height = 480;
+  // window.effects = document.createElement('canvas');
+  // window.effects.width = 640;
+  // window.effects.height = 480;
 
   // spawner = EntityFactory.create('spawner');
   // list of waves (?)
