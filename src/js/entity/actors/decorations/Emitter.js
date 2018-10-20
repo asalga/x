@@ -28,8 +28,7 @@ import SpriteRender from '../../components/SpriteRender.js';
 export default function createEmitter() {
   let e = new Entity({ name: 'emitter' });
 
-  e.layer = 100;
-
+  e.layer = 3;
   let p = null;
 
   // defaults
@@ -42,7 +41,6 @@ export default function createEmitter() {
     opacityRange: [1, 1]
   };
   let timer = 0;
-
 
   let isDead = false;
   let rate = 1;
@@ -59,34 +57,17 @@ export default function createEmitter() {
   let _size = [];
   let _opacity = [];
 
-
-  let w = 640;
-  let h = 480;
-  let spriteRender = new SpriteRender(e, {
-    width: w,
-    height: h,
-    layer: 400,
-    opacity: 0.99,
-    ctx: window.effects
-  });
-  spriteRender.draw = function() {
-
-    // let d1 = new Date();
+  let spriteRender = new SpriteRender(e, { layer: 3 });
+  spriteRender.draw = function(_p3) {
     // this.p3.clearAll();
     for (let i = 0; i < p.length; i++) {
-      if (_alive[i] === false) {
-        continue;
-      }
+      if (!_alive[i]) { continue; }
       let sz = _size[i];
       let op = _opacity[i];
-
-      this.p3.stroke(`rgb(25, 25, 25, ${op})`);
-      this.p3.fill(`rgb(25, 25, 25, ${op})`);
-      this.p3.ellipse(_pos[i].x, _pos[i].y, sz, sz);
+      _p3.stroke(`rgb(25, 25, 25, ${op})`);
+      _p3.fill(`rgb(25, 25, 25, ${op})`);
+      _p3.ellipse(_pos[i].x, _pos[i].y, sz, sz);
     }
-    // let d2 = new Date();
-    // console.log( d2-d1 );
-    // TODO: fix
     // p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
   }
   spriteRender.renderAtRoot = true;
@@ -95,7 +76,6 @@ export default function createEmitter() {
   // A bit strange here. We need the parent before we can add the event listener
   // e.on('childaddedtoparent', data => {
   //   let child = data.child;
-
   //   data.parent.on('remove', data => {
   //     child.stop();
   //   }, e, {
@@ -137,8 +117,10 @@ export default function createEmitter() {
   }
 
   let findFreeParticle = function() {
-    for (let i = 0; i < p.length; ++i) {
+
+    for (let i = p.length-1; i > 0; --i) {
       if (_alive[i] === false) {
+        window.count++;
         return i;
       }
     }

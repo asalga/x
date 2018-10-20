@@ -175,12 +175,12 @@ export default class P3 {
   drawImage(image, x, y) {
     let [_x, _y] = [x, y];
 
-    if (this._imageMode === 'center') {
-      _x = x - image.width / 2;
-      _y = y - image.height / 2;
-    } else {
-      // debugger;
-    }
+    // if (this._imageMode === 'center') {
+    //   _x = x - image.width / 2;
+    //   _y = y - image.height / 2;
+    // } else {
+    //   // debugger;
+    // }
 
     this.ctx.drawImage(image, _x, _y);
   }

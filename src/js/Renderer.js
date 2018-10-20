@@ -1,116 +1,165 @@
 'use strict';
 
 import PriorityQueue from './core/PriorityQueue.js';
+import P3 from './P3.js';
 
-let layers = {};
+// let layers = {};
 let pq = new PriorityQueue();
 
+function createLayer() {
+  let cvs = document.createElement('canvas');
+  cvs.width = 640;
+  cvs.height = 480;
+
+  let p3 = new P3(cvs, cvs.getContext('2d', { alpha: true }));
+
+  p3.imageMode('center');
+  p3.clearColor(25, 80, 10);
+  return p3;
+}
+
+let layers = [];
+layers.push({ 'p3': createLayer(), 'renderables': [] }); //bk
+layers.push({ 'p3': createLayer(), 'renderables': [] }); // sprites
+layers.push({ 'p3': createLayer(), 'renderables': [] }); // effects
+layers.push({ 'p3': createLayer(), 'renderables': [] }); // ui
+// layers.push({ 'p3': createLayer(), 'entities': [] }); // debugger
+
+
 export default class Renderer {
+
   static render() {
+
     p3.clear();
     // scene.draw(p3);
 
-    
-    if(window.effects){
-      window.effects.getContext('2d').clearRect(0, 0, gameWidth, gameHeight);
-    }
-
+    // if (window.effects) {
+    //   window.effects.getContext('2d').clearRect(0, 0, gameWidth, gameHeight);
+    // }
 
     // Place entities in their respective layers
     scene.entities.forEach(e => {
+      if (e.visible === false || e.opacity === 0) { return; }
 
-      // TODO: write this
-      // if(CollisionSystem.intersects(gameBounds, e.bounds))
+      // let id = e.layer || 0;
 
-      if (e.visible === false || e.opacity === 0) {
-        return;
-      }
+      // if (layers[id] === undefined) {
+      // layers[id] = [];
+      // }
 
-      let id = e.layer || 0;
+      // if (e.spriterender && e.spriterender.layer) {
+      //   layers[e.spriterender.layer].entities.push(e);
+      // }
 
-      if (layers[id] === undefined) {
-        layers[id] = [];
-      }
+      e.components.forEach(c => {
+        if (c.renderable && c.visible) { // && c.opacity > 0
+          // c.opacity = rootOpacity;
+          // pq.enqueue(c, c.layer);
+          layers[c.layer].renderables.push(c);
+        }
+      });
 
-      layers[id].push(e);
+      // if (e.renderable && e.layer) {
+      // layers[e.spriterender.layer].entities.push(e);
+      // }
+
     });
 
 
 
-    //
-    Object.values(layers).forEach(layer => {
+    // Draw the entities onto their layers
+    layers.forEach(_layer => {
+      let _p3 = _layer.p3;
+      _p3.clearAll();
+      let r = _layer.renderables;
 
-      layer.forEach(e => {
-
-        let rootOpacity = e.opacity;
-
-        // SELF
-        e.components.forEach(c => {
-          if (c.renderable && c.visible) { // && c.opacity > 0
-            c.opacity = rootOpacity;
-            pq.enqueue(c, c.layer);
-          }
-        });
-
-        // CHILDREN
-        e.children.forEach(e => {
-
-          e.opacity = rootOpacity;
-
-          if (e.components) {
-            e.components.forEach(c => {
-
-              c.opacity = rootOpacity;
-
-              if (c.renderable && c.visible) {
-                pq.enqueue(c, c.layer);
-              }
-            });
-          }
-        });
-
-        while (pq.isEmpty() === false) {
-          let c = pq.dequeue();
-
-          p3.save();
-          p3.ctx.globalAlpha = c.opacity;
-          let pos = c.getWorldCoords();
-
-          // if(Math.floor(pos.x) !== pos.x){
-          // console.warn('position coords are not floors. Perf may suffer');
-          // }
-
-
-          // TOOD: fix
-          // Emitters are attached to other nodes, but we don't want
-          // their transforms.
-          if (c.renderAtRoot === true) {
-            p3.translate(0, 0);
-
-          } else {
-            p3.translate(pos.x, pos.y);
-          }
-          // console.log(c.parent.name);
-
-          c.draw();
-          p3.restore();
-        }
+      r.forEach(c => {
+        c.draw(_p3);
       });
     });
 
 
-    p3.save();
-    p3.translate(640/2, 480/2);
+    // Draw the layers onto the main canvas
+    layers.forEach(_layer => {
+      p3.save();
+      // p3.translate(gameWidth / 2, gameHeight / 2);
+      p3.drawImage(_layer.p3.cvs, 0, 0);
+      // p3.ctx.drawImage(_layer.p3.cvs, 0, 0);
+      p3.restore();
+    });
 
-    p3.drawImage(window.effects, 0, 0);
-    p3.restore();
 
+    //
+    // Object.values(layers).forEach(layer => {
+
+    //   layer.forEach(e => {
+
+    //     let rootOpacity = e.opacity;
+
+    //     // SELF
+    //     e.components.forEach(c => {
+    //       if (c.renderable && c.visible) { // && c.opacity > 0
+    //         c.opacity = rootOpacity;
+    //         pq.enqueue(c, c.layer);
+    //       }
+    //     });
+
+    //     // CHILDREN
+    //     e.children.forEach(e => {
+
+    //       e.opacity = rootOpacity;
+
+    //       if (e.components) {
+    //         e.components.forEach(c => {
+
+    //           c.opacity = rootOpacity;
+
+    //           if (c.renderable && c.visible) {
+    //             pq.enqueue(c, c.layer);
+    //           }
+    //         });
+    //       }
+    //     });
+
+    //     while (pq.isEmpty() === false) {
+    //       let c = pq.dequeue();
+
+    //       p3.save();
+    //       p3.ctx.globalAlpha = c.opacity;
+    //       let pos = c.getWorldCoords();
+
+    //       // TOOD: fix
+    //       // Emitters are attached to other nodes, but we don't want their transforms.
+    //       if (c.renderAtRoot === true) {
+    //         p3.translate(0, 0);
+
+    //       } else {
+    //         // Apparently we need to floor for perf
+    //         p3.translate(Math.floor(pos.x), Math.floor(pos.y));
+    //       }
+
+    //       c.draw();
+    //       p3.restore();
+    //     }
+    //   });
+    // });
+
+    // TODO: fix
+    // p3.save();
+    // p3.translate(gameWidth / 2, gameHeight / 2);
+    // p3.drawImage(window.effects, 0, 0);
+    // p3.restore();
   }
 
   static preRender() {}
+
   static postRender() {
-    Object.keys(layers).forEach(layer => {
-      layers[layer].length = 0;
+    // Object.keys(layers).forEach(layer => {
+    //   layers[layer].length = 0;
+    // });
+
+    layers.forEach(_layer => {
+      _layer.renderables.length = 0;
     });
 
     pq.clear();
