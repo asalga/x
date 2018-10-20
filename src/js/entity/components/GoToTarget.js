@@ -31,6 +31,7 @@ export default class GoToTarget extends Component {
     toTarget.sub(entity.pos);
     toTarget.normalize();
     toTarget.mult(this.speed);
+
     entity.vel = toTarget;
   }
 }

@@ -18,7 +18,7 @@ export default class AreaPayload extends Component {
     this.hit = function(data) {
       let other = data.other;
       if (!other.health) { return; }
-      debugger;
+      // debugger;
       other.addComponent(new LingerHurt(other, { dmg: this.dmg, lingerTime: this.lingerTime }));
     }.bind(this);
 

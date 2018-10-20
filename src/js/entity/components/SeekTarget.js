@@ -14,7 +14,7 @@ export default class SeekTarget extends Component {
       target: null,
       maxSpeed: 100,
       maxVel: 50,
-      maxSteerForce: 10,
+      maxSteerForce: 2,
     };
     Utils.applyProps(this, defaults, cfg)
 

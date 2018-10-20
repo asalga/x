@@ -24,9 +24,15 @@ export default function createUserRocketBullet() {
   // If our target has died, get a new one
   e.on('killed', function(data) {
     if (data === e.seektarget.target) {
-      // potentially can return null
       e.seektarget.target = scene.getClosestBaddie(e.pos);
     }
+  }, e);
+
+  e.on('death', function(data) {
+    debugger;
+    let explosion = EntityFactory.create('explosion');
+    explosion.pos.set(data.pos);
+    scene.add(explosion);
   }, e);
 
   // COMPONENTS
@@ -51,27 +57,32 @@ export default function createUserRocketBullet() {
   }
   e.addComponent(spriteRender);
   e.addComponent(new NearDeathIndicator(e));
-  e.addComponent(new Payload(e, { dmg: 15 }));
+  e.addComponent(new Payload(e, { dmg: 2, lingerTime: 1 }));
   e.addComponent(new LifetimeLimit(e, { limit: 4 }));
 
-  e.addComponent(new SeekTarget(e, { maxVel: 300 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 300, maxSteerForce: 2 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   // TODO: is this the best place for this?
   e.postLaunch = function() {
-    this.seektarget.target = scene.getClosestBaddie(this.pos);
+    let r = Math.random();
+    if (r < 0.5) {
+      this.seektarget.target = scene.getRandomBaddie();
+    } else {
+      this.seektarget.target = scene.getClosestBaddie(this.pos);
+    }
   }
 
   let emitter = EntityFactory.create('emitter');
   emitter.setup({
-    rate: 5,
-    ageRange: [.5, 4.],
-    sizeRange: [.25, .25],
+    count: 50,
+    rate: 20,
+    ageRange: [1.0, 1.],
+    sizeRange: [2.5, 3.5],
     opacityRange: [.7, .7]
   });
   emitter.virtualParent = e;
   scene.add(emitter);
-  //e.add(emitter);
 
   return e;
 }

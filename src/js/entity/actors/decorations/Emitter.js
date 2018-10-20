@@ -30,8 +30,11 @@ export default function createEmitter() {
 
   e.layer = 100;
 
+  let p = null;
+
   // defaults
   let params = {
+    count: 1,
     rate: 1,
     particle: 'null',
     ageRange: [1, 1],
@@ -39,9 +42,9 @@ export default function createEmitter() {
     opacityRange: [1, 1]
   };
   let timer = 0;
-  let particles = [];
+
+
   let isDead = false;
-  let Count = 11;
   let rate = 1;
 
 
@@ -56,26 +59,21 @@ export default function createEmitter() {
   let _size = [];
   let _opacity = [];
 
-  for (let i = 0; i < Count; ++i) {
-    _alive.push(false);
-
-    _pos.push(new Vec2());
-    _vel.push(new Vec2());
-
-    _age.push(0);
-    _maxAge.push(0);
-
-    _size.push(0);
-    _opacity.push(0);
-  }
 
   let w = 640;
   let h = 480;
-  let spriteRender = new SpriteRender(e, { width: w, height: h, layer: 400, opacity: 0.99 });
+  let spriteRender = new SpriteRender(e, {
+    width: w,
+    height: h,
+    layer: 400,
+    opacity: 0.99,
+    ctx: window.effects
+  });
   spriteRender.draw = function() {
 
-    this.p3.clearAll();
-    for (let i = 0; i < Count; i++) {
+    // let d1 = new Date();
+    // this.p3.clearAll();
+    for (let i = 0; i < p.length; i++) {
       if (_alive[i] === false) {
         continue;
       }
@@ -86,8 +84,10 @@ export default function createEmitter() {
       this.p3.fill(`rgb(25, 25, 25, ${op})`);
       this.p3.ellipse(_pos[i].x, _pos[i].y, sz, sz);
     }
+    // let d2 = new Date();
+    // console.log( d2-d1 );
     // TODO: fix
-    p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
+    // p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
   }
   spriteRender.renderAtRoot = true;
   e.addComponent(spriteRender);
@@ -110,7 +110,6 @@ export default function createEmitter() {
   e.on('remove', data => {
     if (data === e.virtualParent) {
       e.isDead = true;
-
     }
   }, e);
 
@@ -138,7 +137,7 @@ export default function createEmitter() {
   }
 
   let findFreeParticle = function() {
-    for (let i = 0; i < Count; ++i) {
+    for (let i = 0; i < p.length; ++i) {
       if (_alive[i] === false) {
         return i;
       }
@@ -150,12 +149,12 @@ export default function createEmitter() {
   e.update = function(dt) {
     timer += dt;
 
-    for (let i = 0; i < Count; ++i) {
+    for (let i = 0; i < p.length; ++i) {
       if (_alive[i]) {
 
         _age[i] += dt;
         _opacity[i] = 1 - (_age[i] / _maxAge[i]);
-        _size[i] += dt * (_age[i] / _maxAge[i]) * 30;
+        _size[i] += dt * (_age[i] / _maxAge[i]) * 4;
 
         if (_age[i] > _maxAge[i]) {
           this.killParticle(i);
@@ -189,7 +188,21 @@ export default function createEmitter() {
   */
   e.setup = function(cfg) {
     Utils.applyProps(params, cfg);
+    p = new Array(params.count);
     rate = 1 / params.rate;
+
+    for (let i = 0; i < p.length; ++i) {
+      _alive.push(false);
+
+      _pos.push(new Vec2());
+      _vel.push(new Vec2());
+
+      _age.push(0);
+      _maxAge.push(0);
+
+      _size.push(0);
+      _opacity.push(0);
+    }
   }
 
   e.play = function() {

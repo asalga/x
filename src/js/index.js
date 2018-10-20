@@ -15,6 +15,8 @@ import Renderer from './Renderer.js';
 
 window.gameTime = 0;
 window.gameFrameCount = 0;
+window.gameWidth = 640;
+window.gameHeight = 480;
 window.debug = true;
 window.Debug = Debug;
 window.scene = null;
@@ -89,6 +91,9 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
 
+  window.effects = document.createElement('canvas');
+  window.effects.width = 640;
+  window.effects.height = 480;
 
   // spawner = EntityFactory.create('spawner');
   // list of waves (?)

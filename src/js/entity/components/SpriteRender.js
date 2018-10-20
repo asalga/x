@@ -7,6 +7,7 @@ import _P3 from '../../P3.js';
 export default class SpriteRender extends Component {
   constructor(e, cfg) {
     super(e, 'spriterender');
+
     this.renderable = true;
     this.visible = true;
     this.opacity = 1;
@@ -15,19 +16,23 @@ export default class SpriteRender extends Component {
 
     this.dirty = true;
 
-    this.sprite = document.createElement('canvas');
-    this.sprite.width = cfg.width;
-    this.sprite.height = cfg.height;
+    this.sprite = null;
+    this.spriteCtx = null;
+
+    if (cfg.ctx) {
+      this.sprite = window.effects;
+
+    } else {
+      this.sprite = document.createElement('canvas');
+      this.sprite.width = cfg.width;
+      this.sprite.height = cfg.height;
+    }
+
     this.spriteCtx = this.sprite.getContext('2d');
     this.p3 = new _P3(this.sprite, this.spriteCtx);
   }
 
-  // renderProxy(){
-  //   console.log('test');
-  // }
-
-    draw(){
-        
-        this.drawProxy();
-    }  
+  draw() {
+    this.drawProxy();
+  }
 }
