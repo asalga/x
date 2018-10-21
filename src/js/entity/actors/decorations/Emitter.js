@@ -35,10 +35,11 @@ export default function createEmitter() {
   let params = {
     count: 1,
     rate: 1,
-    particle: 'null',
+    particle: 'null', // TODO: rename to particle sprite
     ageRange: [1, 1],
     sizeRange: [10, 10],
-    opacityRange: [1, 1]
+    opacityRange: [1, 1],
+    velocityRange: [new Vec2(), new Vec2()]
   };
   let timer = 0;
 
@@ -46,16 +47,17 @@ export default function createEmitter() {
   let rate = 1;
 
 
-  let _alive = [];
+  let _alive; // = [];
 
-  let _pos = [];
-  let _vel = [];
+  let _pos; // = [];
+  let _vel; // = [];
 
-  let _age = [];
-  let _maxAge = [];
+  let _age; // = [];
+  let _maxAge; // = [];
 
-  let _size = [];
-  let _opacity = [];
+  let _size; // = [];
+  let _opacity; // = [];
+
 
   let spriteRender = new SpriteRender(e, { layer: 3 });
   spriteRender.draw = function(_p3) {
@@ -94,14 +96,23 @@ export default function createEmitter() {
   }, e);
 
 
+
   e.createParticle = function(idx) {
     _alive[idx] = true;
 
     _age[idx] = 0;
     _maxAge[idx] = p3.random(params.ageRange[0], params.ageRange[1]);
 
-    _pos[idx] = this.virtualParent.getWorldCoords().clone();
-    // vel
+    if (!_pos[idx]) { _pos[idx] = new Vec2(); }
+    if (!_vel[idx]) { _vel[idx] = new Vec2(); }
+
+    let v = this.virtualParent.getWorldCoords();
+    [_pos[idx].x, _pos[idx].y] = [v.x, v.y];
+
+    _vel[idx].x = p3.random(params.velocityRange[0].x, params.velocityRange[1].x);
+    _vel[idx].y = p3.random(params.velocityRange[0].y, params.velocityRange[1].y);
+
+    // console.log(_vel[idx]);
 
     _size[idx] = p3.random(params.sizeRange[0], params.sizeRange[1]);
     _opacity[idx] = p3.random(params.opacityRange[0], params.opacityRange[1]);
@@ -117,9 +128,8 @@ export default function createEmitter() {
   }
 
   let findFreeParticle = function() {
-
-    for (let i = p.length-1; i > 0; --i) {
-      if (_alive[i] === false) {
+    for (let i = p.length - 1; i > 0; --i) {
+      if (!_alive[i]) {
         window.count++;
         return i;
       }
@@ -135,12 +145,18 @@ export default function createEmitter() {
       if (_alive[i]) {
 
         _age[i] += dt;
-        _opacity[i] = 1 - (_age[i] / _maxAge[i]);
-        _size[i] += dt * (_age[i] / _maxAge[i]) * 4;
 
         if (_age[i] > _maxAge[i]) {
           this.killParticle(i);
+          continue;
         }
+
+        _opacity[i] = 1 - (_age[i] / _maxAge[i]);
+        _size[i] += dt * (_age[i] / _maxAge[i]) * 4;
+
+        _pos[i].x += _vel[i].x * dt;
+        _pos[i].y += _vel[i].y * dt;
+
       }
     }
 
@@ -170,21 +186,35 @@ export default function createEmitter() {
   */
   e.setup = function(cfg) {
     Utils.applyProps(params, cfg);
-    p = new Array(params.count);
+
     rate = 1 / params.rate;
 
-    for (let i = 0; i < p.length; ++i) {
-      _alive.push(false);
 
-      _pos.push(new Vec2());
-      _vel.push(new Vec2());
+    p = new Array(params.count);
 
-      _age.push(0);
-      _maxAge.push(0);
+    _alive = new Array(p.length);
 
-      _size.push(0);
-      _opacity.push(0);
-    }
+    _pos = new Array(p.length);
+    _vel = new Array(p.length);
+
+    _age = new Array(p.length);
+    _maxAge = new Array(p.length);
+
+    _size = new Array(p.length);
+    _opacity = new Array(p.length);
+
+    // for (let i = 0; i < p.length; ++i) {
+    //   _alive.push(false);
+
+    //   _pos.push(new Vec2());
+    //   _vel.push(Vec2.rand().mult(10));
+
+    //   _age.push(0);
+    //   _maxAge.push(0);
+
+    //   _size.push(0);
+    //   _opacity.push(0);
+    // }
   }
 
   e.play = function() {
