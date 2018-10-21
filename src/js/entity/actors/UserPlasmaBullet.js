@@ -16,15 +16,14 @@ export default function createPlamaBullet() {
 
   scene.add(e);
 
-  let spriteRender = new SpriteRender(e, { layer: 20 });
-  spriteRender.draw = function() {
-    p3.save();
-    p3.noStroke();
-    p3.fill('rgb(55, 210, 55)');
+  let spriteRender = new SpriteRender(e, { layer: 2 });
+  spriteRender.draw = function(_p3) {
+    _p3.save();
+    _p3.noStroke();
+    _p3.fill('rgb(55, 210, 55)');
     let sz = e.bounds.radius;
-    // p3.ellipse(e.pos.x, e.pos.y, sz, sz);
-    p3.ellipse(0, 0, sz, sz);
-    p3.restore();
+    _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
+    _p3.restore();
   }
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 10, lingerTime: 2 }));

@@ -14,12 +14,36 @@
 
     <script language="javascript"
             src="libs/TweenMax.min.js"></script>
+
+    <link rel="stylesheet"
+          href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+    $(function() {
+      let s = $("#slider").slider({
+        min: 0,
+        max: 1000,
+        value: 100,
+        change: function(evt, ui) {
+          // console.log(ui.value);
+          window.cfg = ui.value;
+        }
+      });
+    });
+    </script>
 </head>
 
 <body>
     <canvas id='cvs'
             width="640"
             height="480"></canvas>
+
+    <div id="slider"></div>
 </body>
 
 </html>

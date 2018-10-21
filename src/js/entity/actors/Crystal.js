@@ -21,24 +21,24 @@ export default function createCrystal() {
     t.addComponent(new LingerHurt(t, { dmg: 9, lingerTime: time }));
   };
 
-  let [w, h] = [150, 150];
-  let spriteRender = new SpriteRender(e, { width: w, height: h, layer: 100 });
-  spriteRender.draw = function() {
+  // let [w, h] = [150, 150];
+  // width: w, height: h, 
+  let spriteRender = new SpriteRender(e, { layer: 2 });
+  spriteRender.draw = function(_p3) {
     let sz = e.getRoot().bounds.radius + 10;
-
-    this.p3.clearAll();
+    // this.p3.clearAll();
     // this.p3.clear();
-    this.p3.save();
-    this.p3.stroke(33, 66, 130);
-    this.p3.strokeWeight(4);
-    this.p3.fill('rgb(200, 200, 255, .5)');
-    this.p3.translate(w / 2, h / 2);
-    this.p3.rotate(Math.PI / 4);
-    this.p3.rect(-sz, -sz, sz * 2, sz * 2);
-    this.p3.restore();
-
-    let [x,y] = this.entity.getWorldCoords().toArray();
-    p3.drawImage(this.sprite,x,y);
+    _p3.save();
+    _p3.stroke(33, 66, 130);
+    _p3.strokeWeight(4);
+    _p3.fill('rgb(200, 200, 255, .5)');
+    // _p3.translate(w / 2, h / 2);
+    let [x, y] = this.entity.getWorldCoords().toArray();
+    // p3.drawImage(this.sprite,x,y);
+    _p3.translate(x, y);
+    _p3.rotate(Math.PI / 4);
+    _p3.rect(-sz, -sz, sz * 2, sz * 2);
+    _p3.restore();
   }
   e.addComponent(spriteRender);
 

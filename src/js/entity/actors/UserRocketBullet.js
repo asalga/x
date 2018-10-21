@@ -83,7 +83,7 @@ export default function createUserRocketBullet() {
     // opacityRange: [.7, .7]
 
     count: 300,
-    rate: 150,
+    rate: 50,
     ageRange: [.5, 2.0],
     sizeRange: [.5, 2.5],
     opacityRange: [.7, 1.0],
