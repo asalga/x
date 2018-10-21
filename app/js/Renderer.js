@@ -51,6 +51,24 @@ export default class Renderer {
       //   layers[e.spriterender.layer].entities.push(e);
       // }
 
+        e.children.forEach(e => {
+
+    //       e.opacity = rootOpacity;
+
+          if (e.components) {
+            e.components.forEach(c => {
+
+    //           c.opacity = rootOpacity;
+
+              if (c.renderable && c.visible) {
+    //             pq.enqueue(c, c.layer);
+                  layers[c.layer].renderables.push(c);
+              }
+            });
+          }
+        });
+
+
       e.components.forEach(c => {
         if (c.renderable && c.visible) { // && c.opacity > 0
           // c.opacity = rootOpacity;

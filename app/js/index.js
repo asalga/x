@@ -13,6 +13,8 @@ import EventSystem from './event/EventSystem.js';
 import CollisionSystem from './collision/CollisionSystem.js';
 import Renderer from './Renderer.js';
 
+import cfg from './cfg.js';
+
 window.gameTime = 0;
 window.gameFrameCount = 0;
 window.gameWidth = 640;

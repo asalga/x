@@ -7,6 +7,8 @@ import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
+let _v = new Vec2();
+
 export default class SeekTarget extends Component {
   constructor(e, cfg) {
     super(e, 'seektarget');
@@ -27,6 +29,11 @@ export default class SeekTarget extends Component {
 
     this.lastVel = new Vec2();
     // this.offset = Vec2.rand().mult(1);
+
+    // cached vectors
+    this._targetPos = new Vec2();
+    this._desiredVel = new Vec2();
+    this._pos = new Vec2();
   }
 
   tryToTarget(e){
@@ -59,19 +66,21 @@ export default class SeekTarget extends Component {
       return;
     }
 
-    let targetPos = new Vec2(this.target.pos); //.add(this.offset);
+    this._targetPos.set(this.target.pos); //.add(this.offset);
+    this._pos.set(this.entity.pos);
 
-    let pos = new Vec2(this.entity.pos);
+    Vec2.subSelf(this._targetPos, this._pos);
+    this._desiredVel.set(this._targetPos);
+    this._desiredVel.normalize();
+    this._desiredVel.mult(this.maxSpeed);
+
     let vel = this.entity.vel;
+    //let steerVel = 
+    Vec2.subSelf(this._desiredVel, vel);
+    this._desiredVel.limit(this.maxSteerForce);
+    // steerVel.limit(this.maxSteerForce);
 
-    let desiredVel = targetPos.sub(pos);
-    desiredVel.normalize();
-    desiredVel.mult(this.maxSpeed);
-
-    let steerVel = Vec2.sub(desiredVel, vel);
-    steerVel.limit(this.maxSteerForce);
-
-    vel.add(steerVel);
+    vel.add(this._desiredVel);
     vel.limit(this.maxVel);
 
     this.lastVel = vel;

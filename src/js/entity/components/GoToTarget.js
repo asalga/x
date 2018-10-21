@@ -18,6 +18,8 @@ export default class GoToTarget extends Component {
     Utils.applyProps(this, defaults, cfg);
 
     e.on('collision', this.hasArrived, e, { onlySelf: true });
+
+    this._toTarget = new Vec2();
   }
 
   hasArrived() {
@@ -27,11 +29,12 @@ export default class GoToTarget extends Component {
   update(dt, entity) {
     if (this.target === null) { return; }
 
-    let toTarget = this.target.pos.clone();
-    toTarget.sub(entity.pos);
-    toTarget.normalize();
-    toTarget.mult(this.speed);
+    // let toTarget = this.target.pos.clone();
+    this._toTarget.set(this.target.pos);
+    this._toTarget.sub(entity.pos);
+    this._toTarget.normalize();
+    this._toTarget.mult(this.speed);
 
-    entity.vel = toTarget;
+    entity.vel = this._toTarget;
   }
 }

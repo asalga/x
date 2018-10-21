@@ -18,26 +18,18 @@ export default function createExplosion() {
   e.bounds = new BoundingCircle(e.pos, sz);
   let time = .5;
 
-
-  let spriteRender = new SpriteRender(e, {
-    width: sz * 2 + 5,
-    height: sz * 2 + 5,
-    layer: 100
-  });
-  spriteRender.draw = function() {
+  // width: sz * 2 + 5,height: sz * 2 + 5,
+  let spriteRender = new SpriteRender(e, { layer: 3 });
+  spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
-
     let opacity = e.lifetimelimit.timeLeft() / time;
-    this.p3.clearAll();
-    this.p3.save();
-    this.p3.strokeWeight(2);
-    this.p3.stroke(`rgb(250, 250, 0, ${opacity})`);
-    this.p3.fill(`rgb(120, 0, 0, ${opacity})`);
-    this.p3.translate(this.p3.width / 2, this.p3.height / 2);
-    this.p3.ellipse(0, 0, sz, sz);
-    this.p3.restore();
-
-    p3.drawImage(this.sprite, 0, 0); //e.pos.x, e.pos.y);
+    _p3.save();
+    _p3.strokeWeight(2);
+    _p3.stroke(`rgb(250, 250, 0, ${opacity})`);
+    _p3.fill(`rgb(120, 0, 0, ${opacity})`);
+    _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
+    _p3.restore();
+    // p3.drawImage(this.sprite, 0, 0); //e.pos.x, e.pos.y);
   };
 
   e.addComponent(spriteRender);
