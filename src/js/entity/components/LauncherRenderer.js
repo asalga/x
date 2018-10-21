@@ -14,7 +14,7 @@ export default class LauncherRenderer extends Component {
       color: 'rbg(0,0,0)',
       renderable: true,
       visible: true,
-      layer: 2
+      layerName: 'sprite'
     }
     Utils.applyProps(this, defaults, cfg);
   }

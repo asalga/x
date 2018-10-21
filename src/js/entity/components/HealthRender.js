@@ -12,7 +12,7 @@ export default class HealthRender extends Component {
     // TODO: fix, inherit from SpriteRender?
     this.renderable = true;
     this.visible = true;
-    this.layer = 1;// cfg && cfg.layer || 0;
+    this.layerName = 'spriteprops';// cfg && cfg.layer || 0;
     // this.zIndex
 
     this.sprite = document.createElement('canvas');

@@ -18,12 +18,30 @@ function createLayer() {
   return p3;
 }
 
+// This method allows us to easily switch ordering
+let layerOrder = [
+  'bk',
+  'spriteprops', 
+  'sprite',
+  'bullet',
+  'effect',
+  'ui',
+  'debug'
+];
+
+let layerMap = new Map();
 let layers = [];
-layers.push({ 'p3': createLayer(), 'renderables': [] }); //bk
-layers.push({ 'p3': createLayer(), 'renderables': [] }); // sprites
-layers.push({ 'p3': createLayer(), 'renderables': [] }); // effects
-layers.push({ 'p3': createLayer(), 'renderables': [] }); // ui
-// layers.push({ 'p3': createLayer(), 'entities': [] }); // debugger
+
+layerOrder.forEach(name => {
+  
+  let layer = {
+    'p3': createLayer(),
+    'renderables': []
+  };
+
+  layers.push(layer);
+  layerMap.set(name, layer);
+})
 
 
 export default class Renderer {
@@ -51,29 +69,33 @@ export default class Renderer {
       //   layers[e.spriterender.layer].entities.push(e);
       // }
 
-        e.children.forEach(e => {
+      e.children.forEach(e => {
 
-    //       e.opacity = rootOpacity;
+        //       e.opacity = rootOpacity;
 
-          if (e.components) {
-            e.components.forEach(c => {
+        if (e.components) {
+          e.components.forEach(c => {
 
-    //           c.opacity = rootOpacity;
+            //           c.opacity = rootOpacity;
 
-              if (c.renderable && c.visible) {
-    //             pq.enqueue(c, c.layer);
-                  layers[c.layer].renderables.push(c);
-              }
-            });
-          }
-        });
+            if (c.renderable && c.visible) {
+              //             pq.enqueue(c, c.layer);
+
+              let layer = layerMap.get(c.layerName);
+              layer.renderables.push(c);
+            }
+          });
+        }
+      });
 
 
       e.components.forEach(c => {
         if (c.renderable && c.visible) { // && c.opacity > 0
           // c.opacity = rootOpacity;
           // pq.enqueue(c, c.layer);
-          layers[c.layer].renderables.push(c);
+          // layers[c.layer].renderables.push(c);
+              let layer = layerMap.get(c.layerName);
+              layer.renderables.push(c);
         }
       });
 

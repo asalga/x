@@ -36,8 +36,9 @@ export default function createUserRocketBullet() {
   }, e);
 
   // COMPONENTS
-  let spriteSz = 32;
-  let spriteRender = new SpriteRender(e, { layer: 2, width: spriteSz, height: spriteSz });
+  // let spriteSz = 32;
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
+  //, width: spriteSz, height: spriteSz });
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
     // _p3.clearAll();

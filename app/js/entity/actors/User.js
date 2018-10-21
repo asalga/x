@@ -31,7 +31,7 @@ export default function createUser() {
   user.size = 40;
   user.bounds = new BoundingCircle(user.pos, user.size);
 
-  let spriteRender = new SpriteRender(user, { layer: 1 });
+  let spriteRender = new SpriteRender(user, { layerName: 'sprite' });
   spriteRender.draw = function(_p3) {
     _p3.save();
 

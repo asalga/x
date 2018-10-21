@@ -37,7 +37,7 @@ export default function createMouse() {
   setRandPosition(e);
 
   let sz = e.bounds.radius;
-  let spriteRender = new SpriteRender(e, { layer: 1 });
+  let spriteRender = new SpriteRender(e, { layerName: 'sprite' });
 
   spriteRender.draw = function(_p3) {
     // if (this.dirty) {
