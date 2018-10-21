@@ -60,7 +60,7 @@ export default function createEmitter() {
   let _opacity;
 
 
-  let spriteRender = new SpriteRender(e, { layer: 3 });
+  let spriteRender = new SpriteRender(e, { layerName: 'effect' });
   spriteRender.draw = function(_p3) {
     // this.p3.clearAll();
     for (let i = 0; i < p.length; i++) {
