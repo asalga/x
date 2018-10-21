@@ -57,7 +57,7 @@ export default function createUserRocketBullet() {
   }
   e.addComponent(spriteRender);
   // e.addComponent(new NearDeathIndicator(e));
-  e.addComponent(new Payload(e, { dmg: 2, lingerTime: 1 }));
+  e.addComponent(new Payload(e, { dmg: 5, lingerTime: 1 }));
   e.addComponent(new LifetimeLimit(e, { limit: 4 }));
 
   e.addComponent(new SeekTarget(e, { maxVel: 300, maxSteerForce: 2 }));
@@ -74,7 +74,7 @@ export default function createUserRocketBullet() {
   }
 
   let emitter = EntityFactory.create('emitter');
-  let div = 10;
+  let div = 5;
   emitter.setup({
     // count: 40,
     // rate: 10,
@@ -82,11 +82,11 @@ export default function createUserRocketBullet() {
     // sizeRange: [2.5, 2.5],
     // opacityRange: [.7, .7]
 
-    count: 100,
-    rate: 40,
-    ageRange: [.5, 2.5],
-    sizeRange: [2.5, 2.5],
-    opacityRange: [.7, .7],
+    count: 300,
+    rate: 150,
+    ageRange: [.5, 2.0],
+    sizeRange: [.5, 2.5],
+    opacityRange: [.7, 1.0],
     velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });
   emitter.virtualParent = e;

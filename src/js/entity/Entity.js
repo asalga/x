@@ -8,6 +8,9 @@ import EventSystem from '../event/EventSystem.js';
 
 import Utils from '../Utils.js';
 
+// tempvec
+let _v = new Vec2();
+
 export default class Entity {
   constructor(cfg) {
     let defaults = {
@@ -70,10 +73,22 @@ export default class Entity {
       c.update && c.update(dt, this);
       c.updateProxy && c.updateProxy(dt);
     });
-
+//
     if (this.vel) {
-      let d = this.vel.clone().mult(deltaTime * this.timeScale);
-      this.pos.add(d);
+      //let d = this.vel.clone().mult(deltaTime * this.timeScale);
+
+      _v.set(this.vel);
+      Vec2.multSelf(_v, deltaTime * this.timeScale);
+
+      // let [x, y] = [
+        // this.vel.x * deltaTime * this.timeScale,
+        // this.vel.y * deltaTime * this.timeScale
+      // ];
+      this.pos.x += _v.x;
+      this.pos.y += _v.y;
+
+      // Vec2.addSelf(this.pos,  );
+      // this.pos.add(d);
     }
 
     this.children.forEach(c => {

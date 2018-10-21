@@ -7,6 +7,8 @@ import Utils from '../../../Utils.js';
 
 import SpriteRender from '../../components/SpriteRender.js';
 
+
+let _v = new Vec2();
 /*
   1) Image should be sent to Emitter
   2) Emitter is given max size
@@ -46,17 +48,16 @@ export default function createEmitter() {
   let isDead = false;
   let rate = 1;
 
+  let _alive;
 
-  let _alive; // = [];
+  let _pos;
+  let _vel;
 
-  let _pos; // = [];
-  let _vel; // = [];
+  let _age;
+  let _maxAge;
 
-  let _age; // = [];
-  let _maxAge; // = [];
-
-  let _size; // = [];
-  let _opacity; // = [];
+  let _size;
+  let _opacity;
 
 
   let spriteRender = new SpriteRender(e, { layer: 3 });
@@ -68,7 +69,7 @@ export default function createEmitter() {
       let op = _opacity[i];
       _p3.stroke(`rgb(25, 25, 25, ${op})`);
       _p3.fill(`rgb(25, 25, 25, ${op})`);
-      _p3.ellipse(_pos[i].x, _pos[i].y, sz, sz);
+      _p3.ellipse(_pos[i * 2], _pos[i * 2 + 1], sz, sz);
     }
     // p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
   }
@@ -87,15 +88,11 @@ export default function createEmitter() {
   //   });
   // });
 
-
-
   e.on('remove', data => {
     if (data === e.virtualParent) {
       e.isDead = true;
     }
   }, e);
-
-
 
   e.createParticle = function(idx) {
     _alive[idx] = true;
@@ -103,16 +100,31 @@ export default function createEmitter() {
     _age[idx] = 0;
     _maxAge[idx] = p3.random(params.ageRange[0], params.ageRange[1]);
 
-    if (!_pos[idx]) { _pos[idx] = new Vec2(); }
-    if (!_vel[idx]) { _vel[idx] = new Vec2(); }
+    // if (!_pos[idx]) {
+    // _pos[idx] = new Vec2();
+    // if (!window._count) {
+    // window._count = 0;
+    // }
+    // window._count++;
+    // }
+    // 10 particles
+    // 10 * 2 elements
+
+    // 0  1  2
+    // 01 23 45
+
+    // if (!_vel[idx]) { _vel[idx] = new Vec2(); }
+
 
     let v = this.virtualParent.getWorldCoords();
-    [_pos[idx].x, _pos[idx].y] = [v.x, v.y];
+    // [_pos[idx].x, _pos[idx].y] = [v.x, v.y];
+    _pos[idx * 2 + 0] = v.x;
+    _pos[idx * 2 + 1] = v.y;
 
-    _vel[idx].x = p3.random(params.velocityRange[0].x, params.velocityRange[1].x);
-    _vel[idx].y = p3.random(params.velocityRange[0].y, params.velocityRange[1].y);
-
-    // console.log(_vel[idx]);
+    // _vel[idx].x = p3.random(params.velocityRange[0].x, params.velocityRange[1].x);
+    // _vel[idx].y = p3.random(params.velocityRange[0].y, params.velocityRange[1].y);
+    _vel[idx * 2 + 0] = p3.random(params.velocityRange[0].x, params.velocityRange[1].x);
+    _vel[idx * 2 + 1] = p3.random(params.velocityRange[0].y, params.velocityRange[1].y);
 
     _size[idx] = p3.random(params.sizeRange[0], params.sizeRange[1]);
     _opacity[idx] = p3.random(params.opacityRange[0], params.opacityRange[1]);
@@ -140,6 +152,7 @@ export default function createEmitter() {
 
   e.update = function(dt) {
     timer += dt;
+    // Debug.add(window._count);
 
     for (let i = 0; i < p.length; ++i) {
       if (_alive[i]) {
@@ -154,9 +167,11 @@ export default function createEmitter() {
         _opacity[i] = 1 - (_age[i] / _maxAge[i]);
         _size[i] += dt * (_age[i] / _maxAge[i]) * 4;
 
-        _pos[i].x += _vel[i].x * dt;
-        _pos[i].y += _vel[i].y * dt;
+        _v.set(_vel[i * 2 + 0], _vel[i * 2 + 1]);
+        Vec2.multSelf(_v, dt);
 
+        _pos[i * 2 + 0] += _v.x;
+        _pos[i * 2 + 1] += _v.y;
       }
     }
 
@@ -189,13 +204,12 @@ export default function createEmitter() {
 
     rate = 1 / params.rate;
 
-
     p = new Array(params.count);
 
     _alive = new Array(p.length);
 
-    _pos = new Array(p.length);
-    _vel = new Array(p.length);
+    _pos = new Float32Array(p.length * 2);
+    _vel = new Float32Array(p.length * 2);
 
     _age = new Array(p.length);
     _maxAge = new Array(p.length);

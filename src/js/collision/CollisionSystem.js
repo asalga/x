@@ -8,6 +8,8 @@ let firstTime = true;
 let checks = 0;
 let debugChecks = [];
 
+let _v = new Vec2();
+
 export default class CollisionSystem {
   static gatherCollidables() {
 
@@ -51,8 +53,9 @@ export default class CollisionSystem {
   */
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
-    let dist = Vec2.sub(e1._collisionTransform, e2._collisionTransform).length();
-    return dist <= radTotal;
+    _v.set(e1._collisionTransform);
+    Vec2.subSelf(_v, e2._collisionTransform);
+    return _v.length() <= radTotal;
   }
 
   static checkCollisions() {
