@@ -74,17 +74,20 @@ export default function createUserRocketBullet() {
   }
 
   let emitter = EntityFactory.create('emitter');
+  let div = 10;
   emitter.setup({
     // count: 40,
     // rate: 10,
     // ageRange: [4.0, 4.],
     // sizeRange: [2.5, 2.5],
     // opacityRange: [.7, .7]
+
     count: 100,
     rate: 40,
     ageRange: [.5, 2.5],
     sizeRange: [2.5, 2.5],
-    opacityRange: [.7, .7]
+    opacityRange: [.7, .7],
+    velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });
   emitter.virtualParent = e;
   scene.add(emitter);

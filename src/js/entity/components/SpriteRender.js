@@ -19,10 +19,8 @@ export default class SpriteRender extends Component {
     Utils.applyProps(this, cfg);
 
     this.dirty = true;
-
     this.sprite = cfg.cvs;
     
-
     // this.spriteCtx = this.sprite.getContext('2d');
     // this.p3 = new _P3(this.sprite, this.spriteCtx);
 
