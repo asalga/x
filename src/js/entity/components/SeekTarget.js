@@ -7,8 +7,6 @@ import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
-let _v = new Vec2();
-
 export default class SeekTarget extends Component {
   constructor(e, cfg) {
     super(e, 'seektarget');
@@ -21,14 +19,12 @@ export default class SeekTarget extends Component {
     Utils.applyProps(this, defaults, cfg)
 
     // this.connectToTarget(target);
-    // e.on('entityadded', tryToTarget)
 
     e.on('entityadded', data => {
       this.tryToTarget(data);
     }, e);
 
     this.lastVel = new Vec2();
-    // this.offset = Vec2.rand().mult(1);
 
     // cached vectors
     this._targetPos = new Vec2();
@@ -36,9 +32,10 @@ export default class SeekTarget extends Component {
     this._pos = new Vec2();
   }
 
-  tryToTarget(e){
+  tryToTarget(e) {
     if (!this.target && e.killable && e.targetable) {
       this.target = e;
+      console.log(this.target);
     }
   }
 
@@ -57,16 +54,22 @@ export default class SeekTarget extends Component {
   }
 
   update(dt) {
-    // if no longer in the scene
-    if (!this.target) { return; }
 
-    // if in scene, but dead
-    if (this.target.killable.dead) {
-      this.entity.vel = this.lastVel;
+    // if no longer in the scene
+    if (this.target === null) {
       return;
     }
 
-    this._targetPos.set(this.target.pos); //.add(this.offset);
+    // if in scene, but dead
+    if (this.target.killable.dead) {
+      this.target = null;
+      this.entity.vel = this.lastVel;
+      this.entity.vel.normalize();
+      this.entity.vel.mult(this.maxSpeed);
+      return;
+    }
+
+    this._targetPos.set(this.target.pos);
     this._pos.set(this.entity.pos);
 
     Vec2.subSelf(this._targetPos, this._pos);

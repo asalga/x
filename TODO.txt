@@ -1,11 +1,7 @@
 # X
 
-Entities
- - 'mouse'
- - 'bee'
- - 'hummingbird'
- - 'emitter'
-
+* If homing missile loses tracking, it should 
+continue on its lastVel
 
 # TODO - High
  * Find solution for adding 2 of the same Components (ie. LingerHurt)
@@ -15,6 +11,7 @@ Entities
  * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
  * Create Object Pool
  * Test adding 2 components to an entity and removing one of them
+ * Fix NearDeathIndicator
  
 
 # TODO - Low
@@ -49,3 +46,6 @@ that haven't been targeted
 
 * Bullets have linger hurt 
  if bullets kill an enemy rocket, the rockets should immediately be destroyed
+
+
+ https://www.gamedev.net/articles/visual-arts/color-palettes-r4964/?utm_source=gamedevdirect&utm_medium=email

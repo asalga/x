@@ -30,8 +30,7 @@ export default function createMouse() {
   e.pos.x = p3.width / 2;
   e.pos.y = p3.height / 2 - 150;
 
-
-  let spriteRender = new SpriteRender(e, { layer: 100 });
+  let spriteRender = new SpriteRender(e, { layerName: 'sprite' });
   spriteRender.draw = function() {
     p3.save();
     p3.noStroke();

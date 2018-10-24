@@ -23,31 +23,34 @@ export default function createUserRocketBullet() {
   e.bounds = new BoundingCircle(e.pos, 10);
 
   // If our target has died, get a new one
-  e.on('killed', function(data) {
+  e.on('remove', function(data) {
     if (data === e.seektarget.target) {
       e.seektarget.target = scene.getClosestBaddie(e.pos);
     }
   }, e);
 
-  e.on('death', function(data) {
-    let explosion = EntityFactory.create('explosion');
-    explosion.pos.set(data.pos);
-    scene.add(explosion);
-  }, e, { onlySelf: true, onlyOnce: data => [data.id] });
+  // e.on('death', function(data) {
+  // let explosion = EntityFactory.create('explosion');
+  // explosion.pos.set(data.pos);
+  // scene.add(explosion);
+  // }, e, { onlySelf: true, onlyOnce: data => [data.id] });
 
   // COMPONENTS
-  // let spriteSz = 32;
+
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
-  //, width: spriteSz, height: spriteSz });
-  
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
-    // _p3.clearAll();
     _p3.save();
-    // _p3.clear();
+
     _p3.stroke(0);
     _p3.strokeWeight(2);
-    _p3.fill('rgb(245, 10, 255)');
+
+    if (e.seektarget.target) {
+      _p3.fill('rgb(245, 10, 25)');
+    } else {
+      _p3.fill('rgb(25, 250, 255)');
+    }
+
     // _p3.translate(_p3.width / 2, _p3.height / 2);
     _p3.translate(e.pos.x, e.pos.y);
     _p3.rotate(Math.atan2(e.vel.y, e.vel.x));
@@ -87,14 +90,14 @@ export default function createUserRocketBullet() {
     // opacityRange: [.7, .7]
 
     count: 300,
-    rate: 70,
+    rate: 30,
     ageRange: [1.7, 2.0],
     sizeRange: [1.5, 2.5],
     opacityRange: [.7, 1.0],
     velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });
   emitter.virtualParent = e;
-  scene.add(emitter);
+  // scene.add(emitter);
 
   return e;
 }

@@ -42,7 +42,8 @@ export default function createBackground() {
     _p3.noStroke();
     // _p3.clearColor(200);
     
-    _p3.fill('rgba(40, 40, 40, 0.5)');
+    _p3.fill('rgba(33, 66, 99, 0.5)');
+
     // _p3.stroke('rgba(200, 200, 200, 0.52)');
     _p3.rect(0, 0, cfg.gameWidth, cfg.gameHeight);
 

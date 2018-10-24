@@ -9,6 +9,13 @@ Rendering
  - Order of layer rendering is in 'layerRenderOrder' in Renderer.js
 
 
+Entities
+ - 'user'
+ - 'mouse'
+ - 'bee'
+ - 'hummingbird'
+ - 'emitter'
+ - 'background'
 
 Events
  - entityadded

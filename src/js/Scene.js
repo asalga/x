@@ -49,9 +49,12 @@ export default class Scene {
       // let the children do any cleanup.
       this.deleteQueue.forEach(e => {
         new Event({ evtName: 'death', data: e}).fire();
-
-        let evt = new Event({ evtName: 'remove', data: e });
-        evt.fire();        
+        
+        // The seekTarget relies on this event and tries to get a new 
+        // target. but if the entity is still alive, it may return
+        // a target that will be removed next frame.
+        let rm = new Event({ evtName: 'remove', data: e });
+        this.eventsToFireNextFrame.push(rm);
       });
 
       this.deleteQueue.forEach(e => {
@@ -93,6 +96,7 @@ export default class Scene {
     let ls = [];
     this.entities.forEach(e => {
       if (e.killable && !e.killable.dead && e.targetable && e.name !== 'user') {
+        // debugger;
         ls.push(e);
       }
     });

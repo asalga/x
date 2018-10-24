@@ -14,6 +14,7 @@ export default class MeleePayload extends Component {
     e.on('collision', function(data) {
       if (!data.other.health) { return; }
       data.other.health.hurt(this.meleepayload.damage);
+      
       scene.remove(e);
     }, e, { onlySelf: true });
   }
