@@ -35,7 +35,6 @@ export default class SeekTarget extends Component {
   tryToTarget(e) {
     if (!this.target && e.killable && e.targetable) {
       this.target = e;
-      console.log(this.target);
     }
   }
 

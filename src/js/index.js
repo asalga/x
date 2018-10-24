@@ -31,6 +31,10 @@ let p3;
 let timer;
 let perfTimer;
 
+let avgDelta = 0;
+let avgFrames = 0;
+let avgCalc = 0;
+
 let cvs = Utils.getEl('cvs');
 let ctx = cvs.getContext('2d', {alpha: false});
 
@@ -77,7 +81,18 @@ function render() {
 
 function postRender() {
   let timeDiff = new Date().getTime() - perfTimer;
+  
+  avgDelta += timeDiff;
+  avgFrames++;
+
+  if(avgFrames > 100){
+    avgCalc = avgDelta/avgFrames;
+    avgFrames = 0;
+    avgDelta = 0;
+  }
   Debug.add('render ms:' + timeDiff);
+  Debug.add('avg render ms: ' + avgCalc);
+
 
   Renderer.postRender();
 

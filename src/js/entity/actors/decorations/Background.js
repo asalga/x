@@ -19,8 +19,10 @@ export default function createBackground() {
   for (let i = 0; i < COUNT; i++) {
     pos[i] = [p3.random(0, cfg.gameWidth * 2), p3.random(0, cfg.gameHeight * 2)];
 
-    vel[i] = -p3.random(100, 400);
-    sz[i] = [p3.random(2, 6)];
+    vel[i] = -p3.random(50, 400);
+
+    sz[i] = 2 + (((vel[i] / 400)-0.5)*20.0);
+    sz[i] /= 5.;
   }
 
   let spriteRender = new SpriteRender(e, { layerName: 'background' });
@@ -41,8 +43,9 @@ export default function createBackground() {
 
     _p3.noStroke();
     // _p3.clearColor(200);
-    
-    _p3.fill('rgba(33, 66, 99, 0.5)');
+
+    // _p3.fill('rgba(33, 66, 99, 0.5)');
+    _p3.fill('rgba(40, 40, 40, 0.5)');
 
     // _p3.stroke('rgba(200, 200, 200, 0.52)');
     _p3.rect(0, 0, cfg.gameWidth, cfg.gameHeight);

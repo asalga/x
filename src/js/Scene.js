@@ -6,6 +6,7 @@ import Event from './event/Event.js';
 import Spawner from './entity/actors/Spawner.js';
 import Vec2 from './math/Vec2.js';
 import bk from './entity/actors/background.js';
+import cfg from './cfg.js';
 
 export default class Scene {
   constructor() {
@@ -23,10 +24,12 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 5.0) {
+    if (this.tempSpawnTimer > 10.0) {
       this.tempSpawnTimer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
+      let lineWaveLeft = EntityFactory.create('linewave');
+      let lineWaveRight = EntityFactory.create('linewave');
       // circularWave.addComponent(new LifetimeLimit(1))
 
       circularWave.setup({
@@ -34,7 +37,26 @@ export default class Scene {
         count: 3,
         distance: 300
       });
-      circularWave.launch();
+
+      lineWaveLeft.setup({
+        entity: 'mouse',
+        count: 5,
+        dir: -1,
+        pos: new Vec2(0, 0),
+        spacing: 50
+      });
+      lineWaveLeft.launch();
+
+      lineWaveRight.setup({
+        entity: 'mouse',
+        count: 5,
+        dir: 1,
+        pos: new Vec2(cfg.gameWidth, 0),
+        spacing: 50
+      });
+      lineWaveRight.launch();
+
+      // circularWave.launch();
     }
 
     // We can't fire events while we are iterating of the 
@@ -140,18 +162,10 @@ export default class Scene {
 
     this.addUser(EntityFactory.create('user'));
     this.add(EntityFactory.create('background'));
-
-    // this.add(EntityFactory.create('ui'));
-
-    // this.add(EntityFactory.create('mouse'));
-    // let e = new EventSystem();
-    // e.clear();
+    this.add(EntityFactory.create('ui'));
   }
 
   remove(e) {
-    // console.log('remove() ', e.id, e.name);
-    // if (e.name === 'emitter') {
-    // }
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;

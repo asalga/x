@@ -97,7 +97,7 @@ export default function createUserRocketBullet() {
     velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });
   emitter.virtualParent = e;
-  // scene.add(emitter);
+  scene.add(emitter);
 
   return e;
 }

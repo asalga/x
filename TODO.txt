@@ -12,7 +12,8 @@ continue on its lastVel
  * Create Object Pool
  * Test adding 2 components to an entity and removing one of them
  * Fix NearDeathIndicator
- 
+ * Document 'remove' event 
+ * Create 'entergameboard' event
 
 # TODO - Low
  * rename scene.deleteQueue variable
@@ -35,7 +36,6 @@ continue on its lastVel
 
 * Create method to getClosestBaddieOnGameBoard
 
-
 --------
 * Add property to make Missiles only target entities
 that haven't been targeted
@@ -46,6 +46,5 @@ that haven't been targeted
 
 * Bullets have linger hurt 
  if bullets kill an enemy rocket, the rockets should immediately be destroyed
-
 
  https://www.gamedev.net/articles/visual-arts/color-palettes-r4964/?utm_source=gamedevdirect&utm_medium=email
