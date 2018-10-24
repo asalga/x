@@ -3,7 +3,6 @@
 import Entity from '../../Entity.js';
 import EntityFactory from '../../EntityFactory.js';
 import Vec2 from '../../../math/Vec2.js';
-
 import cfg from '../../../cfg.js';
 
 import SpriteRender from '../../components/SpriteRender.js';
