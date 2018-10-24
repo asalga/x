@@ -14,7 +14,7 @@ export default class SeekTarget extends Component {
     super(e, 'seektarget');
     let defaults = {
       target: null,
-      maxSpeed: 100,
+      maxSpeed: 500,
       maxVel: 50,
       maxSteerForce: 2,
     };

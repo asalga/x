@@ -21,13 +21,9 @@ export default function createCrystal() {
     t.addComponent(new LingerHurt(t, { dmg: 9, lingerTime: time }));
   };
 
-  // let [w, h] = [150, 150];
-  // width: w, height: h, 
-  let spriteRender = new SpriteRender(e, { layer: 2 });
+  let spriteRender = new SpriteRender(e, { layerName: 'effect' });
   spriteRender.draw = function(_p3) {
     let sz = e.getRoot().bounds.radius + 10;
-    // this.p3.clearAll();
-    // this.p3.clear();
     _p3.save();
     _p3.stroke(33, 66, 130);
     _p3.strokeWeight(4);

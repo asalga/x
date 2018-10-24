@@ -15,7 +15,7 @@ import teleporter from './actors/Teleporter.js';
 import emitter from './actors/decorations/Emitter.js';
 import smoke from './actors/decorations/Smoke.js';
 import spark from './actors/decorations/Spark.js';
-
+import background from './actors/decorations/Background.js';
 
 import ui from './actors/Ui.js';
 
@@ -50,6 +50,7 @@ createFuncs.set('flakgun', flakGun);
 // DECORATIONS
 createFuncs.set('emitter', emitter);
 createFuncs.set('smoke', smoke);
+createFuncs.set('background', background);
 // smoke
 // spark
 

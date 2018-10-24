@@ -17,9 +17,6 @@ import cfg from './cfg.js';
 
 window.gameTime = 0;
 window.gameFrameCount = 0;
-window.gameWidth = 640;
-window.gameHeight = 480;
-
 window.Renderer = Renderer;
 
 window.count = 0;
@@ -56,7 +53,7 @@ function update(dt) {
 
   let totalVec2Calls = vec2_ctor.toLocaleString();
   Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
-  Debug.add(`${window.count}`);
+  // Debug.add(`${window.count}`);
 
   scene.update(dt);
 
@@ -92,15 +89,11 @@ function postRender() {
 
 function setup() {
   p3 = new P3(cvs, ctx);
-  p3.clearColor(25, 80, 100);
+  // p3.clearColor(25, 80, 100);
 
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
   window.p3 = p3;
-
-  // window.effects = document.createElement('canvas');
-  // window.effects.width = 640;
-  // window.effects.height = 480;
 
   // spawner = EntityFactory.create('spawner');
   // list of waves (?)

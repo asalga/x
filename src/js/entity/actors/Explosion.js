@@ -19,7 +19,7 @@ export default function createExplosion() {
   let time = .5;
 
   // width: sz * 2 + 5,height: sz * 2 + 5,
-  let spriteRender = new SpriteRender(e, { layer: 3 });
+  let spriteRender = new SpriteRender(e, { layerName: 'effect' });
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
     let opacity = e.lifetimelimit.timeLeft() / time;

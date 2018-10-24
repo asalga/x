@@ -1,22 +1,5 @@
 # X
 
-- Document Renderer
-
-- Conventions
-
-Events
- - entityadded
- - collision
- - hurt 
- - killed
- - death <- rename to entityremoved?
- - increasescore
- - payload
- 
- - GAME_MOUSE_DOWN
- - GAME_MOUSE_UP
-
-
 Entities
  - 'mouse'
  - 'bee'

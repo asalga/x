@@ -19,17 +19,13 @@ export default function createFreezeBullet() {
   scene.add(e);
 
   // COMPONENTS
-  // let spriteSz = 32;
-  // width: spriteSz, height: spriteSz, 
-  let spriteRender = new SpriteRender(e, { layer: 2 });
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
-    // _p3.clearAll();
     _p3.save();
     _p3.stroke(255);
     _p3.strokeWeight(2);
     _p3.fill('rgba(200, 200, 200, .2)');
-    // _p3.translate(this.p3.width / 2, this.p3.height / 2);
     _p3.translate(e.pos.x, e.pos.y);
     _p3.rotate(Math.PI / 4);
     _p3.rect(-sz / 2, -sz / 2, sz, sz);

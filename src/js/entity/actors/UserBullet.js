@@ -20,7 +20,7 @@ export default function createBullet() {
   //   // console.log('bullet death');
   // });
 
-  let spriteRender = new SpriteRender(e, { layer: 1 });
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     _p3.save();
     _p3.strokeWeight(2);

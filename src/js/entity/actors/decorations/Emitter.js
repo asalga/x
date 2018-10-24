@@ -152,7 +152,7 @@ export default function createEmitter() {
 
   e.update = function(dt) {
     timer += dt;
-    Debug.add(window._count);
+    // Debug.add(window._count);
 
     for (let i = 0; i < p.length; ++i) {
       if (_alive[i]) {

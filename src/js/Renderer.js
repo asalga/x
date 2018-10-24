@@ -2,45 +2,44 @@
 
 import PriorityQueue from './core/PriorityQueue.js';
 import P3 from './P3.js';
+import cfg from './cfg.js';
 
-// let layers = {};
 let pq = new PriorityQueue();
 
 function createLayer() {
   let cvs = document.createElement('canvas');
-  cvs.width = 640;
-  cvs.height = 480;
+  [cvs.width, cvs.height] = [cfg.gameWidth, cfg.gameHeight];
 
   let p3 = new P3(cvs, cvs.getContext('2d', { alpha: true }));
-
   p3.imageMode('center');
-  p3.clearColor(25, 80, 10);
+  // p3.clearColor(25, 80, 10);
   return p3;
 }
 
-// This method allows us to easily switch ordering
-let layerOrder = [
-  'bk',
-  'spriteprops', 
-  'sprite',
-  'bullet',
-  'effect',
-  'ui',
-  'debug'
+// Change the order of these tags to change rendering order
+let layerRenderOrder = [
+  { name: 'background', cfg: { 'clearFrame': false } },
+  { name: 'spriteprops', cfg: { 'clearFrame': true } },
+  { name: 'sprite', cfg: { 'clearFrame': true } },
+  { name: 'bullet', cfg: { 'clearFrame': true } },
+  { name: 'effect', cfg: { 'clearFrame': true } },
+  { name: 'ui', cfg: { 'clearFrame': true } },
+  { name: 'debug', cfg: { 'clearFrame': true } }
 ];
 
 let layerMap = new Map();
 let layers = [];
 
-layerOrder.forEach(name => {
-  
+layerRenderOrder.forEach(obj => {
+
   let layer = {
     'p3': createLayer(),
-    'renderables': []
+    'renderables': [],
+    'cfg': obj.cfg
   };
 
   layers.push(layer);
-  layerMap.set(name, layer);
+  layerMap.set(obj.name, layer);
 })
 
 
@@ -48,6 +47,7 @@ export default class Renderer {
 
   static render() {
 
+    // TODO: remove?
     p3.clear();
     // scene.draw(p3);
 
@@ -82,7 +82,11 @@ export default class Renderer {
               //             pq.enqueue(c, c.layer);
 
               let layer = layerMap.get(c.layerName);
-              layer.renderables.push(c);
+              // Layer may not exist if we are debugging
+              layer && layer.renderables.push(c);
+              //if (layer) {
+              // layer.renderables.push(c);
+              // }
             }
           });
         }
@@ -94,8 +98,8 @@ export default class Renderer {
           // c.opacity = rootOpacity;
           // pq.enqueue(c, c.layer);
           // layers[c.layer].renderables.push(c);
-              let layer = layerMap.get(c.layerName);
-              layer.renderables.push(c);
+          let layer = layerMap.get(c.layerName);
+          layer && layer.renderables.push(c);
         }
       });
 
@@ -110,7 +114,11 @@ export default class Renderer {
     // Draw the entities onto their layers
     layers.forEach(_layer => {
       let _p3 = _layer.p3;
-      _p3.clearAll();
+
+      if (_layer.cfg.clearFrame) {
+        _p3.clearAll();
+      }
+
       let r = _layer.renderables;
 
       r.forEach(c => {

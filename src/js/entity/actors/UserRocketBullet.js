@@ -3,6 +3,7 @@
 import Entity from '../Entity.js';
 import EntityFactory from '../EntityFactory.js';
 
+import Killable from '../components/Killable.js';
 import Payload from '../components/Payload.js';
 import Collidable from '../components/Collidable.js';
 import SeekTarget from '../components/SeekTarget.js';
@@ -29,16 +30,16 @@ export default function createUserRocketBullet() {
   }, e);
 
   e.on('death', function(data) {
-    debugger;
     let explosion = EntityFactory.create('explosion');
     explosion.pos.set(data.pos);
     scene.add(explosion);
-  }, e);
+  }, e, { onlySelf: true, onlyOnce: data => [data.id] });
 
   // COMPONENTS
   // let spriteSz = 32;
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   //, width: spriteSz, height: spriteSz });
+  
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
     // _p3.clearAll();
@@ -57,11 +58,13 @@ export default function createUserRocketBullet() {
     // p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   }
   e.addComponent(spriteRender);
+  e.addComponent(new Killable(e));
+
   // e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5, lingerTime: 1 }));
   e.addComponent(new LifetimeLimit(e, { limit: 4 }));
 
-  e.addComponent(new SeekTarget(e, { maxVel: 300, maxSteerForce: 2 }));
+  e.addComponent(new SeekTarget(e, { maxVel: 200, maxSpeed: 300, maxSteerForce: 10 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   // TODO: is this the best place for this?
@@ -75,7 +78,7 @@ export default function createUserRocketBullet() {
   }
 
   let emitter = EntityFactory.create('emitter');
-  let div = 5;
+  let div = 6;
   emitter.setup({
     // count: 40,
     // rate: 10,
@@ -84,9 +87,9 @@ export default function createUserRocketBullet() {
     // opacityRange: [.7, .7]
 
     count: 300,
-    rate: 50,
-    ageRange: [.5, 2.0],
-    sizeRange: [.5, 2.5],
+    rate: 70,
+    ageRange: [1.7, 2.0],
+    sizeRange: [1.5, 2.5],
     opacityRange: [.7, 1.0],
     velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });

@@ -5,31 +5,33 @@ import EventSystem from './event/EventSystem.js';
 import Event from './event/Event.js';
 import Spawner from './entity/actors/Spawner.js';
 import Vec2 from './math/Vec2.js';
-
+import bk from './entity/actors/background.js';
 
 export default class Scene {
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 4;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
     this.eventsToFireNextFrame = [];
+
+    // move this out of scene
+    this.tempSpawnTimer = 4;
   }
 
   update(dt) {
 
-    this.timer += dt;
-    if (this.timer > 5.0) {
-      this.timer = 0;
+    this.tempSpawnTimer += dt;
+    if (this.tempSpawnTimer > 5.0) {
+      this.tempSpawnTimer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
       // circularWave.addComponent(new LifetimeLimit(1))
-      
+
       circularWave.setup({
         entity: 'mouse',
-        count: 5,
+        count: 3,
         distance: 300
       });
       circularWave.launch();
@@ -46,8 +48,10 @@ export default class Scene {
 
       // let the children do any cleanup.
       this.deleteQueue.forEach(e => {
+        new Event({ evtName: 'death', data: e}).fire();
+
         let evt = new Event({ evtName: 'remove', data: e });
-        evt.fire();
+        evt.fire();        
       });
 
       this.deleteQueue.forEach(e => {
@@ -131,6 +135,8 @@ export default class Scene {
     this.deleteQueue = [];
 
     this.addUser(EntityFactory.create('user'));
+    this.add(EntityFactory.create('background'));
+
     // this.add(EntityFactory.create('ui'));
 
     // this.add(EntityFactory.create('mouse'));
@@ -141,7 +147,6 @@ export default class Scene {
   remove(e) {
     // console.log('remove() ', e.id, e.name);
     // if (e.name === 'emitter') {
-      // debugger;
     // }
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {

@@ -16,7 +16,7 @@ export default function createPlamaBullet() {
 
   scene.add(e);
 
-  let spriteRender = new SpriteRender(e, { layer: 2 });
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     _p3.save();
     _p3.noStroke();

@@ -23,18 +23,13 @@ export default function createFlakBullet(cfg) {
     this.rot = this.distancecountdown.travelled() / 15;
   }
 
-  // let spriteSz = 32;
-  // width: spriteSz, height: spriteSz, 
-  let spriteRender = new SpriteRender(e, { layer: 2 });
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
-    // this.p3.clearAll();
-    // this.p3.clear();
     _p3.save();
     _p3.strokeWeight(2);
     _p3.stroke('yellow');
-    _p3.fill('rgb(0, 0, 0)');
-    // _p3.translate(this.p3.width / 2, this.p3.height / 2);
+    _p3.fill(0);
     _p3.translate(e.pos.x, e.pos.y);
     _p3.rotate(e.rot);
     _p3.rect(-sz, -sz / 2, sz * 2, sz);

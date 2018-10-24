@@ -20,7 +20,7 @@ export default class Debug {
 
     p3.save();
     p3.noStroke();
-    p3.fill(0);
+    p3.fill(255);
     let y = 20;
     let ySpacing = 18;
 
