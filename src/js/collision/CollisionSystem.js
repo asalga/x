@@ -60,7 +60,10 @@ export default class CollisionSystem {
 
   static checkCollisions() {
     checks = 0;
-    debugChecks = [];
+
+    if(window.debug){
+      debugChecks = [];
+    }
 
     let e1, e2;
 
@@ -100,9 +103,11 @@ export default class CollisionSystem {
     }
 
     Debug.add(`Collision Checks: ${checks}`);
-    debugChecks.forEach( s => {
-      Debug.add('  ' + debugChecks);
-    });
+    if(window.debug){
+      debugChecks.forEach( s => {
+        Debug.add(debugChecks);
+      });
+    }
 
   }
 }

@@ -33,7 +33,7 @@ export default class EventSystem {
   // system to order the values nicely for the listeners.
   // This makes the logic in the collision listeners much cleaner.
   orderEntities(data, evtObj) {
-    if (data.self === evtObj.ctx) return;
+    if (data.self === evtObj.ctx) { return; }
     [data.other, data.self] = [data.self, data.other];
   }
 
@@ -78,14 +78,13 @@ export default class EventSystem {
 
     let evtObjs = this.listeners[evtName];
 
-
     evtObjs.forEach((evtObj, id) => {
       let data = e.data;
 
       // if(e.data.name === 'mouse'){
-        // debugger;  
+      // debugger;  
       // }
-      
+
 
       // If there isn't a context, just invoke the callback
       if (!evtObj.ctx) {

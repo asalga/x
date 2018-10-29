@@ -16,13 +16,13 @@ function createLayer() {
 
 // Change the order of these tags to change rendering order
 let layerConfig = [
-  { name: 'background', cfg: { 'clearFrame': false } },
-  { name: 'spriteprops', cfg: { 'clearFrame': true } },
-  { name: 'sprite', cfg: { 'clearFrame': true } },
-  { name: 'bullet', cfg: { 'clearFrame': true } },
-  { name: 'effect', cfg: { 'clearFrame': true } },
-  { name: 'ui', cfg: { 'clearFrame': true } },
-  { name: 'debug', cfg: { 'clearFrame': true } }
+  // { name: 'background', cfg: { 'clearFrame': false } },
+  // { name: 'spriteprops', cfg: { 'clearFrame': true } },
+  // { name: 'sprite', cfg: { 'clearFrame': true } },
+  // { name: 'bullet', cfg: { 'clearFrame': true } },
+  // { name: 'effect', cfg: { 'clearFrame': true } },
+  // { name: 'ui', cfg: { 'clearFrame': true } },
+  // { name: 'debug', cfg: { 'clearFrame': true } }
 ];
 
 let layerMap = new Map();

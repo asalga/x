@@ -33,7 +33,7 @@ export default function createTeleporter() {
     p3.fill(64, 202, 238);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   // force the user to add the Teleporter it via setup()

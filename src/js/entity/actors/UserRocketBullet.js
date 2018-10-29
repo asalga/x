@@ -59,7 +59,7 @@ export default function createUserRocketBullet() {
 
     // p3.drawImage(this.sprite, 0, 0);
     // p3.drawImage(this.sprite, e.pos.x, e.pos.y);
-  }
+  };
   e.addComponent(spriteRender);
   e.addComponent(new Killable(e));
 
@@ -78,7 +78,7 @@ export default function createUserRocketBullet() {
     } else {
       this.seektarget.target = scene.getClosestBaddie(this.pos);
     }
-  }
+  };
 
   let emitter = EntityFactory.create('emitter');
   let div = 6;

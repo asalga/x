@@ -31,7 +31,7 @@ export default function createFreezeBullet() {
     _p3.rect(-sz / 2, -sz / 2, sz, sz);
     _p3.restore();
     // p3.drawImage(this.sprite, 0,0);//e.pos.x, e.pos.y);
-  }
+  };
   e.addComponent(spriteRender);
 
   e.on('collision', data => {

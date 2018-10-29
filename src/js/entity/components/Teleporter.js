@@ -99,7 +99,7 @@ export default class Teleporter extends Component {
         .to(this.root.pos, this.moveTime, waypoints[currWaypoint]) // MOVE
         .to(this.root, this.fadeTime, { // FADE IN
           opacity: 1,
-          delay: .5,
+          delay: 0.5,
           onCompleteScope: this,
           onStart: () => {
             this.root.setWeaponsEnabled(true);

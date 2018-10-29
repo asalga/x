@@ -16,7 +16,7 @@ export default function createExplosion() {
 
   let sz = 50;
   e.bounds = new BoundingCircle(e.pos, sz);
-  let time = .5;
+  let time = 0.5;
 
   // width: sz * 2 + 5,height: sz * 2 + 5,
   let spriteRender = new SpriteRender(e, { layerName: 'effect' });

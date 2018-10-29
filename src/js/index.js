@@ -23,7 +23,10 @@ window.count = 0;
 window.debug = true;
 window.Debug = Debug;
 window.scene = null;
+
 window.vec2_ctor = 0;
+window.clearArrayCalls = 0;
+
 window.Events = new EventSystem();
 window.ignoreDirty = false;
 
@@ -92,7 +95,7 @@ function postRender() {
   }
   Debug.add('render ms:' + timeDiff);
   Debug.add('avg render ms: ' + avgCalc);
-
+  Debug.add('clear array calls:' + window.clearArrayCalls);
 
   Renderer.postRender();
 

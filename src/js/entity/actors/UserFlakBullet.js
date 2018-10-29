@@ -21,7 +21,7 @@ export default function createFlakBullet(cfg) {
 
   e.updateProxy = function(dt) {
     this.rot = this.distancecountdown.travelled() / 15;
-  }
+  };
 
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
@@ -34,9 +34,8 @@ export default function createFlakBullet(cfg) {
     _p3.rotate(e.rot);
     _p3.rect(-sz, -sz / 2, sz * 2, sz);
     _p3.restore();
-
     // p3.drawImage(this.sprite, 0, 0); // e.pos.x, e.pos.y);
-  }
+  };
 
   e.addComponent(spriteRender);
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));

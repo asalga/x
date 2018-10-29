@@ -44,7 +44,7 @@ export default function createUser() {
     _p3.ellipse(x, y, user.size, user.size);
 
     _p3.restore();
-  }
+  };
   user.addComponent(spriteRender);
 
 

@@ -19,7 +19,7 @@ export default function createSpark() {
     //(100, 111, 140);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   e.updateProxy = function(dt) {

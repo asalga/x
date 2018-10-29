@@ -43,9 +43,8 @@ export default function createUI() {
     _p3.restore();
 
     // p3.drawImage(this.sprite, 0, 0);
-  }
+  };
   e.addComponent(spriteRender);
-
 
   return e;
 }

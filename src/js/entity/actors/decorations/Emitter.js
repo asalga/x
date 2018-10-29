@@ -72,7 +72,7 @@ export default function createEmitter() {
       _p3.ellipse(_pos[i * 2], _pos[i * 2 + 1], sz, sz);
     }
     // p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
-  }
+  };
   spriteRender.renderAtRoot = true;
   e.addComponent(spriteRender);
 
@@ -128,16 +128,16 @@ export default function createEmitter() {
 
     _size[idx] = p3.random(params.sizeRange[0], params.sizeRange[1]);
     _opacity[idx] = p3.random(params.opacityRange[0], params.opacityRange[1]);
-  }
+  };
 
   e.killParticle = function(idx) {
     _alive[idx] = false;
-  }
+  };
 
   e.allParticlesDead = function() {
     let particlesAlive = _alive.filter(p => p);
     return particlesAlive.length === 0;
-  }
+  };
 
   let findFreeParticle = function() {
     for (let i = p.length - 1; i > 0; --i) {
@@ -229,17 +229,17 @@ export default function createEmitter() {
     //   _size.push(0);
     //   _opacity.push(0);
     // }
-  }
+  };
 
   e.play = function() {
     console.log('emitter play');
-  }
+  };
 
   e.stop = function() {
     console.log('emitter stop');
     this.detachFromParent();
     this.isDead = true;
-  }
+  };
 
   return e;
 }

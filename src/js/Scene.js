@@ -1,12 +1,17 @@
 'use strict';
 
-import EntityFactory from './entity/EntityFactory.js';
 import EventSystem from './event/EventSystem.js';
 import Event from './event/Event.js';
+
+import EntityFactory from './entity/EntityFactory.js';
 import Spawner from './entity/actors/Spawner.js';
-import Vec2 from './math/Vec2.js';
 import bk from './entity/actors/background.js';
+
+import Vec2 from './math/Vec2.js';
 import cfg from './cfg.js';
+import Utils from './Utils.js';
+
+let _closestBaddie = [];
 
 export default class Scene {
   constructor() {
@@ -85,7 +90,8 @@ export default class Scene {
 
       // Allow the entities to do any cleanup
       this.deleteQueue.forEach(e => e.indicateRemove());
-      this.deleteQueue.length = 0;
+
+      Utils.clearArray(this.deleteQueue);
     }
 
     this.entities.forEach(e => e.update(dt));
@@ -115,20 +121,19 @@ export default class Scene {
     Make this generic, we'll need to use it in other contexts
   */
   getClosestBaddie(v) {
-    let ls = [];
+    Utils.clearArray(_closestBaddie);
     this.entities.forEach(e => {
       if (e.killable && !e.killable.dead && e.targetable && e.name !== 'user') {
-        // debugger;
-        ls.push(e);
+        _closestBaddie.push(e);
       }
     });
 
-    if (ls.length === 0) { return null; }
+    if (_closestBaddie.length === 0) { return null; }
 
     let len = Infinity;
-    let closest = ls[0];
+    let closest = _closestBaddie[0];
 
-    ls.forEach(l => {
+    _closestBaddie.forEach(l => {
       let d = Vec2.sub(l.pos, v).length();
 
       if (d <= len) {

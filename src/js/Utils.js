@@ -35,6 +35,13 @@ export default class Utils {
     }
   }
 
+  // playing around with perf testing
+  // .length = [] vs allocating new array
+  static clearArray(arr){
+    window.clearArrayCalls++;
+    arr.length = 0;
+  }
+
   // this is shit
   static removeFromArray(arr, el) {
     let idx = -1;

@@ -45,7 +45,7 @@ export default function createRocketBullet() {
     let sz = e.bounds.radius;
     p3.rect(-sz, -sz / 2, sz * 2, sz);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 1 }));
   e.addComponent(new SeekTarget(e, { maxVel: 120, target: scene.getUser() }));

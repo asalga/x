@@ -231,6 +231,7 @@ export default class Entity {
     // don't call off(), since we don't want to modify an
     // array while we iterate over it.
     this.registeredEvents.forEach(id => Events.off(id));
-    this.registeredEvents = [];
+    // this.registeredEvents = [];
+    Utils.clearArray(this.registeredEvents);
   }
 }
