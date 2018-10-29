@@ -35,7 +35,7 @@ export default function createCrystal() {
     _p3.rotate(Math.PI / 4);
     _p3.rect(-sz, -sz, sz * 2, sz * 2);
     _p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   e.addComponent(new LifetimeLimit(e, {

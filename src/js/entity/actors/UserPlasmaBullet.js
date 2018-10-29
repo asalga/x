@@ -24,7 +24,7 @@ export default function createPlamaBullet() {
     let sz = e.bounds.radius;
     _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     _p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 10, lingerTime: 2 }));
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));

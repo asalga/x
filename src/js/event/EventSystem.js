@@ -39,7 +39,7 @@ export default class EventSystem {
 
   // Occurs on the WeaponSwitcher
   eventsAreOffForEntity(ctx) {
-    if (!ctx.entity) return false;
+    if (!ctx.entity) { return false; }
     return !ctx.entity.eventsOn;
   }
 
@@ -104,7 +104,9 @@ export default class EventSystem {
           let res = Object.values(data).filter(v => v === evtObj.ctx);
 
           // TODO: clean this up.
-          if (res.length === 0 && data !== evtObj.ctx) return;
+          if (res.length === 0 && data !== evtObj.ctx) {
+            return;
+          }
         }
 
         if (cfg.onlyOnce) {
@@ -149,6 +151,7 @@ export default class EventSystem {
 
   clear() {
     // be super careful when calling this!
+    /*jshint -W087 */
     debugger;
     this.listeners = {};
   }

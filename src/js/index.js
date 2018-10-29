@@ -24,7 +24,7 @@ window.debug = true;
 window.Debug = Debug;
 window.scene = null;
 
-window.vec2_ctor = 0;
+window.vec2Ctor = 0;
 window.clearArrayCalls = 0;
 
 window.Events = new EventSystem();
@@ -58,7 +58,7 @@ function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
   Debug.add(`Entity count: ${scene.entities.size}`);
 
-  let totalVec2Calls = vec2_ctor.toLocaleString();
+  let totalVec2Calls = window.vec2Ctor.toLocaleString();
   Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
   // Debug.add(`${window.count}`);
 

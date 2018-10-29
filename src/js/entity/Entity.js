@@ -55,12 +55,16 @@ export default class Entity {
 
   // TODO: yup, implement this too
   setPropertyRecursive(name, v) {
+    /*jshint -W087 */
     debugger;
   }
 
   update(dt) {
-    // sanity check
-    if (Number.isNaN(this.vel.x)) { debugger; }
+    // TODO: replace with assert
+    if (Number.isNaN(this.vel.x)) {
+      /*jshint -W087 */
+      debugger;
+    }
 
     // let deltaTime = dt * this.timeScale;
     let deltaTime = dt; // * this.timeScale;
@@ -138,6 +142,7 @@ export default class Entity {
   }
 
   removeChild(e) {
+    /*jshint -W087 */
     debugger;
   }
 

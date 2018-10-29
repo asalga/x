@@ -9,8 +9,8 @@ export default class WeaponSwitcher extends Component {
     this.weapons = new Map();
     this.mouseDown = false;
 
-    this.on('GAME_MOUSE_DOWN', function() { this.mouseDown = true }, this);
-    this.on('GAME_MOUSE_UP', function() { this.mouseDown = false }, this);
+    this.on('GAME_MOUSE_DOWN', function() { this.mouseDown = true; }, this);
+    this.on('GAME_MOUSE_UP', function() { this.mouseDown = false; }, this);
 
     document.addEventListener('keydown', e => {
       if (this.weapons.has(e.key) === false) { return; }
@@ -50,7 +50,7 @@ export default class WeaponSwitcher extends Component {
   }
 
   addWeapon(key, entity) {
-    this.weapons.set(key, entity)
+    this.weapons.set(key, entity);
   }
 
   update(dt) {}

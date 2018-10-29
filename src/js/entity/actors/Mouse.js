@@ -52,7 +52,7 @@ export default function createMouse() {
     // this.dirty = true;
     // }
     // _p3.drawImage(this.sprite, 0, 0);
-  }
+  };
   e.addComponent(spriteRender);
 
   e.addComponent(new GoToTarget(e, {

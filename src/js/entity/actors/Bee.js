@@ -40,7 +40,7 @@ export default function createMouse() {
     //(100, 111, 140);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   e.updateProxy = function(dt) {
@@ -95,7 +95,7 @@ export default function createMouse() {
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));
-    }
+    };
     rocketGun.addComponent(rocketLauncher);
     e.add(rocketGun);
   }

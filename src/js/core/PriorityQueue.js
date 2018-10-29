@@ -33,9 +33,10 @@ export default class PriorityQueue {
   }
 
   printPQueue() {
-    var str = "";
-    for (var i = 0; i < this.items.length; i++)
-      str += this.items[i].obj + " ";
+    var str = '';
+    for (var i = 0; i < this.items.length; i++){
+      str += this.items[i].obj + ' ';
+    }
     return str;
   }
   

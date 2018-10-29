@@ -30,7 +30,7 @@ export default function createBullet() {
     _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     // p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     _p3.restore();
-  }
+  };
 
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 1, lingerTime:1 }));

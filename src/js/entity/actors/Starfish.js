@@ -49,7 +49,7 @@ export default function createStarFish() {
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));
-    }
+    };
     rocketGun.addComponent(rocketLauncher);
     e.add(rocketGun);
   }

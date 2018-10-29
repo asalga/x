@@ -34,7 +34,7 @@ export default class Launcher extends Component {
     this.timer = 0;
     this.rate = 1 / this.shotsPerSecond;
 
-    this.on('GAME_MOUSE_DOWN', () => { this.firing = true }, this);
+    this.on('GAME_MOUSE_DOWN', () => { this.firing = true; }, this);
     this.on('GAME_MOUSE_UP', () => { this.firing = false; }, this);
 
     // this.getVecToCursor = function() {
@@ -58,7 +58,7 @@ export default class Launcher extends Component {
 
       // TODO: find better way for this?
       bullet.postLaunch && bullet.postLaunch();
-    }
+    };
     // let gunTip = this.getVecToCursor();
     // gunTip.add(p3.width / 2, p3.height / 2);
     // bullet.pos.set(gunTip);

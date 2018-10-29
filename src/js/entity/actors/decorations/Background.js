@@ -22,7 +22,7 @@ export default function createBackground() {
     vel[i] = -p3.random(50, 400);
 
     sz[i] = 2 + (((vel[i] / 400)-0.5)*20.0);
-    sz[i] /= 5.;
+    sz[i] /= 5.0;
   }
 
   let spriteRender = new SpriteRender(e, { layerName: 'background' });
@@ -55,7 +55,7 @@ export default function createBackground() {
       _p3.rect(pos[i][0], pos[i][1], sz[i], sz[i]);
     }
     // _p3.restore();
-  }
+  };
 
   e.addComponent(spriteRender);
 

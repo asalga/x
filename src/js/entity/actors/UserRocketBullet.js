@@ -93,7 +93,7 @@ export default function createUserRocketBullet() {
     rate: 30,
     ageRange: [1.7, 2.0],
     sizeRange: [1.5, 2.5],
-    opacityRange: [.7, 1.0],
+    opacityRange: [0.7, 1.0],
     velocityRange: [new Vec2(-div, -div), new Vec2(div, div)]
   });
   emitter.virtualParent = e;

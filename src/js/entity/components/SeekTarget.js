@@ -16,7 +16,7 @@ export default class SeekTarget extends Component {
       maxVel: 50,
       maxSteerForce: 2,
     };
-    Utils.applyProps(this, defaults, cfg)
+    Utils.applyProps(this, defaults, cfg);
 
     // this.connectToTarget(target);
 

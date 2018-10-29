@@ -69,7 +69,7 @@ export default class Teleporter extends Component {
       if (currWaypoint > waypoints.length - 1) {
         currWaypoint = 0;
       }
-    }
+    };
 
     this.root.pos.set(waypoints[currWaypoint]);
     let that = this;

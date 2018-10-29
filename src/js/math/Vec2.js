@@ -2,7 +2,7 @@
 
 export default class Vec2 {
   constructor() {
-    window.vec2_ctor++;
+    window.vec2Ctor++;
 
     let x, y;
 
