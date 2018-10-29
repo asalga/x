@@ -7,9 +7,9 @@ import Event from '../event/Event.js';
 import EventSystem from '../event/EventSystem.js';
 
 import Utils from '../Utils.js';
+import Pool from '../core/Pool.js';
 
-// tempvec
-let _v = Vec2.create();
+let _temp = Vec2.create();
 
 export default class Entity {
   constructor(cfg) {
@@ -19,15 +19,20 @@ export default class Entity {
     };
     Utils.applyProps(this, defaults, cfg);
 
+    console.log('test');
+
     this.id = Utils.getId();
 
     this.eventsOn = true;
-    // this.registeredEvents = new Map();
     this.registeredEvents = [];
 
-    this.pos = Vec2.create();
-    this.vel = Vec2.create();
-    this.acc = Vec2.create();
+    this.pos = Pool.get('vec2');
+    this.vel = Pool.get('vec2');
+    this.acc = Pool.get('vec2');
+    this._collisionTransform = Pool.get('vec2');
+    // this.pos = Vec2.create();
+    // this.vel = Vec2.create();
+    // this.acc = Vec2.create();
 
     this.rot = 0;
 
@@ -37,6 +42,13 @@ export default class Entity {
     this.components = [];
     this.children = [];
     this.parent = null;
+  }
+
+  /*
+    Reset object for the pool
+  */
+  reset() {
+
   }
 
   setup() {}
@@ -82,15 +94,15 @@ export default class Entity {
     if (this.vel) {
       //let d = this.vel.clone().mult(deltaTime * this.timeScale);
 
-      _v.set(this.vel);
-      Vec2.multSelf(_v, deltaTime * this.timeScale);
+      _temp.set(this.vel);
+      Vec2.multSelf(_temp, deltaTime * this.timeScale);
 
       // let [x, y] = [
       // this.vel.x * deltaTime * this.timeScale,
       // this.vel.y * deltaTime * this.timeScale
       // ];
-      this.pos.x += _v.x;
-      this.pos.y += _v.y;
+      this.pos.x += _temp.x;
+      this.pos.y += _temp.y;
 
       // Vec2.addSelf(this.pos,  );
       // this.pos.add(d);
@@ -123,12 +135,16 @@ export default class Entity {
   }
 
   /*
-    If a component needs to remove the associate entity,
+    If a component needs to remove the associated entity,
     give it a method that abstracts out whether the entity
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
-    // console.log('remove self:', this.name);
+    Pool.free('vec2', this.pos);
+    Pool.free('vec2', this.vel);
+    Pool.free('vec2', this.acc);
+    Pool.free('vec2', this._collisionTransform);
+
     if (this.parent) {
       this.parent.removeDirectChild(this);
     } else {
@@ -192,7 +208,6 @@ export default class Entity {
   removeComponent(c) {
     Utils.removeFromArray(this.components, c);
     this.components[c.name] = undefined;
-    // this.components[c.name] = Utils.undef;
   }
 
   removeComponentByName(str) {
@@ -242,7 +257,6 @@ export default class Entity {
     // don't call off(), since we don't want to modify an
     // array while we iterate over it.
     this.registeredEvents.forEach(id => Events.off(id));
-    // this.registeredEvents = [];
     Utils.clearArray(this.registeredEvents);
   }
 }

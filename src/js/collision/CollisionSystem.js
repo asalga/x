@@ -24,16 +24,11 @@ export default class CollisionSystem {
     if (firstTime || scene.entitiesAddedOrRemovedDirty) {
       firstTime = false;
       Utils.clearArray(list);
-      // list.length = 0;
 
       scene.entities.forEach(e => {
 
         _entityCoords.zero();
         e.getWorldCoords(_entityCoords);
-
-        if (!e._collisionTransform) {
-          e._collisionTransform = Vec2.create();
-        }
         e._collisionTransform.set(_entityCoords);
 
         // root        
@@ -44,12 +39,7 @@ export default class CollisionSystem {
 
             _compCoords.zero();
             ch.getWorldCoords(_compCoords);
-
-            // ch.getWorldCoords(_compCoords);
-            if (!ch._collisionTransform) {
-              ch._collisionTransform = Vec2.create();
-            }
-            ch._collisionTransform.set(_entityCoords);
+            ch._collisionTransform.set(_compCoords);
             
             list.push(ch);
           }

@@ -18,6 +18,8 @@ import Vec2 from '../../math/Vec2.js';
 import Utils from '../../Utils.js';
 
 let _worldCoords = Vec2.create();
+let _vel = Vec2.create();
+let _gunTip = Vec2.create();
 
 export default class Launcher extends Component {
   constructor(e, cfg) {
@@ -57,20 +59,18 @@ export default class Launcher extends Component {
       _worldCoords.zero();
       this.entity.getWorldCoords(_worldCoords);
 
-      let gunTip = this.direction.clone().mult(60);
-      _worldCoords.add(gunTip);
+      _gunTip.set(this.direction).mult(60);
+      _worldCoords.add(_gunTip);
 
       let bullet = this.createFunc({ pos: _worldCoords });
       bullet.pos.set(_worldCoords);
-      bullet.vel.set(this.direction.clone().mult(this.bulletVel));
+
+      _vel.set(this.direction).mult(this.bulletVel);
+      bullet.vel.set(_vel);
 
       // TODO: find better way for this?
       bullet.postLaunch && bullet.postLaunch();
     };
-    // let gunTip = this.getVecToCursor();
-    // gunTip.add(p3.width / 2, p3.height / 2);
-    // bullet.pos.set(gunTip);
-    // let dir = gunTip.sub(UserPos).normalize();
   }
 
   setEnable(b) {

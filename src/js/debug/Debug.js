@@ -1,5 +1,7 @@
 'use strict';
 
+import Utils from '../Utils.js';
+
 let strings = [];
 let isOn = true;
 
@@ -47,6 +49,6 @@ export default class Debug {
     if (!isOn) {
       return;
     }
-    strings.length = 0;
+    Utils.clearArray(strings);
   }
 }

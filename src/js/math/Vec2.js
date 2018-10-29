@@ -18,6 +18,10 @@ export default class Vec2 {
     this.set(x, y);
   }
 
+  reset(){
+    this.zero();
+  }
+
   toArray() {
     return [this.x, this.y];
   }
@@ -36,6 +40,7 @@ export default class Vec2 {
         this.x = arguments[0];
         this.y = arguments[1];
     }
+    return this;
   }
 
   add(v) {

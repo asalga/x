@@ -15,6 +15,9 @@ import Renderer from './Renderer.js';
 
 import cfg from './cfg.js';
 
+import Pool from './core/Pool.js';
+
+
 window.gameTime = 0;
 window.gameFrameCount = 0;
 window.Renderer = Renderer;
@@ -39,7 +42,7 @@ let avgFrames = 0;
 let avgCalc = 0;
 
 let cvs = Utils.getEl('cvs');
-let ctx = cvs.getContext('2d', {alpha: false});
+let ctx = cvs.getContext('2d', { alpha: false });
 
 document.addEventListener('mousedown', e => new Event({ evtName: 'GAME_MOUSE_DOWN', data: e }).fire());
 document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire());
@@ -47,7 +50,7 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
-  Debug.add(`Entity count: ${scene.entities.size}`);
+  Debug.add(`Root Entity count: ${scene.entities.size}`);
 
   let totalVec2Calls = window.vec2Ctor.toLocaleString();
   Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
@@ -75,18 +78,20 @@ function render() {
 
 function postRender() {
   let timeDiff = new Date().getTime() - perfTimer;
-  
+
   avgDelta += timeDiff;
   avgFrames++;
 
-  if(avgFrames > 100){
-    avgCalc = avgDelta/avgFrames;
+  if (avgFrames > 100) {
+    avgCalc = avgDelta / avgFrames;
     avgFrames = 0;
     avgDelta = 0;
   }
-  Debug.add('render ms:' + timeDiff);
+  Debug.add('render ms: ' + timeDiff);
   Debug.add('avg render ms: ' + avgCalc);
-  Debug.add('clear array calls:' + window.clearArrayCalls);
+  Debug.add('clear array calls: ' + window.clearArrayCalls);
+
+  Debug.add('pool available: ' + Pool.count());
 
   Renderer.postRender();
 
@@ -98,7 +103,7 @@ function postRender() {
 
 function setup() {
   p3 = new P3(cvs, ctx);
-  // p3.clearColor(25, 80, 100);
+  Pool.init();
 
   // TODO: Make scene and p3 static classes?
   scene = new Scene();
@@ -137,6 +142,7 @@ function setup() {
   Debug.init();
   Debug.setOn(window.debug);
 
+  
   // CollisionSystem.setOn(false);
 
   scene.restartGame();

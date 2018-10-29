@@ -67,7 +67,7 @@ export default class Scene {
     // We can't fire events while we are iterating of the 
     // objects being removed, it breaks everything.
     this.eventsToFireNextFrame.forEach(e => e.fire());
-    this.eventsToFireNextFrame.length = 0;
+    Utils.clearArray(this.eventsToFireNextFrame);
 
     // Seems like this is the best place for this flag to be turned on.
     if (this.deleteQueue.length > 0) {
