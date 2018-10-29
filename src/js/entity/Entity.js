@@ -9,7 +9,7 @@ import EventSystem from '../event/EventSystem.js';
 import Utils from '../Utils.js';
 
 // tempvec
-let _v = new Vec2();
+let _v = Vec2.create();
 
 export default class Entity {
   constructor(cfg) {
@@ -25,9 +25,10 @@ export default class Entity {
     // this.registeredEvents = new Map();
     this.registeredEvents = [];
 
-    this.pos = new Vec2();
-    this.vel = new Vec2();
-    this.acc = new Vec2();
+    this.pos = Vec2.create();
+    this.vel = Vec2.create();
+    this.acc = Vec2.create();
+
     this.rot = 0;
 
     // TODO: fix
@@ -77,7 +78,7 @@ export default class Entity {
       c.update && c.update(dt, this);
       c.updateProxy && c.updateProxy(dt);
     });
-//
+    //
     if (this.vel) {
       //let d = this.vel.clone().mult(deltaTime * this.timeScale);
 
@@ -85,8 +86,8 @@ export default class Entity {
       Vec2.multSelf(_v, deltaTime * this.timeScale);
 
       // let [x, y] = [
-        // this.vel.x * deltaTime * this.timeScale,
-        // this.vel.y * deltaTime * this.timeScale
+      // this.vel.x * deltaTime * this.timeScale,
+      // this.vel.y * deltaTime * this.timeScale
       // ];
       this.pos.x += _v.x;
       this.pos.y += _v.y;
@@ -207,11 +208,16 @@ export default class Entity {
     this.eventsOn = b;
   }
 
-  getWorldCoords() {
+  /*
+    v {Vec2} - out
+  */
+  getWorldCoords(v) {
     if (this.parent) {
-      return Vec2.add(this.pos, this.parent.getWorldCoords());
+      Vec2.addSelf(this.parent.getWorldCoords(v), this.pos);
+    } else {
+      Vec2.addSelf(v, this.pos);
     }
-    return this.pos;
+    return v;
   }
 
   /*

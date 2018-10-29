@@ -44,15 +44,6 @@ let ctx = cvs.getContext('2d', {alpha: false});
 document.addEventListener('mousedown', e => new Event({ evtName: 'GAME_MOUSE_DOWN', data: e }).fire());
 document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', data: e }).fire());
 document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', function(evt) {
-
-  if(evt.code === 'KeyD'){
-    window.debug = !window.debug;
-    Debug.setOn(window.debug);
-
-  }
-// window.ignoreDirty = !window.ignoreDirty;
-});
 
 function update(dt) {
   Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
@@ -143,7 +134,10 @@ function setup() {
 
   // spawner = new Spawner();
   // spawner.addSpawnQueue(wave1);
+  Debug.init();
   Debug.setOn(window.debug);
+
+  // CollisionSystem.setOn(false);
 
   scene.restartGame();
 

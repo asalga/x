@@ -19,7 +19,8 @@ export default class GoToTarget extends Component {
 
     e.on('collision', this.hasArrived, e, { onlySelf: true });
 
-    this._toTarget = new Vec2();
+    // this._toTarget = new Vec2;
+    this._toTarget = Vec2.create();
   }
 
   hasArrived() {

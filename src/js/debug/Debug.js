@@ -1,7 +1,19 @@
+'use strict';
+
 let strings = [];
 let isOn = true;
 
 export default class Debug {
+  
+  static init() {
+    document.addEventListener('keydown', function(evt) {
+      if (evt.code === 'KeyD') {
+        window.debug = !window.debug;
+        Debug.setOn(window.debug);
+      }
+    });
+  }
+  
   static add(str) {
     if (!isOn) {
       return;

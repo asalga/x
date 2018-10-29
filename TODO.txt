@@ -32,7 +32,6 @@ continue on its lastVel
  * Create ShieldGun
  * Create HyperwaveGun
  * Create Targetable component
- * Create ParticleSystem
 
 * Create method to getClosestBaddieOnGameBoard
 

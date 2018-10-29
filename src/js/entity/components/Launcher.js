@@ -17,16 +17,22 @@ import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
 import Utils from '../../Utils.js';
 
+let _worldCoords = Vec2.create();
+
 export default class Launcher extends Component {
   constructor(e, cfg) {
     super(e, 'launcher');
+    
+    let v = Vec2.create();
+    v.set(1,0);
+
     let defaults = {
       ammo: 1,
       enabled: true,
       shotsPerSecond: 1,
       autoFire: false,
       bulletVel: 500,
-      direction: new Vec2(1, 0)
+      direction: v
     };
     Utils.applyProps(this, defaults, cfg);
 
@@ -48,12 +54,15 @@ export default class Launcher extends Component {
     this.createBullet = function() {
       this.ammo--;
 
-      let worldCoords = this.entity.getWorldCoords();
-      let gunTip = this.direction.clone().mult(60);
-      worldCoords.add(gunTip);
+      _worldCoords.zero();
+      this.entity.getWorldCoords(_worldCoords);
+      console.log(_worldCoords);
 
-      let bullet = this.createFunc({ pos: worldCoords });
-      bullet.pos.set(worldCoords);
+      let gunTip = this.direction.clone().mult(60);
+      _worldCoords.add(gunTip);
+
+      let bullet = this.createFunc({ pos: _worldCoords });
+      bullet.pos.set(_worldCoords);
       bullet.vel.set(this.direction.clone().mult(this.bulletVel));
 
       // TODO: find better way for this?

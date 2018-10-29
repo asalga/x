@@ -24,6 +24,9 @@ import createUserPlasmaBullet from './UserPlasmaBullet.js';
 import createUserRocketBullet from './UserRocketBullet.js';
 import createUserFlakBullet from './UserFlakBullet.js';
 
+//cached
+let _v = Vec2.create();
+
 export default function createUser() {
   let user = new Entity();
   user.name = 'user';
@@ -39,9 +42,11 @@ export default function createUser() {
     _p3.stroke(111, 150, 80);
     _p3.fill(251, 200, 138);
 
-    let [x, y] = user.getWorldCoords().toArray();
+    _v.zero();
+    user.getWorldCoords(_v);
+
     // _p3.translate(x, y);
-    _p3.ellipse(x, y, user.size, user.size);
+    _p3.ellipse(_v.x, _v.y, user.size, user.size);
 
     _p3.restore();
   };

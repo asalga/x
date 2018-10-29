@@ -2,32 +2,58 @@ import Vec2 from '../math/Vec2.js';
 import Event from '../event/Event.js';
 import Debug from '../debug/Debug.js';
 
+let isOn = true;
+
 let list = [];
 let firstTime = true;
 
 let checks = 0;
 let debugChecks = [];
 
-let _v = new Vec2();
+let _v = Vec2.create();
 
+
+// let cached = {
+//   entityCoords: Vec2.create();
+// };
 export default class CollisionSystem {
+
   static gatherCollidables() {
+    if (!isOn) { return; }
 
     // if no object were added or removed, we can avoid doing this work
     if (firstTime || scene.entitiesAddedOrRemovedDirty) {
       firstTime = false;
       list.length = 0;
 
+      let _entityCoords = Vec2.create();
+      let _compCoords = Vec2.create();
+
       scene.entities.forEach(e => {
 
-        e._collisionTransform = e.getWorldCoords();
+        _entityCoords.zero();
+        e.getWorldCoords(_entityCoords);
+
+        if (!e._collisionTransform) {
+          e._collisionTransform = Vec2.create();
+        }
+        e._collisionTransform.set(_entityCoords);
 
         // root        
         list.push(e);
 
-        e.children.forEach( ch => {
-          if(ch.collidable){
-            ch._collisionTransform = ch.getWorldCoords();
+        e.children.forEach(ch => {
+          if (ch.collidable) {
+
+            _compCoords.zero();
+            ch.getWorldCoords(_compCoords);
+
+            // ch.getWorldCoords(_compCoords);
+            if (!ch._collisionTransform) {
+              ch._collisionTransform = Vec2.create();
+            }
+            ch._collisionTransform.set(_entityCoords);
+            
             list.push(ch);
           }
         });
@@ -47,7 +73,7 @@ export default class CollisionSystem {
   // AABB_lineSegment
 
   // lineSegment_lineSegment
-  
+
   /*
     TODO: this should be more generic.
   */
@@ -58,10 +84,16 @@ export default class CollisionSystem {
     return _v.length() <= radTotal;
   }
 
+  static setOn(b) {
+    isOn = b;
+  }
+
   static checkCollisions() {
+    if (!isOn) { return; }
+
     checks = 0;
 
-    if(window.debug){
+    if (window.debug) {
       debugChecks = [];
     }
 
@@ -103,8 +135,8 @@ export default class CollisionSystem {
     }
 
     Debug.add(`Collision Checks: ${checks}`);
-    if(window.debug){
-      debugChecks.forEach( s => {
+    if (window.debug) {
+      debugChecks.forEach(s => {
         Debug.add(debugChecks);
       });
     }

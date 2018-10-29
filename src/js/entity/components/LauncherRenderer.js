@@ -5,8 +5,8 @@ import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 import cfg from '../../cfg.js';
 
-let gun = new Vec2();
-let v = new Vec2();
+let gun = Vec2.create();
+// let _v = Vec2.create();
 
 export default class LauncherRenderer extends Component {
   constructor(e, cfg) {
@@ -23,7 +23,8 @@ export default class LauncherRenderer extends Component {
   update(dt) {}
 
   draw(_p3) {
-    v = this.entity.getWorldCoords();
+    // _v.zero();
+    // this.entity.getWorldCoords(_v);
 
     gun.set(this.entity.launcher.direction);
     Vec2.multSelf(gun, 60);

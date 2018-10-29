@@ -3,7 +3,9 @@
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
 
-let _v = new Vec2();
+// cached
+let _v = Vec2.create();
+let _userPos = Vec2.create();
 
 export default class MouseLauncherController extends Component {
   constructor(e) {
@@ -11,9 +13,13 @@ export default class MouseLauncherController extends Component {
   }
 
   getLauncherDirection() {
-    let userPos = scene.getUser().getWorldCoords();
+    _userPos.zero();
+    // let userPos = scene.getUser().getWorldCoords();
+    scene.getUser().getWorldCoords(_userPos);
+
     _v.set(p3.mouseX, p3.mouseY);
-    Vec2.subSelf(_v, userPos);
+    Vec2.subSelf(_v, _userPos);
+    console.log(_v);
     return _v.normalize();
   }
 

@@ -22,6 +22,10 @@ export default class Vec2 {
     return [this.x, this.y];
   }
 
+  zero() {
+    this.x = this.y = 0;
+  }
+
   set() {
     switch (arguments.length) {
       case 1:
@@ -94,6 +98,14 @@ export default class Vec2 {
     return this;
   }
 
+  static create() {
+    return new Vec2();
+  }
+
+  static zero(v) {
+    this.x = this.y = 0;
+  }
+
   static multSelf(v, s) {
     v.x *= s;
     v.y *= s;
@@ -101,7 +113,7 @@ export default class Vec2 {
 
   static addSelf(v1, v2) {
     v1.x += v2.x;
-    v2.y += v2.y;
+    v1.y += v2.y;
   }
 
   static subSelf(v1, v2) {

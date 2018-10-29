@@ -29,7 +29,7 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 10.0) {
+    if (this.tempSpawnTimer > 1000.0) {
       this.tempSpawnTimer = 0;
 
       let circularWave = EntityFactory.create('circularwave');

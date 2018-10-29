@@ -24,12 +24,12 @@ export default class SeekTarget extends Component {
       this.tryToTarget(data);
     }, e);
 
-    this.lastVel = new Vec2();
+    this.lastVel = Vec2.create();
 
     // cached vectors
-    this._targetPos = new Vec2();
-    this._desiredVel = new Vec2();
-    this._pos = new Vec2();
+    this._targetPos = Vec2.create();
+    this._desiredVel = Vec2.create();
+    this._pos = Vec2.create();
   }
 
   tryToTarget(e) {
