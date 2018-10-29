@@ -19,7 +19,6 @@ export default class MouseLauncherController extends Component {
 
     _v.set(p3.mouseX, p3.mouseY);
     Vec2.subSelf(_v, _userPos);
-    console.log(_v);
     return _v.normalize();
   }
 

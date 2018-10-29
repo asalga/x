@@ -56,7 +56,6 @@ export default class Launcher extends Component {
 
       _worldCoords.zero();
       this.entity.getWorldCoords(_worldCoords);
-      console.log(_worldCoords);
 
       let gunTip = this.direction.clone().mult(60);
       _worldCoords.add(gunTip);

@@ -1,6 +1,7 @@
 import Vec2 from '../math/Vec2.js';
 import Event from '../event/Event.js';
 import Debug from '../debug/Debug.js';
+import Utils from '../Utils.js';
 
 let isOn = true;
 
@@ -11,11 +12,9 @@ let checks = 0;
 let debugChecks = [];
 
 let _v = Vec2.create();
+let _entityCoords = Vec2.create();
+let _compCoords = Vec2.create();
 
-
-// let cached = {
-//   entityCoords: Vec2.create();
-// };
 export default class CollisionSystem {
 
   static gatherCollidables() {
@@ -24,10 +23,8 @@ export default class CollisionSystem {
     // if no object were added or removed, we can avoid doing this work
     if (firstTime || scene.entitiesAddedOrRemovedDirty) {
       firstTime = false;
-      list.length = 0;
-
-      let _entityCoords = Vec2.create();
-      let _compCoords = Vec2.create();
+      Utils.clearArray(list);
+      // list.length = 0;
 
       scene.entities.forEach(e => {
 
@@ -94,7 +91,7 @@ export default class CollisionSystem {
     checks = 0;
 
     if (window.debug) {
-      debugChecks = [];
+      Utils.clearArray(debugChecks);
     }
 
     let e1, e2;

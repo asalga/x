@@ -97,7 +97,7 @@ export default function createUser() {
 
 
 
-  // WEAPON SWITCHER
+  // // WEAPON SWITCHER
   let weaponSwitcher = new WeaponSwitcher(user);
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
