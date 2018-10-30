@@ -19,8 +19,6 @@ export default class Entity {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    console.log('test');
-
     this.id = Utils.getId();
 
     this.eventsOn = true;
@@ -135,15 +133,22 @@ export default class Entity {
   }
 
   /*
+    Free any resources from Pools.
+  */
+  free(){
+    Pool.free(this.pos);
+    Pool.free(this.vel);
+    Pool.free(this.acc);
+    Pool.free(this._collisionTransform);
+  }
+
+  /*
     If a component needs to remove the associated entity,
     give it a method that abstracts out whether the entity
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
-    Pool.free('vec2', this.pos);
-    Pool.free('vec2', this.vel);
-    Pool.free('vec2', this.acc);
-    Pool.free('vec2', this._collisionTransform);
+    this.free();
 
     if (this.parent) {
       this.parent.removeDirectChild(this);

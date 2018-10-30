@@ -14,6 +14,7 @@ import Utils from './Utils.js';
 let _closestBaddie = [];
 
 export default class Scene {
+
   constructor() {
     this.entities = new Set();
     this.user = null;

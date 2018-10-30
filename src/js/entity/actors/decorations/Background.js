@@ -7,10 +7,11 @@ import cfg from '../../../cfg.js';
 
 import SpriteRender from '../../components/SpriteRender.js';
 
-const COUNT = 50;
+const COUNT = 100;
 let pos = new Array(COUNT);
 let vel = new Array(COUNT);
 let sz = new Array(COUNT);
+let darkGrey = 'rgba(40, 40, 40, 0.5)';
 
 export default function createBackground() {
 
@@ -26,36 +27,29 @@ export default function createBackground() {
   }
 
   let spriteRender = new SpriteRender(e, { layerName: 'background' });
-
+  
   spriteRender.update = function(dt) {
     for (let i = 0; i < COUNT; i++) {
+      
+      // only x for now
       pos[i][0] += vel[i] * dt;
-      // pos[i][1] += vel[i][1] * dt;
 
       if (pos[i][0] < 0) {
-        pos[i] = 
-        [p3.random(cfg.gameWidth, cfg.gameWidth * 2), p3.random(0, cfg.gameHeight * 2)];
+        pos[i][0] = p3.random(cfg.gameWidth, cfg.gameWidth * 2);
+        pos[i][1] = p3.random(0, cfg.gameHeight * 2);
       }
     }
   };
 
   spriteRender.draw = function(_p3) {
-    // _p3.save();
-
     _p3.noStroke();
-    // _p3.clearColor(200);
-
-    // _p3.fill('rgba(33, 66, 99, 0.5)');
-    _p3.fill('rgba(40, 40, 40, 0.5)');
-
-    // _p3.stroke('rgba(200, 200, 200, 0.52)');
+    _p3.fill(darkGrey);
     _p3.rect(0, 0, cfg.gameWidth, cfg.gameHeight);
-
     _p3.fill(255);
+
     for (let i = 0; i < COUNT; i++) {
-      _p3.rect(pos[i][0], pos[i][1], sz[i], sz[i]);
+       _p3.rect(pos[i][0], pos[i][1], sz[i], sz[i]);
     }
-    // _p3.restore();
   };
 
   e.addComponent(spriteRender);

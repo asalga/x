@@ -17,7 +17,6 @@ import cfg from './cfg.js';
 
 import Pool from './core/Pool.js';
 
-
 window.gameTime = 0;
 window.gameFrameCount = 0;
 window.Renderer = Renderer;
@@ -35,7 +34,7 @@ window.ignoreDirty = false;
 
 let p3;
 let timer;
-let perfTimer;
+let perfTimer = new Date();
 
 let avgDelta = 0;
 let avgFrames = 0;
@@ -49,25 +48,24 @@ document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', 
 document.addEventListener('contextmenu', e => e.preventDefault());
 
 function update(dt) {
-  Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
-  Debug.add(`Root Entity count: ${scene.entities.size}`);
+  // Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
+  // Debug.add(`Root Entity count: ${scene.entities.size}`);
 
-  let totalVec2Calls = window.vec2Ctor.toLocaleString();
-  Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
-  // Debug.add(`${window.count}`);
+  // let totalVec2Calls = window.vec2Ctor.toLocaleString();
+  // Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
 
   scene.update(dt);
 
-  Events.printDebug();
+  // Events.printDebug();
 
-  CollisionSystem.gatherCollidables();
-  CollisionSystem.checkCollisions();
+  // CollisionSystem.gatherCollidables();
+  // CollisionSystem.checkCollisions();
 
   window.gameTime += dt;
 }
 
 function preRender() {
-  perfTimer = new Date().getTime();
+  // perfTimer = new Date().getTime();
   Renderer.preRender();
 }
 
@@ -77,28 +75,26 @@ function render() {
 }
 
 function postRender() {
-  let timeDiff = new Date().getTime() - perfTimer;
+  // let timeDiff = new Date().getTime() - perfTimer;
+  // avgDelta += timeDiff;
+  // avgFrames++;
+  // if (avgFrames > 100) {
+  //   avgCalc = avgDelta / avgFrames;
+  //   avgFrames = 0;
+  //   avgDelta = 0;
+  // }
 
-  avgDelta += timeDiff;
-  avgFrames++;
-
-  if (avgFrames > 100) {
-    avgCalc = avgDelta / avgFrames;
-    avgFrames = 0;
-    avgDelta = 0;
-  }
-  Debug.add('render ms: ' + timeDiff);
-  Debug.add('avg render ms: ' + avgCalc);
-  Debug.add('clear array calls: ' + window.clearArrayCalls);
-
-  Debug.add('pool available: ' + Pool.count());
+  // Debug.add('render ms: ' + timeDiff);
+  // Debug.add('avg render ms: ' + avgCalc);
+  // Debug.add('clear array calls: ' + window.clearArrayCalls);
+  // Debug.add('pool available: ' + Pool.count());
 
   Renderer.postRender();
 
-  let bytes = window.performance.memory.totalJSHeapSize.toLocaleString();
-  Debug.add(`heap: ${bytes} bytes`);
-  Debug.draw();
-  Debug.postRender();
+  // let bytes = window.performance.memory.totalJSHeapSize.toLocaleString();
+  // Debug.add(`heap: ${bytes} bytes`);
+  // Debug.draw();
+  // Debug.postRender();
 }
 
 function setup() {
@@ -109,40 +105,10 @@ function setup() {
   scene = new Scene();
   window.p3 = p3;
 
-  // spawner = EntityFactory.create('spawner');
-  // list of waves (?)
-  // spawner.add(entityQueue);
-  // scene.add(spawner);
-  // spawner.start();
-  // spawner.pause() ?
-
-  // let waveQueue = [{
-  //     time: 0,
-  //     wave: 'line',
-  //     params: {
-  //       position: ['right', 0]
-  //       count: 10,
-  //       entity: 'mouse'
-  //     }
-  //   },
-  //   {
-  //     time: 1.5,
-  //     wave: 'circle',
-  //     params: {
-  //       count: 5,
-  //       distance: 200,
-  //       entity: 'starfish',
-  //       position: [0, 0]
-  //     }
-  //   }
-  // ]
-
-  // spawner = new Spawner();
-  // spawner.addSpawnQueue(wave1);
   Debug.init();
   Debug.setOn(window.debug);
-
   
+  // Debug.setOn(false);  
   // CollisionSystem.setOn(false);
 
   scene.restartGame();
