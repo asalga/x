@@ -148,8 +148,6 @@ export default class Entity {
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
-    this.free();
-
     if (this.parent) {
       this.parent.removeDirectChild(this);
     } else {
@@ -157,6 +155,9 @@ export default class Entity {
     }
   }
 
+  /*
+
+  */
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
     e.parent = null;
@@ -229,6 +230,7 @@ export default class Entity {
   }
 
   /*
+    Zero out the vector prior to calling this method
     v {Vec2} - out
   */
   getWorldCoords(v) {
@@ -256,6 +258,8 @@ export default class Entity {
   }
 
   indicateRemove() {
+    this.free();
+
     this.children.forEach(c => c.indicateRemove());
     this.components.forEach(c => c.indicateRemove());
 

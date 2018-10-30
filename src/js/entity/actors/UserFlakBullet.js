@@ -11,6 +11,9 @@ import BoundingCircle from '../../collision/BoundingCircle.js';
 import CollisionType from '../../collision/CollisionType.js';
 
 import EntityFactory from '../../entity/EntityFactory.js';
+import Vec2 from '../../math/Vec2.js';
+
+let _temp = Vec2.create();
 
 export default function createFlakBullet(cfg) {
   let e = new Entity({ name: 'flakbullet', layer: 2 });
@@ -41,10 +44,11 @@ export default function createFlakBullet(cfg) {
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
 
   let detonate = function() {
-    let v = e.getWorldCoords();
+    _temp.zero();
+    e.getWorldCoords(_temp);
 
     let explosion = EntityFactory.create('explosion');
-    explosion.pos.set(v);
+    explosion.pos.set(_temp);
 
     scene.add(explosion);
     scene.remove(e);

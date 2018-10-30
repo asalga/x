@@ -51,8 +51,8 @@ function update(dt) {
   // Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
   // Debug.add(`Root Entity count: ${scene.entities.size}`);
 
-  // let totalVec2Calls = window.vec2Ctor.toLocaleString();
-  // Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
+  let totalVec2Calls = window.vec2Ctor.toLocaleString();
+  Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
 
   scene.update(dt);
 
@@ -91,10 +91,10 @@ function postRender() {
 
   Renderer.postRender();
 
-  // let bytes = window.performance.memory.totalJSHeapSize.toLocaleString();
-  // Debug.add(`heap: ${bytes} bytes`);
-  // Debug.draw();
-  // Debug.postRender();
+  let bytes = window.performance.memory.totalJSHeapSize.toLocaleString();
+  Debug.add(`heap: ${bytes} bytes`);
+  Debug.draw();
+  Debug.postRender();
 }
 
 function setup() {

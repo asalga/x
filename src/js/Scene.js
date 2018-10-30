@@ -82,6 +82,7 @@ export default class Scene {
         // target. but if the entity is still alive, it may return
         // a target that will be removed next frame.
         let rm = new Event({ evtName: 'remove', data: e });
+
         this.eventsToFireNextFrame.push(rm);
       });
 

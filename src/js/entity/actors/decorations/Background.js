@@ -7,11 +7,11 @@ import cfg from '../../../cfg.js';
 
 import SpriteRender from '../../components/SpriteRender.js';
 
-const COUNT = 100;
+const COUNT = 0;
 let pos = new Array(COUNT);
 let vel = new Array(COUNT);
 let sz = new Array(COUNT);
-let darkGrey = 'rgba(40, 40, 40, 0.5)';
+let darkGrey = 'rgba(33, 66, 99, 1)';
 
 export default function createBackground() {
 

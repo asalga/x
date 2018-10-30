@@ -16,6 +16,9 @@ import CType from '../../collision/CollisionType.js';
 
 import Vec2 from '../../math/Vec2.js';
 
+let ORANGE = 'rgb(245, 25, 25)';
+let BLUE = 'rgb(25, 255, 255)';
+
 export default function createUserRocketBullet() {
   let e = new Entity({ name: 'homingmissle' });
   scene.add(e);
@@ -46,9 +49,9 @@ export default function createUserRocketBullet() {
     _p3.strokeWeight(2);
 
     if (e.seektarget.target) {
-      _p3.fill('rgb(245, 10, 25)');
+      _p3.fill(ORANGE);
     } else {
-      _p3.fill('rgb(25, 250, 255)');
+      _p3.fill(BLUE);
     }
 
     // _p3.translate(_p3.width / 2, _p3.height / 2);

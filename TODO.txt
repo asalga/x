@@ -9,7 +9,6 @@ continue on its lastVel
 
 # TODO - Medium
  * Currently some bullets are being removed based on lifetime, should they use gamebounds instead?
- * Create Object Pool
  * Test adding 2 components to an entity and removing one of them
  * Fix NearDeathIndicator
  * Document 'remove' event 
