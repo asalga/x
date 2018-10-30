@@ -58,8 +58,8 @@ function update(dt) {
 
   // Events.printDebug();
 
-  // CollisionSystem.gatherCollidables();
-  // CollisionSystem.checkCollisions();
+  CollisionSystem.gatherCollidables();
+  CollisionSystem.checkCollisions();
 
   window.gameTime += dt;
 }

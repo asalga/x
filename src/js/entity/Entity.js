@@ -24,13 +24,13 @@ export default class Entity {
     this.eventsOn = true;
     this.registeredEvents = [];
 
-    this.pos = Pool.get('vec2');
-    this.vel = Pool.get('vec2');
-    this.acc = Pool.get('vec2');
+    // this.pos = Pool.get('vec2');
+    // this.vel = Pool.get('vec2');
+    // this.acc = Pool.get('vec2');
     this._collisionTransform = Pool.get('vec2');
-    // this.pos = Vec2.create();
-    // this.vel = Vec2.create();
-    // this.acc = Vec2.create();
+    this.pos = Vec2.create();
+    this.vel = Vec2.create();
+    this.acc = Vec2.create();
 
     this.rot = 0;
 
@@ -258,7 +258,7 @@ export default class Entity {
   }
 
   indicateRemove() {
-    this.free();
+    // this.free();
 
     this.children.forEach(c => c.indicateRemove());
     this.components.forEach(c => c.indicateRemove());

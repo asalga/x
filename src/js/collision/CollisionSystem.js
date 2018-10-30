@@ -102,9 +102,7 @@ export default class CollisionSystem {
         let maskA = e1.collidable.mask;
         let typeB = e2.collidable.type;
 
-
         if ((typeA & maskB) !== 0 && (typeB & maskA) !== 0) {
-
           // debugChecks.push(`${e1.name} <-> ${e2.name}`);
 
           if (CollisionSystem.circleCircleTest(e1, e2)) {
