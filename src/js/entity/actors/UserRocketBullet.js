@@ -44,7 +44,6 @@ export default function createUserRocketBullet() {
   spriteRender.draw = function(_p3) {
     let sz = e.bounds.radius;
     _p3.save();
-
     _p3.stroke(0);
     _p3.strokeWeight(2);
 
@@ -59,16 +58,13 @@ export default function createUserRocketBullet() {
     _p3.rotate(Math.atan2(e.vel.y, e.vel.x));
     _p3.rect(-sz, -sz / 2, sz * 2, sz);
     _p3.restore();
-
-    // p3.drawImage(this.sprite, 0, 0);
-    // p3.drawImage(this.sprite, e.pos.x, e.pos.y);
   };
   e.addComponent(spriteRender);
   e.addComponent(new Killable(e));
 
   // e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5, lingerTime: 1 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 4 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 1 }));
 
   e.addComponent(new SeekTarget(e, { maxVel: 200, maxSpeed: 300, maxSteerForce: 10 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));

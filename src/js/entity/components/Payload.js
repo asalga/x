@@ -11,6 +11,10 @@ export default class Payload extends Component {
 
   constructor(e, cfg) {
     super(e, 'payload');
+    this.reset();
+  }
+
+  reset() {
     let defaults = {
       dmg: 1,
       lingerTime: 0

@@ -1,6 +1,7 @@
 'use strict';
 
 import Vec2 from '../math/Vec2.js';
+import UserBullet from '../entity/actors/UserBullet.js';
 
 /*
   Req.
@@ -15,18 +16,14 @@ import Vec2 from '../math/Vec2.js';
 */
 
 let pools = {};
-let available = 0;
 
 export default class Pool {
 
   static init() {
-    Pool.allocate({ name: 'vec2', type: Vec2, count: 100, growth: 0 });
-    // Pool.allocate({})
+    Pool.allocate({ name: 'vec2', type: Vec2, count: 400, growth: 0 });
+    Pool.allocate({ name: 'bullet', createFunc: UserBullet, count: 50 });
   }
 
-  static count() {
-    return available;
-  }
 
   /*
     cfg
@@ -38,13 +35,16 @@ export default class Pool {
   static allocate(cfg) {
     let n = cfg.name;
 
-    available = cfg.count;
-
     pools[n] = new Array(cfg.count);
     let newPool = pools[n];
 
     for (let i = 0; i < cfg.count; i++) {
-      newPool[i] = new cfg.type;
+
+      if (cfg.createFunc) {
+        newPool[i] = cfg.createFunc();
+      } else {
+        newPool[i] = new cfg.type;
+      }
 
       newPool[i]._pool = {
         available: true,
@@ -58,7 +58,6 @@ export default class Pool {
     let meta = obj._pool;
     pools[meta.name][meta.idx]._pool.available = true;
     // pools[n][obj.poolIdx].available = true;    
-    available++;
   }
 
   static get(n) {
@@ -66,8 +65,6 @@ export default class Pool {
 
     for (let i = 0; i < pool.length; ++i) {
       if (pool[i]._pool.available) {
-        available--;
-
         let obj = pool[i];
         obj._pool.available = false;
         obj.reset();

@@ -16,6 +16,7 @@
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
 import Utils from '../../Utils.js';
+import Pool from '../../core/Pool.js';
 
 let _worldCoords = Vec2.create();
 let _vel = Vec2.create();
@@ -34,7 +35,8 @@ export default class Launcher extends Component {
       shotsPerSecond: 1,
       autoFire: false,
       bulletVel: 500,
-      direction: v
+      direction: v,
+      bulletName: 'bullet'
     };
     Utils.applyProps(this, defaults, cfg);
 
@@ -62,8 +64,10 @@ export default class Launcher extends Component {
       _gunTip.set(this.direction).mult(60);
       _worldCoords.add(_gunTip);
 
-      let bullet = this.createFunc({ pos: _worldCoords });
+      // let bullet = this.createFunc({ pos: _worldCoords });
+      let bullet = Pool.get(this.bulletName);
       bullet.pos.set(_worldCoords);
+      scene.add(bullet);
 
       _vel.set(this.direction).mult(this.bulletVel);
       bullet.vel.set(_vel);

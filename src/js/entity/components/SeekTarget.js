@@ -7,6 +7,10 @@ import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
+import Pool from '../../core/Pool.js';
+
+// TODO: this.connectToTarget(target);
+
 export default class SeekTarget extends Component {
   constructor(e, cfg) {
     super(e, 'seektarget');
@@ -18,18 +22,14 @@ export default class SeekTarget extends Component {
     };
     Utils.applyProps(this, defaults, cfg);
 
-    // this.connectToTarget(target);
-
     e.on('entityadded', data => {
       this.tryToTarget(data);
     }, e);
 
-    this.lastVel = Vec2.create();
-
-    // cached vectors
-    this._targetPos = Vec2.create();
-    this._desiredVel = Vec2.create();
-    this._pos = Vec2.create();
+    this.lastVel = Pool.get('vec2');
+    this._targetPos = Pool.get('vec2');
+    this._desiredVel = Pool.get('vec2');
+    this._pos = Pool.get('vec2');
   }
 
   tryToTarget(e) {
@@ -42,6 +42,17 @@ export default class SeekTarget extends Component {
     // if(target && target.targetable){
     // target.targetable.push(this);
     // }
+  }
+
+  free() {
+    Pool.free(this.lastVel);
+    Pool.free(this._targetPos);
+    Pool.free(this._desiredVel);
+    Pool.free(this._pos);
+  }
+
+  indicateRemove() {
+    this.free();
   }
 
   ready() {
@@ -62,9 +73,10 @@ export default class SeekTarget extends Component {
     // if in scene, but dead
     if (this.target.killable.dead) {
       this.target = null;
-      this.entity.vel = this.lastVel;
-      this.entity.vel.normalize();
-      this.entity.vel.mult(this.maxSpeed);
+      this.entity.vel
+        .set(this.lastVel)
+        .normalize()
+        .mult(this.maxSpeed);
       return;
     }
 
@@ -72,12 +84,13 @@ export default class SeekTarget extends Component {
     this._pos.set(this.entity.pos);
 
     Vec2.subSelf(this._targetPos, this._pos);
-    this._desiredVel.set(this._targetPos);
-    this._desiredVel.normalize();
-    this._desiredVel.mult(this.maxSpeed);
+    this._desiredVel
+      .set(this._targetPos)
+      .normalize()
+      .mult(this.maxSpeed);
 
     let vel = this.entity.vel;
-    //let steerVel = 
+    // let steerVel = 
     Vec2.subSelf(this._desiredVel, vel);
     this._desiredVel.limit(this.maxSteerForce);
     // steerVel.limit(this.maxSteerForce);

@@ -4,16 +4,11 @@ import Debug from '../debug/Debug.js';
 import Utils from '../Utils.js';
 
 let isOn = true;
-
 let list = [];
 let firstTime = true;
-
 let checks = 0;
 let debugChecks = [];
-
 let _v = Vec2.create();
-let _entityCoords = Vec2.create();
-let _compCoords = Vec2.create();
 
 export default class CollisionSystem {
 
@@ -26,28 +21,17 @@ export default class CollisionSystem {
       Utils.clearArray(list);
 
       scene.entities.forEach(e => {
-
-        _entityCoords.zero();
-        e.getWorldCoords(_entityCoords);
-        e._collisionTransform.set(_entityCoords);
-
-        // root        
-        list.push(e);
+        if (e.collidable) { list.push(e); }
 
         e.children.forEach(ch => {
           if (ch.collidable) {
-
-            _compCoords.zero();
-            ch.getWorldCoords(_compCoords);
-            ch._collisionTransform.set(_compCoords);
-            
             list.push(ch);
           }
         });
       });
 
-      // shouldn't this be done sooner?
-      list = list.filter(e => e.collidable);
+      // TODO: shouldn't this be done sooner?
+      // list = list.filter(e => e.collidable);
       scene.clearFlags();
     }
   }
@@ -66,8 +50,8 @@ export default class CollisionSystem {
   */
   static circleCircleTest(e1, e2) {
     let radTotal = e1.bounds.radius + e2.bounds.radius;
-    _v.set(e1._collisionTransform);
-    Vec2.subSelf(_v, e2._collisionTransform);
+    _v.set(e1.worldCoords);
+    Vec2.subSelf(_v, e2.worldCoords);
     return _v.length() <= radTotal;
   }
 
@@ -86,13 +70,15 @@ export default class CollisionSystem {
 
     let e1, e2;
 
+    list.forEach(obj => obj.updateWorldCoords());
+
     for (let i = 0; i < list.length; ++i) {
       for (let j = i + 1; j < list.length; ++j) {
 
         e1 = list[i];
         e2 = list[j];
 
-        if (e1.collidable.enabled === false || e2.collidable.enabled === false) {
+        if (!e1.collidable.enabled || !e2.collidable.enabled) {
           continue;
         }
 
@@ -128,3 +114,10 @@ export default class CollisionSystem {
 
   }
 }
+// for (let i = 0; i < list.length; ++i) {
+// let obj = list[i];
+// obj.updateWorldCoords();
+// _compCoords.zero();
+// ch.getWorldCoords(_compCoords);
+// ch._collisionTransform.set(_compCoords);
+// }

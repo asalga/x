@@ -55,8 +55,10 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 5, ammo: 1000 });
-  miniGunLauncher.createFunc = createUserMiniGunBullet;
+  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 5, ammo: 1000, bulletName: 'bullet' });
+  // miniGunLauncher.createFunc = createUserMiniGunBullet;
+  // miniGunLauncher.bulletName = 'bullet';
+
   miniGun.addComponent(miniGunLauncher);
   // miniGun.addComponent(new LauncherRenderer(e, {color:'grey'}));
   miniGun.addComponent(new MouseLauncherController(miniGun));
@@ -88,7 +90,7 @@ export default function createUser() {
 
   // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 1.0, autoFire: true, ammo: 599, bulletVel: 300 });
+  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: true, ammo: 599, bulletVel: 300 });
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));

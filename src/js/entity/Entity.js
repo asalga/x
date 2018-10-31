@@ -24,13 +24,15 @@ export default class Entity {
     this.eventsOn = true;
     this.registeredEvents = [];
 
-    // this.pos = Pool.get('vec2');
-    // this.vel = Pool.get('vec2');
-    // this.acc = Pool.get('vec2');
-    this._collisionTransform = Pool.get('vec2');
-    this.pos = Vec2.create();
-    this.vel = Vec2.create();
-    this.acc = Vec2.create();
+    this.pos = Pool.get('vec2');
+    this.vel = Pool.get('vec2');
+    this.acc = Pool.get('vec2');
+    this.worldCoords = Pool.get('vec2');
+
+    // this.worldCoords = Vec2.create();
+    // this.pos = Vec2.create();
+    // this.vel = Vec2.create();
+    // this.acc = Vec2.create();
 
     this.rot = 0;
 
@@ -43,10 +45,10 @@ export default class Entity {
   }
 
   /*
-    Reset object for the pool
+    When we reset an object, we'll also need to generate a new ID
   */
   reset() {
-
+    this.children.forEach(ch => ch.reset());
   }
 
   setup() {}
@@ -135,11 +137,11 @@ export default class Entity {
   /*
     Free any resources from Pools.
   */
-  free(){
+  free() {
     Pool.free(this.pos);
     Pool.free(this.vel);
     Pool.free(this.acc);
-    Pool.free(this._collisionTransform);
+    Pool.free(this.worldCoords);
   }
 
   /*
@@ -194,6 +196,11 @@ export default class Entity {
   setWeaponsEnabled(b) {
     this.children.filter(c => c.launcher)
       .forEach(e => e.launcher.setEnable(b));
+  }
+
+  updateWorldCoords() {
+    this.worldCoords.zero();
+    this.getWorldCoords(this.worldCoords);
   }
 
   getRoot() {
@@ -258,7 +265,7 @@ export default class Entity {
   }
 
   indicateRemove() {
-    // this.free();
+    this.free();
 
     this.children.forEach(c => c.indicateRemove());
     this.components.forEach(c => c.indicateRemove());
