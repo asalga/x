@@ -5,7 +5,8 @@ continue on its lastVel
 * There is a prerequisite of zero-ing out the vector before its passed to Entity.getWorldCoords()
 
 * reset() should only be called when object is being retrieved from the pool
-
+* Set assertion levels
+* We shouldn't need to have a separate function for UserBullets, UserPlasmaBullets, etc.
 
 # TODO - High
  * Find solution for adding 2 of the same Components (ie. LingerHurt)

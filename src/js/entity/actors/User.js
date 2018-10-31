@@ -55,30 +55,24 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 50, ammo: 11000, bulletName: 'bullet' });
-  // miniGunLauncher.createFunc = createUserMiniGunBullet;
-  // miniGunLauncher.bulletName = 'bullet';
-
+  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 15, ammo: 11000, bulletName: 'bullet' });
   miniGun.addComponent(miniGunLauncher);
-  // miniGun.addComponent(new LauncherRenderer(e, {color:'grey'}));
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
 
-  // FREEZE
-  let freezeGun = EntityFactory.create('freezegun');
-  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100 });
-  freezeGunLauncher.createFunc = createUserFreezeBullet;
-  freezeGun.addComponent(freezeGunLauncher);
-  freezeGun.addComponent(new MouseLauncherController(freezeGun));
-  user.add(freezeGun);
-
   // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { shotsPerSecond: 5, ammo: 350 });
-  plamaLauncher.createFunc = createUserPlasmaBullet;
+  let plamaLauncher = new Launcher(plasmaGun, { shotsPerSecond: 25, ammo: 350, bulletName: 'plasmabullet' });
   plasmaGun.addComponent(plamaLauncher);
   plasmaGun.addComponent(new MouseLauncherController(plasmaGun));
   user.add(plasmaGun);
+
+  // FREEZE
+  let freezeGun = EntityFactory.create('freezegun');
+  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100, bulletName: 'freezebullet' });
+  freezeGun.addComponent(freezeGunLauncher);
+  freezeGun.addComponent(new MouseLauncherController(freezeGun));
+  user.add(freezeGun);
 
   // FLAK
   let flakGun = EntityFactory.create('flakgun');

@@ -47,7 +47,7 @@ export default class Scene {
 
       lineWaveLeft.setup({
         entity: 'mouse',
-        count: 5,
+        count: 15,
         dir: -1,
         pos: Vec2.create(),
         spacing: 50
@@ -175,8 +175,7 @@ export default class Scene {
 
   remove(e) {
     Assert(e);
-    console.log(e);
-    
+
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;

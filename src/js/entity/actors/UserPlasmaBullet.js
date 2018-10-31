@@ -14,8 +14,6 @@ export default function createPlamaBullet() {
   let e = new Entity({ name: 'plasmabullet', layer: 2 });
   e.bounds = new BoundingCircle(e.pos, 10);
 
-  scene.add(e);
-
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     _p3.save();

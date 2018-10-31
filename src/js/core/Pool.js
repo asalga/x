@@ -2,6 +2,8 @@
 
 import Vec2 from '../math/Vec2.js';
 import UserBullet from '../entity/actors/UserBullet.js';
+import PlasmaBullet from '../entity/actors/UserPlasmaBullet.js';
+import FreezeBullet from '../entity/actors/UserFreezeBullet.js';
 
 /*
   Req.
@@ -16,15 +18,16 @@ import UserBullet from '../entity/actors/UserBullet.js';
 */
 
 let pools = {};
-window.count = 200;
+window.count = 50;
 
 export default class Pool {
 
   static init() {
     Pool.allocate({ name: 'vec2', type: Vec2, count: 2000, growth: 0 });
     Pool.allocate({ name: 'bullet', createFunc: UserBullet, count: window.count });
+    Pool.allocate({ name: 'plasmabullet', createFunc: PlasmaBullet, count: 40 });
+    Pool.allocate({ name: 'freezebullet', createFunc: FreezeBullet, count: 40 });    
   }
-
 
   /*
     cfg
@@ -62,8 +65,6 @@ export default class Pool {
     if (obj.name === 'bullet') {
       window.count++;
     }
-
-    // pools[n][obj.poolIdx].available = true;    
   }
 
   static get(n) {

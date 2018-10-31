@@ -16,8 +16,6 @@ export default function createFreezeBullet() {
   let e = new Entity({ name: 'freezebullet', layer: 2 });
   e.bounds = new BoundingCircle(e.pos, 14);
 
-  scene.add(e);
-
   // COMPONENTS
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
@@ -34,18 +32,23 @@ export default function createFreezeBullet() {
   };
   e.addComponent(spriteRender);
 
-  e.on('collision', data => {
-    let other = data.other;
 
-    // Doesn't make sense to be frozen twice
-    if (other.hasChild('crystal')) { return; }
+  e.resetProxy = function() {
+    e.on('collision', data => {
+      let other = data.other;
 
-    let crystal = EntityFactory.create('crystal');
-    crystal.setTarget(other);
-    other.add(crystal);
+      // Doesn't make sense to be frozen twice
+      if (other.hasChild('crystal')) { return; }
 
-    scene.remove(e);
-  }, e, { onlySelf: true });
+      // TODO: fix
+      let crystal = EntityFactory.create('crystal');
+      crystal.setTarget(other);
+      other.add(crystal);
+
+      scene.remove(e);
+    }, e, { onlySelf: true });
+
+  }
 
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
   e.addComponent(new LifetimeLimit(e, { limit: 1.5 }));
