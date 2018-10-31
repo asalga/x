@@ -9,17 +9,9 @@ import _P3 from '../../P3.js';
 */
 export default class SpriteRender extends Component {
   constructor(e, cfg) {
-
     super(e, 'spriterender');
-
-    this.renderable = true;
-    this.visible = true;
-    this.opacity = 1;
-    this.layer = cfg && cfg.layer || 0;
-    Utils.applyProps(this, cfg);
-
-    this.dirty = true;
-    this.sprite = cfg.cvs;
+    this.cfg = cfg;
+    this.reset();
     
     // this.spriteCtx = this.sprite.getContext('2d');
     // this.p3 = new _P3(this.sprite, this.spriteCtx);
@@ -35,6 +27,17 @@ export default class SpriteRender extends Component {
       // this.sprite.height = cfg.height;
       // console.log(window.count++);
     // }
+  }
+
+  reset(){
+    this.renderable = true;
+    this.visible = true;
+    this.opacity = 1;
+    this.layer = this.cfg && this.cfg.layer || 0;
+    Utils.applyProps(this, this.cfg);
+
+    this.dirty = true;
+    this.sprite = this.cfg.cvs;
   }
 
   draw() {

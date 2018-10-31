@@ -55,7 +55,7 @@ export default function createUser() {
 
   // MINIGUN
   let miniGun = EntityFactory.create('minigun');
-  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 5, ammo: 1000, bulletName: 'bullet' });
+  let miniGunLauncher = new Launcher(miniGun, { shotsPerSecond: 50, ammo: 11000, bulletName: 'bullet' });
   // miniGunLauncher.createFunc = createUserMiniGunBullet;
   // miniGunLauncher.bulletName = 'bullet';
 

@@ -16,12 +16,13 @@ import UserBullet from '../entity/actors/UserBullet.js';
 */
 
 let pools = {};
+window.count = 200;
 
 export default class Pool {
 
   static init() {
-    Pool.allocate({ name: 'vec2', type: Vec2, count: 400, growth: 0 });
-    Pool.allocate({ name: 'bullet', createFunc: UserBullet, count: 50 });
+    Pool.allocate({ name: 'vec2', type: Vec2, count: 2000, growth: 0 });
+    Pool.allocate({ name: 'bullet', createFunc: UserBullet, count: window.count });
   }
 
 
@@ -57,6 +58,11 @@ export default class Pool {
   static free(obj) {
     let meta = obj._pool;
     pools[meta.name][meta.idx]._pool.available = true;
+
+    if (obj.name === 'bullet') {
+      window.count++;
+    }
+
     // pools[n][obj.poolIdx].available = true;    
   }
 
@@ -65,6 +71,11 @@ export default class Pool {
 
     for (let i = 0; i < pool.length; ++i) {
       if (pool[i]._pool.available) {
+
+        if (n === 'bullet') {
+          window.count--;
+        }
+
         let obj = pool[i];
         obj._pool.available = false;
         obj.reset();
@@ -72,6 +83,7 @@ export default class Pool {
       }
     }
 
+    // TODO: fix
     console.error('no free objects available!');
     debugger;
   }

@@ -10,6 +10,7 @@ import bk from './entity/actors/background.js';
 import Vec2 from './math/Vec2.js';
 import cfg from './cfg.js';
 import Utils from './Utils.js';
+import Assert from './core/Assert.js';
 
 let _closestBaddie = [];
 
@@ -30,7 +31,7 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 225) {
+    if (this.tempSpawnTimer > 10) {
       this.tempSpawnTimer = 0;
 
       // let circularWave = EntityFactory.create('circularwave');
@@ -173,6 +174,9 @@ export default class Scene {
   }
 
   remove(e) {
+    Assert(e);
+    console.log(e);
+    
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;

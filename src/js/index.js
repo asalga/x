@@ -21,7 +21,7 @@ window.gameTime = 0;
 window.gameFrameCount = 0;
 window.Renderer = Renderer;
 
-window.count = 0;
+
 window.debug = true;
 window.Debug = Debug;
 window.scene = null;
@@ -48,11 +48,12 @@ document.addEventListener('mouseup', e => new Event({ evtName: 'GAME_MOUSE_UP', 
 document.addEventListener('contextmenu', e => e.preventDefault());
 
 function update(dt) {
-  // Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
-  // Debug.add(`Root Entity count: ${scene.entities.size}`);
+  Debug.add(`Game time: ${Math.floor(window.gameTime)}`);
+  Debug.add(`Root Entity count: ${scene.entities.size}`);
 
   let totalVec2Calls = window.vec2Ctor.toLocaleString();
   Debug.add(`Total Vec2 ctor calls: ${totalVec2Calls}`);
+  Debug.add('Bullets: ' + window.count);
 
   scene.update(dt);
 
@@ -65,7 +66,7 @@ function update(dt) {
 }
 
 function preRender() {
-  // perfTimer = new Date().getTime();
+  perfTimer = new Date().getTime();
   Renderer.preRender();
 }
 
@@ -75,7 +76,7 @@ function render() {
 }
 
 function postRender() {
-  // let timeDiff = new Date().getTime() - perfTimer;
+  let timeDiff = new Date().getTime() - perfTimer;
   // avgDelta += timeDiff;
   // avgFrames++;
   // if (avgFrames > 100) {
@@ -84,7 +85,7 @@ function postRender() {
   //   avgDelta = 0;
   // }
 
-  // Debug.add('render ms: ' + timeDiff);
+  Debug.add('render ms: ' + timeDiff);
   // Debug.add('avg render ms: ' + avgCalc);
   // Debug.add('clear array calls: ' + window.clearArrayCalls);
   // Debug.add('pool available: ' + Pool.count());

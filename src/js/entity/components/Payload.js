@@ -11,15 +11,18 @@ export default class Payload extends Component {
 
   constructor(e, cfg) {
     super(e, 'payload');
+    this.cfg = cfg;
     this.reset();
   }
 
   reset() {
+    console.log('payload reset');
+
     let defaults = {
       dmg: 1,
       lingerTime: 0
     };
-    Utils.applyProps(this, defaults, cfg);
+    Utils.applyProps(this, defaults, this.cfg);
 
     this.hit = function(data) {
       let other = data.other;
@@ -51,9 +54,10 @@ export default class Payload extends Component {
         lingerTime: this.payload.lingerTime
       });
       other.addComponent(lingerHurt);
-      scene.remove(e);
+      
+      scene.remove(this);
     };
-
-    e.on('collision', this.hit, e, { onlySelf: true });
+ 
+    this.entity.on('collision', this.hit, this.entity, { onlySelf: true });
   }
 }

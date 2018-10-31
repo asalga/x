@@ -13,28 +13,7 @@ let _temp = Vec2.create();
 
 export default class Entity {
   constructor(cfg) {
-    let defaults = {
-      opacity: 1,
-      visible: true
-    };
-    Utils.applyProps(this, defaults, cfg);
-
-    this.id = Utils.getId();
-
-    this.eventsOn = true;
-    this.registeredEvents = [];
-
-    this.pos = Pool.get('vec2');
-    this.vel = Pool.get('vec2');
-    this.acc = Pool.get('vec2');
-    this.worldCoords = Pool.get('vec2');
-
-    // this.worldCoords = Vec2.create();
-    // this.pos = Vec2.create();
-    // this.vel = Vec2.create();
-    // this.acc = Vec2.create();
-
-    this.rot = 0;
+    this.cfg = cfg;
 
     // TODO: fix
     this.speed = 1;
@@ -42,13 +21,44 @@ export default class Entity {
     this.components = [];
     this.children = [];
     this.parent = null;
+
+    this.reset();
   }
 
   /*
     When we reset an object, we'll also need to generate a new ID
   */
   reset() {
-    this.children.forEach(ch => ch.reset());
+    console.log('Entity Reset');
+
+    let defaults = {
+      opacity: 1,
+      visible: true
+    };
+    Utils.applyProps(this, defaults, this.cfg);
+
+    this.eventsOn = true;
+    this.registeredEvents = [];
+    this.rot = 0;
+
+    this.pos = Pool.get('vec2');
+    this.vel = Pool.get('vec2');
+    this.acc = Pool.get('vec2');
+    this.worldCoords = Pool.get('vec2');
+
+    this.id = Utils.getId();
+
+    this.children.forEach(ch => {
+      ch.reset();
+      ch.resetProxy && ch.resetProxy();
+    });
+    this.components.forEach(c => {
+      c.reset();
+      c.resetProxy && c.resetProxy()
+    });
+
+    //
+    this.resetProxy && this.resetProxy();
   }
 
   setup() {}
@@ -264,15 +274,25 @@ export default class Entity {
     Events.off(id);
   }
 
+  /*
+    Called once the scene has removed the entity from the scene.
+  */
   indicateRemove() {
-    this.free();
 
-    this.children.forEach(c => c.indicateRemove());
-    this.components.forEach(c => c.indicateRemove());
+    if (!this._pool) {
+      this.free();
+      this.children.forEach(c => c.indicateRemove());
+      this.components.forEach(c => c.indicateRemove());
 
-    // don't call off(), since we don't want to modify an
-    // array while we iterate over it.
-    this.registeredEvents.forEach(id => Events.off(id));
-    Utils.clearArray(this.registeredEvents);
+      // don't call off(), since we don't want to modify an
+      // array while we iterate over it.
+      this.registeredEvents.forEach(id => Events.off(id));
+      Utils.clearArray(this.registeredEvents);
+    } 
+    // If this object is memory managed
+    else {
+      this.free();
+      Pool.free(this);
+    }
   }
 }

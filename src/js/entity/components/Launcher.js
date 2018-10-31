@@ -25,9 +25,9 @@ let _gunTip = Vec2.create();
 export default class Launcher extends Component {
   constructor(e, cfg) {
     super(e, 'launcher');
-    
+
     let v = Vec2.create();
-    v.set(1,0);
+    v.set(1, 0);
 
     let defaults = {
       ammo: 1,
@@ -66,14 +66,18 @@ export default class Launcher extends Component {
 
       // let bullet = this.createFunc({ pos: _worldCoords });
       let bullet = Pool.get(this.bulletName);
-      bullet.pos.set(_worldCoords);
-      scene.add(bullet);
+      if (bullet) {
+        bullet.pos.set(_worldCoords);
+        scene.add(bullet);
 
-      _vel.set(this.direction).mult(this.bulletVel);
-      bullet.vel.set(_vel);
+        _vel.set(this.direction).mult(this.bulletVel);
+        bullet.vel.set(_vel);
 
-      // TODO: find better way for this?
-      bullet.postLaunch && bullet.postLaunch();
+        // TODO: find better way for this?
+        bullet.postLaunch && bullet.postLaunch();
+      }
+
+
     };
   }
 
