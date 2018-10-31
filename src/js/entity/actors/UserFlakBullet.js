@@ -14,13 +14,14 @@ import EntityFactory from '../../entity/EntityFactory.js';
 import Vec2 from '../../math/Vec2.js';
 
 let _temp = Vec2.create();
+let yellow = 'yellow';
 
 export default function createFlakBullet(cfg) {
   let e = new Entity({ name: 'flakbullet', layer: 2 });
+  
   e.bounds = new BoundingCircle(e.pos, 5);
-  e.pos.set(cfg.pos.x, cfg.pos.y);
-
-  scene.add(e);
+  
+  // e.pos.set(cfg.pos.x, cfg.pos.y);
 
   e.updateProxy = function(dt) {
     this.rot = this.distancecountdown.travelled() / 15;
@@ -31,7 +32,7 @@ export default function createFlakBullet(cfg) {
     let sz = e.bounds.radius;
     _p3.save();
     _p3.strokeWeight(2);
-    _p3.stroke('yellow');
+    _p3.stroke(yellow);
     _p3.fill(0);
     _p3.translate(e.pos.x, e.pos.y);
     _p3.rotate(e.rot);
@@ -54,9 +55,11 @@ export default function createFlakBullet(cfg) {
     scene.remove(e);
   };
 
-  e.on('collision', data => {
-    detonate();
-  }, e, { onlySelf: true });
+  e.resetProxy = function() {
+    e.on('collision', data => {
+      detonate();
+    }, e, { onlySelf: true });
+  }
 
   e.addComponent(new DistanceCountdown(e, {
     distance: 110,
