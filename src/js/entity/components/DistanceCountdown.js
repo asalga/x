@@ -5,6 +5,7 @@ import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
 let _temp = Vec2.create();
+let _startPos = Vec2.create();
 
 export default class DistanceCountdown extends Component {
   constructor(e, cfg) {
@@ -14,10 +15,12 @@ export default class DistanceCountdown extends Component {
   }
 
   reset() {
+     this.entity.getWorldCoords(_temp);
+
     let defaults = {
       arrived: Utils.noop(),
       distance: 100,
-      startPos: Vec2.create()
+      startPos: _startPos
     };
     Utils.applyProps(this, defaults, this.cfg);
   }
@@ -25,7 +28,7 @@ export default class DistanceCountdown extends Component {
   travelled() {
     _temp.zero();
     this.entity.getWorldCoords(_temp);
-    return Vec2.sub(this.startPos, _temp).length();
+    return Vec2.sub(_startPos, _temp).length();
   }
 
   update(dt) {

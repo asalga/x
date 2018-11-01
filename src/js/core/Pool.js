@@ -29,7 +29,7 @@ export default class Pool {
     Pool.allocate({ name: 'bullet', createFunc: UserBullet, count: window.count });
     Pool.allocate({ name: 'plasmabullet', createFunc: PlasmaBullet, count: 40 });
     Pool.allocate({ name: 'freezebullet', createFunc: FreezeBullet, count: 40 });
-    Pool.allocate({ name: 'flakbullet', createFunc: FlakBullet, count: 20 });
+    Pool.allocate({ name: 'flakbullet', createFunc: FlakBullet, count: 200 });
   }
 
   /*

@@ -26,8 +26,6 @@ export default function createCrystal() {
   };
 
 
-
-
   let spriteRender = new SpriteRender(e, { layerName: 'effect' });
   spriteRender.draw = function(_p3) {
     let sz = e.getRoot().bounds.radius + 10;
@@ -39,7 +37,7 @@ export default function createCrystal() {
 
     _coords.zero(); 
     this.entity.getWorldCoords(_coords);
-    
+
     _p3.translate(_coords.x, _coords.y);
     _p3.rotate(Math.PI / 4);
     _p3.rect(-sz, -sz, sz * 2, sz * 2);

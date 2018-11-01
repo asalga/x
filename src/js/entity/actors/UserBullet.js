@@ -12,13 +12,6 @@ import CollisionType from '../../collision/CollisionType.js';
 
 import Pool from '../../core/Pool.js';
 
-/*
-  On game initialization, we call createBullet()
-  this function creates the entity as well as its respective components
-
-  It also sets up an event listener. This listener needs to be somehow reset as well
-*/
-
 export default function createBullet() {
   let e = new Entity({ name: 'bullet', layer: 2 });
 

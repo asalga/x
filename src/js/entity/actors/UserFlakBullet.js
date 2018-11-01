@@ -5,26 +5,29 @@ import Entity from '../Entity.js';
 import Payload from '../components/Payload.js';
 import Collidable from '../components/Collidable.js';
 import SpriteRender from '../components/SpriteRender.js';
+import PostLaunch from '../components/PostLaunch.js';
 import DistanceCountdown from '../components/DistanceCountdown.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
-import CollisionType from '../../collision/CollisionType.js';
+import CType from '../../collision/CollisionType.js';
 
 import EntityFactory from '../../entity/EntityFactory.js';
 import Vec2 from '../../math/Vec2.js';
 
 let _temp = Vec2.create();
+let _gunTip = Vec2.create();
 let yellow = 'yellow';
 
 export default function createFlakBullet(cfg) {
   let e = new Entity({ name: 'flakbullet', layer: 2 });
-  
+
   e.bounds = new BoundingCircle(e.pos, 5);
-  
+
   // e.pos.set(cfg.pos.x, cfg.pos.y);
 
   e.updateProxy = function(dt) {
-    this.rot = this.distancecountdown.travelled() / 15;
+    // TODO: fix literal
+    // this.rot = this.distancecountdown.travelled() / 15;
   };
 
   let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
@@ -42,18 +45,28 @@ export default function createFlakBullet(cfg) {
   };
 
   e.addComponent(spriteRender);
-  e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));
+  e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   let detonate = function() {
-    _temp.zero();
-    e.getWorldCoords(_temp);
+    debugger;
+    // let explosion = EntityFactory.create('explosion');
+    // _temp.zero();
+    // e.getWorldCoords(_temp);
+    // explosion.pos.set(_temp);
 
-    let explosion = EntityFactory.create('explosion');
-    explosion.pos.set(_temp);
-
-    scene.add(explosion);
-    scene.remove(e);
+    // scene.add(explosion);
+    // scene.remove(e);
   };
+
+  e.addComponent(new PostLaunch(e, {
+    launched: function(launcher){
+      launcher.getTip(_gunTip);
+      e.pos.set(_gunTip);
+
+      // debugger;
+      // console.log('test');
+    }.bind(this)
+  }));
 
   e.resetProxy = function() {
     e.on('collision', data => {
@@ -61,11 +74,11 @@ export default function createFlakBullet(cfg) {
     }, e, { onlySelf: true });
   }
 
-  e.addComponent(new DistanceCountdown(e, {
-    distance: 110,
-    startPos: e.pos.clone(),
-    arrived: detonate
-  }));
+  // e.addComponent(new DistanceCountdown(e, {
+  //   distance: 110,
+  //   startPos: e.pos.clone(),
+  //   arrived: detonate
+  // }));
 
   return e;
 }

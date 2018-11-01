@@ -12,24 +12,9 @@ export default class SpriteRender extends Component {
     super(e, 'spriterender');
     this.cfg = cfg;
     this.reset();
-    
-    // this.spriteCtx = this.sprite.getContext('2d');
-    // this.p3 = new _P3(this.sprite, this.spriteCtx);
-
-    // this.sprite = null;
-    // this.spriteCtx = null;
-
-    // if (cfg.cvs) {
-      // this.sprite = cfg.cvs;
-    // } else {
-      // this.sprite = document.createElement('canvas');
-      // this.sprite.width = cfg.width;
-      // this.sprite.height = cfg.height;
-      // console.log(window.count++);
-    // }
   }
 
-  reset(){
+  reset() {
     this.renderable = true;
     this.visible = true;
     this.opacity = 1;

@@ -3,7 +3,7 @@
 /*
   Responsible for launching bullets at a certain rate.
 
-  When fire is called, it may or may not actually fire a bullet.
+  When fire() is called, it may or may not actually fire a bullet.
   The success depends on
     - ammo remaining
     - rate at which the launcher can fire
@@ -74,11 +74,18 @@ export default class Launcher extends Component {
         bullet.vel.set(_vel);
 
         // TODO: find better way for this?
-        bullet.postLaunch && bullet.postLaunch();
+        bullet.postlaunch && bullet.postlaunch.launched(this);
       }
 
 
     };
+  }
+
+  getTip(v){
+    v.zero();
+    this.entity.getWorldCoords(v);
+    v.set(this.direction).mult(60);
+    // _worldCoords.add(_gunTip);
   }
 
   setEnable(b) {
