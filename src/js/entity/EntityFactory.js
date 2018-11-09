@@ -69,7 +69,7 @@ createFuncs.set('ui', ui);
 
 // WAVES
 // createFuncs.set('spawner', spawner);
-createFuncs.set('circularwave', circularWave);
+// createFuncs.set('circularwave', circularWave);
 createFuncs.set('linewave', linewave);
 
 
