@@ -21,7 +21,6 @@ import ui from './actors/Ui.js';
 
 // WAVES
 import createSpawner from './actors/Spawner.js';
-import circularWave from './waves/circularWave.js';
 import linewave from './waves/linewave.js';
 
 import {
@@ -69,7 +68,6 @@ createFuncs.set('ui', ui);
 
 // WAVES
 // createFuncs.set('spawner', spawner);
-// createFuncs.set('circularwave', circularWave);
 createFuncs.set('linewave', linewave);
 
 

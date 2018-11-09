@@ -27,16 +27,11 @@ export default class Scene {
     if (this.tempSpawnTimer > 5.0) {
       this.tempSpawnTimer = 0;
 
-      let circularWave = EntityFactory.create('circularwave');
+
       let lineWaveLeft = EntityFactory.create('linewave');
       let lineWaveRight = EntityFactory.create('linewave');
-      // circularWave.addComponent(new LifetimeLimit(1))
 
-      circularWave.setup({
-        entity: 'mouse',
-        count: 3,
-        distance: 300
-      });
+ 
 
       lineWaveLeft.setup({
         entity: 'mouse',
@@ -55,8 +50,6 @@ export default class Scene {
         spacing: 250
       });
       lineWaveRight.launch();
-
-      // circularWave.launch();
     }
 
     // We can't fire events while we are iterating of the 
