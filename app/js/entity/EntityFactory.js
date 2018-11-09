@@ -15,13 +15,14 @@ import teleporter from './actors/Teleporter.js';
 import emitter from './actors/decorations/Emitter.js';
 import smoke from './actors/decorations/Smoke.js';
 import spark from './actors/decorations/Spark.js';
-
+import background from './actors/decorations/Background.js';
 
 import ui from './actors/Ui.js';
 
 // WAVES
 import createSpawner from './actors/Spawner.js';
 import circularWave from './waves/circularWave.js';
+import linewave from './waves/linewave.js';
 
 import {
   miniGun,
@@ -50,6 +51,7 @@ createFuncs.set('flakgun', flakGun);
 // DECORATIONS
 createFuncs.set('emitter', emitter);
 createFuncs.set('smoke', smoke);
+createFuncs.set('background', background);
 // smoke
 // spark
 
@@ -68,6 +70,7 @@ createFuncs.set('ui', ui);
 // WAVES
 // createFuncs.set('spawner', spawner);
 createFuncs.set('circularwave', circularWave);
+createFuncs.set('linewave', linewave);
 
 
 // MISC

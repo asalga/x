@@ -19,8 +19,8 @@ export default class Killable extends Component {
     this.onDeath = function() {
       this.entity.removeSelf();
     };
-
   }
+  
   update(dt, entity) {
     if (this.dead) {
       this.deadTime += dt;

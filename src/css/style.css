@@ -27,9 +27,9 @@ body {
 canvas#cvs {
   /*background-color: #000;*/
   border: 1px solid #FFF;
-  display: flex;
+  /*display: flex;*/
   height: auto !important;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   padding: 0;
   width: 640px;
   /*display: inline-block;*/

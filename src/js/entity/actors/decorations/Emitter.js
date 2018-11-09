@@ -8,7 +8,7 @@ import Utils from '../../../Utils.js';
 import SpriteRender from '../../components/SpriteRender.js';
 
 
-let _v = new Vec2();
+let _v = Vec2.create();
 /*
   1) Image should be sent to Emitter
   2) Emitter is given max size
@@ -41,7 +41,7 @@ export default function createEmitter() {
     ageRange: [1, 1],
     sizeRange: [10, 10],
     opacityRange: [1, 1],
-    velocityRange: [new Vec2(), new Vec2()]
+    velocityRange: [Vec2.create(), Vec2.create()]
   };
   let timer = 0;
 
@@ -72,7 +72,7 @@ export default function createEmitter() {
       _p3.ellipse(_pos[i * 2], _pos[i * 2 + 1], sz, sz);
     }
     // p3.drawImage(this.sprite, this.p3.width / 2, this.p3.height / 2);
-  }
+  };
   spriteRender.renderAtRoot = true;
   e.addComponent(spriteRender);
 
@@ -101,7 +101,7 @@ export default function createEmitter() {
     _maxAge[idx] = p3.random(params.ageRange[0], params.ageRange[1]);
 
     // if (!_pos[idx]) {
-    // _pos[idx] = new Vec2();
+    // _pos[idx] = new Vec2;
     // if (!window._count) {
     // window._count = 0;
     // }
@@ -113,13 +113,14 @@ export default function createEmitter() {
     // 0  1  2
     // 01 23 45
 
-    // if (!_vel[idx]) { _vel[idx] = new Vec2(); }
+    // if (!_vel[idx]) { _vel[idx] = new Vec2; }
 
+    _v.zero();
+    this.virtualParent.getWorldCoords(_v);
 
-    let v = this.virtualParent.getWorldCoords();
     // [_pos[idx].x, _pos[idx].y] = [v.x, v.y];
-    _pos[idx * 2 + 0] = v.x;
-    _pos[idx * 2 + 1] = v.y;
+    _pos[idx * 2 + 0] = _v.x;
+    _pos[idx * 2 + 1] = _v.y;
 
     // _vel[idx].x = p3.random(params.velocityRange[0].x, params.velocityRange[1].x);
     // _vel[idx].y = p3.random(params.velocityRange[0].y, params.velocityRange[1].y);
@@ -128,16 +129,16 @@ export default function createEmitter() {
 
     _size[idx] = p3.random(params.sizeRange[0], params.sizeRange[1]);
     _opacity[idx] = p3.random(params.opacityRange[0], params.opacityRange[1]);
-  }
+  };
 
   e.killParticle = function(idx) {
     _alive[idx] = false;
-  }
+  };
 
   e.allParticlesDead = function() {
     let particlesAlive = _alive.filter(p => p);
     return particlesAlive.length === 0;
-  }
+  };
 
   let findFreeParticle = function() {
     for (let i = p.length - 1; i > 0; --i) {
@@ -152,7 +153,7 @@ export default function createEmitter() {
 
   e.update = function(dt) {
     timer += dt;
-    Debug.add(window._count);
+    // Debug.add(window._count);
 
     for (let i = 0; i < p.length; ++i) {
       if (_alive[i]) {
@@ -220,7 +221,7 @@ export default function createEmitter() {
     // for (let i = 0; i < p.length; ++i) {
     //   _alive.push(false);
 
-    //   _pos.push(new Vec2());
+    //   _pos.push(new Vec2;
     //   _vel.push(Vec2.rand().mult(10));
 
     //   _age.push(0);
@@ -229,17 +230,17 @@ export default function createEmitter() {
     //   _size.push(0);
     //   _opacity.push(0);
     // }
-  }
+  };
 
   e.play = function() {
     console.log('emitter play');
-  }
+  };
 
   e.stop = function() {
     console.log('emitter stop');
     this.detachFromParent();
     this.isDead = true;
-  }
+  };
 
   return e;
 }

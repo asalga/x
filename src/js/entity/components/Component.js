@@ -24,12 +24,20 @@ export default class Component {
     (new EventSystem()).on(evtName, func, ctx);
   }
 
+  free(){
+    console.log('super free called');
+  }
+
   setEvents(b) {
     this.eventsOn = b;
   }
 
-  getWorldCoords(){
-    return this.entity.getWorldCoords();
+  /*
+    v {Vec2} - out
+  */
+  getWorldCoords(v){
+    this.entity.getWorldCoords(v);
+    // return this.entity.getWorldCoords();
   }
 
   /*

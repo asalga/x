@@ -12,7 +12,7 @@ export default class HealthRender extends Component {
     // TODO: fix, inherit from SpriteRender?
     this.renderable = true;
     this.visible = true;
-    this.layerName = 'spriteprops';// cfg && cfg.layer || 0;
+    this.layerName = 'spriteprops'; // cfg && cfg.layer || 0;
     // this.zIndex
 
     this.sprite = document.createElement('canvas');
@@ -37,19 +37,15 @@ export default class HealthRender extends Component {
     let e = this.entity;
     let healthPercent = e.health.amt / e.health.max;
 
-    // if (this.dirty) {
-      _p3.save();
-      // _p3.clearAll();
-      _p3.strokeWeight(this.sz);
-      _p3.stroke(0, 255, 0);
-      // _p3.translate(this.p3.width / 2, this.p3.height / 2);
-      // let [x,y] = e.pos;//getWorldCoords();
-      _p3.translate(e.pos.x,e.pos.y);
-      _p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
-      _p3.restore();
-      // this.dirty = false;
-    // }
-
+    _p3.save();
+    
+    _p3.strokeWeight(this.sz);
+    _p3.stroke(0, 255, 0);
+    // _p3.translate(this.p3.width / 2, this.p3.height / 2);
+    // let [x,y] = e.pos;//getWorldCoords();
+    _p3.translate(e.pos.x, e.pos.y);
+    _p3.arc(0, 0, e.bounds.radius, healthPercent * p3.TAU, 0, false);
+    _p3.restore();
     // p3.drawImage(this.sprite, 0, 0);
   }
 }

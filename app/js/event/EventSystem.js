@@ -33,13 +33,13 @@ export default class EventSystem {
   // system to order the values nicely for the listeners.
   // This makes the logic in the collision listeners much cleaner.
   orderEntities(data, evtObj) {
-    if (data.self === evtObj.ctx) return;
+    if (data.self === evtObj.ctx) { return; }
     [data.other, data.self] = [data.self, data.other];
   }
 
   // Occurs on the WeaponSwitcher
   eventsAreOffForEntity(ctx) {
-    if (!ctx.entity) return false;
+    if (!ctx.entity) { return false; }
     return !ctx.entity.eventsOn;
   }
 
@@ -78,14 +78,13 @@ export default class EventSystem {
 
     let evtObjs = this.listeners[evtName];
 
-
     evtObjs.forEach((evtObj, id) => {
       let data = e.data;
 
       // if(e.data.name === 'mouse'){
-        // debugger;  
+      // debugger;  
       // }
-      
+
 
       // If there isn't a context, just invoke the callback
       if (!evtObj.ctx) {
@@ -105,7 +104,9 @@ export default class EventSystem {
           let res = Object.values(data).filter(v => v === evtObj.ctx);
 
           // TODO: clean this up.
-          if (res.length === 0 && data !== evtObj.ctx) return;
+          if (res.length === 0 && data !== evtObj.ctx) {
+            return;
+          }
         }
 
         if (cfg.onlyOnce) {
@@ -150,6 +151,7 @@ export default class EventSystem {
 
   clear() {
     // be super careful when calling this!
+    /*jshint -W087 */
     debugger;
     this.listeners = {};
   }

@@ -1,44 +1,75 @@
 'use strict';
 
-import EntityFactory from './entity/EntityFactory.js';
 import EventSystem from './event/EventSystem.js';
 import Event from './event/Event.js';
-import Spawner from './entity/actors/Spawner.js';
-import Vec2 from './math/Vec2.js';
 
+import EntityFactory from './entity/EntityFactory.js';
+import Spawner from './entity/actors/Spawner.js';
+import bk from './entity/actors/background.js';
+
+import Vec2 from './math/Vec2.js';
+import cfg from './cfg.js';
+import Utils from './Utils.js';
+import Assert from './core/Assert.js';
+
+let _closestBaddie = [];
 
 export default class Scene {
+
   constructor() {
     this.entities = new Set();
     this.user = null;
-    this.timer = 4;
 
     this.entitiesAddedOrRemovedDirty = false;
     this.deleteQueue = [];
     this.eventsToFireNextFrame = [];
+
+    // move this out of scene
+    this.tempSpawnTimer = 9;
   }
 
   update(dt) {
 
-    this.timer += dt;
-    if (this.timer > 5.0) {
-      this.timer = 0;
+    this.tempSpawnTimer += dt;
+    if (this.tempSpawnTimer > 10) {
+      this.tempSpawnTimer = 0;
 
-      let circularWave = EntityFactory.create('circularwave');
+      // let circularWave = EntityFactory.create('circularwave');
+      let lineWaveLeft = EntityFactory.create('linewave');
+      // let lineWaveRight = EntityFactory.create('linewave');
       // circularWave.addComponent(new LifetimeLimit(1))
-      
-      circularWave.setup({
+
+      // circularWave.setup({
+      //   entity: 'mouse',
+      //   count: 3,
+      //   distance: 300
+      // });
+
+      lineWaveLeft.setup({
         entity: 'mouse',
-        count: 5,
-        distance: 300
+        count: 15,
+        dir: -1,
+        pos: Vec2.create(),
+        spacing: 50
       });
-      circularWave.launch();
+      lineWaveLeft.launch();
+
+      // lineWaveRight.setup({
+      //   entity: 'mouse',
+      //   count: 5,
+      //   dir: 1,
+      //   pos: new Vec2(cfg.gameWidth, 0),
+      //   spacing: 50
+      // });
+      // lineWaveRight.launch();
+
+      // circularWave.launch();
     }
 
     // We can't fire events while we are iterating of the 
     // objects being removed, it breaks everything.
     this.eventsToFireNextFrame.forEach(e => e.fire());
-    this.eventsToFireNextFrame.length = 0;
+    Utils.clearArray(this.eventsToFireNextFrame);
 
     // Seems like this is the best place for this flag to be turned on.
     if (this.deleteQueue.length > 0) {
@@ -46,8 +77,14 @@ export default class Scene {
 
       // let the children do any cleanup.
       this.deleteQueue.forEach(e => {
-        let evt = new Event({ evtName: 'remove', data: e });
-        evt.fire();
+        new Event({ evtName: 'death', data: e}).fire();
+        
+        // The seekTarget relies on this event and tries to get a new 
+        // target. but if the entity is still alive, it may return
+        // a target that will be removed next frame.
+        let rm = new Event({ evtName: 'remove', data: e });
+
+        this.eventsToFireNextFrame.push(rm);
       });
 
       this.deleteQueue.forEach(e => {
@@ -56,7 +93,8 @@ export default class Scene {
 
       // Allow the entities to do any cleanup
       this.deleteQueue.forEach(e => e.indicateRemove());
-      this.deleteQueue.length = 0;
+
+      Utils.clearArray(this.deleteQueue);
     }
 
     this.entities.forEach(e => e.update(dt));
@@ -86,19 +124,19 @@ export default class Scene {
     Make this generic, we'll need to use it in other contexts
   */
   getClosestBaddie(v) {
-    let ls = [];
+    Utils.clearArray(_closestBaddie);
     this.entities.forEach(e => {
       if (e.killable && !e.killable.dead && e.targetable && e.name !== 'user') {
-        ls.push(e);
+        _closestBaddie.push(e);
       }
     });
 
-    if (ls.length === 0) { return null; }
+    if (_closestBaddie.length === 0) { return null; }
 
     let len = Infinity;
-    let closest = ls[0];
+    let closest = _closestBaddie[0];
 
-    ls.forEach(l => {
+    _closestBaddie.forEach(l => {
       let d = Vec2.sub(l.pos, v).length();
 
       if (d <= len) {
@@ -131,18 +169,13 @@ export default class Scene {
     this.deleteQueue = [];
 
     this.addUser(EntityFactory.create('user'));
-    // this.add(EntityFactory.create('ui'));
-
-    // this.add(EntityFactory.create('mouse'));
-    // let e = new EventSystem();
-    // e.clear();
+    this.add(EntityFactory.create('background'));
+    this.add(EntityFactory.create('ui'));
   }
 
   remove(e) {
-    // console.log('remove() ', e.id, e.name);
-    // if (e.name === 'emitter') {
-      // debugger;
-    // }
+    Assert(e);
+
     for (let i = 0; i < this.deleteQueue.length; i++) {
       if (e === this.deleteQueue[i]) {
         continue;

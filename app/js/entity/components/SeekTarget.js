@@ -7,36 +7,32 @@ import Debug from '../../debug/Debug.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
-let _v = new Vec2();
+import Pool from '../../core/Pool.js';
+
+// TODO: this.connectToTarget(target);
 
 export default class SeekTarget extends Component {
   constructor(e, cfg) {
     super(e, 'seektarget');
     let defaults = {
       target: null,
-      maxSpeed: 100,
+      maxSpeed: 500,
       maxVel: 50,
       maxSteerForce: 2,
     };
-    Utils.applyProps(this, defaults, cfg)
-
-    // this.connectToTarget(target);
-    // e.on('entityadded', tryToTarget)
+    Utils.applyProps(this, defaults, cfg);
 
     e.on('entityadded', data => {
       this.tryToTarget(data);
     }, e);
 
-    this.lastVel = new Vec2();
-    // this.offset = Vec2.rand().mult(1);
-
-    // cached vectors
-    this._targetPos = new Vec2();
-    this._desiredVel = new Vec2();
-    this._pos = new Vec2();
+    this.lastVel = Pool.get('vec2');
+    this._targetPos = Pool.get('vec2');
+    this._desiredVel = Pool.get('vec2');
+    this._pos = Pool.get('vec2');
   }
 
-  tryToTarget(e){
+  tryToTarget(e) {
     if (!this.target && e.killable && e.targetable) {
       this.target = e;
     }
@@ -48,6 +44,17 @@ export default class SeekTarget extends Component {
     // }
   }
 
+  free() {
+    Pool.free(this.lastVel);
+    Pool.free(this._targetPos);
+    Pool.free(this._desiredVel);
+    Pool.free(this._pos);
+  }
+
+  indicateRemove() {
+    this.free();
+  }
+
   ready() {
     // this.on('collision', this.arrived, this);
   }
@@ -57,25 +64,33 @@ export default class SeekTarget extends Component {
   }
 
   update(dt) {
-    // if no longer in the scene
-    if (!this.target) { return; }
 
-    // if in scene, but dead
-    if (this.target.killable.dead) {
-      this.entity.vel = this.lastVel;
+    // if no longer in the scene
+    if (this.target === null) {
       return;
     }
 
-    this._targetPos.set(this.target.pos); //.add(this.offset);
+    // if in scene, but dead
+    if (this.target.killable.dead) {
+      this.target = null;
+      this.entity.vel
+        .set(this.lastVel)
+        .normalize()
+        .mult(this.maxSpeed);
+      return;
+    }
+
+    this._targetPos.set(this.target.pos);
     this._pos.set(this.entity.pos);
 
     Vec2.subSelf(this._targetPos, this._pos);
-    this._desiredVel.set(this._targetPos);
-    this._desiredVel.normalize();
-    this._desiredVel.mult(this.maxSpeed);
+    this._desiredVel
+      .set(this._targetPos)
+      .normalize()
+      .mult(this.maxSpeed);
 
     let vel = this.entity.vel;
-    //let steerVel = 
+    // let steerVel = 
     Vec2.subSelf(this._desiredVel, vel);
     this._desiredVel.limit(this.maxSteerForce);
     // steerVel.limit(this.maxSteerForce);

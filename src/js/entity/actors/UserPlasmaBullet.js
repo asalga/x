@@ -14,9 +14,7 @@ export default function createPlamaBullet() {
   let e = new Entity({ name: 'plasmabullet', layer: 2 });
   e.bounds = new BoundingCircle(e.pos, 10);
 
-  scene.add(e);
-
-  let spriteRender = new SpriteRender(e, { layer: 2 });
+  let spriteRender = new SpriteRender(e, { layerName: 'bullet' });
   spriteRender.draw = function(_p3) {
     _p3.save();
     _p3.noStroke();
@@ -24,7 +22,7 @@ export default function createPlamaBullet() {
     let sz = e.bounds.radius;
     _p3.ellipse(e.pos.x, e.pos.y, sz, sz);
     _p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
   e.addComponent(new Payload(e, { dmg: 10, lingerTime: 2 }));
   e.addComponent(new Collidable(e, { type: CollisionType.PLAYER_BULLET, mask: CollisionType.ENEMY }));

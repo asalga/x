@@ -19,7 +19,11 @@ export default class GoToTarget extends Component {
 
     e.on('collision', this.hasArrived, e, { onlySelf: true });
 
-    this._toTarget = new Vec2();
+    this._toTarget = Vec2.create();
+  }
+
+  free(){
+    super.free();
   }
 
   hasArrived() {
@@ -35,6 +39,6 @@ export default class GoToTarget extends Component {
     this._toTarget.normalize();
     this._toTarget.mult(this.speed);
 
-    entity.vel = this._toTarget;
+    entity.vel.set(this._toTarget);
   }
 }

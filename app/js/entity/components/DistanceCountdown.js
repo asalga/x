@@ -4,20 +4,31 @@ import Component from './Component.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
 
+let _temp = Vec2.create();
+let _startPos = Vec2.create();
+
 export default class DistanceCountdown extends Component {
   constructor(e, cfg) {
     super(e, 'distancecountdown');
+    this.cfg = cfg;
+    this.reset();
+  }
+
+  reset() {
+     this.entity.getWorldCoords(_temp);
+
     let defaults = {
       arrived: Utils.noop(),
       distance: 100,
-      startPos: new Vec2(0, 0)
+      startPos: _startPos
     };
-    Utils.applyProps(this, defaults, cfg);
+    Utils.applyProps(this, defaults, this.cfg);
   }
 
   travelled() {
-    let currPos = this.entity.getWorldCoords();
-    return Vec2.sub(this.startPos, currPos).length();
+    _temp.zero();
+    this.entity.getWorldCoords(_temp);
+    return Vec2.sub(_startPos, _temp).length();
   }
 
   update(dt) {

@@ -21,7 +21,10 @@ export default class LingerHurt extends Component {
   update(dt) {
     let dps = (dt * this.dmg) / this.lingerTime;
 
-    if (!this.entity.health) { debugger; }
+    if (!this.entity.health) {
+      /*jshint -W087 */
+      debugger;
+    }
 
     // If user specified zero time
     if (this.lingerTime <= 0) {

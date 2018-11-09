@@ -35,7 +35,7 @@ export default function createHummingBird() {
     this.p3.restore();
 
     p3.drawImage(this.sprite, 0, 0); // e.pos.x, e.pos.y);
-  }
+  };
   e.addComponent(spriteRender);
 
   // e.updateProxy = function(dt) {
@@ -62,9 +62,9 @@ export default function createHummingBird() {
     // rocketGun.addComponent(new Collidable(rocketGun, { type: CType.ENEMY, mask: CType.PLAYER_BULLET }));
 
     rocketLauncher.updateProxy = function() {
-      this.direction.x = Math.cos((a));
-      this.direction.y = Math.sin((a));
-    }
+      this.direction.x = Math.cos(a);
+      this.direction.y = Math.sin(a);
+    };
     rocketGun.addComponent(rocketLauncher);
     e.add(rocketGun);
   }

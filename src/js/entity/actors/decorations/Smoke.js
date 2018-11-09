@@ -19,10 +19,10 @@ export default function createSmoke() {
     p3.stroke(200);
     p3.strokeWeight(1);
     // p3.translate(e.pos.x, e.pos.y);
-    p3.fill(64, 64, 64, .3);
+    p3.fill(64, 64, 64, 0.3);
     p3.ellipse(0, 0, sz, sz);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   e.updateProxy = function(dt) {

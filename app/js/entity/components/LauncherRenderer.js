@@ -3,9 +3,10 @@
 import Component from './Component.js';
 import Utils from '../../Utils.js';
 import Vec2 from '../../math/Vec2.js';
+import cfg from '../../cfg.js';
 
-let gun = new Vec2();
-let v = new Vec2();
+let gun = Vec2.create();
+// let _v = Vec2.create();
 
 export default class LauncherRenderer extends Component {
   constructor(e, cfg) {
@@ -15,14 +16,15 @@ export default class LauncherRenderer extends Component {
       renderable: true,
       visible: true,
       layerName: 'sprite'
-    }
+    };
     Utils.applyProps(this, defaults, cfg);
   }
 
   update(dt) {}
 
   draw(_p3) {
-    v = this.entity.getWorldCoords();
+    // _v.zero();
+    // this.entity.getWorldCoords(_v);
 
     gun.set(this.entity.launcher.direction);
     Vec2.multSelf(gun, 60);
@@ -30,7 +32,7 @@ export default class LauncherRenderer extends Component {
     _p3.save();
     _p3.strokeWeight(10);
     _p3.stroke(this.color);
-    _p3.translate(gameWidth/2, gameHeight/2);
+    _p3.translate(cfg.gameWidth/2, cfg.gameHeight/2);
     // p3.line(v.x, v.y, v.x + gun.x, v.y + gun.y);
     _p3.line(0, 0, gun.x, gun.y);
     _p3.restore();

@@ -1,7 +1,21 @@
+'use strict';
+
+import Utils from '../Utils.js';
+
 let strings = [];
 let isOn = true;
 
 export default class Debug {
+  
+  static init() {
+    document.addEventListener('keydown', function(evt) {
+      if (evt.code === 'KeyD') {
+        window.debug = !window.debug;
+        Debug.setOn(window.debug);
+      }
+    });
+  }
+  
   static add(str) {
     if (!isOn) {
       return;
@@ -20,7 +34,7 @@ export default class Debug {
 
     p3.save();
     p3.noStroke();
-    p3.fill(0);
+    p3.fill(255);
     let y = 20;
     let ySpacing = 18;
 
@@ -35,6 +49,6 @@ export default class Debug {
     if (!isOn) {
       return;
     }
-    strings.length = 0;
+    Utils.clearArray(strings);
   }
 }

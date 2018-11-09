@@ -6,7 +6,7 @@ import Flash from './Flash.js';
 export default class NearDeathIndicator extends Component {
   constructor(e) {
     super(e, 'neardeathindicator');
-    this.timespan = .5;
+    this.timespan = 0.5;
   }
 
   update(dt) {

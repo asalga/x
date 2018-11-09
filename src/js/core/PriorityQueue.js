@@ -1,4 +1,6 @@
-'use strict'
+'use strict';
+
+import Utils from '../Utils.js';
 
 export default class PriorityQueue {
   constructor() {
@@ -6,7 +8,7 @@ export default class PriorityQueue {
   }
 
   clear(){
-    this.items = [];
+    Utils.clearArray(this.items);
   }
 
   size(){
@@ -31,11 +33,13 @@ export default class PriorityQueue {
   }
 
   printPQueue() {
-    var str = "";
-    for (var i = 0; i < this.items.length; i++)
-      str += this.items[i].obj + " ";
+    var str = '';
+    for (var i = 0; i < this.items.length; i++){
+      str += this.items[i].obj + ' ';
+    }
     return str;
   }
+  
   isEmpty() {
     return this.items.length === 0;
   }

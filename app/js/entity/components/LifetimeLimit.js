@@ -13,22 +13,27 @@ export default class LifetimeLimit extends Component {
 
   constructor(e, cfg) {
     super(e, 'lifetimelimit');
-    let defaults = {
-      age: 0,
-      limit: 1,
-      cb: Utils.noop
-    };
-    Utils.applyProps(this, defaults, cfg);
+    this.cfg = cfg;
   }
 
   timeLeft() {
     return this.limit - this.age;
   }
 
+  reset() {
+    let defaults = {
+      age: 0,
+      limit: 1,
+      cb: Utils.noop
+    };
+    Utils.applyProps(this, defaults, this.cfg);
+  }
+
   update(dt) {
     this.age += dt;
     if (this.age >= this.limit) {
       this.cb();
+      // this.entity.recycle();
       this.entity.removeSelf();
     }
   }

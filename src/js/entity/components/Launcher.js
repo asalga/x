@@ -3,7 +3,7 @@
 /*
   Responsible for launching bullets at a certain rate.
 
-  When fire is called, it may or may not actually fire a bullet.
+  When fire() is called, it may or may not actually fire a bullet.
   The success depends on
     - ammo remaining
     - rate at which the launcher can fire
@@ -16,17 +16,27 @@
 import Component from './Component.js';
 import Vec2 from '../../math/Vec2.js';
 import Utils from '../../Utils.js';
+import Pool from '../../core/Pool.js';
+
+let _worldCoords = Vec2.create();
+let _vel = Vec2.create();
+let _gunTip = Vec2.create();
 
 export default class Launcher extends Component {
   constructor(e, cfg) {
     super(e, 'launcher');
+
+    let v = Vec2.create();
+    v.set(1, 0);
+
     let defaults = {
       ammo: 1,
       enabled: true,
       shotsPerSecond: 1,
       autoFire: false,
       bulletVel: 500,
-      direction: new Vec2(1, 0)
+      direction: v,
+      // bulletName: 'bullet'
     };
     Utils.applyProps(this, defaults, cfg);
 
@@ -34,7 +44,7 @@ export default class Launcher extends Component {
     this.timer = 0;
     this.rate = 1 / this.shotsPerSecond;
 
-    this.on('GAME_MOUSE_DOWN', () => { this.firing = true }, this);
+    this.on('GAME_MOUSE_DOWN', () => { this.firing = true; }, this);
     this.on('GAME_MOUSE_UP', () => { this.firing = false; }, this);
 
     // this.getVecToCursor = function() {
@@ -48,21 +58,39 @@ export default class Launcher extends Component {
     this.createBullet = function() {
       this.ammo--;
 
-      let worldCoords = this.entity.getWorldCoords();
-      let gunTip = this.direction.clone().mult(60);
-      worldCoords.add(gunTip);
+      _worldCoords.zero();
+      this.entity.getWorldCoords(_worldCoords);
 
-      let bullet = this.createFunc({ pos: worldCoords });
-      bullet.pos.set(worldCoords);
-      bullet.vel.set(this.direction.clone().mult(this.bulletVel));
+      _gunTip.set(this.direction).mult(60);
+      _worldCoords.add(_gunTip);
 
-      // TODO: find better way for this?
-      bullet.postLaunch && bullet.postLaunch();
-    }
-    // let gunTip = this.getVecToCursor();
-    // gunTip.add(p3.width / 2, p3.height / 2);
-    // bullet.pos.set(gunTip);
-    // let dir = gunTip.sub(UserPos).normalize();
+      // 
+      let bullet;//Pool.get();
+      if (this.bulletName) {
+        bullet = Pool.get(this.bulletName);
+
+        bullet.pos.set(_worldCoords);
+        scene.add(bullet);
+
+        _vel.set(this.direction).mult(this.bulletVel);
+        bullet.vel.set(_vel);
+
+        // TODO: find better way for this?
+        bullet.postlaunch && bullet.postlaunch.launched(this);
+      }
+      else{
+         bullet = this.createFunc({ pos: _worldCoords });
+      }
+
+
+    };
+  }
+
+  getTip(v){
+    v.zero();
+    this.entity.getWorldCoords(v);
+    v.set(this.direction).mult(60);
+    // _worldCoords.add(_gunTip);
   }
 
   setEnable(b) {

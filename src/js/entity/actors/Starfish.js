@@ -29,7 +29,7 @@ export default function createStarFish() {
     p3.noStroke();
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   let numGuns = 6;
@@ -49,7 +49,7 @@ export default function createStarFish() {
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));
-    }
+    };
     rocketGun.addComponent(rocketLauncher);
     e.add(rocketGun);
   }

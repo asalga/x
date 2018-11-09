@@ -30,8 +30,7 @@ export default function createMouse() {
   e.pos.x = p3.width / 2;
   e.pos.y = p3.height / 2 - 150;
 
-
-  let spriteRender = new SpriteRender(e, { layer: 100 });
+  let spriteRender = new SpriteRender(e, { layerName: 'sprite' });
   spriteRender.draw = function() {
     p3.save();
     p3.noStroke();
@@ -41,7 +40,7 @@ export default function createMouse() {
     //(100, 111, 140);
     p3.ellipse(0, 0, e.bounds.radius, e.bounds.radius);
     p3.restore();
-  }
+  };
   e.addComponent(spriteRender);
 
   e.updateProxy = function(dt) {
@@ -96,7 +95,7 @@ export default function createMouse() {
     rocketLauncher.updateProxy = function() {
       this.direction.x = Math.cos((a));
       this.direction.y = Math.sin((a));
-    }
+    };
     rocketGun.addComponent(rocketLauncher);
     e.add(rocketGun);
   }

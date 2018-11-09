@@ -2,7 +2,7 @@
 
 export default class Vec2 {
   constructor() {
-    window.vec2_ctor++;
+    window.vec2Ctor++;
 
     let x, y;
 
@@ -18,8 +18,16 @@ export default class Vec2 {
     this.set(x, y);
   }
 
+  reset(){
+    this.zero();
+  }
+
   toArray() {
     return [this.x, this.y];
+  }
+
+  zero() {
+    this.x = this.y = 0;
   }
 
   set() {
@@ -32,6 +40,7 @@ export default class Vec2 {
         this.x = arguments[0];
         this.y = arguments[1];
     }
+    return this;
   }
 
   add(v) {
@@ -94,6 +103,14 @@ export default class Vec2 {
     return this;
   }
 
+  static create() {
+    return new Vec2();
+  }
+
+  static zero(v) {
+    this.x = this.y = 0;
+  }
+
   static multSelf(v, s) {
     v.x *= s;
     v.y *= s;
@@ -101,7 +118,7 @@ export default class Vec2 {
 
   static addSelf(v1, v2) {
     v1.x += v2.x;
-    v2.y += v2.y;
+    v1.y += v2.y;
   }
 
   static subSelf(v1, v2) {

@@ -9,12 +9,12 @@ export default class WeaponSwitcher extends Component {
     this.weapons = new Map();
     this.mouseDown = false;
 
-    this.on('GAME_MOUSE_DOWN', function() { this.mouseDown = true }, this);
-    this.on('GAME_MOUSE_UP', function() { this.mouseDown = false }, this);
+    this.on('GAME_MOUSE_DOWN', function() { this.mouseDown = true; }, this);
+    this.on('GAME_MOUSE_UP', function() { this.mouseDown = false; }, this);
 
     document.addEventListener('keydown', e => {
       if (this.weapons.has(e.key) === false) { return; }
-
+console.log('key down');
       this.ismdown = this.mouseDown;
 
       this.turnAllWeaponsOff();
@@ -32,6 +32,7 @@ export default class WeaponSwitcher extends Component {
     e.launcher.setEnable(b);
     e.launcherrenderer.visible = b;
     e.setEvents(b);
+    console.log('enableWeapon ',e.name);
 
     // If we turn off the weapon but user is still holding down fire
     // Just fire the up event.
@@ -42,15 +43,17 @@ export default class WeaponSwitcher extends Component {
 
   init() {
     this.turnAllWeaponsOff();
-    this.enableWeapon(this.weapons.get('3'), true);
+    this.enableWeapon(this.weapons.get('1'), true);
   }
 
   turnAllWeaponsOff() {
+      console.log('turn off all  ');
+
     this.weapons.forEach(e => this.enableWeapon(e, false));
   }
 
   addWeapon(key, entity) {
-    this.weapons.set(key, entity)
+    this.weapons.set(key, entity);
   }
 
   update(dt) {}

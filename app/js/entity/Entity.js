@@ -7,28 +7,13 @@ import Event from '../event/Event.js';
 import EventSystem from '../event/EventSystem.js';
 
 import Utils from '../Utils.js';
+import Pool from '../core/Pool.js';
 
-// tempvec
-let _v = new Vec2();
+let _temp = Vec2.create();
 
 export default class Entity {
   constructor(cfg) {
-    let defaults = {
-      opacity: 1,
-      visible: true
-    };
-    Utils.applyProps(this, defaults, cfg);
-
-    this.id = Utils.getId();
-
-    this.eventsOn = true;
-    // this.registeredEvents = new Map();
-    this.registeredEvents = [];
-
-    this.pos = new Vec2();
-    this.vel = new Vec2();
-    this.acc = new Vec2();
-    this.rot = 0;
+    this.cfg = cfg;
 
     // TODO: fix
     this.speed = 1;
@@ -36,6 +21,44 @@ export default class Entity {
     this.components = [];
     this.children = [];
     this.parent = null;
+
+    this.reset();
+  }
+
+  /*
+    When we reset an object, we'll also need to generate a new ID
+  */
+  reset() {
+    // console.log('Entity Reset');
+
+    let defaults = {
+      opacity: 1,
+      visible: true
+    };
+    Utils.applyProps(this, defaults, this.cfg);
+
+    this.eventsOn = true;
+    this.registeredEvents = [];
+    this.rot = 0;
+
+    this.pos = Pool.get('vec2');
+    this.vel = Pool.get('vec2');
+    this.acc = Pool.get('vec2');
+    this.worldCoords = Pool.get('vec2');
+
+    this.id = Utils.getId();
+
+    this.children.forEach(ch => {
+      ch.reset();
+      ch.resetProxy && ch.resetProxy();
+    });
+    this.components.forEach(c => {
+      c.reset();
+      c.resetProxy && c.resetProxy()
+    });
+
+    //
+    this.resetProxy && this.resetProxy();
   }
 
   setup() {}
@@ -55,12 +78,16 @@ export default class Entity {
 
   // TODO: yup, implement this too
   setPropertyRecursive(name, v) {
+    /*jshint -W087 */
     debugger;
   }
 
   update(dt) {
-    // sanity check
-    if (Number.isNaN(this.vel.x)) { debugger; }
+    // TODO: replace with assert
+    if (Number.isNaN(this.vel.x)) {
+      /*jshint -W087 */
+      debugger;
+    }
 
     // let deltaTime = dt * this.timeScale;
     let deltaTime = dt; // * this.timeScale;
@@ -73,19 +100,19 @@ export default class Entity {
       c.update && c.update(dt, this);
       c.updateProxy && c.updateProxy(dt);
     });
-//
+    //
     if (this.vel) {
       //let d = this.vel.clone().mult(deltaTime * this.timeScale);
 
-      _v.set(this.vel);
-      Vec2.multSelf(_v, deltaTime * this.timeScale);
+      _temp.set(this.vel);
+      Vec2.multSelf(_temp, deltaTime * this.timeScale);
 
       // let [x, y] = [
-        // this.vel.x * deltaTime * this.timeScale,
-        // this.vel.y * deltaTime * this.timeScale
+      // this.vel.x * deltaTime * this.timeScale,
+      // this.vel.y * deltaTime * this.timeScale
       // ];
-      this.pos.x += _v.x;
-      this.pos.y += _v.y;
+      this.pos.x += _temp.x;
+      this.pos.y += _temp.y;
 
       // Vec2.addSelf(this.pos,  );
       // this.pos.add(d);
@@ -118,12 +145,21 @@ export default class Entity {
   }
 
   /*
-    If a component needs to remove the associate entity,
+    Free any resources from Pools.
+  */
+  free() {
+    Pool.free(this.pos);
+    Pool.free(this.vel);
+    Pool.free(this.acc);
+    Pool.free(this.worldCoords);
+  }
+
+  /*
+    If a component needs to remove the associated entity,
     give it a method that abstracts out whether the entity
     is in a scenegraph or directly in the scene.
   */
   removeSelf() {
-    // console.log('remove self:', this.name);
     if (this.parent) {
       this.parent.removeDirectChild(this);
     } else {
@@ -131,6 +167,9 @@ export default class Entity {
     }
   }
 
+  /*
+
+  */
   removeDirectChild(e) {
     let res = Utils.removeFromArray(this.children, e);
     e.parent = null;
@@ -138,6 +177,7 @@ export default class Entity {
   }
 
   removeChild(e) {
+    /*jshint -W087 */
     debugger;
   }
 
@@ -168,6 +208,11 @@ export default class Entity {
       .forEach(e => e.launcher.setEnable(b));
   }
 
+  updateWorldCoords() {
+    this.worldCoords.zero();
+    this.getWorldCoords(this.worldCoords);
+  }
+
   getRoot() {
     if (this.parent === null) {
       return this;
@@ -186,7 +231,6 @@ export default class Entity {
   removeComponent(c) {
     Utils.removeFromArray(this.components, c);
     this.components[c.name] = undefined;
-    // this.components[c.name] = Utils.undef;
   }
 
   removeComponentByName(str) {
@@ -202,11 +246,17 @@ export default class Entity {
     this.eventsOn = b;
   }
 
-  getWorldCoords() {
+  /*
+    Zero out the vector prior to calling this method
+    v {Vec2} - out
+  */
+  getWorldCoords(v) {
     if (this.parent) {
-      return Vec2.add(this.pos, this.parent.getWorldCoords());
+      Vec2.addSelf(this.parent.getWorldCoords(v), this.pos);
+    } else {
+      Vec2.addSelf(v, this.pos);
     }
-    return this.pos;
+    return v;
   }
 
   /*
@@ -224,13 +274,25 @@ export default class Entity {
     Events.off(id);
   }
 
+  /*
+    Called once the scene has removed the entity from the scene.
+  */
   indicateRemove() {
-    this.children.forEach(c => c.indicateRemove());
-    this.components.forEach(c => c.indicateRemove());
 
-    // don't call off(), since we don't want to modify an
-    // array while we iterate over it.
-    this.registeredEvents.forEach(id => Events.off(id));
-    this.registeredEvents = [];
+    if (!this._pool) {
+      this.free();
+      this.children.forEach(c => c.indicateRemove());
+      this.components.forEach(c => c.indicateRemove());
+
+      // don't call off(), since we don't want to modify an
+      // array while we iterate over it.
+      this.registeredEvents.forEach(id => Events.off(id));
+      Utils.clearArray(this.registeredEvents);
+    } 
+    // If this object is memory managed
+    else {
+      this.free();
+      Pool.free(this);
+    }
   }
 }

@@ -1,3 +1,10 @@
+let STRING = 'string';
+let NUMBER = 'number';
+let CENTER = 'center';
+// let WHITE = 'white';
+
+window.cnt = 0;
+
 export default class P3 {
   constructor(cvs, ctx) {
     this.ctx = ctx;
@@ -11,9 +18,9 @@ export default class P3 {
     this.stroke('white');
     this.strokeWeight(1);
 
-    this._imageMode = 'center';
-    this._rectMode = 'center';
-    this._ellipseMode = 'center';
+    this._imageMode = CENTER;
+    this._rectMode = CENTER;
+    this._ellipseMode = CENTER;
 
     this._doFill = true;
     this._doStroke = true;
@@ -50,8 +57,7 @@ export default class P3 {
   }
 
   ellipseMode(str) {
-    // debugger;
-    // console.log('implement me');
+    console.log('implement me');
     this._ellipseMode = str;
   }
 
@@ -68,17 +74,19 @@ export default class P3 {
   }
 
   _argColorToString(args) {
+    window.cnt++;
     let ret;
+
     if (arguments.length === 1) {
-      if (typeof(args) === 'string') {
+      if (typeof(args) === STRING) {
         ret = args;
-      } else if (typeof(args) === 'number') {
+        // if its a number and only 1 arg, we want a grey color
+      } else if (typeof(args) === NUMBER) {
         let c = args;
         ret = `rgb(${c}, ${c}, ${c})`;
       }
     } else {
-      let c = [...arguments];
-      ret = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+      ret = `rgb(${arguments[0]}, ${arguments[1]}, ${arguments[2]})`;
     }
     return ret;
   }
@@ -117,7 +125,6 @@ export default class P3 {
 
   rect(x, y, w, h) {
     // let arrArgs = [...arguments];
-
     // this.ctx.globalAlpha = 0.8;
 
     if (this._doStroke) {
@@ -150,7 +157,7 @@ export default class P3 {
   ellipse(x, y, r1, r2) {
 
     let [_x, _y] = [x, y];
-    if (this._ellipseMode === 'center') {
+    if (this._ellipseMode === CENTER) {
       _x = x;
       _y = y;
     }
@@ -173,8 +180,7 @@ export default class P3 {
   }
 
   drawImage(image, x, y) {
-    let [_x, _y] = [x, y];
-
+    // let [_x, _y] = [x, y];
     // if (this._imageMode === 'center') {
     //   _x = x - image.width / 2;
     //   _y = y - image.height / 2;
@@ -182,7 +188,7 @@ export default class P3 {
     //   // debugger;
     // }
 
-    this.ctx.drawImage(image, _x, _y);
+    this.ctx.drawImage(image, x, y);
   }
 
   arc(x, y, r, s, e, cc) {
@@ -196,4 +202,5 @@ export default class P3 {
   tan(a) { return Math.tan(a); }
   get PI() { return Math.PI; }
   get TAU() { return Math.PI * 2; }
+  // get WHITE() { return WHITE; }
 }
