@@ -1,5 +1,6 @@
 'use strict';
 
+
 import Entity from '../Entity.js';
 import EntityFactory from '../EntityFactory.js';
 import Utils from '../../Utils.js';
