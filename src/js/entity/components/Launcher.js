@@ -65,7 +65,7 @@ export default class Launcher extends Component {
       _worldCoords.add(_gunTip);
 
       // 
-      let bullet;//Pool.get();
+      let bullet;
       if (this.bulletName) {
         bullet = Pool.get(this.bulletName);
 
@@ -80,9 +80,11 @@ export default class Launcher extends Component {
       }
       else{
          bullet = this.createFunc({ pos: _worldCoords });
+
+        bullet.postlaunch && bullet.postlaunch.launched(this);
+        _vel.set(this.direction).mult(this.bulletVel);
+        bullet.vel.set(_vel);
       }
-
-
     };
   }
 

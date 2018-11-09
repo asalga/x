@@ -71,12 +71,12 @@ export default function createUserRocketBullet() {
 
   // TODO: is this the best place for this?
   e.postLaunch = function() {
-    let r = Math.random();
-    if (r < 0.5) {
+    // let r = Math.random();
+    // if (r < 0.5) {
       this.seektarget.target = scene.getRandomBaddie();
-    } else {
-      this.seektarget.target = scene.getClosestBaddie(this.pos);
-    }
+    // } else {
+      // this.seektarget.target = scene.getClosestBaddie(this.pos);
+    // }
   };
 
   let emitter = EntityFactory.create('emitter');
