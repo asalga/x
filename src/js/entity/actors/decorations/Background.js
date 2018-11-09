@@ -7,7 +7,7 @@ import cfg from '../../../cfg.js';
 
 import SpriteRender from '../../components/SpriteRender.js';
 
-const COUNT = 100;
+const COUNT = 70;
 let pos = new Array(COUNT);
 let vel = new Array(COUNT);
 let sz = new Array(COUNT);
@@ -19,7 +19,7 @@ export default function createBackground() {
   for (let i = 0; i < COUNT; i++) {
     pos[i] = [p3.random(0, cfg.gameWidth * 2), p3.random(0, cfg.gameHeight * 2)];
 
-    vel[i] = -p3.random(50, 400);
+    vel[i] = -p3.random(250, 100);
 
     sz[i] = 2 + (((vel[i] / 400)-0.5)*20.0);
     sz[i] /= 5.;
@@ -45,7 +45,7 @@ export default function createBackground() {
     // _p3.clearColor(200);
 
     // _p3.fill('rgba(33, 66, 99, 0.5)');
-    _p3.fill('rgba(40, 40, 40, 0.5)');
+    _p3.fill('rgba(20, 20, 20, 0.85)');
 
     // _p3.stroke('rgba(200, 200, 200, 0.52)');
     _p3.rect(0, 0, cfg.gameWidth, cfg.gameHeight);

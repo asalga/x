@@ -24,7 +24,7 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 10.0) {
+    if (this.tempSpawnTimer > 5.0) {
       this.tempSpawnTimer = 0;
 
       let circularWave = EntityFactory.create('circularwave');
@@ -40,19 +40,19 @@ export default class Scene {
 
       lineWaveLeft.setup({
         entity: 'mouse',
-        count: 5,
+        count: 2,
         dir: -1,
         pos: new Vec2(0, 0),
-        spacing: 50
+        spacing: 250
       });
       lineWaveLeft.launch();
 
       lineWaveRight.setup({
         entity: 'mouse',
-        count: 5,
+        count: 2,
         dir: 1,
         pos: new Vec2(cfg.gameWidth, 0),
-        spacing: 50
+        spacing: 250
       });
       lineWaveRight.launch();
 

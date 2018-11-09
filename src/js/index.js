@@ -20,7 +20,7 @@ window.gameFrameCount = 0;
 window.Renderer = Renderer;
 
 window.count = 0;
-window.debug = true;
+window.debug = false;
 window.Debug = Debug;
 window.scene = null;
 window.vec2_ctor = 0;
