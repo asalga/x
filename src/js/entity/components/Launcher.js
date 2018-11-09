@@ -36,7 +36,7 @@ export default class Launcher extends Component {
       autoFire: false,
       bulletVel: 500,
       direction: v,
-      bulletName: 'bullet'
+      // bulletName: 'bullet'
     };
     Utils.applyProps(this, defaults, cfg);
 
@@ -64,9 +64,11 @@ export default class Launcher extends Component {
       _gunTip.set(this.direction).mult(60);
       _worldCoords.add(_gunTip);
 
-      // let bullet = this.createFunc({ pos: _worldCoords });
-      let bullet = Pool.get(this.bulletName);
-      if (bullet) {
+      // 
+      let bullet;//Pool.get();
+      if (this.bulletName) {
+        bullet = Pool.get(this.bulletName);
+
         bullet.pos.set(_worldCoords);
         scene.add(bullet);
 
@@ -75,6 +77,9 @@ export default class Launcher extends Component {
 
         // TODO: find better way for this?
         bullet.postlaunch && bullet.postlaunch.launched(this);
+      }
+      else{
+         bullet = this.createFunc({ pos: _worldCoords });
       }
 
 

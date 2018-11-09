@@ -48,7 +48,7 @@ export default function createFlakBullet(cfg) {
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   let detonate = function() {
-    debugger;
+    // debugger;
     // let explosion = EntityFactory.create('explosion');
     // _temp.zero();
     // e.getWorldCoords(_temp);

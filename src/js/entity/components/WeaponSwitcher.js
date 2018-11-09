@@ -14,7 +14,7 @@ export default class WeaponSwitcher extends Component {
 
     document.addEventListener('keydown', e => {
       if (this.weapons.has(e.key) === false) { return; }
-
+console.log('key down');
       this.ismdown = this.mouseDown;
 
       this.turnAllWeaponsOff();
@@ -32,6 +32,7 @@ export default class WeaponSwitcher extends Component {
     e.launcher.setEnable(b);
     e.launcherrenderer.visible = b;
     e.setEvents(b);
+    console.log('enableWeapon ',e.name);
 
     // If we turn off the weapon but user is still holding down fire
     // Just fire the up event.
@@ -46,6 +47,8 @@ export default class WeaponSwitcher extends Component {
   }
 
   turnAllWeaponsOff() {
+      console.log('turn off all  ');
+
     this.weapons.forEach(e => this.enableWeapon(e, false));
   }
 

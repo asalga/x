@@ -29,7 +29,7 @@ export default class Entity {
     When we reset an object, we'll also need to generate a new ID
   */
   reset() {
-    console.log('Entity Reset');
+    // console.log('Entity Reset');
 
     let defaults = {
       opacity: 1,

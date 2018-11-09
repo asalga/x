@@ -60,30 +60,31 @@ export default function createUser() {
   miniGun.addComponent(new MouseLauncherController(miniGun));
   user.add(miniGun);
 
-  // PLASMA
+  // // PLASMA
   let plasmaGun = EntityFactory.create('plasmagun');
-  let plamaLauncher = new Launcher(plasmaGun, { shotsPerSecond: 25, ammo: 350, bulletName: 'plasmabullet' });
+  let plamaLauncher = new Launcher(plasmaGun, { shotsPerSecond: 4, ammo: 350, bulletName: 'plasmabullet' });
   plasmaGun.addComponent(plamaLauncher);
   plasmaGun.addComponent(new MouseLauncherController(plasmaGun));
   user.add(plasmaGun);
 
-  // FREEZE
-  let freezeGun = EntityFactory.create('freezegun');
-  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100, bulletName: 'freezebullet' });
-  freezeGun.addComponent(freezeGunLauncher);
-  freezeGun.addComponent(new MouseLauncherController(freezeGun));
-  user.add(freezeGun);
+  // // FREEZE
+  // let freezeGun = EntityFactory.create('freezegun');
+  // let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100, bulletName: 'freezebullet' });
+  // freezeGun.addComponent(freezeGunLauncher);
+  // freezeGun.addComponent(new MouseLauncherController(freezeGun));
+  // user.add(freezeGun);
 
-  // FLAK
-  let flakGun = EntityFactory.create('flakgun');
-  let flakLauncher = new Launcher(flakGun, { shotsPerSecond: 5, ammo: 100, bulletVel: 300, bulletName: 'flakbullet' });
-  flakGun.addComponent(flakLauncher);
-  flakGun.addComponent(new MouseLauncherController(flakGun));
-  user.add(flakGun);
+  // // FLAK
+  // let flakGun = EntityFactory.create('flakgun');
+  // let flakLauncher = new Launcher(flakGun, { shotsPerSecond: 5, ammo: 100, bulletVel: 300, bulletName: 'flakbullet' });
+  // flakGun.addComponent(flakLauncher);
+  // flakGun.addComponent(new MouseLauncherController(flakGun));
+  // user.add(flakGun);
 
-  // ROCKET
+  // // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: true, ammo: 599, bulletVel: 300 });
+  //, bulletName: 'missile'  
+  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: false, ammo: 599, bulletVel: 300});
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));
@@ -97,8 +98,8 @@ export default function createUser() {
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
-  weaponSwitcher.addWeapon('4', freezeGun);
-  weaponSwitcher.addWeapon('5', flakGun);
+  // weaponSwitcher.addWeapon('4', freezeGun);
+  // weaponSwitcher.addWeapon('5', flakGun);
   weaponSwitcher.init();
   user.addComponent(weaponSwitcher);
 

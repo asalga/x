@@ -16,7 +16,7 @@ export default class Payload extends Component {
   }
 
   reset() {
-    console.log('payload reset');
+    // console.log('payload reset');
 
     let defaults = {
       dmg: 1,
