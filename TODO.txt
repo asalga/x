@@ -1,5 +1,7 @@
 # X
 
+* Add pause feature
+
 * If homing missile loses tracking, it should 
 continue on its lastVel
 * There is a prerequisite of zero-ing out the vector before its passed to Entity.getWorldCoords()

@@ -59,12 +59,10 @@ export default function createFlakBullet(cfg) {
   };
 
   e.addComponent(new PostLaunch(e, {
-    launched: function(launcher){
+    launched: function(launcher) {
       launcher.getTip(_gunTip);
       e.pos.set(_gunTip);
-
-      // debugger;
-      // console.log('test');
+      e.distancecountdown.startPos.set(_gunTip);
     }.bind(this)
   }));
 
@@ -74,11 +72,7 @@ export default function createFlakBullet(cfg) {
     }, e, { onlySelf: true });
   }
 
-  // e.addComponent(new DistanceCountdown(e, {
-  //   distance: 110,
-  //   startPos: e.pos.clone(),
-  //   arrived: detonate
-  // }));
+  e.addComponent(new DistanceCountdown(e, { distance: 110, arrived: detonate }));
 
   return e;
 }
