@@ -5,9 +5,14 @@ import Event from './event/Event.js';
 
 import EntityFactory from './entity/EntityFactory.js';
 import Spawner from './entity/actors/Spawner.js';
+<<<<<<< HEAD
 import bk from './entity/actors/background.js';
 
 import Vec2 from './math/Vec2.js';
+=======
+import Vec2 from './math/Vec2.js';
+import bk from './entity/actors/decorations/Background.js';
+>>>>>>> invivo
 import cfg from './cfg.js';
 import Utils from './Utils.js';
 import Assert from './core/Assert.js';
@@ -31,39 +36,33 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 10) {
+
+    if (this.tempSpawnTimer > 5.0) {
       this.tempSpawnTimer = 0;
 
-      // let circularWave = EntityFactory.create('circularwave');
-      let lineWaveLeft = EntityFactory.create('linewave');
-      // let lineWaveRight = EntityFactory.create('linewave');
-      // circularWave.addComponent(new LifetimeLimit(1))
 
-      // circularWave.setup({
-      //   entity: 'mouse',
-      //   count: 3,
-      //   distance: 300
-      // });
+      let lineWaveLeft = EntityFactory.create('linewave');
+      let lineWaveRight = EntityFactory.create('linewave');
+
+ 
 
       lineWaveLeft.setup({
         entity: 'mouse',
-        count: 15,
+        count: 2,
         dir: -1,
-        pos: Vec2.create(),
-        spacing: 50
+        pos: new Vec2(0, 0),
+        spacing: 250
       });
       lineWaveLeft.launch();
 
-      // lineWaveRight.setup({
-      //   entity: 'mouse',
-      //   count: 5,
-      //   dir: 1,
-      //   pos: new Vec2(cfg.gameWidth, 0),
-      //   spacing: 50
-      // });
-      // lineWaveRight.launch();
-
-      // circularWave.launch();
+      lineWaveRight.setup({
+        entity: 'mouse',
+        count: 2,
+        dir: 1,
+        pos: new Vec2(cfg.gameWidth, 0),
+        spacing: 250
+      });
+      lineWaveRight.launch();
     }
 
     // We can't fire events while we are iterating of the 

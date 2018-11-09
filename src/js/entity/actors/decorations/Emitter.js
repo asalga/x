@@ -67,7 +67,7 @@ export default function createEmitter() {
       if (!_alive[i]) { continue; }
       let sz = _size[i];
       let op = _opacity[i];
-      _p3.stroke(`rgb(25, 25, 25, ${op})`);
+      _p3.stroke(`rgb(125, 125, 125, ${op})`);
       _p3.fill(`rgb(25, 25, 25, ${op})`);
       _p3.ellipse(_pos[i * 2], _pos[i * 2 + 1], sz, sz);
     }
