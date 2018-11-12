@@ -65,6 +65,7 @@ export default class SeekTarget extends Component {
 
   update(dt) {
 
+
     // if no longer in the scene
     if (this.target === null) {
       return;

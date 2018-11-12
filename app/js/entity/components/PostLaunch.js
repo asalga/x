@@ -11,6 +11,7 @@ export default class PostLaunch extends Component {
   constructor(e, cfg) {
     super(e, 'postlaunch');
     this.cfg = cfg;
+    this.reset(this.cfg);
   }
 
   reset() {

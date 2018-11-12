@@ -14,6 +14,7 @@ export default class LifetimeLimit extends Component {
   constructor(e, cfg) {
     super(e, 'lifetimelimit');
     this.cfg = cfg;
+    this.reset(this.cfg);
   }
 
   timeLeft() {
@@ -31,6 +32,7 @@ export default class LifetimeLimit extends Component {
 
   update(dt) {
     this.age += dt;
+
     if (this.age >= this.limit) {
       this.cb();
       // this.entity.recycle();

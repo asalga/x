@@ -68,11 +68,11 @@ export default function createUser() {
   user.add(plasmaGun);
 
   // // FREEZE
-  // let freezeGun = EntityFactory.create('freezegun');
-  // let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100, bulletName: 'freezebullet' });
-  // freezeGun.addComponent(freezeGunLauncher);
-  // freezeGun.addComponent(new MouseLauncherController(freezeGun));
-  // user.add(freezeGun);
+  let freezeGun = EntityFactory.create('freezegun');
+  let freezeGunLauncher = new Launcher(freezeGun, { shotsPerSecond: 5, ammo: 999, bulletVel: 100, bulletName: 'freezebullet' });
+  freezeGun.addComponent(freezeGunLauncher);
+  freezeGun.addComponent(new MouseLauncherController(freezeGun));
+  user.add(freezeGun);
 
   // // FLAK
   // let flakGun = EntityFactory.create('flakgun');
@@ -83,8 +83,7 @@ export default function createUser() {
 
   // // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  //, bulletName: 'missile'  
-  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: false, ammo: 599, bulletVel: 300});
+  let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: false, ammo: 599, bulletVel: 100});
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
   rocketGun.addComponent(new MouseLauncherController(rocketGun));
@@ -98,7 +97,7 @@ export default function createUser() {
   weaponSwitcher.addWeapon('1', miniGun);
   weaponSwitcher.addWeapon('2', plasmaGun);
   weaponSwitcher.addWeapon('3', rocketGun);
-  // weaponSwitcher.addWeapon('4', freezeGun);
+  weaponSwitcher.addWeapon('4', freezeGun);
   // weaponSwitcher.addWeapon('5', flakGun);
   weaponSwitcher.init();
   user.addComponent(weaponSwitcher);
