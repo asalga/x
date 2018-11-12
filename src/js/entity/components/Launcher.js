@@ -69,22 +69,21 @@ export default class Launcher extends Component {
       if (this.bulletName) {
         bullet = Pool.get(this.bulletName);
 
-        bullet.pos.set(_worldCoords);
-        scene.add(bullet);
 
-        _vel.set(this.direction).mult(this.bulletVel);
-        bullet.vel.set(_vel);
-
-        // TODO: find better way for this?
-        bullet.postlaunch && bullet.postlaunch.launched(this);
       }
       else{
          bullet = this.createFunc({ pos: _worldCoords });
+      }
 
+        bullet.pos.set(_worldCoords);
+        scene.add(bullet);
+
+
+        // TODO: find better way for this?
         bullet.postlaunch && bullet.postlaunch.launched(this);
+      
         _vel.set(this.direction).mult(this.bulletVel);
         bullet.vel.set(_vel);
-      }
     };
   }
 

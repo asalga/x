@@ -25,18 +25,18 @@ export default class Scene {
     this.eventsToFireNextFrame = [];
 
     // move this out of scene
-    this.tempSpawnTimer = 9;
+    this.tempSpawnTimer = 4;
   }
 
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 10) {
+    if (this.tempSpawnTimer > 6) {
       this.tempSpawnTimer = 0;
 
       // let circularWave = EntityFactory.create('circularwave');
       let lineWaveLeft = EntityFactory.create('linewave');
-      // let lineWaveRight = EntityFactory.create('linewave');
+      let lineWaveRight = EntityFactory.create('linewave');
       // circularWave.addComponent(new LifetimeLimit(1))
 
       // circularWave.setup({
@@ -47,21 +47,21 @@ export default class Scene {
 
       lineWaveLeft.setup({
         entity: 'mouse',
-        count: 15,
+        count: 3,
         dir: -1,
         pos: Vec2.create(),
         spacing: 50
       });
       lineWaveLeft.launch();
 
-      // lineWaveRight.setup({
-      //   entity: 'mouse',
-      //   count: 5,
-      //   dir: 1,
-      //   pos: new Vec2(cfg.gameWidth, 0),
-      //   spacing: 50
-      // });
-      // lineWaveRight.launch();
+      lineWaveRight.setup({
+        entity: 'mouse',
+        count: 3,
+        dir: 1,
+        pos: new Vec2(cfg.gameWidth, 0),
+        spacing: 50
+      });
+      lineWaveRight.launch();
 
       // circularWave.launch();
     }

@@ -22,7 +22,7 @@ window.gameFrameCount = 0;
 window.Renderer = Renderer;
 
 
-window.debug = true;
+window.debug = false;
 window.Debug = Debug;
 window.scene = null;
 

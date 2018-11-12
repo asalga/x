@@ -1,0 +1,30 @@
+// spawner = EntityFactory.create('spawner');
+  // list of waves (?)
+  // spawner.add(entityQueue);
+  // scene.add(spawner);
+  // spawner.start();
+  // spawner.pause() ?
+
+  // let waveQueue = [{
+  //     time: 0,
+  //     wave: 'line',
+  //     params: {
+  //       position: ['right', 0]
+  //       count: 10,
+  //       entity: 'mouse'
+  //     }
+  //   },
+  //   {
+  //     time: 1.5,
+  //     wave: 'circle',
+  //     params: {
+  //       count: 5,
+  //       distance: 200,
+  //       entity: 'starfish',
+  //       position: [0, 0]
+  //     }
+  //   }
+  // ]
+
+  // spawner = new Spawner();
+  // spawner.addSpawnQueue(wave1);

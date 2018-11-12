@@ -10,6 +10,7 @@ import SeekTarget from '../components/SeekTarget.js';
 import SpriteRender from '../components/SpriteRender.js';
 import LifetimeLimit from '../components/LifetimeLimit.js';
 import NearDeathIndicator from '../components/NearDeathIndicator.js';
+import PostLaunch from '../components/PostLaunch.js';
 
 import BoundingCircle from '../../collision/BoundingCircle.js';
 import CType from '../../collision/CollisionType.js';
@@ -28,7 +29,7 @@ export default function createUserRocketBullet() {
   // If our target has died, get a new one
   e.on('remove', function(data) {
     if (data === e.seektarget.target) {
-      e.seektarget.target = scene.getClosestBaddie(e.pos);
+      e.seektarget.target = scene.getRandomBaddie(e.pos);
     }
   }, e);
 
@@ -64,20 +65,37 @@ export default function createUserRocketBullet() {
 
   // e.addComponent(new NearDeathIndicator(e));
   e.addComponent(new Payload(e, { dmg: 5, lingerTime: 1 }));
-  e.addComponent(new LifetimeLimit(e, { limit: 1 }));
+  e.addComponent(new LifetimeLimit(e, { limit: 2 }));
 
   e.addComponent(new SeekTarget(e, { maxVel: 200, maxSpeed: 300, maxSteerForce: 10 }));
   e.addComponent(new Collidable(e, { type: CType.PLAYER_BULLET, mask: CType.ENEMY }));
 
   // TODO: is this the best place for this?
-  e.postLaunch = function() {
-    // let r = Math.random();
-    // if (r < 0.5) {
-      this.seektarget.target = scene.getRandomBaddie();
-    // } else {
-      // this.seektarget.target = scene.getClosestBaddie(this.pos);
-    // }
-  };
+  // e.postlaunch = function() {
+  //   // let r = Math.random();
+  //   // if (r < 0.5) {
+  //     // this.seektarget.target = scene.getRandomBaddie();
+  //   // } else {
+  //      this.seektarget.target = scene.getClosestBaddie(this.pos);
+  //      console.log(this.seektarget);
+  //   // }
+  // };
+
+
+  e.addComponent(new PostLaunch(e, {
+    launched: function(launcher) {
+       e.seektarget.target = scene.getRandomBaddie(e.pos);
+       
+
+       if(e.seektarget.target){
+        // debugger;
+       }
+       console.log(e.seektarget.target);
+
+    }.bind(this)
+  }));
+
+
 
   let emitter = EntityFactory.create('emitter');
   let div = 6;
@@ -88,7 +106,7 @@ export default function createUserRocketBullet() {
     // sizeRange: [2.5, 2.5],
     // opacityRange: [.7, .7]
 
-    count: 300,
+    count: 100,
     rate: 30,
     ageRange: [1.7, 2.0],
     sizeRange: [1.5, 2.5],

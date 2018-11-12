@@ -43,7 +43,7 @@ console.log('key down');
 
   init() {
     this.turnAllWeaponsOff();
-    this.enableWeapon(this.weapons.get('1'), true);
+    this.enableWeapon(this.weapons.get('3'), true);
   }
 
   turnAllWeaponsOff() {
