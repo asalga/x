@@ -1,5 +1,6 @@
 'use strict';
 
+
 import Component from './Component.js';
 import Event from '../../event/Event.js';
 
