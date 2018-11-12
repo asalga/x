@@ -32,7 +32,7 @@ console.log('key down');
     e.launcher.setEnable(b);
     e.launcherrenderer.visible = b;
     e.setEvents(b);
-    console.log('enableWeapon ',e.name);
+    // console.log('enableWeapon ',e.name);
 
     // If we turn off the weapon but user is still holding down fire
     // Just fire the up event.
@@ -43,7 +43,7 @@ console.log('key down');
 
   init() {
     this.turnAllWeaponsOff();
-    this.enableWeapon(this.weapons.get('1'), true);
+    this.enableWeapon(this.weapons.get('3'), true);
   }
 
   turnAllWeaponsOff() {

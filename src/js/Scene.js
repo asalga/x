@@ -5,14 +5,11 @@ import Event from './event/Event.js';
 
 import EntityFactory from './entity/EntityFactory.js';
 import Spawner from './entity/actors/Spawner.js';
-<<<<<<< HEAD
 import bk from './entity/actors/background.js';
+import bk from './entity/actors/decorations/Background.js';
 
 import Vec2 from './math/Vec2.js';
-=======
-import Vec2 from './math/Vec2.js';
 import bk from './entity/actors/decorations/Background.js';
->>>>>>> invivo
 import cfg from './cfg.js';
 import Utils from './Utils.js';
 import Assert from './core/Assert.js';
@@ -30,25 +27,21 @@ export default class Scene {
     this.eventsToFireNextFrame = [];
 
     // move this out of scene
-    this.tempSpawnTimer = 9;
+    this.tempSpawnTimer = 4;
   }
 
   update(dt) {
 
     this.tempSpawnTimer += dt;
-
     if (this.tempSpawnTimer > 5.0) {
+    if (this.tempSpawnTimer > 6) {
       this.tempSpawnTimer = 0;
-
-
       let lineWaveLeft = EntityFactory.create('linewave');
       let lineWaveRight = EntityFactory.create('linewave');
 
- 
-
       lineWaveLeft.setup({
         entity: 'mouse',
-        count: 2,
+        count: 3,
         dir: -1,
         pos: new Vec2(0, 0),
         spacing: 250
@@ -57,7 +50,7 @@ export default class Scene {
 
       lineWaveRight.setup({
         entity: 'mouse',
-        count: 2,
+        count: 3,
         dir: 1,
         pos: new Vec2(cfg.gameWidth, 0),
         spacing: 250
