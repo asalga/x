@@ -7,6 +7,7 @@ import EntityFactory from './entity/EntityFactory.js';
 import Spawner from './entity/actors/Spawner.js';
 import bk from './entity/actors/decorations/Background.js';
 
+
 import Vec2 from './math/Vec2.js';
 import cfg from './cfg.js';
 import Utils from './Utils.js';
