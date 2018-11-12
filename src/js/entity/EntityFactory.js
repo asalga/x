@@ -15,7 +15,7 @@ import teleporter from './actors/Teleporter.js';
 import emitter from './actors/decorations/Emitter.js';
 import smoke from './actors/decorations/Smoke.js';
 import spark from './actors/decorations/Spark.js';
-import background from './actors/decorations/Background.js';
+import background from './actors/decorations/BK.js';
 
 import ui from './actors/Ui.js';
 
