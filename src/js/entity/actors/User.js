@@ -83,7 +83,6 @@ export default function createUser() {
 
   // // ROCKET
   let rocketGun = EntityFactory.create('rocketgun');
-  //, bulletName: 'missile'  
   let rocketLauncher = new Launcher(rocketGun, { shotsPerSecond: 5, autoFire: false, ammo: 599, bulletVel: 100});
   rocketLauncher.createFunc = createUserRocketBullet;
   rocketGun.addComponent(rocketLauncher);
