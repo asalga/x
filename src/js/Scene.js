@@ -8,6 +8,7 @@ import Spawner from './entity/actors/Spawner.js';
 import bk from './entity/actors/background.js';
 import bk from './entity/actors/decorations/Background.js';
 
+
 import Vec2 from './math/Vec2.js';
 import bk from './entity/actors/decorations/Background.js';
 import cfg from './cfg.js';
