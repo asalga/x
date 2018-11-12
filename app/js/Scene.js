@@ -5,11 +5,10 @@ import Event from './event/Event.js';
 
 import EntityFactory from './entity/EntityFactory.js';
 import Spawner from './entity/actors/Spawner.js';
-import bk from './entity/actors/background.js';
 import bk from './entity/actors/decorations/Background.js';
 
+
 import Vec2 from './math/Vec2.js';
-import bk from './entity/actors/decorations/Background.js';
 import cfg from './cfg.js';
 import Utils from './Utils.js';
 import Assert from './core/Assert.js';
@@ -33,18 +32,26 @@ export default class Scene {
   update(dt) {
 
     this.tempSpawnTimer += dt;
-    if (this.tempSpawnTimer > 5.0) {
     if (this.tempSpawnTimer > 6) {
       this.tempSpawnTimer = 0;
+
+      // let circularWave = EntityFactory.create('circularwave');
       let lineWaveLeft = EntityFactory.create('linewave');
       let lineWaveRight = EntityFactory.create('linewave');
+      // circularWave.addComponent(new LifetimeLimit(1))
+
+      // circularWave.setup({
+      //   entity: 'mouse',
+      //   count: 3,
+      //   distance: 300
+      // });
 
       lineWaveLeft.setup({
         entity: 'mouse',
         count: 3,
         dir: -1,
-        pos: new Vec2(0, 0),
-        spacing: 250
+        pos: Vec2.create(),
+        spacing: 50
       });
       lineWaveLeft.launch();
 
@@ -53,9 +60,11 @@ export default class Scene {
         count: 3,
         dir: 1,
         pos: new Vec2(cfg.gameWidth, 0),
-        spacing: 250
+        spacing: 50
       });
       lineWaveRight.launch();
+
+      // circularWave.launch();
     }
 
     // We can't fire events while we are iterating of the 
